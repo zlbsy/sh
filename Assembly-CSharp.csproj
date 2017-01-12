@@ -48,6 +48,11 @@
   <ItemGroup>
      <Compile Include="Assets\Character.cs" />
      <Compile Include="Assets\CharacterTest.cs" />
+     <Compile Include="Assets\Script\App\Model\MBase.cs" />
+     <Compile Include="Assets\Script\App\Model\MCharacter.cs" />
+     <Compile Include="Assets\Script\App\View\VBase.cs" />
+     <Compile Include="Assets\Script\App\View\VCharacter.cs" />
+     <Compile Include="Assets\Script\App\ViewModel\VMCharacter.cs" />
      <Compile Include="Assets\Script\MakeAtlas.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity5.5/Unity5.5.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
