@@ -4,6 +4,7 @@ using App.Model;
 
 public class CharacterTest : MonoBehaviour {
 	[SerializeField]GameObject characterPrefab;
+	[SerializeField]Canvas layer;
 	// Use this for initialization
 	void Start () {
 	
@@ -17,6 +18,8 @@ public class CharacterTest : MonoBehaviour {
 		if(GUI.Button(new Rect(100, 50, 100, 30), "Create")){
 			GameObject obj = GameObject.Instantiate (characterPrefab);
 			MCharacter model = new MCharacter ();
+			obj.transform.parent = layer.transform;
+			obj.SetActive (true);
 			//character.SetAction ("Idle");
 		}
 		/*
