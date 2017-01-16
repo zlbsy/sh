@@ -9,6 +9,7 @@ namespace App.Controller{
 	public class CBattlefield : CBase {
 		[SerializeField]GameObject mapLayer;
 		[SerializeField]GameObject characterLayer;
+		[SerializeField]GameObject characterPrefab;
 		public override IEnumerator OnLoad( ) 
 		{  
 			SBattlefield sBattlefield = new SBattlefield ();
@@ -16,6 +17,9 @@ namespace App.Controller{
 			MBattlefield battlefield = sBattlefield.battlefield;
 			MCharacter[] enemys = battlefield.enemys;
 			foreach (MCharacter chara in enemys) {
+				GameObject obj = GameObject.Instantiate (characterPrefab);
+				obj.transform.parent = characterLayer.transform;
+				obj.SetActive (true);
 				Debug.Log ("chara="+chara.id+","+chara.name);
 			}
 			yield return 0;
