@@ -48,12 +48,44 @@
   <ItemGroup>
      <Compile Include="Assets\Character.cs" />
      <Compile Include="Assets\CharacterTest.cs" />
+     <Compile Include="Assets\Script\App\Controller\CBase.cs" />
+     <Compile Include="Assets\Script\App\Controller\CBattlefield.cs" />
      <Compile Include="Assets\Script\App\Model\MBase.cs" />
+     <Compile Include="Assets\Script\App\Model\MBattlefield.cs" />
      <Compile Include="Assets\Script\App\Model\MCharacter.cs" />
+     <Compile Include="Assets\Script\App\Service\HttpClient.cs" />
+     <Compile Include="Assets\Script\App\Service\SBase.cs" />
+     <Compile Include="Assets\Script\App\Service\SBattlefield.cs" />
      <Compile Include="Assets\Script\App\View\VBase.cs" />
      <Compile Include="Assets\Script\App\View\VCharacter.cs" />
      <Compile Include="Assets\Script\App\ViewModel\VMCharacter.cs" />
      <Compile Include="Assets\Script\MakeAtlas.cs" />
+     <Compile Include="Assets\Script\Plugin\JsonFx\About.cs" />
+     <Compile Include="Assets\Script\Plugin\JsonFx\DataReaderProvider.cs" />
+     <Compile Include="Assets\Script\Plugin\JsonFx\DataWriterProvider.cs" />
+     <Compile Include="Assets\Script\Plugin\JsonFx\EcmaScriptIdentifier.cs" />
+     <Compile Include="Assets\Script\Plugin\JsonFx\EcmaScriptWriter.cs" />
+     <Compile Include="Assets\Script\Plugin\JsonFx\IDataReader.cs" />
+     <Compile Include="Assets\Script\Plugin\JsonFx\IDataWriter.cs" />
+     <Compile Include="Assets\Script\Plugin\JsonFx\IJsonSerializable.cs" />
+     <Compile Include="Assets\Script\Plugin\JsonFx\JsonDataReader.cs" />
+     <Compile Include="Assets\Script\Plugin\JsonFx\JsonDataWriter.cs" />
+     <Compile Include="Assets\Script\Plugin\JsonFx\JsonIgnoreAttribute.cs" />
+     <Compile Include="Assets\Script\Plugin\JsonFx\JsonMemberAttribute.cs" />
+     <Compile Include="Assets\Script\Plugin\JsonFx\JsonNameAttribute.cs" />
+     <Compile Include="Assets\Script\Plugin\JsonFx\JsonOptInAttribute.cs" />
+     <Compile Include="Assets\Script\Plugin\JsonFx\JsonReader.cs" />
+     <Compile Include="Assets\Script\Plugin\JsonFx\JsonReaderSettings.cs" />
+     <Compile Include="Assets\Script\Plugin\JsonFx\JsonSerializationException.cs" />
+     <Compile Include="Assets\Script\Plugin\JsonFx\JsonSpecifiedPropertyAttribute.cs" />
+     <Compile Include="Assets\Script\Plugin\JsonFx\JsonToken.cs" />
+     <Compile Include="Assets\Script\Plugin\JsonFx\JsonWriter.cs" />
+     <Compile Include="Assets\Script\Plugin\JsonFx\JsonWriterSettings.cs" />
+     <Compile Include="Assets\Script\Plugin\JsonFx\TypeCoercionUtility.cs" />
+     <None Include="Assets\Script\Plugin\JsonFx\History.txt" />
+     <None Include="Assets\Script\Plugin\JsonFx\Readme.txt" />
+     <None Include="Assets\Script\Plugin\JsonFx\TODO.txt" />
+     <None Include="Assets\Script\Plugin\JsonFx\License.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity5.5/Unity5.5.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
