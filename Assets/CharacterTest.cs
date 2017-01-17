@@ -2,6 +2,7 @@
 using System.Collections;
 using App.Model;
 using App.Service;
+using App.View;
 
 public class CharacterTest : MonoBehaviour {
 	[SerializeField]GameObject characterPrefab;
@@ -15,24 +16,28 @@ public class CharacterTest : MonoBehaviour {
 	void Update () {
 	
 	}
+	VCharacter view;
+	MCharacter model;
 	void OnGUI(){
 		if(GUI.Button(new Rect(100, 50, 100, 30), "Create")){
 			GameObject obj = GameObject.Instantiate (characterPrefab);
-			string strJson = "{\"id\":1,\"name\":\"Tester\"}";
-			MCharacter model = JsonUtility.FromJson <MCharacter>(strJson);
-			Debug.Log ("model="+model.id+","+model.name);
-			//MCharacter model = new MCharacter ();
 			obj.transform.parent = layer.transform;
+			obj.transform.localPosition = new Vector3 (0f, 100f,0f);
 			obj.SetActive (true);
+			obj.GetComponent<RectTransform> ().localScale = new Vector3(3f,3f,1f);
+			model = new MCharacter ();
+			view = obj.GetComponent<VCharacter> ();
+			view.BindingContext = model.ViewModel;
+			model.Head = 2;
 			//character.SetAction ("Idle");
 		}
+		if(GUI.Button(new Rect(100, 100, 100, 30), "ChangeHead")){
+			model.Head = 3;
+		}
 
-		if(GUI.Button(new Rect(100, 100, 100, 30), "HttpTest")){
+		if(GUI.Button(new Rect(100, 150, 100, 30), "HttpTest")){
 			StartCoroutine (httpTest());
 		}
-		/*if(GUI.Button(new Rect(100, 150, 100, 30), "Attack")){
-			//character.SetAction ("Attack");
-		}*/
 	}
 	IEnumerator httpTest(){
 		SBattlefield battleS = new SBattlefield ();

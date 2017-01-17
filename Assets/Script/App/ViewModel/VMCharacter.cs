@@ -1,16 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using App.View;
+using App.Model;
 
-public class VMCharacter : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+namespace App.ViewModel
+{
+	public class VMCharacter : VMBase
+	{
+		public VMProperty<string> Name = new VMProperty<string>();
+		public VMProperty<int> Head = new VMProperty<int>();
 	}
 }
