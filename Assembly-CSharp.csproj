@@ -58,7 +58,9 @@
      <Compile Include="Assets\Script\App\Service\SBattlefield.cs" />
      <Compile Include="Assets\Script\App\View\VBase.cs" />
      <Compile Include="Assets\Script\App\View\VCharacter.cs" />
+     <Compile Include="Assets\Script\App\ViewModel\VMBase.cs" />
      <Compile Include="Assets\Script\App\ViewModel\VMCharacter.cs" />
+     <Compile Include="Assets\Script\App\ViewModel\VMProperty.cs" />
      <Compile Include="Assets\Script\MakeAtlas.cs" />
      <Compile Include="Assets\Script\Plugin\JsonFx\About.cs" />
      <Compile Include="Assets\Script\Plugin\JsonFx\DataReaderProvider.cs" />
