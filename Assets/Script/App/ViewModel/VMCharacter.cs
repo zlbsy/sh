@@ -11,5 +11,8 @@ namespace App.ViewModel
 		public VMProperty<string> Name = new VMProperty<string>();
 		public VMProperty<int> Head = new VMProperty<int>();
 		public VMProperty<int> Hat = new VMProperty<int>();
+		public VMProperty<string> Horse = new VMProperty<string>();
+		public VMProperty<int> Body = new VMProperty<int>();
+		public VMProperty<int> Weapon = new VMProperty<int>();
 	}
 }

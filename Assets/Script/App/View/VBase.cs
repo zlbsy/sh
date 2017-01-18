@@ -18,7 +18,8 @@ namespace App.View{
 		}
 		protected virtual void OnBindingContextChanged(VMBase oldViewModel, VMBase newViewModel)
 		{
-		}public VBase()
+		}
+		public VBase()
 		{
 			this.vmProperty.OnValueChanged += OnBindingContextChanged;
 		}

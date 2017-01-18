@@ -3,42 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using App.ViewModel;
+using App.Util;
 
 namespace App.View{
 	public class VCharacter : VBase {
 
-		[SerializeField]Image image;
+		[SerializeField]Image imgHorse;
+		[SerializeField]Image imgBody;
 		[SerializeField]Image imgHead;
 		[SerializeField]Image imgHat;
-		private string spriteName = "b-";
-		public static AssetBundle assetbundleCharacter = null;
-		public static AssetBundle assetbundleHat = null;
-		// Use this for initialization
-		void Start () {
-			
-		}
-		
-		// Update is called once per frame
-		void Update () {
-			
-		}
-		public void ChangeAction(string strIndex){
-			//image.sprite.name = spriteName + strIndex;
-			//image.sprite = loadSprite(spriteName + strIndex);
+		[SerializeField]Image imgWeapon;
 
-		}
-		private Sprite loadSprite(string spriteName){
-			if(assetbundleCharacter == null)
-				assetbundleCharacter = AssetBundle.LoadFromFile(Application.streamingAssetsPath +"/chara.assetbundle");
-			return assetbundleCharacter.LoadAsset<Sprite>(spriteName);
-			//return Resources.Load<GameObject>("Sprite/" + spriteName).GetComponent<SpriteRenderer>().sprite;
-		}
-		private Sprite loadHat(string spriteName){
-			if(assetbundleHat == null)
-				assetbundleHat = AssetBundle.LoadFromFile(Application.streamingAssetsPath +"/hat.assetbundle");
-			return assetbundleHat.LoadAsset<Sprite>(spriteName);
-		}
-
+		#region VM处理
 		public VMCharacter ViewModel { get { return (VMCharacter)BindingContext; } }
 		protected override void OnBindingContextChanged(VMBase oldViewModel, VMBase newViewModel)
 		{
@@ -50,20 +26,49 @@ namespace App.View{
 			{
 				ViewModel.Head.OnValueChanged -= HeadChanged;
 				ViewModel.Hat.OnValueChanged -= HatChanged;
+				ViewModel.Horse.OnValueChanged -= HorseChanged;
+				ViewModel.Body.OnValueChanged -= BodyChanged;
 			}
 			if (ViewModel!=null)
 			{
 				ViewModel.Head.OnValueChanged += HeadChanged;
 				ViewModel.Hat.OnValueChanged += HatChanged;
+				ViewModel.Horse.OnValueChanged += HorseChanged;
+				ViewModel.Body.OnValueChanged += BodyChanged;
 			}
 		}
 		private void HeadChanged(int oldvalue, int newvalue)
 		{
-			imgHead.sprite = loadSprite("head_" + newvalue);
+			imgHead.sprite = AssetBundleManager.GetAvatarHead("head_" + newvalue);
 		}
 		private void HatChanged(int oldvalue, int newvalue)
 		{
-			imgHat.sprite = loadHat("hat_" + newvalue);
+			imgHat.sprite = AssetBundleManager.GetAvatarHat("hat_" + newvalue);
+		}
+		private void HorseChanged(string oldvalue, string newvalue)
+		{
+			imgHorse.sprite = AssetBundleManager.GetHorse(string.Format("horse_{0}_attack_1", newvalue));
+		}
+		private void BodyChanged(int oldvalue, int newvalue)
+		{//body_cavalry_longKnife_attack_1
+			imgBody.sprite = AssetBundleManager.GetAvatarBody(string.Format("body_cavalry_longKnife_attack_1", newvalue));
+		}
+		#endregion
+
+
+		// Use this for initialization
+		void Start () {
+
+		}
+
+		// Update is called once per frame
+		void Update () {
+
+		}
+		public void ChangeAction(string strIndex){
+			//image.sprite.name = spriteName + strIndex;
+			//image.sprite = loadSprite(spriteName + strIndex);
+
 		}
 	}
 }
