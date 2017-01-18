@@ -10,5 +10,6 @@ namespace App.ViewModel
 	{
 		public VMProperty<string> Name = new VMProperty<string>();
 		public VMProperty<int> Head = new VMProperty<int>();
+		public VMProperty<int> Hat = new VMProperty<int>();
 	}
 }

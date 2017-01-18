@@ -9,7 +9,7 @@ public class CharacterTest : MonoBehaviour {
 	[SerializeField]Canvas layer;
 	// Use this for initialization
 	void Start () {
-	
+		
 	}
 	
 	// Update is called once per frame
@@ -28,14 +28,26 @@ public class CharacterTest : MonoBehaviour {
 			model = new MCharacter ();
 			view = obj.GetComponent<VCharacter> ();
 			view.BindingContext = model.ViewModel;
-			model.Head = 2;
+			model.Head = 1;
+			model.Hat = 1;
 			//character.SetAction ("Idle");
 		}
 		if(GUI.Button(new Rect(100, 100, 100, 30), "ChangeHead")){
-			model.Head = 3;
+			if (model.Head == 3) {
+				model.Head = 1;
+			} else {
+				model.Head += 1;
+			}
+		}
+		if(GUI.Button(new Rect(100, 150, 100, 30), "ChangeHat")){
+			if (model.Hat == 4) {
+				model.Hat = 1;
+			} else {
+				model.Hat += 1;
+			}
 		}
 
-		if(GUI.Button(new Rect(100, 150, 100, 30), "HttpTest")){
+		if(GUI.Button(new Rect(100, 200, 100, 30), "HttpTest")){
 			StartCoroutine (httpTest());
 		}
 	}

@@ -28,7 +28,6 @@ namespace App.Model{
 		public int mp;
 		public int sp;
 		public int body;
-		public int hat;
 		public int horse;
 		public WeaponType weaponType;
 		public MoveType moveType;
@@ -38,6 +37,14 @@ namespace App.Model{
 			}
 			get{ 
 				return this.ViewModel.Head.Value;
+			}
+		}
+		public int Hat{
+			set{ 
+				this.ViewModel.Hat.Value = value;
+			}
+			get{ 
+				return this.ViewModel.Hat.Value;
 			}
 		}
 	}
