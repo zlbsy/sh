@@ -40,7 +40,7 @@ public class CharacterTest : MonoBehaviour {
 			}
 		}
 		if(GUI.Button(new Rect(100, 150, 100, 30), "ChangeHat")){
-			if (model.Hat == 4) {
+			if (model.Hat == 5) {
 				model.Hat = 1;
 			} else {
 				model.Hat += 1;

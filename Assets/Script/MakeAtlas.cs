@@ -67,7 +67,7 @@ public class MakeAtlas : MonoBehaviour {
 		#if UNITY_STANDALONE
 		target = BuildTarget.StandaloneWindows;
 		#elif UNITY_IPHONE
-		target = BuildTarget.iPhone;
+		target = BuildTarget.iOS;
 		#elif UNITY_ANDROID
 		target = BuildTarget.Android;
 		#endif
