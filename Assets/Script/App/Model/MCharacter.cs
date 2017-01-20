@@ -17,6 +17,11 @@ namespace App.Model{
 		shortAx,//短斧
 		longAx,//长斧
 	}
+	public enum ActionType{
+		stand,
+		move,
+		attack,
+	}
 	public class MCharacter : MBase {
 		public MCharacter(){
 			viewModel = new VMCharacter ();
@@ -28,9 +33,38 @@ namespace App.Model{
 		public int mp;
 		public int sp;
 		public int body;
-		public int horse;
-		public WeaponType weaponType;
-		public MoveType moveType;
+		public string Horse{
+			set{
+				this.ViewModel.Horse.Value = value;
+			}
+			get{ 
+				return this.ViewModel.Horse.Value;
+			}
+		}
+		public ActionType Action{
+			set{
+				this.ViewModel.Action.Value = value;
+			}
+			get{ 
+				return this.ViewModel.Action.Value;
+			}
+		}
+		public WeaponType WeaponType{
+			set{
+				this.ViewModel.WeaponType.Value = value;
+			}
+			get{ 
+				return this.ViewModel.WeaponType.Value;
+			}
+		}
+		public MoveType MoveType{
+			set{ 
+				this.ViewModel.MoveType.Value = value;
+			}
+			get{ 
+				return this.ViewModel.MoveType.Value;
+			}
+		}
 		public int Head{
 			set{ 
 				this.ViewModel.Head.Value = value;

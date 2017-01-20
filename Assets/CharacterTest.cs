@@ -3,13 +3,13 @@ using System.Collections;
 using App.Model;
 using App.Service;
 using App.View;
+using App.Model.Avatar;
 
 public class CharacterTest : MonoBehaviour {
 	[SerializeField]GameObject characterPrefab;
 	[SerializeField]Canvas layer;
 	// Use this for initialization
 	void Start () {
-		
 	}
 	
 	// Update is called once per frame
@@ -26,11 +26,15 @@ public class CharacterTest : MonoBehaviour {
 			obj.SetActive (true);
 			obj.GetComponent<RectTransform> ().localScale = new Vector3(3f,3f,1f);
 			model = new MCharacter ();
-			view = obj.GetComponent<VCharacter> ();
-			view.BindingContext = model.ViewModel;
+			model.MoveType = MoveType.cavalry;
+			model.WeaponType = WeaponType.longKnife;
+			model.Action = ActionType.attack;
+			model.Horse = "brown";
 			model.Head = 1;
 			model.Hat = 1;
-			//character.SetAction ("Idle");
+			model.body = 1;
+			view = obj.GetComponent<VCharacter> ();
+			view.BindingContext = model.ViewModel;
 		}
 		if(GUI.Button(new Rect(100, 100, 100, 30), "ChangeHead")){
 			if (model.Head == 3) {

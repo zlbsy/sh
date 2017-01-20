@@ -61,6 +61,15 @@ public class MakeAtlas : MonoBehaviour {
 			}
 		}	
 	}
+	[MenuItem ("MyMenu/Create AvatarAsset Instance")]
+	static void CreateAvatarAsset ()
+	{
+		var avatarAsset = ScriptableObject.CreateInstance<App.Model.Avatar.AvatarAsset> ();
+
+		AssetDatabase.CreateAsset (avatarAsset, "Assets/Resources/avatarAsset.asset");
+		AssetDatabase.Refresh ();
+	}
+
 	static private BuildTarget GetBuildTarget()
 	{
 		BuildTarget target = BuildTarget.WebPlayer;

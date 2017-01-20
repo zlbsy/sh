@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using App.ViewModel;
 using App.Util;
+using App.Model.Avatar;
 
 namespace App.View{
 	public class VCharacter : VBase {
@@ -13,7 +14,7 @@ namespace App.View{
 		[SerializeField]Image imgHead;
 		[SerializeField]Image imgHat;
 		[SerializeField]Image imgWeapon;
-
+		private int animationIndex = 0;
 		#region VM处理
 		public VMCharacter ViewModel { get { return (VMCharacter)BindingContext; } }
 		protected override void OnBindingContextChanged(VMBase oldViewModel, VMBase newViewModel)
@@ -47,11 +48,27 @@ namespace App.View{
 		}
 		private void HorseChanged(string oldvalue, string newvalue)
 		{
-			imgHorse.sprite = AssetBundleManager.GetHorse(string.Format("horse_{0}_attack_1", newvalue));
+			ResetAll();
 		}
 		private void BodyChanged(int oldvalue, int newvalue)
-		{//body_cavalry_longKnife_attack_1
-			imgBody.sprite = AssetBundleManager.GetAvatarBody(string.Format("body_cavalry_longKnife_attack_1", newvalue));
+		{
+			ResetAll();
+		}
+		private void ResetAll(){
+			AvatarAction avatarAction = AvatarAsset.Data.GetAvatarAction(ViewModel.MoveType.Value, ViewModel.WeaponType.Value, ViewModel.Action.Value, animationIndex);
+			string key;
+			//Horse
+			key = string.Format("horse_{0}_{1}_{2}", ViewModel.Horse.Value, ViewModel.Action.Value, avatarAction.horse.index);
+			imgHorse.sprite = AssetBundleManager.GetHorse(key);
+			imgHorse.SetNativeSize ();
+			//Body
+			key = string.Format("body_{0}_{1}_{2}_{3}", ViewModel.MoveType.Value, ViewModel.WeaponType.Value, ViewModel.Action.Value, avatarAction.body.index);
+			imgBody.sprite = AssetBundleManager.GetAvatarBody(key);
+			imgBody.SetNativeSize ();
+
+			imgHorse.GetComponent<RectTransform> ().localPosition = avatarAction.horse.position;
+			imgBody.GetComponent<RectTransform> ().localPosition = avatarAction.body.position;
+			imgHead.GetComponent<RectTransform> ().localPosition = avatarAction.head.position;
 		}
 		#endregion
 
@@ -65,10 +82,13 @@ namespace App.View{
 		void Update () {
 
 		}
-		public void ChangeAction(string strIndex){
-			//image.sprite.name = spriteName + strIndex;
-			//image.sprite = loadSprite(spriteName + strIndex);
+		public void ChangeAction(int index){
+			//ViewModel.Body.Value = index;
 
+		}
+		public void ChangeAnimationIdex(int index){
+			animationIndex = index;
+			ResetAll ();
 		}
 	}
 }
