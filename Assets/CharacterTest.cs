@@ -28,11 +28,12 @@ public class CharacterTest : MonoBehaviour {
 			model = new MCharacter ();
 			model.MoveType = MoveType.cavalry;
 			model.WeaponType = WeaponType.longKnife;
+			model.Weapon = 1;
 			model.Action = ActionType.attack;
 			model.Horse = "brown";
 			model.Head = 1;
 			model.Hat = 1;
-			model.body = 1;
+			//model.body = 1;
 			view = obj.GetComponent<VCharacter> ();
 			view.BindingContext = model.ViewModel;
 		}
@@ -50,8 +51,15 @@ public class CharacterTest : MonoBehaviour {
 				model.Hat += 1;
 			}
 		}
+		if(GUI.Button(new Rect(100, 200, 100, 30), "ChangeWeapon")){
+			if (model.Weapon == 2) {
+				model.Weapon = 1;
+			} else {
+				model.Weapon += 1;
+			}
+		}
 
-		if(GUI.Button(new Rect(100, 200, 100, 30), "HttpTest")){
+		if(GUI.Button(new Rect(100, 250, 100, 30), "HttpTest")){
 			StartCoroutine (httpTest());
 		}
 	}

@@ -71,9 +71,14 @@ namespace App.View{
 			key = string.Format("body_{0}_{1}_{2}_{3}", ViewModel.MoveType.Value, ViewModel.WeaponType.Value, ViewModel.Action.Value, avatarAction.body.index);
 			imgBody.sprite = AssetBundleManager.GetAvatarBody(key);
 			imgBody.SetNativeSize ();
+			//Weapon
+			key = string.Format("weapon_{0}_{1}_{2}_{3}_{4}", ViewModel.Weapon.Value, ViewModel.MoveType.Value, ViewModel.WeaponType.Value, ViewModel.Action.Value, avatarAction.body.index);
+			imgWeapon.sprite = AssetBundleManager.GetWeapon(key);
+			imgWeapon.SetNativeSize ();
 
 			imgBody.GetComponent<RectTransform> ().localPosition = avatarAction.body.position;
 			imgHead.GetComponent<RectTransform> ().localPosition = avatarAction.head.position;
+			imgWeapon.GetComponent<RectTransform> ().localPosition = avatarAction.weapon.position;
 		}
 		#endregion
 
@@ -94,6 +99,8 @@ namespace App.View{
 		public void ChangeAnimationIdex(int index){
 			animationIndex = index;
 			ResetAll ();
+		}
+		public void EmptyAction(){
 		}
 	}
 }

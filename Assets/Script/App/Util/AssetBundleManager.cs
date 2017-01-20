@@ -7,13 +7,12 @@ using App.ViewModel;
 namespace App.Util{
 	public class AssetBundleManager {
 		private static AssetBundle character = null;
+		private static AssetBundle horse = null;
 		private static AssetBundle hat = null;
 		private static AssetBundle map = null;
+		private static AssetBundle weapon = null;
 
 		public static Sprite GetAvatarBody(string name){
-			return GetAvatarSprite(name);
-		}
-		public static Sprite GetHorse(string name){
 			return GetAvatarSprite(name);
 		}
 		public static Sprite GetAvatarHead(string name){
@@ -24,6 +23,18 @@ namespace App.Util{
 				character = AssetBundle.LoadFromFile(Application.streamingAssetsPath +"/chara.assetbundle");
 			}
 			return character.LoadAsset<Sprite>(name);
+		}
+		public static Sprite GetWeapon(string name){
+			if (weapon == null) {
+				weapon = AssetBundle.LoadFromFile(Application.streamingAssetsPath +"/weapon.assetbundle");
+			}
+			return weapon.LoadAsset<Sprite>(name);
+		}
+		public static Sprite GetHorse(string name){
+			if (horse == null) {
+				horse = AssetBundle.LoadFromFile(Application.streamingAssetsPath +"/horse.assetbundle");
+			}
+			return horse.LoadAsset<Sprite>(name);
 		}
 		public static Sprite GetAvatarHat(string name){
 			if (hat == null) {

@@ -12,5 +12,6 @@ namespace App.Model.Avatar{
 		public AvatarProperty body;
 		public AvatarProperty head;
 		public AvatarProperty hat;
+		public AvatarProperty weapon;
 	}
 }

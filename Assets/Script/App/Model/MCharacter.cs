@@ -56,6 +56,14 @@ namespace App.Model{
 				return this.ViewModel.WeaponType.Value;
 			}
 		}
+		public int Weapon{
+			set{ 
+				this.ViewModel.Weapon.Value = value;
+			}
+			get{ 
+				return this.ViewModel.Weapon.Value;
+			}
+		}
 		public MoveType MoveType{
 			set{ 
 				this.ViewModel.MoveType.Value = value;
