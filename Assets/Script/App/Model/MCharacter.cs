@@ -32,7 +32,6 @@ namespace App.Model{
 		public int hp;
 		public int mp;
 		public int sp;
-		public int body;
 		public string Horse{
 			set{
 				this.ViewModel.Horse.Value = value;

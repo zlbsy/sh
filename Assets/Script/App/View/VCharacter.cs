@@ -28,14 +28,14 @@ namespace App.View{
 				ViewModel.Head.OnValueChanged -= HeadChanged;
 				ViewModel.Hat.OnValueChanged -= HatChanged;
 				ViewModel.Horse.OnValueChanged -= HorseChanged;
-				ViewModel.Body.OnValueChanged -= BodyChanged;
+				//ViewModel.Body.OnValueChanged -= BodyChanged;
 			}
 			if (ViewModel!=null)
 			{
 				ViewModel.Head.OnValueChanged += HeadChanged;
 				ViewModel.Hat.OnValueChanged += HatChanged;
 				ViewModel.Horse.OnValueChanged += HorseChanged;
-				ViewModel.Body.OnValueChanged += BodyChanged;
+				//ViewModel.Body.OnValueChanged += BodyChanged;
 			}
 		}
 		private void HeadChanged(int oldvalue, int newvalue)
@@ -50,23 +50,28 @@ namespace App.View{
 		{
 			ResetAll();
 		}
-		private void BodyChanged(int oldvalue, int newvalue)
+		/*private void BodyChanged(int oldvalue, int newvalue)
 		{
 			ResetAll();
-		}
+		}*/
 		private void ResetAll(){
 			AvatarAction avatarAction = AvatarAsset.Data.GetAvatarAction(ViewModel.MoveType.Value, ViewModel.WeaponType.Value, ViewModel.Action.Value, animationIndex);
 			string key;
 			//Horse
-			key = string.Format("horse_{0}_{1}_{2}", ViewModel.Horse.Value, ViewModel.Action.Value, avatarAction.horse.index);
-			imgHorse.sprite = AssetBundleManager.GetHorse(key);
-			imgHorse.SetNativeSize ();
+			if (avatarAction.horse == null) {
+				imgHorse.gameObject.SetActive (false);
+			} else {
+				imgHorse.gameObject.SetActive (true);
+				key = string.Format("horse_{0}_{1}_{2}", ViewModel.Horse.Value, ViewModel.Action.Value, avatarAction.horse.index);
+				imgHorse.sprite = AssetBundleManager.GetHorse(key);
+				imgHorse.SetNativeSize ();
+				imgHorse.GetComponent<RectTransform> ().localPosition = avatarAction.horse.position;
+			}
 			//Body
 			key = string.Format("body_{0}_{1}_{2}_{3}", ViewModel.MoveType.Value, ViewModel.WeaponType.Value, ViewModel.Action.Value, avatarAction.body.index);
 			imgBody.sprite = AssetBundleManager.GetAvatarBody(key);
 			imgBody.SetNativeSize ();
 
-			imgHorse.GetComponent<RectTransform> ().localPosition = avatarAction.horse.position;
 			imgBody.GetComponent<RectTransform> ().localPosition = avatarAction.body.position;
 			imgHead.GetComponent<RectTransform> ().localPosition = avatarAction.head.position;
 		}

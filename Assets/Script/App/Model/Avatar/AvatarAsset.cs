@@ -20,12 +20,6 @@ namespace App.Model.Avatar{
 				return _data;
 			}
 		}
-		public Vector3 GetBodyPosition(MoveType moveType, WeaponType weaponType, ActionType actionType, int index){
-			return GetAvatarAction (moveType, weaponType, actionType, index).body.position;
-		}
-		public Vector3 GetHeadPosition(MoveType moveType, WeaponType weaponType, ActionType actionType, int index){
-			return GetAvatarAction (moveType, weaponType, actionType, index).head.position;
-		}
 		public AvatarAction GetAvatarAction(MoveType moveType, WeaponType weaponType, ActionType actionType, int index){
 			MoveArms moveArms = moveType == MoveType.cavalry ? cavalry : infantry;
 			return moveArms.GetAvatarAction (weaponType, actionType, index);
