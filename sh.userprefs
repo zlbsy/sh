@@ -1,25 +1,12 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Script/App/ViewModel/VMBase.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Script/App/View/VCharacter.cs">
     <Files>
-      <File FileName="Assets/Script/App/Controller/CBase.cs" Line="15" Column="4" />
-      <File FileName="Assets/CharacterTest.cs" Line="26" Column="25" />
-      <File FileName="Assets/Script/App/Model/MCharacter.cs" Line="17" Column="31" />
-      <File FileName="Assets/Script/App/View/VCharacter.cs" Line="7" Column="33" />
-      <File FileName="Assets/Script/App/Model/MBase.cs" Line="5" Column="2" />
-      <File FileName="Assets/Script/App/Controller/CBattlefield.cs" Line="15" Column="52" />
-      <File FileName="Assets/Script/App/Service/SBattlefield.cs" Line="25" Column="30" />
-      <File FileName="Assets/Script/App/Service/HttpClient.cs" Line="24" Column="4" />
-      <File FileName="Assets/Script/App/Service/SBase.cs" Line="8" Column="3" />
-      <File FileName="Assets/Script/App/Model/MBattlefield.cs" Line="7" Column="4" />
-      <File FileName="Assets/Script/App/ViewModel/VMCharacter.cs" Line="5" Column="34" />
-      <File FileName="Assets/Script/App/ViewModel/VMBase.cs" Line="9" Column="2" />
+      <File FileName="Assets/Script/App/View/VCharacter.cs" Line="50" Column="48" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <RunToCursorBreakpoint file="/Users/lubin.zhang/Documents/git/sh/Assets/Script/App/Service/HttpClient.cs" line="11" column="6" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

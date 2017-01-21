@@ -7,107 +7,107 @@ using App.Util;
 using App.Model.Avatar;
 
 namespace App.View{
-	public class VCharacter : VBase {
+    public class VCharacter : VBase {
 
-		[SerializeField]Image imgHorse;
-		[SerializeField]Image imgBody;
-		[SerializeField]Image imgClothes;
-		[SerializeField]Image imgHead;
-		[SerializeField]Image imgHat;
-		[SerializeField]Image imgWeapon;
-		private int animationIndex = 0;
-		#region VM处理
-		public VMCharacter ViewModel { get { return (VMCharacter)BindingContext; } }
-		protected override void OnBindingContextChanged(VMBase oldViewModel, VMBase newViewModel)
-		{
+        [SerializeField]Image imgHorse;
+        [SerializeField]Image imgBody;
+        [SerializeField]Image imgClothes;
+        [SerializeField]Image imgHead;
+        [SerializeField]Image imgHat;
+        [SerializeField]Image imgWeapon;
+        private int animationIndex = 0;
+        #region VM处理
+        public VMCharacter ViewModel { get { return (VMCharacter)BindingContext; } }
+        protected override void OnBindingContextChanged(VMBase oldViewModel, VMBase newViewModel)
+        {
 
-			base.OnBindingContextChanged(oldViewModel, newViewModel);
+            base.OnBindingContextChanged(oldViewModel, newViewModel);
 
-			VMCharacter oldVm = oldViewModel as VMCharacter;
-			if (oldVm != null)
-			{
-				ViewModel.Head.OnValueChanged -= HeadChanged;
-				ViewModel.Hat.OnValueChanged -= HatChanged;
-				ViewModel.Horse.OnValueChanged -= HorseChanged;
-				ViewModel.Clothes.OnValueChanged -= ClothesChanged;
-			}
-			if (ViewModel!=null)
-			{
-				ViewModel.Head.OnValueChanged += HeadChanged;
-				ViewModel.Hat.OnValueChanged += HatChanged;
-				ViewModel.Horse.OnValueChanged += HorseChanged;
-				ViewModel.Clothes.OnValueChanged += ClothesChanged;
-			}
-		}
-		private void HeadChanged(int oldvalue, int newvalue)
-		{
-			imgHead.sprite = AssetBundleManager.GetAvatarHead("head_" + newvalue);
-		}
-		private void HatChanged(int oldvalue, int newvalue)
-		{
-			imgHat.sprite = AssetBundleManager.GetAvatarHat("hat_" + newvalue);
-		}
-		private void HorseChanged(int oldvalue, int newvalue)
-		{
-			ResetAll();
-		}
-		private void ClothesChanged(int oldvalue, int newvalue)
-		{
-			ResetAll();
-		}
-		private void ResetAll(){
-			AvatarAction avatarAction = AvatarAsset.Data.GetAvatarAction(ViewModel.MoveType.Value, ViewModel.WeaponType.Value, ViewModel.Action.Value, animationIndex);
-			string key;
-			//Horse
-			if (avatarAction.horse == null) {
-				imgHorse.gameObject.SetActive (false);
-			} else {
-				imgHorse.gameObject.SetActive (true);
-				key = string.Format("horse_{0}_{1}_{2}", ViewModel.Horse.Value, ViewModel.Action.Value, avatarAction.horse.index);
-				imgHorse.sprite = AssetBundleManager.GetHorse(key);
-				imgHorse.SetNativeSize ();
-				imgHorse.GetComponent<RectTransform> ().localPosition = avatarAction.horse.position;
-			}
-			//Body
-			key = string.Format("body_{0}_{1}_{2}_{3}", ViewModel.MoveType.Value, ViewModel.WeaponType.Value, ViewModel.Action.Value, avatarAction.body.index);
-			imgBody.sprite = AssetBundleManager.GetAvatarBody(key);
-			imgBody.SetNativeSize ();
-			//Clothes
-			key = string.Format("clothes_{0}_{1}_{2}_{3}_{4}", ViewModel.Clothes.Value, ViewModel.MoveType.Value, ViewModel.WeaponType.Value, ViewModel.Action.Value, avatarAction.clothes.index);
-			imgClothes.sprite = AssetBundleManager.GetClothes(key);
-			imgClothes.transform.SetSiblingIndex (avatarAction.clothes.sibling);
-			imgClothes.SetNativeSize ();
-			//Weapon
-			key = string.Format("weapon_{0}_{1}_{2}_{3}_{4}", ViewModel.Weapon.Value, ViewModel.MoveType.Value, ViewModel.WeaponType.Value, ViewModel.Action.Value, avatarAction.body.index);
-			imgWeapon.sprite = AssetBundleManager.GetWeapon(key);
-			imgWeapon.SetNativeSize ();
+            VMCharacter oldVm = oldViewModel as VMCharacter;
+            if (oldVm != null)
+            {
+                ViewModel.Head.OnValueChanged -= HeadChanged;
+                ViewModel.Hat.OnValueChanged -= HatChanged;
+                ViewModel.Horse.OnValueChanged -= HorseChanged;
+                ViewModel.Clothes.OnValueChanged -= ClothesChanged;
+            }
+            if (ViewModel!=null)
+            {
+                ViewModel.Head.OnValueChanged += HeadChanged;
+                ViewModel.Hat.OnValueChanged += HatChanged;
+                ViewModel.Horse.OnValueChanged += HorseChanged;
+                ViewModel.Clothes.OnValueChanged += ClothesChanged;
+            }
+        }
+        private void HeadChanged(int oldvalue, int newvalue)
+        {
+            imgHead.sprite = AssetBundleManager.GetAvatarHead("head_" + newvalue);
+        }
+        private void HatChanged(int oldvalue, int newvalue)
+        {
+            imgHat.sprite = AssetBundleManager.GetAvatarHat("hat_" + newvalue);
+        }
+        private void HorseChanged(int oldvalue, int newvalue)
+        {
+            ResetAll();
+        }
+        private void ClothesChanged(int oldvalue, int newvalue)
+        {
+            ResetAll();
+        }
+        private void ResetAll(){
+            AvatarAction avatarAction = AvatarAsset.Data.GetAvatarAction(ViewModel.MoveType.Value, ViewModel.WeaponType.Value, ViewModel.Action.Value, animationIndex);
+            string key;
+            //Horse
+            if (avatarAction.horse == null) {
+                imgHorse.gameObject.SetActive (false);
+            } else {
+                imgHorse.gameObject.SetActive (true);
+                key = string.Format("horse_{0}_{1}_{2}", ViewModel.Horse.Value, ViewModel.Action.Value, avatarAction.horse.index);
+                imgHorse.sprite = AssetBundleManager.GetHorse(key);
+                imgHorse.SetNativeSize ();
+                imgHorse.GetComponent<RectTransform> ().localPosition = avatarAction.horse.position;
+            }
+            //Body
+            key = string.Format("body_{0}_{1}_{2}_{3}", ViewModel.MoveType.Value, ViewModel.WeaponType.Value, ViewModel.Action.Value, avatarAction.body.index);
+            imgBody.sprite = AssetBundleManager.GetAvatarBody(key);
+            imgBody.SetNativeSize ();
+            //Clothes
+            key = string.Format("clothes_{0}_{1}_{2}_{3}_{4}", ViewModel.Clothes.Value, ViewModel.MoveType.Value, ViewModel.WeaponType.Value, ViewModel.Action.Value, avatarAction.clothes.index);
+            imgClothes.sprite = AssetBundleManager.GetClothes(key);
+            imgClothes.transform.SetSiblingIndex (avatarAction.clothes.sibling);
+            imgClothes.SetNativeSize ();
+            //Weapon
+            key = string.Format("weapon_{0}_{1}_{2}_{3}_{4}", ViewModel.Weapon.Value, ViewModel.MoveType.Value, ViewModel.WeaponType.Value, ViewModel.Action.Value, avatarAction.body.index);
+            imgWeapon.sprite = AssetBundleManager.GetWeapon(key);
+            imgWeapon.SetNativeSize ();
 
-			imgBody.GetComponent<RectTransform> ().localPosition = avatarAction.body.position;
-			imgClothes.GetComponent<RectTransform> ().localPosition = avatarAction.clothes.position;
-			imgHead.GetComponent<RectTransform> ().localPosition = avatarAction.head.position;
-			imgWeapon.GetComponent<RectTransform> ().localPosition = avatarAction.weapon.position;
-		}
-		#endregion
+            imgBody.GetComponent<RectTransform> ().localPosition = avatarAction.body.position;
+            imgClothes.GetComponent<RectTransform> ().localPosition = avatarAction.clothes.position;
+            imgHead.GetComponent<RectTransform> ().localPosition = avatarAction.head.position;
+            imgWeapon.GetComponent<RectTransform> ().localPosition = avatarAction.weapon.position;
+        }
+        #endregion
 
 
-		// Use this for initialization
-		void Start () {
+        // Use this for initialization
+        void Start () {
 
-		}
+        }
 
-		// Update is called once per frame
-		void Update () {
+        // Update is called once per frame
+        void Update () {
 
-		}
-		public void ChangeAction(int index){
-			//ViewModel.Body.Value = index;
+        }
+        public void ChangeAction(int index){
+            //ViewModel.Body.Value = index;
 
-		}
-		public void ChangeAnimationIdex(int index){
-			animationIndex = index;
-			ResetAll ();
-		}
-		public void EmptyAction(){
-		}
-	}
+        }
+        public void ChangeAnimationIdex(int index){
+            animationIndex = index;
+            ResetAll ();
+        }
+        public void EmptyAction(){
+        }
+    }
 }
