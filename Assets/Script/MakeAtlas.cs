@@ -51,6 +51,7 @@ public class MakeAtlas : MonoBehaviour {
 		foreach (DirectoryInfo dirInfo in rootDirInfo.GetDirectories()) {
 			List<Sprite> assets = new List<Sprite>();
 			string path = dir +"/"+dirInfo.Name+".assetbundle";
+			Debug.Log ("path="+path);
 			foreach (FileInfo pngFile in dirInfo.GetFiles("*.png",SearchOption.AllDirectories)) 
 			{
 				string allPath = pngFile.FullName;

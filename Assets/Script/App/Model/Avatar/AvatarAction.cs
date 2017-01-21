@@ -10,6 +10,7 @@ namespace App.Model.Avatar{
 		}
 		public AvatarProperty horse;
 		public AvatarProperty body;
+		public AvatarProperty clothes;
 		public AvatarProperty head;
 		public AvatarProperty hat;
 		public AvatarProperty weapon;

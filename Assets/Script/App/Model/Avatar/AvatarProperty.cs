@@ -10,6 +10,7 @@ namespace App.Model.Avatar{
 		}
 		public int index;
 		public Vector3 position = Vector3.zero;
+		public int sibling = -1;
 		public Vector3 scale = Vector3.one;
 	}
 }

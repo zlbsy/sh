@@ -10,6 +10,7 @@ namespace App.Util{
 		private static AssetBundle horse = null;
 		private static AssetBundle hat = null;
 		private static AssetBundle map = null;
+		private static AssetBundle clothes = null;
 		private static AssetBundle weapon = null;
 
 		public static Sprite GetAvatarBody(string name){
@@ -23,6 +24,12 @@ namespace App.Util{
 				character = AssetBundle.LoadFromFile(Application.streamingAssetsPath +"/chara.assetbundle");
 			}
 			return character.LoadAsset<Sprite>(name);
+		}
+		public static Sprite GetClothes(string name){
+			if (clothes == null) {
+				clothes = AssetBundle.LoadFromFile(Application.streamingAssetsPath +"/clothes.assetbundle");
+			}
+			return clothes.LoadAsset<Sprite>(name);
 		}
 		public static Sprite GetWeapon(string name){
 			if (weapon == null) {

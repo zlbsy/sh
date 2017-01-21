@@ -11,6 +11,7 @@ namespace App.View{
 
 		[SerializeField]Image imgHorse;
 		[SerializeField]Image imgBody;
+		[SerializeField]Image imgClothes;
 		[SerializeField]Image imgHead;
 		[SerializeField]Image imgHat;
 		[SerializeField]Image imgWeapon;
@@ -28,14 +29,14 @@ namespace App.View{
 				ViewModel.Head.OnValueChanged -= HeadChanged;
 				ViewModel.Hat.OnValueChanged -= HatChanged;
 				ViewModel.Horse.OnValueChanged -= HorseChanged;
-				//ViewModel.Body.OnValueChanged -= BodyChanged;
+				ViewModel.Clothes.OnValueChanged -= ClothesChanged;
 			}
 			if (ViewModel!=null)
 			{
 				ViewModel.Head.OnValueChanged += HeadChanged;
 				ViewModel.Hat.OnValueChanged += HatChanged;
 				ViewModel.Horse.OnValueChanged += HorseChanged;
-				//ViewModel.Body.OnValueChanged += BodyChanged;
+				ViewModel.Clothes.OnValueChanged += ClothesChanged;
 			}
 		}
 		private void HeadChanged(int oldvalue, int newvalue)
@@ -46,14 +47,14 @@ namespace App.View{
 		{
 			imgHat.sprite = AssetBundleManager.GetAvatarHat("hat_" + newvalue);
 		}
-		private void HorseChanged(string oldvalue, string newvalue)
+		private void HorseChanged(int oldvalue, int newvalue)
 		{
 			ResetAll();
 		}
-		/*private void BodyChanged(int oldvalue, int newvalue)
+		private void ClothesChanged(int oldvalue, int newvalue)
 		{
 			ResetAll();
-		}*/
+		}
 		private void ResetAll(){
 			AvatarAction avatarAction = AvatarAsset.Data.GetAvatarAction(ViewModel.MoveType.Value, ViewModel.WeaponType.Value, ViewModel.Action.Value, animationIndex);
 			string key;
@@ -71,12 +72,18 @@ namespace App.View{
 			key = string.Format("body_{0}_{1}_{2}_{3}", ViewModel.MoveType.Value, ViewModel.WeaponType.Value, ViewModel.Action.Value, avatarAction.body.index);
 			imgBody.sprite = AssetBundleManager.GetAvatarBody(key);
 			imgBody.SetNativeSize ();
+			//Clothes
+			key = string.Format("clothes_{0}_{1}_{2}_{3}_{4}", ViewModel.Clothes.Value, ViewModel.MoveType.Value, ViewModel.WeaponType.Value, ViewModel.Action.Value, avatarAction.clothes.index);
+			imgClothes.sprite = AssetBundleManager.GetClothes(key);
+			imgClothes.transform.SetSiblingIndex (avatarAction.clothes.sibling);
+			imgClothes.SetNativeSize ();
 			//Weapon
 			key = string.Format("weapon_{0}_{1}_{2}_{3}_{4}", ViewModel.Weapon.Value, ViewModel.MoveType.Value, ViewModel.WeaponType.Value, ViewModel.Action.Value, avatarAction.body.index);
 			imgWeapon.sprite = AssetBundleManager.GetWeapon(key);
 			imgWeapon.SetNativeSize ();
 
 			imgBody.GetComponent<RectTransform> ().localPosition = avatarAction.body.position;
+			imgClothes.GetComponent<RectTransform> ().localPosition = avatarAction.clothes.position;
 			imgHead.GetComponent<RectTransform> ().localPosition = avatarAction.head.position;
 			imgWeapon.GetComponent<RectTransform> ().localPosition = avatarAction.weapon.position;
 		}

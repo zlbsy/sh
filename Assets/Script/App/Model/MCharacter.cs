@@ -32,7 +32,7 @@ namespace App.Model{
 		public int hp;
 		public int mp;
 		public int sp;
-		public string Horse{
+		public int Horse{
 			set{
 				this.ViewModel.Horse.Value = value;
 			}
@@ -54,6 +54,14 @@ namespace App.Model{
 			}
 			get{ 
 				return this.ViewModel.WeaponType.Value;
+			}
+		}
+		public int Clothes{
+			set{ 
+				this.ViewModel.Clothes.Value = value;
+			}
+			get{ 
+				return this.ViewModel.Clothes.Value;
 			}
 		}
 		public int Weapon{
