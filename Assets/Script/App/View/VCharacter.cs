@@ -16,6 +16,16 @@ namespace App.View{
         [SerializeField]Image imgHat;
         [SerializeField]Image imgWeapon;
         private int animationIndex = 0;
+        private Animator _animator;
+        private Animator animator{
+            get{ 
+                if (_animator == null)
+                {
+                    _animator = this.GetComponent<Animator>();
+                }
+                return _animator;
+            }
+        }
         #region VM处理
         public VMCharacter ViewModel { get { return (VMCharacter)BindingContext; } }
         protected override void OnBindingContextChanged(VMBase oldViewModel, VMBase newViewModel)
@@ -30,6 +40,8 @@ namespace App.View{
                 ViewModel.Hat.OnValueChanged -= HatChanged;
                 ViewModel.Horse.OnValueChanged -= HorseChanged;
                 ViewModel.Clothes.OnValueChanged -= ClothesChanged;
+                ViewModel.Weapon.OnValueChanged -= WeaponChanged;
+                ViewModel.Action.OnValueChanged -= ActionChanged;
             }
             if (ViewModel!=null)
             {
@@ -37,6 +49,18 @@ namespace App.View{
                 ViewModel.Hat.OnValueChanged += HatChanged;
                 ViewModel.Horse.OnValueChanged += HorseChanged;
                 ViewModel.Clothes.OnValueChanged += ClothesChanged;
+                ViewModel.Weapon.OnValueChanged += WeaponChanged;
+                ViewModel.Action.OnValueChanged += ActionChanged;
+            }
+        }
+        private void ActionChanged(App.Model.ActionType oldvalue, App.Model.ActionType newvalue)
+        {
+            animationIndex = 0;
+            animator.Play(newvalue.ToString());
+            ResetAll();
+            if (newvalue == App.Model.ActionType.stand || newvalue == App.Model.ActionType.block)
+            {
+                ResetAll();
             }
         }
         private void HeadChanged(int oldvalue, int newvalue)
@@ -46,6 +70,10 @@ namespace App.View{
         private void HatChanged(int oldvalue, int newvalue)
         {
             imgHat.sprite = AssetBundleManager.GetAvatarHat("hat_" + newvalue);
+        }
+        private void WeaponChanged(int oldvalue, int newvalue)
+        {
+            ResetAll();
         }
         private void HorseChanged(int oldvalue, int newvalue)
         {
@@ -77,9 +105,20 @@ namespace App.View{
             imgClothes.sprite = AssetBundleManager.GetClothes(key);
             imgClothes.transform.SetSiblingIndex (avatarAction.clothes.sibling);
             imgClothes.SetNativeSize ();
+            if (imgHead.gameObject.activeSelf && avatarAction.head.index == 0)
+            {
+                imgHead.gameObject.SetActive(false);
+            }else if (!imgHead.gameObject.activeSelf && avatarAction.head.index > 0)
+            {
+                imgHead.gameObject.SetActive(true);
+            }
             //Weapon
             key = string.Format("weapon_{0}_{1}_{2}_{3}_{4}", ViewModel.Weapon.Value, ViewModel.MoveType.Value, ViewModel.WeaponType.Value, ViewModel.Action.Value, avatarAction.body.index);
             imgWeapon.sprite = AssetBundleManager.GetWeapon(key);
+            if (avatarAction.weapon.sibling >= 0)
+            {
+                imgWeapon.transform.SetSiblingIndex(avatarAction.weapon.sibling);
+            }
             imgWeapon.SetNativeSize ();
 
             imgBody.GetComponent<RectTransform> ().localPosition = avatarAction.body.position;
@@ -99,9 +138,8 @@ namespace App.View{
         void Update () {
 
         }
-        public void ChangeAction(int index){
-            //ViewModel.Body.Value = index;
-
+        public void ChangeAction(App.Model.ActionType type){
+            ViewModel.Action.Value = type;
         }
         public void ChangeAnimationIdex(int index){
             animationIndex = index;

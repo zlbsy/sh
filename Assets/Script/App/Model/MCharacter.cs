@@ -21,6 +21,8 @@ namespace App.Model{
 		stand,
 		move,
 		attack,
+        block,
+        hert,
 	}
 	public class MCharacter : MBase {
 		public MCharacter(){

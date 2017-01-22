@@ -3,8 +3,9 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
+    <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
+    <RootNamespace></RootNamespace>
     <ProjectGuid>{955BE9E4-9553-54F5-EC7D-D20A861971DC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -33,81 +34,83 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.XML" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="UnityEngine">
-      <HintPath>..\..\..\..\Applications\Unity\Unity.app\Contents\Managed\UnityEngine.dll</HintPath>
+      <HintPath>/Applications/Unity/Unity.app/Contents/Managed/UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor">
-      <HintPath>..\..\..\..\Applications\Unity\Unity.app\Contents\Managed\UnityEditor.dll</HintPath>
+      <HintPath>/Applications/Unity/Unity.app/Contents/Managed/UnityEditor.dll</HintPath>
     </Reference>
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Script\App\Controller\CBase.cs" />
-    <Compile Include="Assets\Script\App\Controller\CBattlefield.cs" />
-    <Compile Include="Assets\Script\App\Model\Avatar\Arms.cs" />
-    <Compile Include="Assets\Script\App\Model\Avatar\AvatarAction.cs" />
-    <Compile Include="Assets\Script\App\Model\Avatar\AvatarAsset.cs" />
-    <Compile Include="Assets\Script\App\Model\Avatar\AvatarProperty.cs" />
-    <Compile Include="Assets\Script\App\Model\Avatar\MoveArms.cs" />
-    <Compile Include="Assets\Script\App\Model\MBase.cs" />
-    <Compile Include="Assets\Script\App\Model\MBattlefield.cs" />
-    <Compile Include="Assets\Script\App\Model\MCharacter.cs" />
-    <Compile Include="Assets\Script\App\Service\HttpClient.cs" />
-    <Compile Include="Assets\Script\App\Service\SBase.cs" />
-    <Compile Include="Assets\Script\App\Service\SBattlefield.cs" />
-    <Compile Include="Assets\Script\App\Util\AssetBundleManager.cs" />
-    <Compile Include="Assets\Script\App\View\VBase.cs" />
-    <Compile Include="Assets\Script\App\View\VCharacter.cs" />
-    <Compile Include="Assets\Script\App\ViewModel\VMBase.cs" />
-    <Compile Include="Assets\Script\App\ViewModel\VMCharacter.cs" />
-    <Compile Include="Assets\Script\App\ViewModel\VMProperty.cs" />
-    <Compile Include="Assets\Script\Plugin\JsonFx\About.cs" />
-    <Compile Include="Assets\Script\Plugin\JsonFx\DataReaderProvider.cs" />
-    <Compile Include="Assets\Script\Plugin\JsonFx\DataWriterProvider.cs" />
-    <Compile Include="Assets\Script\Plugin\JsonFx\EcmaScriptIdentifier.cs" />
-    <Compile Include="Assets\Script\Plugin\JsonFx\EcmaScriptWriter.cs" />
-    <Compile Include="Assets\Script\Plugin\JsonFx\IDataReader.cs" />
-    <Compile Include="Assets\Script\Plugin\JsonFx\IDataWriter.cs" />
-    <Compile Include="Assets\Script\Plugin\JsonFx\IJsonSerializable.cs" />
-    <Compile Include="Assets\Script\Plugin\JsonFx\JsonDataReader.cs" />
-    <Compile Include="Assets\Script\Plugin\JsonFx\JsonDataWriter.cs" />
-    <Compile Include="Assets\Script\Plugin\JsonFx\JsonIgnoreAttribute.cs" />
-    <Compile Include="Assets\Script\Plugin\JsonFx\JsonMemberAttribute.cs" />
-    <Compile Include="Assets\Script\Plugin\JsonFx\JsonNameAttribute.cs" />
-    <Compile Include="Assets\Script\Plugin\JsonFx\JsonOptInAttribute.cs" />
-    <Compile Include="Assets\Script\Plugin\JsonFx\JsonReader.cs" />
-    <Compile Include="Assets\Script\Plugin\JsonFx\JsonReaderSettings.cs" />
-    <Compile Include="Assets\Script\Plugin\JsonFx\JsonSerializationException.cs" />
-    <Compile Include="Assets\Script\Plugin\JsonFx\JsonSpecifiedPropertyAttribute.cs" />
-    <Compile Include="Assets\Script\Plugin\JsonFx\JsonToken.cs" />
-    <Compile Include="Assets\Script\Plugin\JsonFx\JsonWriter.cs" />
-    <Compile Include="Assets\Script\Plugin\JsonFx\JsonWriterSettings.cs" />
-    <Compile Include="Assets\Script\Plugin\JsonFx\TypeCoercionUtility.cs" />
-    <None Include="Assets\Script\Plugin\JsonFx\History.txt" />
-    <None Include="Assets\Script\Plugin\JsonFx\Readme.txt" />
-    <None Include="Assets\Script\Plugin\JsonFx\TODO.txt" />
-    <None Include="Assets\Script\Plugin\JsonFx\License.txt" />
-    <Reference Include="UnityEngine.UI">
-      <HintPath>..\..\..\..\Applications\Unity\Unity.app\Contents\UnityExtensions\Unity\GUISystem\UnityEngine.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.Networking">
-      <HintPath>..\..\..\..\Applications\Unity\Unity.app\Contents\UnityExtensions\Unity\Networking\UnityEngine.Networking.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.PlaymodeTestsRunner">
-      <HintPath>..\..\..\..\Applications\Unity\Unity.app\Contents\UnityExtensions\Unity\PlaymodeTestsRunner\UnityEngine.PlaymodeTestsRunner.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.Analytics">
-      <HintPath>..\..\..\..\Applications\Unity\Unity.app\Contents\UnityExtensions\Unity\UnityAnalytics\UnityEngine.Analytics.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.HoloLens">
-      <HintPath>..\..\..\..\Applications\Unity\Unity.app\Contents\UnityExtensions\Unity\UnityHoloLens\RuntimeEditor\UnityEngine.HoloLens.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.VR">
-      <HintPath>..\..\..\..\Applications\Unity\Unity.app\Contents\UnityExtensions\Unity\UnityVR\RuntimeEditor\UnityEngine.VR.dll</HintPath>
-    </Reference>
+     <Compile Include="Assets\Script\App\Controller\CBase.cs" />
+     <Compile Include="Assets\Script\App\Controller\CBattlefield.cs" />
+     <Compile Include="Assets\Script\App\Model\Avatar\Arms.cs" />
+     <Compile Include="Assets\Script\App\Model\Avatar\AvatarAction.cs" />
+     <Compile Include="Assets\Script\App\Model\Avatar\AvatarAsset.cs" />
+     <Compile Include="Assets\Script\App\Model\Avatar\AvatarProperty.cs" />
+     <Compile Include="Assets\Script\App\Model\Avatar\MoveArms.cs" />
+     <Compile Include="Assets\Script\App\Model\MBase.cs" />
+     <Compile Include="Assets\Script\App\Model\MBattlefield.cs" />
+     <Compile Include="Assets\Script\App\Model\MCharacter.cs" />
+     <Compile Include="Assets\Script\App\Service\HttpClient.cs" />
+     <Compile Include="Assets\Script\App\Service\SBase.cs" />
+     <Compile Include="Assets\Script\App\Service\SBattlefield.cs" />
+     <Compile Include="Assets\Script\App\Util\AssetBundleManager.cs" />
+     <Compile Include="Assets\Script\App\View\VBase.cs" />
+     <Compile Include="Assets\Script\App\View\VCharacter.cs" />
+     <Compile Include="Assets\Script\App\ViewModel\VMBase.cs" />
+     <Compile Include="Assets\Script\App\ViewModel\VMCharacter.cs" />
+     <Compile Include="Assets\Script\App\ViewModel\VMProperty.cs" />
+     <Compile Include="Assets\Script\MyEditor\CharacterTest.cs" />
+     <Compile Include="Assets\Script\MyEditor\MakeAtlas.cs" />
+     <Compile Include="Assets\Script\Plugin\JsonFx\About.cs" />
+     <Compile Include="Assets\Script\Plugin\JsonFx\DataReaderProvider.cs" />
+     <Compile Include="Assets\Script\Plugin\JsonFx\DataWriterProvider.cs" />
+     <Compile Include="Assets\Script\Plugin\JsonFx\EcmaScriptIdentifier.cs" />
+     <Compile Include="Assets\Script\Plugin\JsonFx\EcmaScriptWriter.cs" />
+     <Compile Include="Assets\Script\Plugin\JsonFx\IDataReader.cs" />
+     <Compile Include="Assets\Script\Plugin\JsonFx\IDataWriter.cs" />
+     <Compile Include="Assets\Script\Plugin\JsonFx\IJsonSerializable.cs" />
+     <Compile Include="Assets\Script\Plugin\JsonFx\JsonDataReader.cs" />
+     <Compile Include="Assets\Script\Plugin\JsonFx\JsonDataWriter.cs" />
+     <Compile Include="Assets\Script\Plugin\JsonFx\JsonIgnoreAttribute.cs" />
+     <Compile Include="Assets\Script\Plugin\JsonFx\JsonMemberAttribute.cs" />
+     <Compile Include="Assets\Script\Plugin\JsonFx\JsonNameAttribute.cs" />
+     <Compile Include="Assets\Script\Plugin\JsonFx\JsonOptInAttribute.cs" />
+     <Compile Include="Assets\Script\Plugin\JsonFx\JsonReader.cs" />
+     <Compile Include="Assets\Script\Plugin\JsonFx\JsonReaderSettings.cs" />
+     <Compile Include="Assets\Script\Plugin\JsonFx\JsonSerializationException.cs" />
+     <Compile Include="Assets\Script\Plugin\JsonFx\JsonSpecifiedPropertyAttribute.cs" />
+     <Compile Include="Assets\Script\Plugin\JsonFx\JsonToken.cs" />
+     <Compile Include="Assets\Script\Plugin\JsonFx\JsonWriter.cs" />
+     <Compile Include="Assets\Script\Plugin\JsonFx\JsonWriterSettings.cs" />
+     <Compile Include="Assets\Script\Plugin\JsonFx\TypeCoercionUtility.cs" />
+     <None Include="Assets\Script\Plugin\JsonFx\History.txt" />
+     <None Include="Assets\Script\Plugin\JsonFx\Readme.txt" />
+     <None Include="Assets\Script\Plugin\JsonFx\TODO.txt" />
+     <None Include="Assets\Script\Plugin\JsonFx\License.txt" />
+ <Reference Include="UnityEngine.UI">
+ <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.Networking">
+ <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.PlaymodeTestsRunner">
+ <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/PlaymodeTestsRunner/UnityEngine.PlaymodeTestsRunner.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.Analytics">
+ <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.HoloLens">
+ <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.VR">
+ <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>
+ </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -117,14 +120,6 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <ProjectExtensions>
-    <MonoDevelop>
-      <Properties>
-        <Policies>
-          <TextStylePolicy inheritsSet="VisualStudio" inheritsScope="text/plain" scope="text/x-csharp" />
-          <CSharpFormattingPolicy IndentSwitchBody="True" IndentBlocksInsideExpressions="True" AnonymousMethodBraceStyle="NextLine" PropertyBraceStyle="NextLine" PropertyGetBraceStyle="NextLine" PropertySetBraceStyle="NextLine" EventBraceStyle="NextLine" EventAddBraceStyle="NextLine" EventRemoveBraceStyle="NextLine" StatementBraceStyle="NextLine" ElseNewLinePlacement="NewLine" CatchNewLinePlacement="NewLine" FinallyNewLinePlacement="NewLine" WhileNewLinePlacement="DoNotCare" ArrayInitializerWrapping="DoNotChange" ArrayInitializerBraceStyle="NextLine" BeforeMethodDeclarationParentheses="False" BeforeMethodCallParentheses="False" BeforeConstructorDeclarationParentheses="False" NewLineBeforeConstructorInitializerColon="NewLine" NewLineAfterConstructorInitializerColon="SameLine" BeforeDelegateDeclarationParentheses="False" NewParentheses="False" SpacesBeforeBrackets="False" inheritsSet="Mono" inheritsScope="text/x-csharp" scope="text/x-csharp" />
-        </Policies>
-      </Properties>
-    </MonoDevelop>
-  </ProjectExtensions>
+  <ProjectExtensions xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><MonoDevelop><Properties><Policies><TextStylePolicy inheritsSet="VisualStudio" inheritsScope="text/plain" scope="text/x-csharp" /><CSharpFormattingPolicy IndentSwitchBody="True" IndentBlocksInsideExpressions="True" AnonymousMethodBraceStyle="NextLine" PropertyBraceStyle="NextLine" PropertyGetBraceStyle="NextLine" PropertySetBraceStyle="NextLine" EventBraceStyle="NextLine" EventAddBraceStyle="NextLine" EventRemoveBraceStyle="NextLine" StatementBraceStyle="NextLine" ElseNewLinePlacement="NewLine" CatchNewLinePlacement="NewLine" FinallyNewLinePlacement="NewLine" WhileNewLinePlacement="DoNotCare" ArrayInitializerWrapping="DoNotChange" ArrayInitializerBraceStyle="NextLine" BeforeMethodDeclarationParentheses="False" BeforeMethodCallParentheses="False" BeforeConstructorDeclarationParentheses="False" NewLineBeforeConstructorInitializerColon="NewLine" NewLineAfterConstructorInitializerColon="SameLine" BeforeDelegateDeclarationParentheses="False" NewParentheses="False" SpacesBeforeBrackets="False" inheritsSet="Mono" inheritsScope="text/x-csharp" scope="text/x-csharp" /></Policies></Properties></MonoDevelop></ProjectExtensions>
+
 </Project>

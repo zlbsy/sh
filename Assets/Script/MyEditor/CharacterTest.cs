@@ -36,40 +36,53 @@ public class CharacterTest : MonoBehaviour {
 			model.Hat = 1;
 			//model.body = 1;
 			view = obj.GetComponent<VCharacter> ();
-			view.BindingContext = model.ViewModel;
-		}
-		if(GUI.Button(new Rect(100, 100, 100, 30), "ChangeHead")){
+            view.BindingContext = model.ViewModel;
+            model.Action = ActionType.stand;
+        }
+        if(GUI.Button(new Rect(50, 100, 50, 30), "Stand")){
+            model.Action = ActionType.stand;
+        }
+        if(GUI.Button(new Rect(100, 100, 50, 30), "Move")){
+            model.Action = ActionType.move;
+        }
+        if(GUI.Button(new Rect(150, 100, 50, 30), "Block")){
+            model.Action = ActionType.block;
+        }
+        if(GUI.Button(new Rect(200, 100, 50, 30), "Hert")){
+            model.Action = ActionType.hert;
+        }
+        if(GUI.Button(new Rect(250, 100, 50, 30), "Attack")){
+            model.Action = ActionType.attack;
+        }
+		if(GUI.Button(new Rect(100, 140, 100, 30), "ChangeHead")){
 			if (model.Head == 3) {
 				model.Head = 1;
 			} else {
 				model.Head += 1;
 			}
 		}
-		if(GUI.Button(new Rect(200, 100, 100, 30), "ChangeAction")){
-			
-		}
-		if(GUI.Button(new Rect(100, 150, 100, 30), "ChangeHat")){
+		if(GUI.Button(new Rect(100, 180, 100, 30), "ChangeHat")){
 			if (model.Hat == 5) {
 				model.Hat = 1;
 			} else {
 				model.Hat += 1;
 			}
 		}
-		if(GUI.Button(new Rect(200, 150, 100, 30), "ChangeHorse")){
+		if(GUI.Button(new Rect(200, 180, 100, 30), "ChangeHorse")){
 			if (model.Horse == 2) {
 				model.Horse = 1;
 			} else {
 				model.Horse += 1;
 			}
 		}
-		if(GUI.Button(new Rect(100, 200, 100, 30), "ChangeWeapon")){
+		if(GUI.Button(new Rect(100, 220, 100, 30), "ChangeWeapon")){
 			if (model.Weapon == 2) {
 				model.Weapon = 1;
 			} else {
 				model.Weapon += 1;
 			}
 		}
-		if(GUI.Button(new Rect(200, 200, 100, 30), "ChangeClothes")){
+		if(GUI.Button(new Rect(200, 220, 100, 30), "ChangeClothes")){
 			if (model.Clothes == 2) {
 				model.Clothes = 1;
 			} else {
@@ -77,7 +90,7 @@ public class CharacterTest : MonoBehaviour {
 			}
 		}
 
-		if(GUI.Button(new Rect(100, 250, 100, 30), "HttpTest")){
+		if(GUI.Button(new Rect(100, 260, 100, 30), "HttpTest")){
 			StartCoroutine (httpTest());
 		}
 	}

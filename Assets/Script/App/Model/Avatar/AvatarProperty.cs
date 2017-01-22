@@ -8,7 +8,7 @@ namespace App.Model.Avatar{
 	public class AvatarProperty {
 		public AvatarProperty(){
 		}
-		public int index;
+		public int index = 0;
 		public Vector3 position = Vector3.zero;
 		public int sibling = -1;
 		public Vector3 scale = Vector3.one;

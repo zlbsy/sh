@@ -1,8 +1,11 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Script/App/View/VCharacter.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Script/App/ViewModel/VMCharacter.cs">
     <Files>
-      <File FileName="Assets/Script/App/View/VCharacter.cs" Line="50" Column="48" />
+      <File FileName="Assets/Script/App/View/VCharacter.cs" Line="57" Column="48" />
+      <File FileName="Assets/Script/App/Model/Avatar/AvatarProperty.cs" Line="13" Column="23" />
+      <File FileName="Assets/Script/App/ViewModel/VMCharacter.cs" Line="19" Column="31" />
+      <File FileName="Assets/Script/App/Model/MCharacter.cs" Line="21" Column="4" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
