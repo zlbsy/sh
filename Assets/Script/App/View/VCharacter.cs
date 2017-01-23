@@ -83,7 +83,7 @@ namespace App.View{
         {
             ResetAll();
         }
-        private void ResetAll(){
+        public void ResetAll(){Debug.LogError(ViewModel.MoveType.Value+", " + ViewModel.WeaponType.Value + ", " + ViewModel.Action.Value + ", " + animationIndex);
             AvatarAction avatarAction = AvatarAsset.Data.GetAvatarAction(ViewModel.MoveType.Value, ViewModel.WeaponType.Value, ViewModel.Action.Value, animationIndex);
             string key;
             //Horse

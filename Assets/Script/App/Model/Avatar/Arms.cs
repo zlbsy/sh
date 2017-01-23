@@ -19,7 +19,7 @@ namespace App.Model.Avatar
         public AvatarAction[] hert;
 
         public AvatarAction GetAvatarAction(ActionType actionType, int index)
-        {
+        {Debug.Log("actionType="+actionType+", index="+index);
             AvatarAction[] actions = null;
             switch (actionType)
             {
