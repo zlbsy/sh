@@ -15,7 +15,7 @@ public class MakeAtlas : MonoBehaviour {
 	void Update () {
 		
 	}
-	[MenuItem ("SH/AtlasMaker")]
+	[MenuItem ("SH/AtlasMaker/All")]
 	static private void MakeAtlasStart()
 	{
 		string spriteDir = Application.dataPath +"/Resources/Sprite";
@@ -39,7 +39,7 @@ public class MakeAtlas : MonoBehaviour {
 			}
 		}	
 	}
-	[MenuItem ("SH/Build Assetbundle")]
+	[MenuItem ("SH/Build Assetbundle/All")]
 	static private void BuildAssetBundle()
 	{
 		string dir = Application.dataPath +"/StreamingAssets";
@@ -62,7 +62,7 @@ public class MakeAtlas : MonoBehaviour {
 			}
 		}	
 	}
-	[MenuItem ("SH/Create AvatarAsset Instance")]
+    [MenuItem ("SH/Create ScriptableObject/AvatarAsset")]
 	static void CreateAvatarAsset ()
 	{
 		var avatarAsset = ScriptableObject.CreateInstance<App.Model.Avatar.AvatarAsset> ();
@@ -89,9 +89,16 @@ public class MakeAtlas : MonoBehaviour {
     [MenuItem ("SH/Create ScriptableObject/Master/Tile")]
     static void CreateScriptableObjectMasterTile ()
     {
-        var avatarAsset = ScriptableObject.CreateInstance<App.Model.Avatar.AvatarAsset> ();
-
-        AssetDatabase.CreateAsset (avatarAsset, "Assets/Data/avatarAsset.asset");
+        GameObject obj = new GameObject();
+        obj.AddComponent<MonoBehaviour>().StartCoroutine(CreateScriptableObjectMasterTileRun());
+    }
+    static IEnumerator CreateScriptableObjectMasterTileRun(){
+        var tileAsset = ScriptableObject.CreateInstance<App.Model.Scriptable.TileAsset> ();
+        App.Service.SMaster sMaster = new App.Service.SMaster();
+        GameObject obj = new GameObject();
+        yield return obj.AddComponent<MonoBehaviour>().StartCoroutine (sMaster.RequestAll());
+        tileAsset.tiles = sMaster.tiles;
+        AssetDatabase.CreateAsset (tileAsset, "Assets/Data/tileAsset.asset");
         AssetDatabase.Refresh ();
     }
 

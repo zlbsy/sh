@@ -7,6 +7,17 @@ namespace App.Model.Master{
 		}
         public string name;//
         public float heal;//回复能力
-        public int[] strategy_ids;//可使用法术
+        //可使用法术
+        public int[] _strategys;
+        public int[] strategys{
+            get{ 
+                if (_strategys == null)
+                {
+                    _strategys = (int[])JsonFx.JsonReader.Deserialize(strategy, typeof(int[]));
+                }
+                return _strategys;
+            }
+        }
+        public string strategy;//可使用法术
 	}
 }
