@@ -7,7 +7,7 @@ using App.View;
 
 
 namespace App.Controller{
-	public class CBattlefield : CBase {
+    public class CBattlefield : CScene {
 		[SerializeField]GameObject mapLayer;
 		[SerializeField]GameObject characterLayer;
 		[SerializeField]GameObject characterPrefab;

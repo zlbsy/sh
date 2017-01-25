@@ -15,7 +15,7 @@ public class MakeAtlas : MonoBehaviour {
 	void Update () {
 		
 	}
-	[MenuItem ("MyMenu/AtlasMaker")]
+	[MenuItem ("SH/AtlasMaker")]
 	static private void MakeAtlasStart()
 	{
 		string spriteDir = Application.dataPath +"/Resources/Sprite";
@@ -39,7 +39,7 @@ public class MakeAtlas : MonoBehaviour {
 			}
 		}	
 	}
-	[MenuItem ("MyMenu/Build Assetbundle")]
+	[MenuItem ("SH/Build Assetbundle")]
 	static private void BuildAssetBundle()
 	{
 		string dir = Application.dataPath +"/StreamingAssets";
@@ -62,14 +62,38 @@ public class MakeAtlas : MonoBehaviour {
 			}
 		}	
 	}
-	[MenuItem ("MyMenu/Create AvatarAsset Instance")]
+	[MenuItem ("SH/Create AvatarAsset Instance")]
 	static void CreateAvatarAsset ()
 	{
 		var avatarAsset = ScriptableObject.CreateInstance<App.Model.Avatar.AvatarAsset> ();
 
 		AssetDatabase.CreateAsset (avatarAsset, "Assets/Data/avatarAsset.asset");
 		AssetDatabase.Refresh ();
-	}
+    }
+    [MenuItem ("SH/Create ScriptableObject/All")]
+    static void CreateScriptableObjectAll ()
+    {
+        var avatarAsset = ScriptableObject.CreateInstance<App.Model.Avatar.AvatarAsset> ();
+
+        AssetDatabase.CreateAsset (avatarAsset, "Assets/Data/avatarAsset.asset");
+        AssetDatabase.Refresh ();
+    }
+    [MenuItem ("SH/Create ScriptableObject/Master/TopMap")]
+    static void CreateScriptableObjectMasterTopMap ()
+    {
+        var avatarAsset = ScriptableObject.CreateInstance<App.Model.Avatar.AvatarAsset> ();
+
+        AssetDatabase.CreateAsset (avatarAsset, "Assets/Data/avatarAsset.asset");
+        AssetDatabase.Refresh ();
+    }
+    [MenuItem ("SH/Create ScriptableObject/Master/Tile")]
+    static void CreateScriptableObjectMasterTile ()
+    {
+        var avatarAsset = ScriptableObject.CreateInstance<App.Model.Avatar.AvatarAsset> ();
+
+        AssetDatabase.CreateAsset (avatarAsset, "Assets/Data/avatarAsset.asset");
+        AssetDatabase.Refresh ();
+    }
 
 	static private BuildTarget GetBuildTarget()
 	{

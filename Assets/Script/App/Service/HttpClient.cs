@@ -8,15 +8,16 @@ namespace App.Service{
 	public class HttpClient {
 		public HttpClient(){
 		}
-		const string docmain = "http://lufylegend.com/test/sh/";
+		const string docmain = "http://d.lufylegend.com/";
 		string text;
-		public IEnumerator Send(string path){
-			using (WWW www = new WWW (docmain + path)) {
+        public IEnumerator Send(string path, WWWForm form = null){
+            using (WWW www = (form == null ? new WWW(docmain + path) : new WWW (docmain + path, form))) {
 				yield return www;
 				if (!string.IsNullOrEmpty (www.error)) {
 					Debug.LogError("www Error:" + www.error);
 					yield break;
 				}
+                Debug.Log("HttpClient : " + www.text);
 				text = www.text;
 			}
 		}

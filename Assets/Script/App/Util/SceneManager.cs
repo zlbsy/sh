@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace App.Util{
 	public class SceneManager {
-
+        public static App.Controller.CScene CurrentScene;
         public static void LoadScene(string name){
             UnityEngine.SceneManagement.SceneManager.LoadScene( name );
             Resources.UnloadUnusedAssets();

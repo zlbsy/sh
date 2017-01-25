@@ -29,11 +29,16 @@ namespace App.Model{
 			viewModel = new VMCharacter ();
 		}
 		public VMCharacter ViewModel { get { return (VMCharacter)viewModel; } }
-		public int id;
+		
 		public string name;
 		public int hp;
 		public int mp;
 		public int sp;
+        public App.Model.Master.MCharacter Master{
+            get{ 
+                return null;
+            }
+        }
 		public int Horse{
 			set{
 				this.ViewModel.Horse.Value = value;
