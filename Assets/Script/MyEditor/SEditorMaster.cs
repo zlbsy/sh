@@ -14,10 +14,12 @@ namespace App.Service{
         public SEditorMaster(){
 		}
         public class ResponseAll : ResponseBase
-		{
+        {
             public App.Model.Master.MCharacter[] characters;
             public App.Model.Master.MTile[] tiles;
             public int tiles_v;
+            public App.Model.Master.MTopMap[] top_maps;
+            public int top_maps_v;
 		}
         public IEnumerator RequestAll(string type = "")
 		{

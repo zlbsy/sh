@@ -75,6 +75,47 @@ namespace MyEditor
                 }
             }	
         }
+        [MenuItem("SH/Build Assetbundle/Master/All")]
+        static private void BuildAssetBundleAll()
+        {
+            BuildAssetBundleTile();
+            BuildAssetBundleTopMap();
+        }
+        [MenuItem("SH/Build Assetbundle/Master/Tile")]
+        static private void BuildAssetBundleTile()
+        {
+            BuildAssetBundleMaster(App.Model.Scriptable.TileAsset.Name);
+        }
+        [MenuItem("SH/Build Assetbundle/Master/TopMap")]
+        static private void BuildAssetBundleTopMap()
+        {
+            BuildAssetBundleMaster(App.Model.Scriptable.TopMapAsset.Name);
+        }
+        static private void BuildAssetBundleMaster(string name)
+        {
+            ScriptableObject asset = Resources.Load<ScriptableObject>(name);
+            Debug.LogError("BuildAssetBundleMaster:" + name + ", " + asset);
+            if (asset == null)
+            {
+                return;
+            }
+            List<ScriptableObject> assets = new List<ScriptableObject>();
+            assets.Add(asset);
+            string dir = Application.dataPath + "/StreamingAssets";
+
+            if (!Directory.Exists(dir))
+            {
+                Directory.CreateDirectory(dir);
+            }
+            string path = dir + "/" + name + ".unity3d";
+            File.Delete(path);
+            string assetPath = string.Format("{0}/Resources/{1}.asset", Application.dataPath, name);
+            if (BuildPipeline.BuildAssetBundle(null, assets.ToArray(), path, BuildAssetBundleOptions.UncompressedAssetBundle | BuildAssetBundleOptions.CollectDependencies, GetBuildTarget()))
+            {
+            }
+            File.Delete(assetPath);
+            Debug.LogError("assetPath="+assetPath);
+        }
 
         [MenuItem("SH/Create ScriptableObject/AvatarAsset")]
         static void CreateAvatarAsset()
@@ -87,7 +128,7 @@ namespace MyEditor
 
 
 
-        static private BuildTarget GetBuildTarget()
+        static public BuildTarget GetBuildTarget()
         {
             BuildTarget target = BuildTarget.WebPlayer;
             #if UNITY_STANDALONE
