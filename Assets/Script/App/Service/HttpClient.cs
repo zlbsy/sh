@@ -8,9 +8,12 @@ namespace App.Service{
 	public class HttpClient {
 		public HttpClient(){
 		}
-		const string docmain = "http://d.lufylegend.com/";
+        public const string docmain = "http://d.lufylegend.com/";
 		string text;
+        public bool isWaiting = false;
         public IEnumerator Send(string path, WWWForm form = null){
+            Debug.Log("Send : " + path);
+            isWaiting = true;
             using (WWW www = (form == null ? new WWW(docmain + path) : new WWW (docmain + path, form))) {
 				yield return www;
 				if (!string.IsNullOrEmpty (www.error)) {
@@ -19,8 +22,13 @@ namespace App.Service{
 				}
                 Debug.Log("HttpClient : " + www.text);
 				text = www.text;
+                isWaiting = false;
 			}
-		}
+        }
+        public T Deserialize<T>(string text)
+        {
+            return (T)Deserialize(text, typeof(T));
+        }
 		public T Deserialize<T>()
 		{
 			return (T)Deserialize(text, typeof(T));

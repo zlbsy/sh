@@ -1,34 +1,6 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Script/MyEditor/MakeAtlas.cs">
-    <Files>
-      <File FileName="Assets/Script/App/UGUI/UGImageEditor.cs" Line="9" Column="62" />
-      <File FileName="Assets/Script/App/View/VCharacter.cs" Line="1" Column="1" />
-      <File FileName="Assets/Script/App/Model/Avatar/AvatarProperty.cs" Line="1" Column="1" />
-      <File FileName="Assets/Script/App/ViewModel/VMCharacter.cs" Line="1" Column="1" />
-      <File FileName="Assets/Script/App/Model/Master/MCharacter.cs" Line="7" Column="28" />
-      <File FileName="Assets/Script/App/UGUI/UGImage.cs" Line="20" Column="2" />
-      <File FileName="Assets/Script/App/Service/ResponseBase.cs" Line="8" Column="30" />
-      <File FileName="Assets/Script/App/Controller/CScene.cs" Line="13" Column="47" />
-      <File FileName="Assets/Script/App/Util/SceneManager.cs" Line="5" Column="19" />
-      <File FileName="Assets/Script/App/View/VBase.cs" Line="14" Column="31" />
-      <File FileName="Assets/Script/App/Model/MBase.cs" Line="7" Column="21" />
-      <File FileName="Assets/Script/App/Controller/CBase.cs" Line="11" Column="4" />
-      <File FileName="Assets/Script/App/Service/HttpClient.cs" Line="14" Column="102" />
-      <File FileName="Assets/Script/App/Controller/CLogo.cs" Line="10" Column="32" />
-      <File FileName="Assets/Script/App/Controller/CTop.cs" Line="19" Column="88" />
-      <File FileName="Assets/Script/App/Controller/CBattlefield.cs" Line="10" Column="39" />
-      <File FileName="Assets/Script/App/Service/SBase.cs" Line="9" Column="3" />
-      <File FileName="Assets/Script/App/Service/SMaster.cs" Line="10" Column="31" />
-      <File FileName="Assets/Script/App/Model/MCharacter.cs" Line="32" Column="3" />
-      <File FileName="Assets/Script/App/Util/Cacher/CacherBase.cs" Line="22" Column="60" />
-      <File FileName="Assets/Script/App/Util/Cacher/CharacterCacher.cs" Line="7" Column="94" />
-      <File FileName="Assets/Script/App/Model/Master/MTile.cs" Line="10" Column="42" />
-      <File FileName="Assets/Script/App/Model/Master/MTopMap.cs" Line="4" Column="27" />
-      <File FileName="Assets/Script/App/Util/AssetBundleManager.cs" Line="1" Column="1" />
-      <File FileName="Assets/Script/MyEditor/MakeAtlas.cs" Line="22" Column="9" />
-    </Files>
-  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

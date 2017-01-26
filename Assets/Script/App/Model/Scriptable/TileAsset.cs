@@ -4,20 +4,9 @@ using UnityEngine;
 
 
 namespace App.Model.Scriptable{
-	public class TileAsset : ScriptableObject {
-        public TileAsset(){
-		}
+    public class TileAsset : AssetBase<TileAsset> {
         [SerializeField]public App.Model.Master.MTile[] tiles;
+        [SerializeField]public int version;
 
-		public const string PATH = "tileAsset";
-        private static TileAsset _data;
-        public  static TileAsset  Data{
-			get{ 
-				if (_data == null) {
-                    _data = Resources.Load<TileAsset>(PATH);
-				}
-				return _data;
-			}
-		}
 	}
 }

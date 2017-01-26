@@ -16,8 +16,8 @@ namespace App.Service{
 		}
         public class ResponseAll : ResponseBase
 		{
-            public App.Model.Master.MCharacter[] characters;
-            public App.Model.Master.MTile[] tiles;
+            public int character;
+            public int tile;
 		}
 		public IEnumerator RequestAll()
 		{
@@ -27,11 +27,18 @@ namespace App.Service{
             form.AddField("tile", 1);
             HttpClient client = new HttpClient();
             yield return App.Util.SceneManager.CurrentScene.StartCoroutine(client.Send( url, form));
-            characters = client.Deserialize<ResponseAll>().characters;
+            ResponseAll response = client.Deserialize<ResponseAll>();
+            App.Model.Scriptable.TileAsset tileAsset = App.Model.Scriptable.TileAsset.Data;
+            if (App.Model.Scriptable.TileAsset.Data.version < response.tile)
+            {
+                //AssetBundle数据下载更新
+                App.Model.Scriptable.TileAsset.Clear();
+            }
+            /*characters = client.Deserialize<ResponseAll>().characters;
             tiles = client.Deserialize<ResponseAll>().tiles;
             foreach(App.Model.Master.MTile tile in tiles){
                 Debug.LogError(tile.id + " = " + tile.strategys + ", " + tile.strategys.Length);
-            }
+            }*/
 		}
 	}
 }
