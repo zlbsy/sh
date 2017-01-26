@@ -81,7 +81,7 @@ namespace MyEditor
         {
             var avatarAsset = ScriptableObject.CreateInstance<App.Model.Avatar.AvatarAsset>();
 
-            AssetDatabase.CreateAsset(avatarAsset, "Assets/Data/avatarAsset.asset");
+            AssetDatabase.CreateAsset(avatarAsset, "Assets/Data/avatarasset.asset");
             AssetDatabase.Refresh();
         }
 
