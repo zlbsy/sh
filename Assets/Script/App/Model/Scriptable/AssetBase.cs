@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using App.Service;
 
 
 namespace App.Model.Scriptable{
@@ -13,16 +14,27 @@ namespace App.Model.Scriptable{
 			get{ 
 				if (_data == null) {
                     //_data = Resources.Load(Name) as TClass;
-                    string path = string.Format("{0}/{1}.assetbundle",Application.streamingAssetsPath, Name);
-                    Debug.LogError("path=" + path);
-                    _assetbundle = AssetBundle.LoadFromFile(path);
-                    Debug.LogError("_assetbundle=" + _assetbundle);
+                    _assetbundle = AssetBundle.LoadFromFile(Path);
+                    if (_assetbundle == null)
+                    {
+                        Debug.LogError(Path + " is _assetbundle is null");
+                        return null;
+                    }
                     ScriptableObject[] ts = _assetbundle.LoadAllAssets<ScriptableObject>();
-                    Debug.LogError("ts.Length=" + ts.Length);
                     _data = ts[0] as TClass;
                 }
 				return _data;
 			}
+        }
+        public static string Url{
+            get{ 
+                return HttpClient.assetBandleURL + Name + ".unity3d";
+            }
+        }
+        public static string Path{
+            get{ 
+                return string.Format("{0}/{1}.unity3d",Application.streamingAssetsPath, Name);
+            }
         }
         public static string Name{
             get{ 

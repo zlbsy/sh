@@ -14,6 +14,7 @@ namespace App.Controller{
             yield return StartCoroutine (sMaster.RequestAll());
             App.Model.Master.MCharacter[] characters = sMaster.characters;
             App.Util.Cacher.CharacterCacher.Instance.Reset(sMaster.characters);
+            yield break;
             foreach (App.Model.Master.MCharacter character in characters)
             {
                 Debug.Log("character.id=" + App.Util.Cacher.CharacterCacher.Instance.Get(character.id));

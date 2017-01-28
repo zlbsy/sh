@@ -7,8 +7,14 @@ using System;
 namespace App.Service{
 	public class HttpClient {
 		public HttpClient(){
-		}
-        public const string docmain = "http://d.lufylegend.com/";
+        }
+        public const string docmainBase = "http://d.lufylegend.com/";
+        public static string docmain{
+            get{
+                string gameVersion = "";
+                return docmainBase + gameVersion;
+            }
+        }
 		string text;
         public bool isWaiting = false;
         public IEnumerator Send(string path, WWWForm form = null){
@@ -21,9 +27,18 @@ namespace App.Service{
 					yield break;
 				}
                 Debug.Log("HttpClient : " + www.text);
-				text = www.text;
+                text = www.text;
+                if (text.IndexOf("\"result\":0") >= 0)
+                {
+                    Debug.LogError("Error");
+                }
                 isWaiting = false;
 			}
+        }
+        public static string assetBandleURL{
+            get{ 
+                return docmain + "download/assetbundle/";
+            }
         }
         public T Deserialize<T>(string text)
         {
