@@ -4,13 +4,19 @@ using UnityEngine;
 using App.Service;
 using App.Model;
 using App.View;
+using UnityEngine.UI;
 
 
 namespace App.Controller{
 	public class CTop : CScene {
+        [SerializeField]VTopMap topMap;
 		public override IEnumerator OnLoad( ) 
 		{  
-            SMaster sMaster = new SMaster();
+            SUser sUser = new SUser();
+            yield return StartCoroutine (sUser.RequestGet());
+            topMap.BindingContext = sUser.user.top_map.ViewModel;
+            topMap.ResetAll();
+            /*SMaster sMaster = new SMaster();
             yield return StartCoroutine (sMaster.RequestAll());
             App.Model.Master.MCharacter[] characters = sMaster.characters;
             App.Util.Cacher.CharacterCacher.Instance.Reset(sMaster.characters);
@@ -19,7 +25,7 @@ namespace App.Controller{
             {
                 Debug.Log("character.id=" + App.Util.Cacher.CharacterCacher.Instance.Get(character.id));
             }
-
+            */
 			yield return 0;
 		}
 	}

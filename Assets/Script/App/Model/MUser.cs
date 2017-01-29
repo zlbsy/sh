@@ -7,6 +7,7 @@ namespace App.Model{
 		}
         public string name;
         public string nickname;
-		public string password;
+        public string password;
+        public MTopMap top_map;
 	}
 }

@@ -5,7 +5,8 @@ namespace App.Model.Master{
     [System.Serializable]
 	public class MTile : MBase {
         public MTile(){
-		}
+        }
+        public int id;//
         public string name;//
         public float heal;//回复能力
         //可使用法术

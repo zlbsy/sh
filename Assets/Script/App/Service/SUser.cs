@@ -34,6 +34,22 @@ namespace App.Service{
             this.ssid = response.ssid;
             this.versions = response.versions;
         }
+        public IEnumerator RequestGet(string name = "")
+        {
+            var url = "user/get";
+            HttpClient client = new HttpClient();
+            WWWForm form = null;
+            if (!string.IsNullOrEmpty(name))
+            {
+                form = new WWWForm();
+                form.AddField("name", name);
+            }
+            yield return App.Util.SceneManager.CurrentScene.StartCoroutine(client.Send( url, form));
+            ResponseAll response = client.Deserialize<ResponseAll>();
+            this.user = response.user;
+            this.ssid = response.ssid;
+            this.versions = response.versions;
+        }
         public IEnumerator VersionCheck(MVersion versions)
         {
             Debug.LogError("VersionCheck");

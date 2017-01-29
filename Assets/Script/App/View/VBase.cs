@@ -23,5 +23,18 @@ namespace App.View{
 		{
 			this.vmProperty.OnValueChanged += OnBindingContextChanged;
 		}
+
+        public void Destroy( )
+        {
+            if ( Application.isPlaying ) {
+                if ( Application.isEditor ) {
+                    UnityEngine.Object.DestroyImmediate( gameObject, true );
+                } else {
+                    UnityEngine.Object.Destroy( gameObject );
+                }
+            } else {
+                UnityEngine.Object.DestroyImmediate( gameObject, true );
+            }    
+        }
 	}
 }
