@@ -38,8 +38,7 @@ namespace App.View{
             {
                 topMapMaster = TopMapCacher.Instance.Get(ViewModel.MapId.Value);
             }
-            //UnityEngine.Object.Destroy( this.gameObject );
-            //this.Destroy();
+            this.ClearChild();
             int widthCount = 0;
             int heightCount = 0;
             int i = 0;

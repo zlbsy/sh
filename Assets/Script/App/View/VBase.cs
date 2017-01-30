@@ -24,17 +24,13 @@ namespace App.View{
 			this.vmProperty.OnValueChanged += OnBindingContextChanged;
 		}
 
-        public void Destroy( )
+        public void ClearChild()
         {
-            if ( Application.isPlaying ) {
-                if ( Application.isEditor ) {
-                    UnityEngine.Object.DestroyImmediate( gameObject, true );
-                } else {
-                    UnityEngine.Object.Destroy( gameObject );
-                }
-            } else {
-                UnityEngine.Object.DestroyImmediate( gameObject, true );
-            }    
+            var t = this.transform;
+            for ( int i = 0; i< t.childCount; i++) {
+                GameObject.Destroy(t.GetChild(i).gameObject);
+            }
+            t.DetachChildren();    //子要素情報が残っているとテーブルが崩れるため解除処理
         }
 	}
 }
