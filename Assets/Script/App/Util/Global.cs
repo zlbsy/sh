@@ -1,14 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using App.Model;
+using App.Service;
 
 namespace App.Util{
 	public class Global {
-        public static MUser User;
+        public static SUser SUser;
+        public static string ssid;
         public static void Initialize()
         {
-            User = new MUser();
+            SUser = new SUser();
         }
 	}
 }

@@ -12,7 +12,6 @@ namespace App.Service{
 	public class SUser : SBase {
         public MUser user;
         public MVersion versions;
-        public string ssid;
         public SUser(){
 		}
         public class ResponseAll : ResponseBase
@@ -31,8 +30,8 @@ namespace App.Service{
             yield return App.Util.SceneManager.CurrentScene.StartCoroutine(client.Send( url, form));
             ResponseAll response = client.Deserialize<ResponseAll>();
             this.user = response.user;
-            this.ssid = response.ssid;
             this.versions = response.versions;
+            App.Util.Global.ssid = response.ssid;
         }
         public IEnumerator RequestGet(string name = "")
         {
@@ -45,10 +44,9 @@ namespace App.Service{
                 form.AddField("name", name);
             }
             yield return App.Util.SceneManager.CurrentScene.StartCoroutine(client.Send( url, form));
-            ResponseAll response = client.Deserialize<ResponseAll>();
+            /*ResponseAll response = client.Deserialize<ResponseAll>();
             this.user = response.user;
-            this.ssid = response.ssid;
-            this.versions = response.versions;
+            this.versions = response.versions;*/
         }
         public IEnumerator VersionCheck(MVersion versions)
         {

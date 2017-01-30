@@ -12,10 +12,9 @@ namespace App.Controller{
         [SerializeField]VTopMap topMap;
 		public override IEnumerator OnLoad( ) 
 		{  
-            SUser sUser = new SUser();
-            yield return StartCoroutine (sUser.RequestGet());
-            topMap.BindingContext = sUser.user.top_map.ViewModel;
-            topMap.ResetAll();
+            yield return StartCoroutine (App.Util.Global.SUser.RequestGet());
+            //topMap.BindingContext = sUser.user.top_map.ViewModel;
+            //topMap.ResetAll();
             /*SMaster sMaster = new SMaster();
             yield return StartCoroutine (sMaster.RequestAll());
             App.Model.Master.MCharacter[] characters = sMaster.characters;

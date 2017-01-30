@@ -20,10 +20,18 @@ namespace App.Service{
         public IEnumerator Send(string path, WWWForm form = null){
             Debug.Log("Send : " + path);
             isWaiting = true;
+            if (!string.IsNullOrEmpty(App.Util.Global.ssid))
+            {
+                if (form == null)
+                {
+                    form = new WWWForm();
+                }
+                form.AddField("ssid", App.Util.Global.ssid);
+            }
             using (WWW www = (form == null ? new WWW(docmain + path) : new WWW (docmain + path, form))) {
 				yield return www;
 				if (!string.IsNullOrEmpty (www.error)) {
-					Debug.LogError("www Error:" + www.error);
+                    Debug.LogError("www Error:" + www.error + "\n" + path);
 					yield break;
 				}
                 Debug.Log("HttpClient : " + www.text);

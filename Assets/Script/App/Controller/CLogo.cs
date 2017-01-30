@@ -19,14 +19,12 @@ namespace App.Controller{
         }
         public IEnumerator ToLogin( ) 
         {  
-            SUser sUser = new SUser ();
-            yield return StartCoroutine (sUser.RequestLogin("aaa", "bbb"));
-            if (sUser.user == null)
+            yield return StartCoroutine (App.Util.Global.SUser.RequestLogin("aaa", "bbb"));
+            if (App.Util.Global.SUser.user == null)
             {
                 yield break;
             }
-            Global.User = sUser.user;
-            yield return StartCoroutine(sUser.VersionCheck( sUser.versions ));
+            yield return StartCoroutine(App.Util.Global.SUser.VersionCheck( App.Util.Global.SUser.versions ));
             App.Util.SceneManager.LoadScene( "Top" );
         }
 	}
