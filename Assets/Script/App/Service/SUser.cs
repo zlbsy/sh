@@ -49,7 +49,7 @@ namespace App.Service{
             this.versions = response.versions;*/
         }
         public IEnumerator VersionCheck(MVersion versions)
-        {
+        {yield break;
             Debug.LogError("VersionCheck");
             if (App.Model.Scriptable.TileAsset.Data == null || App.Model.Scriptable.TileAsset.Data.version < versions.tile)
             {

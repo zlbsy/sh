@@ -38,12 +38,15 @@ namespace App.View{
             {
                 topMapMaster = TopMapCacher.Instance.Get(ViewModel.MapId.Value);
             }
-            this.Destroy();
+            //UnityEngine.Object.Destroy( this.gameObject );
+            //this.Destroy();
             int widthCount = 0;
             int heightCount = 0;
+            int i = 0;
             foreach(App.Model.Master.MTile tile in topMapMaster.tiles){
                 GameObject obj = GameObject.Instantiate (tileUnit.gameObject);
-                obj.name = tile.id.ToString();
+                //obj.name = tile.id.ToString();
+                obj.name = (i++).ToString();
                 obj.transform.parent = this.transform;
                 RectTransform rectTrans = obj.GetComponent<RectTransform>();
                 rectTrans.anchoredPosition = new Vector2(widthCount * 69f, heightCount * 80f);

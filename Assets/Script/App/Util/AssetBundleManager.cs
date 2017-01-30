@@ -21,37 +21,37 @@ namespace App.Util{
 		}
 		public static Sprite GetAvatarSprite(string name){
 			if (character == null) {
-				character = AssetBundle.LoadFromFile(Application.streamingAssetsPath +"/chara.assetbundle");
+				character = AssetBundle.LoadFromFile(Application.streamingAssetsPath +"/chara.unity3d");
 			}
 			return character.LoadAsset<Sprite>(name);
 		}
 		public static Sprite GetClothes(string name){
 			if (clothes == null) {
-				clothes = AssetBundle.LoadFromFile(Application.streamingAssetsPath +"/clothes.assetbundle");
+				clothes = AssetBundle.LoadFromFile(Application.streamingAssetsPath +"/clothes.unity3d");
 			}
 			return clothes.LoadAsset<Sprite>(name);
 		}
 		public static Sprite GetWeapon(string name){
 			if (weapon == null) {
-				weapon = AssetBundle.LoadFromFile(Application.streamingAssetsPath +"/weapon.assetbundle");
+				weapon = AssetBundle.LoadFromFile(Application.streamingAssetsPath +"/weapon.unity3d");
 			}
 			return weapon.LoadAsset<Sprite>(name);
 		}
 		public static Sprite GetHorse(string name){
 			if (horse == null) {
-				horse = AssetBundle.LoadFromFile(Application.streamingAssetsPath +"/horse.assetbundle");
+				horse = AssetBundle.LoadFromFile(Application.streamingAssetsPath +"/horse.unity3d");
 			}
 			return horse.LoadAsset<Sprite>(name);
 		}
 		public static Sprite GetAvatarHat(string name){
 			if (hat == null) {
-				hat = AssetBundle.LoadFromFile(Application.streamingAssetsPath +"/hat.assetbundle");
+				hat = AssetBundle.LoadFromFile(Application.streamingAssetsPath +"/hat.unity3d");
 			}
 			return hat.LoadAsset<Sprite>(name);
 		}
 		public static Sprite GetMapTile(string name){
 			if (map == null) {
-				map = AssetBundle.LoadFromFile(Application.streamingAssetsPath +"/map.assetbundle");
+				map = AssetBundle.LoadFromFile(Application.streamingAssetsPath +"/map.unity3d");
 			}
 			return map.LoadAsset<Sprite>(name);
 		}

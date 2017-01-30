@@ -27,7 +27,7 @@ namespace App.Model.Master{
                         _tiles.Add(tile);
                     }
                 }
-                return tiles;
+                return _tiles;
             }
         }
 	}

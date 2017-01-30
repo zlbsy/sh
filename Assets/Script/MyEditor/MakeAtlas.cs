@@ -62,7 +62,8 @@ namespace MyEditor
             foreach (DirectoryInfo dirInfo in rootDirInfo.GetDirectories())
             {
                 List<Sprite> assets = new List<Sprite>();
-                string path = dir + "/" + dirInfo.Name + ".assetbundle";
+                //string path = dir + "/" + dirInfo.Name + ".assetbundle";
+                string path = dir + "/" + dirInfo.Name + ".unity3d";
                 Debug.Log("path=" + path);
                 foreach (FileInfo pngFile in dirInfo.GetFiles("*.png",SearchOption.AllDirectories))
                 {
@@ -81,6 +82,11 @@ namespace MyEditor
             BuildAssetBundleTile();
             BuildAssetBundleTopMap();
         }
+        [MenuItem("SH/Build Assetbundle/Master/Avatar")]
+        static private void BuildAssetBundleAvatar()
+        {
+            BuildAssetBundleMaster(App.Model.Avatar.AvatarAsset.Name, false);
+        }
         [MenuItem("SH/Build Assetbundle/Master/Tile")]
         static private void BuildAssetBundleTile()
         {
@@ -91,7 +97,7 @@ namespace MyEditor
         {
             BuildAssetBundleMaster(App.Model.Scriptable.TopMapAsset.Name);
         }
-        static private void BuildAssetBundleMaster(string name)
+        static private void BuildAssetBundleMaster(string name, bool toDelete = true)
         {
             ScriptableObject asset = Resources.Load<ScriptableObject>(name);
             Debug.LogError("BuildAssetBundleMaster:" + name + ", " + asset);
@@ -113,7 +119,10 @@ namespace MyEditor
             if (BuildPipeline.BuildAssetBundle(null, assets.ToArray(), path, BuildAssetBundleOptions.UncompressedAssetBundle | BuildAssetBundleOptions.CollectDependencies, GetBuildTarget()))
             {
             }
-            File.Delete(assetPath);
+            if (toDelete)
+            {
+                File.Delete(assetPath);
+            }
             Debug.LogError("assetPath="+assetPath);
         }
 

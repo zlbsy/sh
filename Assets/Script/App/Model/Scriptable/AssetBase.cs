@@ -11,7 +11,8 @@ namespace App.Model.Scriptable{
         private static TClass _data;
         private static AssetBundle _assetbundle = null;
         public static TClass Data{
-			get{ 
+            get{ 
+                Debug.Log(Path+"="+_data);
 				if (_data == null) {
                     //_data = Resources.Load(Name) as TClass;
                     _assetbundle = AssetBundle.LoadFromFile(Path);
@@ -19,6 +20,10 @@ namespace App.Model.Scriptable{
                     {
                         Debug.LogError(Path + " is _assetbundle is null");
                         return null;
+                    }
+                    else
+                    {
+                        Debug.Log(Path+"="+_assetbundle);
                     }
                     ScriptableObject[] ts = _assetbundle.LoadAllAssets<ScriptableObject>();
                     _data = ts[0] as TClass;
@@ -45,6 +50,7 @@ namespace App.Model.Scriptable{
         }
         public static void Clear(){
             _data = null;
+            Debug.Log("Clear : " + Path + ", ");
             Resources.UnloadUnusedAssets();
             System.GC.Collect();
         }

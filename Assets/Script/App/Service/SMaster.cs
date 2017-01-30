@@ -31,7 +31,7 @@ namespace App.Service{
             yield return App.Util.SceneManager.CurrentScene.StartCoroutine(VersionCheck( client.Deserialize<ResponseAll>() ));
         }
         public IEnumerator VersionCheck(ResponseAll response)
-        {
+        {yield break;
             Debug.LogError("VersionCheck");
             if (App.Model.Scriptable.TileAsset.Data == null || App.Model.Scriptable.TileAsset.Data.version < response.tile)
             {

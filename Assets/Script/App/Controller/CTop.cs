@@ -13,8 +13,12 @@ namespace App.Controller{
 		public override IEnumerator OnLoad( ) 
 		{  
             yield return StartCoroutine (App.Util.Global.SUser.RequestGet());
-            //topMap.BindingContext = sUser.user.top_map.ViewModel;
-            //topMap.ResetAll();
+
+            MTopMap mTopMap = new MTopMap();
+            mTopMap.MapId = App.Util.Global.SUser.user.map_id;
+            mTopMap.Tiles = App.Util.Global.SUser.user.top_map;
+            topMap.BindingContext = mTopMap.ViewModel;
+            topMap.ResetAll();
             /*SMaster sMaster = new SMaster();
             yield return StartCoroutine (sMaster.RequestAll());
             App.Model.Master.MCharacter[] characters = sMaster.characters;

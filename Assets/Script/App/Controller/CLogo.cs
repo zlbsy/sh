@@ -5,6 +5,7 @@ using App.Service;
 using App.Model;
 using App.View;
 using App.Util;
+using App.Util.Cacher;
 
 
 namespace App.Controller{
@@ -25,6 +26,10 @@ namespace App.Controller{
                 yield break;
             }
             yield return StartCoroutine(App.Util.Global.SUser.VersionCheck( App.Util.Global.SUser.versions ));
+            Debug.LogError("App.Model.Scriptable.TileAsset.Data=" + App.Model.Scriptable.TileAsset.Data);
+            Debug.LogError("App.Model.Scriptable.TileAsset.Data.tiles=" + App.Model.Scriptable.TileAsset.Data.tiles);
+            TileCacher.Instance.Reset(App.Model.Scriptable.TileAsset.Data.tiles);
+            TopMapCacher.Instance.Reset(App.Model.Scriptable.TopMapAsset.Data.topMaps);
             App.Util.SceneManager.LoadScene( "Top" );
         }
 	}
