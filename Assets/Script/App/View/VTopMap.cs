@@ -9,7 +9,9 @@ using App.Util.Cacher;
 
 namespace App.View{
     public class VTopMap : VBase {
-        [SerializeField]Image tileUnit;
+        [SerializeField]public int mapWidth;
+        [SerializeField]public int mapHeight;
+        [SerializeField]public VTile[] tileUnits;
         #region VM处理
         public VMTopMap ViewModel { get { return (VMTopMap)BindingContext; } }
         protected override void OnBindingContextChanged(VMBase oldViewModel, VMBase newViewModel)
@@ -38,25 +40,26 @@ namespace App.View{
             {
                 topMapMaster = TopMapCacher.Instance.Get(ViewModel.MapId.Value);
             }
-            this.ClearChild();
             int widthCount = 0;
             int heightCount = 0;
-            int i = 0;Debug.LogError("topMapMaster.tiles="+topMapMaster.tiles.Count+", "+topMapMaster.tile_ids.Length);
+            int i = 0;
+            foreach(VTile tile in tileUnits){
+                tile.gameObject.SetActive(false);
+            }
             foreach(App.Model.Master.MTile tile in topMapMaster.tiles){
-                GameObject obj = GameObject.Instantiate (tileUnit.gameObject);
-                //obj.name = tile.id.ToString();
-                obj.name = (i++).ToString();
-                obj.transform.parent = this.transform;
-                RectTransform rectTrans = obj.GetComponent<RectTransform>();
-                float x = widthCount * 69f + (heightCount % 2) * 34.5f;
-                float y = heightCount * -60f;
-                rectTrans.anchoredPosition = new Vector2(x, y);
-                obj.SetActive (true);
+                i = heightCount * mapWidth + widthCount;
+                VTile obj = tileUnits[i];
+                obj.gameObject.SetActive (true);
+                obj.SetData(widthCount, heightCount, "tile_" + tile.id);
                 widthCount++;
                 if (widthCount >= topMapMaster.width)
                 {
                     widthCount = 0;
                     heightCount++;
+                }
+                if (heightCount >= topMapMaster.height)
+                {
+                    break;
                 }
             }
         }
