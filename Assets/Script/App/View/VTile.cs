@@ -12,6 +12,7 @@ namespace App.View{
         [SerializeField]public SpriteRenderer tileSprite;
         private int x = 0;
         private int y = 0;
+        private VTopMap vTopMap;
         #region VM处理
 
         #endregion
@@ -20,8 +21,16 @@ namespace App.View{
             this.y = y;
             tileSprite.sprite = AssetBundleManager.GetMapTile(spriteName);
         }
-        void OnMouseDown(){
-            Debug.LogError("OnMouseDown : "+this.name);
+        void OnMouseUp(){
+            if (vTopMap == null)
+            {
+                vTopMap = this.GetComponentInParent<VTopMap>();
+            }
+            if (vTopMap.IsDraging)
+            {
+                return;
+            }
+            vTopMap.Camera3dToPosition(this.transform.position.x, this.transform.position.y - 9f);
         }
 
     }

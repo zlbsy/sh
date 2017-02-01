@@ -6,12 +6,17 @@ using App.ViewModel;
 using App.Util;
 using App.Model.Avatar;
 using App.Util.Cacher;
+using Holoville.HOTween;
 
 namespace App.View{
     public class VTopMap : VBase {
         [SerializeField]public int mapWidth;
         [SerializeField]public int mapHeight;
         [SerializeField]public VTile[] tileUnits;
+        [SerializeField]Camera camera3d;
+        private Vector2 camera3dPosition;
+        private Vector2 mousePosition;
+        private bool _isDraging;
         #region VM处理
         public VMTopMap ViewModel { get { return (VMTopMap)BindingContext; } }
         protected override void OnBindingContextChanged(VMBase oldViewModel, VMBase newViewModel)
@@ -62,7 +67,29 @@ namespace App.View{
                     break;
                 }
             }
+            BoxCollider collider = this.GetComponent<BoxCollider>();
+            collider.size = new Vector3(topMapMaster.width * 0.69f + 0.345f, topMapMaster.height * 0.6f + 0.2f, 0f);
+            collider.center = new Vector3(collider.size.x * 0.5f - 0.345f, -collider.size.y * 0.5f + 0.4f, 0f);
         }
-
+        public bool IsDraging{
+            get{ 
+                return _isDraging;
+            }
+        }
+        void OnMouseDrag(){
+            //transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, z));
+            //transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, transform.position.z));
+            camera3d.transform.localPosition = new Vector3(camera3dPosition.x + (mousePosition.x - Input.mousePosition.x) * 0.01f, camera3dPosition.y + (mousePosition.y - Input.mousePosition.y)*0.01f, camera3d.transform.localPosition.z);
+        }
+        void OnMouseUp(){
+            _isDraging = Input.mousePosition.x != mousePosition.x || Input.mousePosition.y != mousePosition.y;
+        }
+        void OnMouseDown(){
+            mousePosition = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+            camera3dPosition = new Vector2(camera3d.transform.localPosition.x, camera3d.transform.localPosition.y);
+        }
+        public void Camera3dToPosition(float x, float y){
+            HOTween.To(camera3d.transform, 0.3f, new TweenParms().Prop("localPosition", new Vector3(x, y, camera3d.transform.localPosition.z)));
+        }
     }
 }
