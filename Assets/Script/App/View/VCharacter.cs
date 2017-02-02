@@ -9,12 +9,12 @@ using App.Model.Avatar;
 namespace App.View{
     public class VCharacter : VBase {
 
-        [SerializeField]Image imgHorse;
-        [SerializeField]Image imgBody;
-        [SerializeField]Image imgClothes;
-        [SerializeField]Image imgHead;
-        [SerializeField]Image imgHat;
-        [SerializeField]Image imgWeapon;
+        [SerializeField]SpriteRenderer imgHorse;
+        [SerializeField]SpriteRenderer imgBody;
+        [SerializeField]SpriteRenderer imgClothes;
+        [SerializeField]SpriteRenderer imgHead;
+        [SerializeField]SpriteRenderer imgHat;
+        [SerializeField]SpriteRenderer imgWeapon;
         private int animationIndex = 0;
         private Animator _animator;
         private Animator animator{
@@ -93,18 +93,18 @@ namespace App.View{
                 imgHorse.gameObject.SetActive (true);
                 key = string.Format("horse_{0}_{1}_{2}", ViewModel.Horse.Value, ViewModel.Action.Value, avatarAction.horse.index);
                 imgHorse.sprite = AssetBundleManager.GetHorse(key);
-                imgHorse.SetNativeSize ();
+                //imgHorse.SetNativeSize ();
                 imgHorse.GetComponent<RectTransform> ().localPosition = avatarAction.horse.position;
             }
             //Body
             key = string.Format("body_{0}_{1}_{2}_{3}", ViewModel.MoveType.Value, ViewModel.WeaponType.Value, ViewModel.Action.Value, avatarAction.body.index);
             imgBody.sprite = AssetBundleManager.GetAvatarBody(key);
-            imgBody.SetNativeSize ();
+            //imgBody.SetNativeSize ();
             //Clothes
             key = string.Format("clothes_{0}_{1}_{2}_{3}_{4}", ViewModel.Clothes.Value, ViewModel.MoveType.Value, ViewModel.WeaponType.Value, ViewModel.Action.Value, avatarAction.clothes.index);
             imgClothes.sprite = AssetBundleManager.GetClothes(key);
             imgClothes.transform.SetSiblingIndex (avatarAction.clothes.sibling);
-            imgClothes.SetNativeSize ();
+            //imgClothes.SetNativeSize ();
             if (imgHead.gameObject.activeSelf && avatarAction.head.index == 0)
             {
                 imgHead.gameObject.SetActive(false);
@@ -119,7 +119,7 @@ namespace App.View{
             {
                 imgWeapon.transform.SetSiblingIndex(avatarAction.weapon.sibling);
             }
-            imgWeapon.SetNativeSize ();
+            //imgWeapon.SetNativeSize ();
 
             imgBody.GetComponent<RectTransform> ().localPosition = avatarAction.body.position;
             imgClothes.GetComponent<RectTransform> ().localPosition = avatarAction.clothes.position;

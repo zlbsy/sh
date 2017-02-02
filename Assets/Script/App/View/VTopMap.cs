@@ -17,6 +17,8 @@ namespace App.View{
         private Vector2 camera3dPosition;
         private Vector2 mousePosition;
         private bool _isDraging;
+        private const float tileWidth = 0.69f;
+        private const float tileHeight = 0.6f;
         #region VM处理
         public VMTopMap ViewModel { get { return (VMTopMap)BindingContext; } }
         protected override void OnBindingContextChanged(VMBase oldViewModel, VMBase newViewModel)
@@ -55,7 +57,10 @@ namespace App.View{
                 i = heightCount * mapWidth + widthCount;
                 VTile obj = tileUnits[i];
                 obj.gameObject.SetActive (true);
-                obj.SetData(widthCount, heightCount, "tile_" + tile.id);
+                App.Model.MTile building = System.Array.Find(ViewModel.Tiles.Value, _=>_.x == widthCount && _.y == heightCount);
+                Debug.Log("building = " + building);
+                if (building != null)Debug.Log("building.Master = " + building.tile_id+","+building.Master);
+                obj.SetData(i, tile.id, building != null ? building.Master.id : 0);
                 widthCount++;
                 if (widthCount >= topMapMaster.width)
                 {
@@ -68,13 +73,21 @@ namespace App.View{
                 }
             }
             BoxCollider collider = this.GetComponent<BoxCollider>();
-            collider.size = new Vector3(topMapMaster.width * 0.69f + 0.345f, topMapMaster.height * 0.6f + 0.2f, 0f);
+            collider.size = new Vector3(topMapMaster.width * tileWidth + 0.345f, topMapMaster.height * tileHeight + 0.2f, 0f);
             collider.center = new Vector3(collider.size.x * 0.5f - 0.345f, -collider.size.y * 0.5f + 0.4f, 0f);
         }
         public bool IsDraging{
             get{ 
                 return _isDraging;
             }
+        }
+        public void MoveToCenter(){
+            App.Model.Master.MTopMap topMapMaster = TopMapCacher.Instance.Get(ViewModel.MapId.Value);
+            int widthCount = Mathf.FloorToInt(topMapMaster.width / 2f);
+            int heightCount = Mathf.FloorToInt(topMapMaster.height / 2f);
+            int i = heightCount * mapWidth + widthCount;
+            VTile obj = tileUnits[i];
+            Camera3dToPosition(obj.transform.position.x, obj.transform.position.y - 9f);
         }
         void OnMouseDrag(){
             //transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, z));

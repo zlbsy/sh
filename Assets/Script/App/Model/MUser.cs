@@ -14,5 +14,8 @@ namespace App.Model{
         public int junling;
         public int map_id;
         public MTile[] top_map;
+        public MTile GetTile(int x, int y){
+            return System.Array.Find(top_map, _=>_.x == x && _.y == y);
+        }
 	}
 }

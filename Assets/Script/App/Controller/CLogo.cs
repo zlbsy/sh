@@ -10,12 +10,18 @@ using App.Util.Cacher;
 
 namespace App.Controller{
     public class CLogo : CScene {
+        public override IEnumerator Start()
+        {
+            Global.Initialize();
+            yield return StartCoroutine (base.Start());
+        }
 		public override IEnumerator OnLoad( ) 
 		{  
 			yield return 0;
 		}
         public void GameStart(){
-            Global.Initialize();
+            StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.BuildingDialog));
+            return;
             StartCoroutine(ToLogin( ));
         }
         public IEnumerator ToLogin( ) 

@@ -13,5 +13,8 @@ namespace App.Controller{
 		{  
 			yield return 0;
 		}
+        public GameObject GetObject(GameObject obj){
+            return Instantiate(obj) as GameObject;
+        }
 	}
 }

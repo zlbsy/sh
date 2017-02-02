@@ -44,9 +44,7 @@ namespace App.Service{
                 form.AddField("name", name);
             }
             yield return App.Util.SceneManager.CurrentScene.StartCoroutine(client.Send( url, form));
-            /*ResponseAll response = client.Deserialize<ResponseAll>();
-            this.user = response.user;
-            this.versions = response.versions;*/
+            this.user = client.Deserialize<MUser>();
         }
         public IEnumerator VersionCheck(MVersion versions)
         {yield break;

@@ -10,16 +10,24 @@ using App.Util.Cacher;
 namespace App.View{
     public class VTile : VBase {
         [SerializeField]public SpriteRenderer tileSprite;
-        private int x = 0;
-        private int y = 0;
+        [SerializeField]public SpriteRenderer buildingSprite;
+        private int index = 0;
         private VTopMap vTopMap;
         #region VM处理
 
         #endregion
-        public void SetData(int x, int y, string spriteName){
-            this.x = x;
-            this.y = y;
-            tileSprite.sprite = AssetBundleManager.GetMapTile(spriteName);
+        public void SetData(int index, int tileId, int buildId = 0){
+            this.index = index;
+            tileSprite.sprite = AssetBundleManager.GetMapTile(string.Format("tile_{0}", tileId));
+            if (buildId > 0)
+            {
+                buildingSprite.gameObject.SetActive(true);
+                buildingSprite.sprite = AssetBundleManager.GetMapTile(string.Format("tile_{0}", buildId));
+            }
+            else
+            {
+                buildingSprite.gameObject.SetActive(false);
+            }
         }
         void OnMouseUp(){
             if (vTopMap == null)
@@ -30,7 +38,8 @@ namespace App.View{
             {
                 return;
             }
-            vTopMap.Camera3dToPosition(this.transform.position.x, this.transform.position.y - 9f);
+            Debug.Log("VTile OnMouseUp");
+            //vTopMap.Camera3dToPosition(this.transform.position.x, this.transform.position.y - 9f);
         }
 
     }
