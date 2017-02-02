@@ -58,8 +58,6 @@ namespace App.View{
                 VTile obj = tileUnits[i];
                 obj.gameObject.SetActive (true);
                 App.Model.MTile building = System.Array.Find(ViewModel.Tiles.Value, _=>_.x == widthCount && _.y == heightCount);
-                Debug.Log("building = " + building);
-                if (building != null)Debug.Log("building.Master = " + building.tile_id+","+building.Master);
                 obj.SetData(i, tile.id, building != null ? building.Master.id : 0);
                 widthCount++;
                 if (widthCount >= topMapMaster.width)
