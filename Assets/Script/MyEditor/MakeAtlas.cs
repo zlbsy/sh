@@ -20,9 +20,18 @@ namespace MyEditor
         {
 		
         }
+        [MenuItem("SH/AtlasMaker/Map")]
+        static private void MakeAtlasMap(){
+            MakeAtlasStart("map");
+        }
 
         [MenuItem("SH/AtlasMaker/All")]
-        static private void MakeAtlasStart()
+        static private void MakeAtlasAll()
+        {
+            MakeAtlasStart("");
+        }
+
+        static private void MakeAtlasStart(string atlasName)
         {
             string spriteDir = Application.dataPath + "/Resources/Sprite";
 
@@ -31,7 +40,7 @@ namespace MyEditor
                 Directory.CreateDirectory(spriteDir);
             }
 
-            DirectoryInfo rootDirInfo = new DirectoryInfo(Application.dataPath + "/Atlas");
+            DirectoryInfo rootDirInfo = new DirectoryInfo(Application.dataPath + "/Atlas" + (string.IsNullOrEmpty(atlasName) ? "" : "/"+atlasName));
             foreach (DirectoryInfo dirInfo in rootDirInfo.GetDirectories())
             {
                 foreach (FileInfo pngFile in dirInfo.GetFiles("*.png",SearchOption.AllDirectories))
@@ -49,8 +58,19 @@ namespace MyEditor
             }	
         }
 
+        [MenuItem("SH/Build Assetbundle/Map")]
+        static private void BuildAssetBundleMap()
+        {
+            BuildAssetBundle("map");
+        }
+
         [MenuItem("SH/Build Assetbundle/All")]
-        static private void BuildAssetBundle()
+        static private void BuildAssetBundleAll()
+        {
+            BuildAssetBundle("");
+        }
+
+        static private void BuildAssetBundle(string atlasName)
         {
             string dir = Application.dataPath + "/StreamingAssets";
 
@@ -58,7 +78,7 @@ namespace MyEditor
             {
                 Directory.CreateDirectory(dir);
             }
-            DirectoryInfo rootDirInfo = new DirectoryInfo(Application.dataPath + "/Atlas");
+            DirectoryInfo rootDirInfo = new DirectoryInfo(Application.dataPath + "/Atlas" + (string.IsNullOrEmpty(atlasName) ? "" : "/"+atlasName));
             foreach (DirectoryInfo dirInfo in rootDirInfo.GetDirectories())
             {
                 List<Sprite> assets = new List<Sprite>();
@@ -77,7 +97,7 @@ namespace MyEditor
             }	
         }
         [MenuItem("SH/Build Assetbundle/Master/All")]
-        static private void BuildAssetBundleAll()
+        static private void BuildAssetBundleMasterAll()
         {
             BuildAssetBundleTile();
             BuildAssetBundleTopMap();
