@@ -6,6 +6,7 @@ using App.ViewModel;
 using App.Util;
 using App.Model.Avatar;
 using App.Util.Cacher;
+using App.Controller;
 
 namespace App.View{
     public class VTile : VBase {
@@ -20,7 +21,7 @@ namespace App.View{
             this.index = index;
             tileSprite.sprite = AssetBundleManager.GetMapTile(string.Format("tile_{0}", tileId));
             if (buildId > 0)
-            {
+            {Debug.LogError("buildId : "+buildId);
                 buildingSprite.gameObject.SetActive(true);
                 buildingSprite.sprite = AssetBundleManager.GetMapTile(string.Format("tile_{0}", buildId));
             }
@@ -38,8 +39,14 @@ namespace App.View{
             {
                 return;
             }
-            Debug.Log("VTile OnMouseUp");
             //vTopMap.Camera3dToPosition(this.transform.position.x, this.transform.position.y - 9f);
+            if (this.Controller is CTop)
+            {
+                (this.Controller as CTop).OnClickTile(this.index);
+            }
+            else
+            {
+            }
         }
 
     }

@@ -40,9 +40,13 @@ namespace MyEditor
                 Directory.CreateDirectory(spriteDir);
             }
 
-            DirectoryInfo rootDirInfo = new DirectoryInfo(Application.dataPath + "/Atlas" + (string.IsNullOrEmpty(atlasName) ? "" : "/"+atlasName));
+            DirectoryInfo rootDirInfo = new DirectoryInfo(Application.dataPath + "/Atlas");
             foreach (DirectoryInfo dirInfo in rootDirInfo.GetDirectories())
             {
+                if (!string.IsNullOrEmpty(atlasName) && dirInfo.FullName.IndexOf("/Atlas/" + atlasName) < 0)
+                {
+                    continue;
+                }
                 foreach (FileInfo pngFile in dirInfo.GetFiles("*.png",SearchOption.AllDirectories))
                 {
                     string allPath = pngFile.FullName;
@@ -78,9 +82,13 @@ namespace MyEditor
             {
                 Directory.CreateDirectory(dir);
             }
-            DirectoryInfo rootDirInfo = new DirectoryInfo(Application.dataPath + "/Atlas" + (string.IsNullOrEmpty(atlasName) ? "" : "/"+atlasName));
+            DirectoryInfo rootDirInfo = new DirectoryInfo(Application.dataPath + "/Atlas");
             foreach (DirectoryInfo dirInfo in rootDirInfo.GetDirectories())
             {
+                if (!string.IsNullOrEmpty(atlasName) && dirInfo.FullName.IndexOf("/Atlas/" + atlasName) < 0)
+                {
+                    continue;
+                }
                 List<Sprite> assets = new List<Sprite>();
                 //string path = dir + "/" + dirInfo.Name + ".assetbundle";
                 string path = dir + "/" + dirInfo.Name + ".unity3d";
