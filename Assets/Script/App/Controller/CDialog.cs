@@ -3,12 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using App.Service;
 using Holoville.HOTween;
+using UnityEngine.UI;
 
 
 namespace App.Controller{
+    public enum OpenType{
+        Middle,//从中间扩大
+        None,//无
+        Fade//无
+    }
     public class CDialog : CScene {
+        [SerializeField]OpenType opentype;
         Transform panel;
         UnityEngine.UI.Image background;
+        [HideInInspector]public int index;
+        private static int dialogIndex = 0;
+        public static int GetIndex(){
+            return dialogIndex++;
+        }
         public virtual void OnEnable(){
             if (panel == null){
                 panel = this.transform.FindChild("Panel");
@@ -20,22 +32,43 @@ namespace App.Controller{
                 backgroundObj.transform.SetAsFirstSibling();
                 background = backgroundObj.GetComponent<UnityEngine.UI.Image>();
             }
-            panel.localScale = new Vector3(panel.localScale.x, 0, panel.localScale.z);
             background.color = new Color(0, 0, 0, 0);
+            if (opentype == OpenType.Middle)
+            {
+                panel.localScale = new Vector3(panel.localScale.x, 0, panel.localScale.z);
+            }else if (opentype == OpenType.Fade)
+            {
+                panel.gameObject.AddComponent<CanvasGroup>().alpha = 0;
+            }
+        }
+        public void SetIndex(){
+            this.index = CDialog.GetIndex();
         }
         public override IEnumerator OnLoad( ) 
         {  
-            HOTween.To(panel, 0.3f, new TweenParms().Prop("localScale", new Vector3(1f, 1f, 1f)));
             HOTween.To(background, 0.1f, new TweenParms().Prop("color", new Color(0,0,0,0.5f)));
+            if (opentype == OpenType.Middle)
+            {
+                HOTween.To(panel, 0.3f, new TweenParms().Prop("localScale", new Vector3(1f, 1f, 1f)));
+            }else if (opentype == OpenType.Fade)
+            {
+                HOTween.To(panel.gameObject.GetComponent<CanvasGroup>(), 0.3f, new TweenParms().Prop("alpha", 1));
+            }
             yield return 0;
         }
         public void Close(){
             background.transform.SetAsLastSibling();
-            HOTween.To(panel, 0.2f, new TweenParms().Prop("localScale", new Vector3(1f, 0, 1f)).OnComplete(Delete));
+            if (opentype == OpenType.Middle)
+            {
+                HOTween.To(panel, 0.2f, new TweenParms().Prop("localScale", new Vector3(1f, 0, 1f)).OnComplete(Delete));
+            }else if (opentype == OpenType.Fade)
+            {
+                HOTween.To(panel.gameObject.GetComponent<CanvasGroup>(), 0.3f, new TweenParms().Prop("alpha", 0));
+            }
         }
         public void Delete(){
             HOTween.To(background, 0.1f, new TweenParms().Prop("color", new Color(0,0,0,0)).OnComplete(()=>{
-                GameObject.Destroy(this.gameObject);
+                App.Util.Global.SceneManager.DestoryDialog(this);
             }));
         }
 	}

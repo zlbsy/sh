@@ -5,7 +5,6 @@ namespace App.Model{
 	public class MTile : MBase {
         public MTile(){
 		}
-        public int id;//
         public int user_id;//
         public int num;//
         public int tile_id;//

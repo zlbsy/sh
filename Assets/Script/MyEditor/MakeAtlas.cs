@@ -24,6 +24,10 @@ namespace MyEditor
         static private void MakeAtlasMap(){
             MakeAtlasStart("map");
         }
+        [MenuItem("SH/AtlasMaker/Chara")]
+        static private void MakeAtlasChara(){
+            MakeAtlasStart("chara");
+        }
 
         [MenuItem("SH/AtlasMaker/All")]
         static private void MakeAtlasAll()
@@ -67,6 +71,11 @@ namespace MyEditor
         {
             BuildAssetBundle("map");
         }
+        [MenuItem("SH/Build Assetbundle/Chara")]
+        static private void BuildAssetBundleChara()
+        {
+            BuildAssetBundle("chara");
+        }
 
         [MenuItem("SH/Build Assetbundle/All")]
         static private void BuildAssetBundleAll()
@@ -109,6 +118,7 @@ namespace MyEditor
         {
             BuildAssetBundleTile();
             BuildAssetBundleTopMap();
+            BuildAssetBundleBuilding();
         }
         [MenuItem("SH/Build Assetbundle/Master/Avatar")]
         static private void BuildAssetBundleAvatar()
@@ -124,6 +134,11 @@ namespace MyEditor
         static private void BuildAssetBundleTopMap()
         {
             BuildAssetBundleMaster(App.Model.Scriptable.TopMapAsset.Name);
+        }
+        [MenuItem("SH/Build Assetbundle/Master/Building")]
+        static private void BuildAssetBundleBuilding()
+        {
+            BuildAssetBundleMaster(App.Model.Scriptable.BuildingAsset.Name);
         }
         static private void BuildAssetBundleMaster(string name, bool toDelete = true)
         {

@@ -20,8 +20,8 @@ namespace App.Controller{
 			yield return 0;
 		}
         public void GameStart(){
-            //StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.BuildingDialog));
-            //return;
+            StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.LoadingDialog));
+            return;
             StartCoroutine(ToLogin( ));
         }
         public IEnumerator ToLogin( ) 
@@ -32,11 +32,10 @@ namespace App.Controller{
                 yield break;
             }
             yield return StartCoroutine(App.Util.Global.SUser.VersionCheck( App.Util.Global.SUser.versions ));
-            //Debug.LogError("App.Model.Scriptable.TileAsset.Data=" + App.Model.Scriptable.TileAsset.Data);
-            //Debug.LogError("App.Model.Scriptable.TileAsset.Data.tiles=" + App.Model.Scriptable.TileAsset.Data.tiles);
             TileCacher.Instance.Reset(App.Model.Scriptable.TileAsset.Data.tiles);
             TopMapCacher.Instance.Reset(App.Model.Scriptable.TopMapAsset.Data.topMaps);
-            App.Util.SceneManager.LoadScene( "Top" );
+            BuildingCacher.Instance.Reset(App.Model.Scriptable.BuildingAsset.Data.buildings);
+            App.Util.SceneManager.LoadScene( App.Util.SceneManager.Scenes.Top.ToString() );
         }
 	}
 }

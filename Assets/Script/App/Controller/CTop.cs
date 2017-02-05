@@ -7,23 +7,26 @@ using App.View;
 using UnityEngine.UI;
 using App.Util.Cacher;
 using Holoville.HOTween;
+using App.View.Top;
 
 
 namespace App.Controller{
 	public class CTop : CScene {
-        [SerializeField]VTopMap topMap;
-        [SerializeField]GameObject buildingMenu;
-        private GameObject currentMenu;
+        [SerializeField]VTopMap vTopMap;
+        [SerializeField]VBuildingMenu buildingMenu;
+        [SerializeField]VStrengthenMenu strengthenMenu;
+        [SerializeField]GameObject menuBackground;
+        private VTopMenu currentMenu;
 		public override IEnumerator OnLoad( ) 
 		{  
             yield return StartCoroutine (App.Util.Global.SUser.RequestGet());
-            Debug.LogError("App.Util.Global.SUser.user="+App.Util.Global.SUser.user);
             MTopMap mTopMap = new MTopMap();
             mTopMap.MapId = App.Util.Global.SUser.user.map_id;
             mTopMap.Tiles = App.Util.Global.SUser.user.top_map;
-            topMap.BindingContext = mTopMap.ViewModel;
-            topMap.ResetAll();
-            topMap.MoveToCenter();
+            vTopMap.BindingContext = mTopMap.ViewModel;
+            vTopMap.ResetAll();
+            vTopMap.transform.parent.localScale = Vector3.one;
+            vTopMap.MoveToCenter();
             /*SMaster sMaster = new SMaster();
             yield return StartCoroutine (sMaster.RequestAll());
             App.Model.Master.MCharacter[] characters = sMaster.characters;
@@ -46,13 +49,31 @@ namespace App.Controller{
             {
                 OpenMenu(buildingMenu);
             }
+            else
+            {
+                OpenMenu(strengthenMenu);
+            }
         }
-        private void OpenMenu(GameObject menu){
+        public void OpenMenu(VTopMenu menu){
             currentMenu = menu;
-            HOTween.To(menu.GetComponent<RectTransform>(), 0.3f, new TweenParms().Prop("anchoredPosition", new Vector2(0f,100f)));
+            currentMenu.gameObject.SetActive(true);
+            vTopMap.Camera3DEnable = false;
+            menuBackground.SetActive(true);
+            menu.Open();
         }
         public void CloseMenu(){
-            HOTween.To(currentMenu.GetComponent<RectTransform>(), 0.3f, new TweenParms().Prop("anchoredPosition", new Vector3(0f,0f)));
+            CloseMenu(null);
+        }
+        public void CloseMenu(System.Action complete){
+            currentMenu.Close(()=>{
+                if(complete != null){
+                    complete();
+                }
+                currentMenu.gameObject.SetActive(false);
+                currentMenu = null;
+                vTopMap.Camera3DEnable = true;
+                menuBackground.SetActive(false);
+            });
         }
 	}
 }

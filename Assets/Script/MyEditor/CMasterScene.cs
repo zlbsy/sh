@@ -25,6 +25,10 @@ namespace App.Controller{
             {
                 this.StartCoroutine(CreateScriptableObjectMasterTopMapRun());
             }
+            if (GUI.Button(new Rect(150, 150, 100, 30), "Create buildings"))
+            {
+                this.StartCoroutine(CreateScriptableObjectMasterBuildingRun());
+            }
         }
         IEnumerator CreateScriptableObjectMasterTopMapRun()
         {
@@ -48,6 +52,18 @@ namespace App.Controller{
             tileAsset.version = sMaster.responseAll.tiles_v;
 
             UnityEditor.AssetDatabase.CreateAsset(tileAsset, string.Format("Assets/Resources/{0}.asset", App.Model.Scriptable.TileAsset.Name));
+            UnityEditor.AssetDatabase.Refresh();
+        }
+        IEnumerator CreateScriptableObjectMasterBuildingRun()
+        {
+            var buildingAsset = ScriptableObject.CreateInstance<App.Model.Scriptable.BuildingAsset>();
+
+            SEditorMaster sMaster = new SEditorMaster();
+            yield return StartCoroutine (sMaster.RequestAll("building"));
+            buildingAsset.buildings = sMaster.responseAll.buildings;
+            buildingAsset.version = sMaster.responseAll.buildings_v;
+
+            UnityEditor.AssetDatabase.CreateAsset(buildingAsset, string.Format("Assets/Resources/{0}.asset", App.Model.Scriptable.BuildingAsset.Name));
             UnityEditor.AssetDatabase.Refresh();
         }
 	}

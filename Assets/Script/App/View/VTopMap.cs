@@ -15,8 +15,9 @@ namespace App.View{
         [SerializeField]public VTile[] tileUnits;
         [SerializeField]Camera camera3d;
         private Vector2 camera3dPosition;
-        private Vector2 mousePosition;
+        private Vector2 mousePosition = Vector2.zero;
         private bool _isDraging;
+        private bool _camera3DEnable = true;
         private const float tileWidth = 0.69f;
         private const float tileHeight = 0.6f;
         #region VM处理
@@ -74,6 +75,7 @@ namespace App.View{
             BoxCollider collider = this.GetComponent<BoxCollider>();
             collider.size = new Vector3(topMapMaster.width * tileWidth + 0.345f, topMapMaster.height * tileHeight + 0.2f, 0f);
             collider.center = new Vector3(collider.size.x * 0.5f - 0.345f, -collider.size.y * 0.5f + 0.4f, 0f);
+            mousePosition.x = int.MinValue;
         }
         public bool IsDraging{
             get{ 
@@ -89,19 +91,41 @@ namespace App.View{
             Camera3dToPosition(obj.transform.position.x, obj.transform.position.y - 9f);
         }
         void OnMouseDrag(){
+            if (mousePosition.x == int.MinValue)
+            {
+                return;
+            }
             //transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, z));
             //transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, transform.position.z));
             camera3d.transform.localPosition = new Vector3(camera3dPosition.x + (mousePosition.x - Input.mousePosition.x) * 0.01f, camera3dPosition.y + (mousePosition.y - Input.mousePosition.y)*0.01f, camera3d.transform.localPosition.z);
         }
         void OnMouseUp(){
+            if (Global.SceneManager.DialogIsShow() || !Camera3DEnable)
+            {
+                return;
+            }
             _isDraging = Input.mousePosition.x != mousePosition.x || Input.mousePosition.y != mousePosition.y;
+            mousePosition.x = int.MinValue;
         }
         void OnMouseDown(){
-            mousePosition = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+            if (Global.SceneManager.DialogIsShow() || !Camera3DEnable)
+            {
+                return;
+            }
+            mousePosition.x = Input.mousePosition.x;
+            mousePosition.y = Input.mousePosition.y;
             camera3dPosition = new Vector2(camera3d.transform.localPosition.x, camera3d.transform.localPosition.y);
         }
         public void Camera3dToPosition(float x, float y){
             HOTween.To(camera3d.transform, 0.3f, new TweenParms().Prop("localPosition", new Vector3(x, y, camera3d.transform.localPosition.z)));
+        }
+        public bool Camera3DEnable{
+            set{ 
+                _camera3DEnable = value;
+            }
+            get{ 
+                return _camera3DEnable;
+            }
         }
     }
 }

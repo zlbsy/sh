@@ -31,15 +31,22 @@ namespace App.View{
             }
         }
         void OnMouseUp(){
+            StartCoroutine (OnClickTile());
+        }
+        IEnumerator OnClickTile(){
+            yield return 0;Debug.LogError("OnClickTile");
+            if (Global.SceneManager.DialogIsShow())
+            {
+                yield break;
+            }
             if (vTopMap == null)
             {
                 vTopMap = this.GetComponentInParent<VTopMap>();
             }
-            if (vTopMap.IsDraging)
+            if (!vTopMap.Camera3DEnable || vTopMap.IsDraging)
             {
-                return;
+                yield break;
             }
-            //vTopMap.Camera3dToPosition(this.transform.position.x, this.transform.position.y - 9f);
             if (this.Controller is CTop)
             {
                 (this.Controller as CTop).OnClickTile(this.index);

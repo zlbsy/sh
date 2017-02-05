@@ -20,6 +20,8 @@ namespace App.Service{
             public int tiles_v;
             public App.Model.Master.MTopMap[] top_maps;
             public int top_maps_v;
+            public App.Model.Master.MBuilding[] buildings;
+            public int buildings_v;
 		}
         public IEnumerator RequestAll(string type = "")
 		{
