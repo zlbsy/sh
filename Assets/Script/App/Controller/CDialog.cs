@@ -17,6 +17,7 @@ namespace App.Controller{
         Transform panel;
         UnityEngine.UI.Image background;
         [HideInInspector]public int index;
+        private bool _isClose;
         private static int dialogIndex = 0;
         public static int GetIndex(){
             return dialogIndex++;
@@ -54,16 +55,22 @@ namespace App.Controller{
             {
                 HOTween.To(panel.gameObject.GetComponent<CanvasGroup>(), 0.3f, new TweenParms().Prop("alpha", 1));
             }
+            _isClose = false;
             yield return 0;
         }
         public void Close(){
+            if (_isClose)
+            {
+                return;
+            }
+            _isClose = true;
             background.transform.SetAsLastSibling();
             if (opentype == OpenType.Middle)
             {
                 HOTween.To(panel, 0.2f, new TweenParms().Prop("localScale", new Vector3(1f, 0, 1f)).OnComplete(Delete));
             }else if (opentype == OpenType.Fade)
             {
-                HOTween.To(panel.gameObject.GetComponent<CanvasGroup>(), 0.3f, new TweenParms().Prop("alpha", 0));
+                HOTween.To(panel.gameObject.GetComponent<CanvasGroup>(), 0.3f, new TweenParms().Prop("alpha", 0).OnComplete(Delete));
             }
         }
         public void Delete(){

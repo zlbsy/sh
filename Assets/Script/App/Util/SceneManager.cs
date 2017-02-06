@@ -11,7 +11,8 @@ namespace App.Util{
         }
         public enum Prefabs{
             BuildingDialog,
-            LoadingDialog
+            LoadingDialog,
+            ConnectingDialog
         }
         public static App.Controller.CScene CurrentScene;
         private List<App.Controller.CDialog> Dialogs = new List<App.Controller.CDialog>();
@@ -49,6 +50,20 @@ namespace App.Util{
                 }
             }
             return false;
+        }
+        public App.Controller.CDialog CurrentDialog
+        {
+            get{ 
+                for (int i = Dialogs.Count - 1; i >= 0; i--)
+                {
+                    App.Controller.CDialog dialog = Dialogs[i];
+                    if (dialog.gameObject.activeSelf)
+                    {
+                        return dialog;
+                    }
+                }
+                return null;
+            }
         }
         public void DestoryDialog(App.Controller.CDialog deleteDialog)
         {

@@ -29,6 +29,13 @@ namespace App.Controller{
             {
                 this.StartCoroutine(CreateScriptableObjectMasterBuildingRun());
             }
+
+            if (GUI.Button(new Rect(350, 50, 100, 30), "Create Prompt"))
+            {
+                var promptMessageAsset = ScriptableObject.CreateInstance<App.Model.Scriptable.PromptMessageAsset>();
+                UnityEditor.AssetDatabase.CreateAsset(promptMessageAsset, string.Format("Assets/Editor Default Resources/{0}.asset", App.Model.Scriptable.PromptMessageAsset.Name));
+                UnityEditor.AssetDatabase.Refresh();
+            }
         }
         IEnumerator CreateScriptableObjectMasterTopMapRun()
         {
@@ -39,7 +46,7 @@ namespace App.Controller{
             topMapAsset.topMaps = sMaster.responseAll.top_maps;
             topMapAsset.version = sMaster.responseAll.top_maps_v;
 
-            UnityEditor.AssetDatabase.CreateAsset(topMapAsset, string.Format("Assets/Resources/{0}.asset", App.Model.Scriptable.TopMapAsset.Name));
+            UnityEditor.AssetDatabase.CreateAsset(topMapAsset, string.Format("Assets/Editor Default Resources/{0}.asset", App.Model.Scriptable.TopMapAsset.Name));
             UnityEditor.AssetDatabase.Refresh();
         }
         IEnumerator CreateScriptableObjectMasterTileRun()
@@ -51,7 +58,7 @@ namespace App.Controller{
             tileAsset.tiles = sMaster.responseAll.tiles;
             tileAsset.version = sMaster.responseAll.tiles_v;
 
-            UnityEditor.AssetDatabase.CreateAsset(tileAsset, string.Format("Assets/Resources/{0}.asset", App.Model.Scriptable.TileAsset.Name));
+            UnityEditor.AssetDatabase.CreateAsset(tileAsset, string.Format("Assets/Editor Default Resources/{0}.asset", App.Model.Scriptable.TileAsset.Name));
             UnityEditor.AssetDatabase.Refresh();
         }
         IEnumerator CreateScriptableObjectMasterBuildingRun()
@@ -63,7 +70,7 @@ namespace App.Controller{
             buildingAsset.buildings = sMaster.responseAll.buildings;
             buildingAsset.version = sMaster.responseAll.buildings_v;
 
-            UnityEditor.AssetDatabase.CreateAsset(buildingAsset, string.Format("Assets/Resources/{0}.asset", App.Model.Scriptable.BuildingAsset.Name));
+            UnityEditor.AssetDatabase.CreateAsset(buildingAsset, string.Format("Assets/Editor Default Resources/{0}.asset", App.Model.Scriptable.BuildingAsset.Name));
             UnityEditor.AssetDatabase.Refresh();
         }
 	}

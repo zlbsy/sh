@@ -28,9 +28,9 @@ namespace App.Service{
             //form.AddField("tile", 1);
             HttpClient client = new HttpClient();
             yield return App.Util.SceneManager.CurrentScene.StartCoroutine(client.Send( url));
-            yield return App.Util.SceneManager.CurrentScene.StartCoroutine(VersionCheck( client.Deserialize<ResponseAll>() ));
+            //yield return App.Util.SceneManager.CurrentScene.StartCoroutine(VersionCheck( client.Deserialize<ResponseAll>() ));
         }
-        public IEnumerator VersionCheck(ResponseAll response)
+        /*public IEnumerator VersionCheck(ResponseAll response)
         {yield break;
             Debug.LogError("VersionCheck");
             if (App.Model.Scriptable.TileAsset.Data == null || App.Model.Scriptable.TileAsset.Data.version < response.tile)
@@ -46,6 +46,6 @@ namespace App.Service{
                 App.Model.Scriptable.TopMapAsset.Clear();
             }
             yield return 0;
-		}
+		}*/
 	}
 }

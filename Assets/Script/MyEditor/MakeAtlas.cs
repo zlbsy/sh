@@ -123,7 +123,7 @@ namespace MyEditor
         [MenuItem("SH/Build Assetbundle/Master/Avatar")]
         static private void BuildAssetBundleAvatar()
         {
-            BuildAssetBundleMaster(App.Model.Avatar.AvatarAsset.Name, false);
+            BuildAssetBundleMaster(App.Model.Avatar.AvatarAsset.Name);
         }
         [MenuItem("SH/Build Assetbundle/Master/Tile")]
         static private void BuildAssetBundleTile()
@@ -135,14 +135,19 @@ namespace MyEditor
         {
             BuildAssetBundleMaster(App.Model.Scriptable.TopMapAsset.Name);
         }
+        [MenuItem("SH/Build Assetbundle/Master/PromptMessage")]
+        static private void BuildAssetBundlePromptMessage()
+        {
+            BuildAssetBundleMaster(App.Model.Scriptable.PromptMessageAsset.Name);
+        }
         [MenuItem("SH/Build Assetbundle/Master/Building")]
         static private void BuildAssetBundleBuilding()
         {
             BuildAssetBundleMaster(App.Model.Scriptable.BuildingAsset.Name);
         }
-        static private void BuildAssetBundleMaster(string name, bool toDelete = true)
+        static private void BuildAssetBundleMaster(string name)
         {
-            ScriptableObject asset = Resources.Load<ScriptableObject>(name);
+            ScriptableObject asset = EditorGUIUtility.Load(name + ".asset") as ScriptableObject;
             Debug.LogError("BuildAssetBundleMaster:" + name + ", " + asset);
             if (asset == null)
             {
@@ -158,14 +163,14 @@ namespace MyEditor
             }
             string path = dir + "/" + name + ".unity3d";
             File.Delete(path);
-            string assetPath = string.Format("{0}/Resources/{1}.asset", Application.dataPath, name);
+            string assetPath = string.Format("{0}/Editor Default Resources/{1}.asset", Application.dataPath, name);
             if (BuildPipeline.BuildAssetBundle(null, assets.ToArray(), path, BuildAssetBundleOptions.UncompressedAssetBundle | BuildAssetBundleOptions.CollectDependencies, GetBuildTarget()))
             {
             }
-            if (toDelete)
+            /*if (toDelete)
             {
                 File.Delete(assetPath);
-            }
+            }*/
             Debug.LogError("assetPath="+assetPath);
         }
 

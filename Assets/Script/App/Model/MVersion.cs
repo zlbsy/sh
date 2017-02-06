@@ -7,5 +7,7 @@ namespace App.Model{
         }
         public int tile;
         public int top_map;
+        public int building;
+        public int prompt_message;
 	}
 }

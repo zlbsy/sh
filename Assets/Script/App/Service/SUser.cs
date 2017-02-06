@@ -46,22 +46,5 @@ namespace App.Service{
             yield return App.Util.SceneManager.CurrentScene.StartCoroutine(client.Send( url, form));
             this.user = client.Deserialize<MUser>();
         }
-        public IEnumerator VersionCheck(MVersion versions)
-        {yield break;
-            Debug.LogError("VersionCheck");
-            if (App.Model.Scriptable.TileAsset.Data == null || App.Model.Scriptable.TileAsset.Data.version < versions.tile)
-            {
-                Debug.LogError("TileAsset Download");
-                yield return App.Util.SceneManager.CurrentScene.StartCoroutine(Download(App.Model.Scriptable.TileAsset.Url, App.Model.Scriptable.TileAsset.Path));
-                App.Model.Scriptable.TileAsset.Clear();
-            }
-            if (App.Model.Scriptable.TopMapAsset.Data == null || App.Model.Scriptable.TopMapAsset.Data.version < versions.top_map)
-            {
-                Debug.LogError("TopMapAsset Download");
-                yield return App.Util.SceneManager.CurrentScene.StartCoroutine(Download(App.Model.Scriptable.TopMapAsset.Url, App.Model.Scriptable.TopMapAsset.Path));
-                App.Model.Scriptable.TopMapAsset.Clear();
-            }
-            yield return 0;
-		}
 	}
 }
