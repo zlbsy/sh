@@ -9,5 +9,11 @@ namespace App.Model{
         public int top_map;
         public int building;
         public int prompt_message;
+        public int character;
+        public int horse;
+        public int hat;
+        public int map;
+        public int clothes;
+        public int weapon;
 	}
 }

@@ -10,10 +10,16 @@ namespace App.Model.Scriptable{
     {
         private static TClass _data;
         private static AssetBundle _assetbundle = null;
+        public static AssetBundle assetbundle{
+            set{ 
+                //_assetbundle = value;
+                ScriptableObject[] ts = value.LoadAllAssets<ScriptableObject>();
+                _data = ts[0] as TClass;
+            }
+        }
         public static TClass Data{
             get{ 
-                Debug.Log(Path+"="+_data);
-				if (_data == null) {
+				/*if (_data == null) {
                     //_data = Resources.Load(Name) as TClass;
                     _assetbundle = AssetBundle.LoadFromFile(Path);
                     if (_assetbundle == null)
@@ -27,7 +33,7 @@ namespace App.Model.Scriptable{
                     }
                     ScriptableObject[] ts = _assetbundle.LoadAllAssets<ScriptableObject>();
                     _data = ts[0] as TClass;
-                }
+                }*/
 				return _data;
 			}
         }

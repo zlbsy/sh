@@ -69,7 +69,7 @@ namespace App.Controller{
                 if(complete != null){
                     complete();
                 }
-                currentMenu.gameObject.SetActive(false);
+                //currentMenu.gameObject.SetActive(false);
                 currentMenu = null;
                 vTopMap.Camera3DEnable = true;
                 menuBackground.SetActive(false);

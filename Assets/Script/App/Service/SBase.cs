@@ -6,21 +6,30 @@ using System.IO;
 
 namespace App.Service{
 	public class SBase {
-        public IEnumerator Download (string url, string path)
-        //public IEnumerator Download (string url, int ver)
+        //public IEnumerator Download (string url, string path)
+        public IEnumerator Download (string url, int ver, System.Action<AssetBundle> handle, bool destory = true)
         {
-            /*var www = WWW.LoadFromCacheOrDownload(url, ver);
+            var www = WWW.LoadFromCacheOrDownload(url, ver);
             yield return www;
-            www.assetBundle.Unload(false);
-            Debug.LogError("www.assetBundle="+www.assetBundle);*/
-            using (WWW www = new WWW (url + "?time=" + System.DateTime.Now.GetHashCode())) {
+            if(!string.IsNullOrEmpty(www.error))
+            {
+                Debug.LogError(www.error);
+                yield break;
+            }
+            handle(www.assetBundle);
+            if (destory)
+            {
+                www.assetBundle.Unload(false);
+            }
+            //www.assetBundle.Unload(false);
+            /*using (WWW www = new WWW (url + "?time=" + System.DateTime.Now.GetHashCode())) {
 
                 yield return www;
 
                 File.Delete (path);
                 File.WriteAllBytes (path, www.bytes);
             }
-            yield return 0;
+            yield return 0;*/
         }
 	}
 }

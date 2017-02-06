@@ -21,7 +21,7 @@ namespace App.View{
             this.index = index;
             tileSprite.sprite = AssetBundleManager.GetMapTile(string.Format("tile_{0}", tileId));
             if (buildId > 0)
-            {Debug.LogError("buildId : "+buildId);
+            {
                 buildingSprite.gameObject.SetActive(true);
                 buildingSprite.sprite = AssetBundleManager.GetMapTile(string.Format("tile_{0}", buildId));
             }
@@ -34,7 +34,7 @@ namespace App.View{
             StartCoroutine (OnClickTile());
         }
         IEnumerator OnClickTile(){
-            yield return 0;Debug.LogError("OnClickTile");
+            yield return 0;
             if (Global.SceneManager.DialogIsShow())
             {
                 yield break;

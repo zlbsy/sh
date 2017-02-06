@@ -18,6 +18,7 @@ namespace App.Util{
         private List<App.Controller.CDialog> Dialogs = new List<App.Controller.CDialog>();
         public static void LoadScene(string name){
             UnityEngine.SceneManagement.SceneManager.LoadScene( name );
+            Global.SceneManager.DestoryDialog();
             Resources.UnloadUnusedAssets();
             System.GC.Collect();
 		}
@@ -65,12 +66,16 @@ namespace App.Util{
                 return null;
             }
         }
-        public void DestoryDialog(App.Controller.CDialog deleteDialog)
+        public void DestoryDialog(App.Controller.CDialog deleteDialog = null)
         {
             for (int i = Dialogs.Count - 1; i >= 0; i--)
             {
                 App.Controller.CDialog dialog = Dialogs[i];
-                if (deleteDialog.index == dialog.index)
+                if (deleteDialog == null)
+                {
+                    Dialogs.RemoveAt(i);
+                }
+                else if (deleteDialog.index == dialog.index)
                 {
                     Dialogs.RemoveAt(i);
                     GameObject.Destroy(deleteDialog.gameObject);

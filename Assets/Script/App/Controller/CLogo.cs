@@ -6,6 +6,7 @@ using App.Model;
 using App.View;
 using App.Util;
 using App.Util.Cacher;
+using App.Model.Scriptable;
 
 
 namespace App.Controller{
@@ -19,6 +20,9 @@ namespace App.Controller{
 		{  
 			yield return 0;
 		}
+        public void ClearCacher(){
+            Caching.CleanCache();
+        }
         public void GameStart(){
             CConnectingDialog.ToShow();
             StartCoroutine(ToLogin( ));
@@ -52,34 +56,47 @@ namespace App.Controller{
         public IEnumerator VersionCheck(MVersion versions)
         {
             Debug.LogError("VersionCheck");
-            if (App.Model.Scriptable.TileAsset.Data == null || App.Model.Scriptable.TileAsset.Data.version < versions.tile)
-            {
-                Debug.LogError("TileAsset Download");
-                yield return App.Util.SceneManager.CurrentScene.StartCoroutine(App.Util.Global.SUser.Download(App.Model.Scriptable.TileAsset.Url, App.Model.Scriptable.TileAsset.Path));
-                App.Model.Scriptable.TileAsset.Clear();
-            }
-            /*
+            CScene scene = SceneManager.CurrentScene;
+            SUser sUser = Global.SUser;
+            yield return scene.StartCoroutine(sUser.Download(PromptMessageAsset.Url, versions.prompt_message, (AssetBundle assetbundle)=>{
+                PromptMessageAsset.assetbundle = assetbundle;
+            }));
+            CLoadingDialog.SetProgress(10f);
+            yield return scene.StartCoroutine(sUser.Download(TileAsset.Url, versions.tile, (AssetBundle assetbundle)=>{
+                TileAsset.assetbundle = assetbundle;
+            }));
             CLoadingDialog.SetProgress(20f);
-            if (App.Model.Scriptable.BuildingAsset.Data == null || App.Model.Scriptable.BuildingAsset.Data.version < versions.building)
-            {
-                Debug.LogError("BuildingAsset Download");
-                yield return App.Util.SceneManager.CurrentScene.StartCoroutine(App.Util.Global.SUser.Download(App.Model.Scriptable.TileAsset.Url, App.Model.Scriptable.BuildingAsset.Path));
-                App.Model.Scriptable.TileAsset.Clear();
-            }
+            yield return scene.StartCoroutine(sUser.Download(BuildingAsset.Url, versions.building, (AssetBundle assetbundle)=>{
+                BuildingAsset.assetbundle = assetbundle;
+            }));
+            CLoadingDialog.SetProgress(30f);
+            yield return scene.StartCoroutine(sUser.Download(TopMapAsset.Url, versions.top_map, (AssetBundle assetbundle)=>{
+                TopMapAsset.assetbundle = assetbundle;
+            }));
             CLoadingDialog.SetProgress(40f);
-            if (App.Model.Scriptable.PromptMessageAsset.Data == null || App.Model.Scriptable.PromptMessageAsset.Data.version < versions.prompt_message)
-            {
-                Debug.LogError("TopMapAsset Download");
-                yield return App.Util.SceneManager.CurrentScene.StartCoroutine(App.Util.Global.SUser.Download(App.Model.Scriptable.TopMapAsset.Url, App.Model.Scriptable.TopMapAsset.Path));
-                App.Model.Scriptable.TopMapAsset.Clear();
-            }
-            CLoadingDialog.SetProgress(40f);
-            if (App.Model.Scriptable.TopMapAsset.Data == null || App.Model.Scriptable.TopMapAsset.Data.version < versions.top_map)
-            {
-                Debug.LogError("TopMapAsset Download");
-                yield return App.Util.SceneManager.CurrentScene.StartCoroutine(App.Util.Global.SUser.Download(App.Model.Scriptable.TopMapAsset.Url, App.Model.Scriptable.TopMapAsset.Path));
-                App.Model.Scriptable.TopMapAsset.Clear();
-            }*/
+            yield return scene.StartCoroutine(sUser.Download(AssetBundleManager.characterUrl, versions.character, (AssetBundle assetbundle)=>{
+                AssetBundleManager.character = assetbundle;
+            }, false));
+            CLoadingDialog.SetProgress(50f);
+            yield return scene.StartCoroutine(sUser.Download(AssetBundleManager.horseUrl, versions.horse, (AssetBundle assetbundle)=>{
+                AssetBundleManager.horse = assetbundle;
+            }, false));
+            CLoadingDialog.SetProgress(60f);
+            yield return scene.StartCoroutine(sUser.Download(AssetBundleManager.hatUrl, versions.hat, (AssetBundle assetbundle)=>{
+                AssetBundleManager.hat = assetbundle;
+            }, false));
+            CLoadingDialog.SetProgress(70f);
+            yield return scene.StartCoroutine(sUser.Download(AssetBundleManager.mapUrl, versions.map, (AssetBundle assetbundle)=>{
+                AssetBundleManager.map = assetbundle;
+            }, false));
+            CLoadingDialog.SetProgress(80f);
+            yield return scene.StartCoroutine(sUser.Download(AssetBundleManager.clothesUrl, versions.clothes, (AssetBundle assetbundle)=>{
+                AssetBundleManager.clothes = assetbundle;
+            }, false));
+            CLoadingDialog.SetProgress(90f);
+            yield return scene.StartCoroutine(sUser.Download(AssetBundleManager.weaponUrl, versions.weapon, (AssetBundle assetbundle)=>{
+                AssetBundleManager.weapon = assetbundle;
+            }, false));
             CLoadingDialog.SetProgress(100f);
             yield return 0;
         }
