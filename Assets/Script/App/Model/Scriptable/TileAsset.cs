@@ -6,7 +6,6 @@ using UnityEngine;
 namespace App.Model.Scriptable{
     public class TileAsset : AssetBase<TileAsset> {
         [SerializeField]public App.Model.Master.MTile[] tiles;
-        [SerializeField]public int version;
 
 	}
 }

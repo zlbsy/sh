@@ -85,7 +85,7 @@ namespace MyEditor
 
         static private void BuildAssetBundle(string atlasName)
         {
-            string dir = Application.dataPath + "/StreamingAssets";
+            string dir = Application.dataPath + "/Editor Default Resources/assetbundle/";
 
             if (!Directory.Exists(dir))
             {
@@ -108,7 +108,7 @@ namespace MyEditor
                     string assetPath = allPath.Substring(allPath.IndexOf("Assets"));
                     assets.Add(AssetDatabase.LoadAssetAtPath<Sprite>(assetPath));
                 }
-                if (BuildPipeline.BuildAssetBundle(null, assets.ToArray(), path, BuildAssetBundleOptions.UncompressedAssetBundle | BuildAssetBundleOptions.CollectDependencies, GetBuildTarget()))
+                if (BuildPipeline.BuildAssetBundle(null, assets.ToArray(), path, BuildAssetBundleOptions.ChunkBasedCompression | BuildAssetBundleOptions.CollectDependencies, GetBuildTarget()))
                 {
                 }
             }	
@@ -119,6 +119,7 @@ namespace MyEditor
             BuildAssetBundleTile();
             BuildAssetBundleTopMap();
             BuildAssetBundleBuilding();
+            BuildAssetBundlePromptMessage();
         }
         [MenuItem("SH/Build Assetbundle/Master/Avatar")]
         static private void BuildAssetBundleAvatar()
@@ -147,24 +148,26 @@ namespace MyEditor
         }
         static private void BuildAssetBundleMaster(string name)
         {
-            ScriptableObject asset = EditorGUIUtility.Load(name + ".asset") as ScriptableObject;
-            Debug.LogError("BuildAssetBundleMaster:" + name + ", " + asset);
+            string assetPath = string.Format("ScriptableObject/{0}.asset", name);
+            ScriptableObject asset = EditorGUIUtility.Load(assetPath) as ScriptableObject;
+            Debug.LogError("BuildAssetBundleMaster:" + assetPath + ", " + asset);
             if (asset == null)
             {
                 return;
             }
             List<ScriptableObject> assets = new List<ScriptableObject>();
             assets.Add(asset);
-            string dir = Application.dataPath + "/StreamingAssets";
+            string dir = Application.dataPath + "/Editor Default Resources/assetbundle/";
 
             if (!Directory.Exists(dir))
             {
                 Directory.CreateDirectory(dir);
             }
             string path = dir + "/" + name + ".unity3d";
-            File.Delete(path);
-            string assetPath = string.Format("{0}/Editor Default Resources/{1}.asset", Application.dataPath, name);
-            if (BuildPipeline.BuildAssetBundle(null, assets.ToArray(), path, BuildAssetBundleOptions.UncompressedAssetBundle | BuildAssetBundleOptions.CollectDependencies, GetBuildTarget()))
+            assetPath = string.Format("{0}/Editor Default Resources/ScriptableObject/{1}.asset", Application.dataPath, name);
+            //File.Delete(path);
+            Debug.LogError("path="+path);
+            if (BuildPipeline.BuildAssetBundle(null, assets.ToArray(), path, BuildAssetBundleOptions.ChunkBasedCompression | BuildAssetBundleOptions.CollectDependencies, GetBuildTarget()))
             {
             }
             /*if (toDelete)

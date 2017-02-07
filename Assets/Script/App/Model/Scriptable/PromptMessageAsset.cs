@@ -11,7 +11,6 @@ namespace App.Model.Scriptable{
     }
     public class PromptMessageAsset : AssetBase<PromptMessageAsset> {
         [SerializeField]public MPromptMessage[] promptMessages;
-        [SerializeField]public int version;
 
 	}
 }

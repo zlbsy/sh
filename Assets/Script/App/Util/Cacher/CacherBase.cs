@@ -21,5 +21,8 @@ namespace App.Util.Cacher{
         public TValue Get(int id){
             return System.Array.Find(datas, _=>_.id == id);
         }
+        public TValue[] GetAll(){
+            return datas;
+        }
 	}
 }

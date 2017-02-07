@@ -6,8 +6,7 @@ using App.Model;
 
 namespace App.Service{
     /**
-     * Master数据每次检索更新版本号，只获取需要更新的数据AssetBundle
-     * 数据保存格式为ScriptableObject
+     * Master数据更新用API
     */
 	public class SEditorMaster : SBase {
         public ResponseAll responseAll;
@@ -17,11 +16,8 @@ namespace App.Service{
         {
             public App.Model.Master.MCharacter[] characters;
             public App.Model.Master.MTile[] tiles;
-            public int tiles_v;
             public App.Model.Master.MTopMap[] top_maps;
-            public int top_maps_v;
             public App.Model.Master.MBuilding[] buildings;
-            public int buildings_v;
 		}
         public IEnumerator RequestAll(string type = "")
 		{

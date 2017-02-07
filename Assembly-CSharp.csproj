@@ -39,10 +39,10 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="UnityEngine">
-      <HintPath>/Applications/Unity/Unity.app/Contents/Managed/UnityEngine.dll</HintPath>
+      <HintPath>/Applications/Unity5.5/Unity5.5.app/Contents/Managed/UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor">
-      <HintPath>/Applications/Unity/Unity.app/Contents/Managed/UnityEditor.dll</HintPath>
+      <HintPath>/Applications/Unity5.5/Unity5.5.app/Contents/Managed/UnityEditor.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -63,9 +63,9 @@
      <Compile Include="Assets\Script\App\Model\Avatar\MoveArms.cs" />
      <Compile Include="Assets\Script\App\Model\MBase.cs" />
      <Compile Include="Assets\Script\App\Model\MBattlefield.cs" />
+     <Compile Include="Assets\Script\App\Model\MBuilding.cs" />
      <Compile Include="Assets\Script\App\Model\MCharacter.cs" />
      <Compile Include="Assets\Script\App\Model\MTile.cs" />
-     <Compile Include="Assets\Script\App\Model\MTop.cs" />
      <Compile Include="Assets\Script\App\Model\MTopMap.cs" />
      <Compile Include="Assets\Script\App\Model\MUser.cs" />
      <Compile Include="Assets\Script\App\Model\MVersion.cs" />
@@ -73,8 +73,10 @@
      <Compile Include="Assets\Script\App\Model\Master\MCharacter.cs" />
      <Compile Include="Assets\Script\App\Model\Master\MTile.cs" />
      <Compile Include="Assets\Script\App\Model\Master\MTopMap.cs" />
+     <Compile Include="Assets\Script\App\Model\Master\MWord.cs" />
      <Compile Include="Assets\Script\App\Model\Scriptable\AssetBase.cs" />
      <Compile Include="Assets\Script\App\Model\Scriptable\BuildingAsset.cs" />
+     <Compile Include="Assets\Script\App\Model\Scriptable\LanguageAsset.cs" />
      <Compile Include="Assets\Script\App\Model\Scriptable\PromptMessageAsset.cs" />
      <Compile Include="Assets\Script\App\Model\Scriptable\TileAsset.cs" />
      <Compile Include="Assets\Script\App\Model\Scriptable\TopMapAsset.cs" />
@@ -94,19 +96,21 @@
      <Compile Include="Assets\Script\App\Util\Cacher\TopMapCacher.cs" />
      <Compile Include="Assets\Script\App\Util\FullScreen.cs" />
      <Compile Include="Assets\Script\App\Util\Global.cs" />
+     <Compile Include="Assets\Script\App\Util\Language.cs" />
      <Compile Include="Assets\Script\App\Util\SceneManager.cs" />
      <Compile Include="Assets\Script\App\View\Top\VBuildingMenu.cs" />
      <Compile Include="Assets\Script\App\View\Top\VStrengthenMenu.cs" />
      <Compile Include="Assets\Script\App\View\Top\VTopFooterMenu.cs" />
      <Compile Include="Assets\Script\App\View\Top\VTopMenu.cs" />
      <Compile Include="Assets\Script\App\View\VBase.cs" />
+     <Compile Include="Assets\Script\App\View\VBuildingChild.cs" />
      <Compile Include="Assets\Script\App\View\VCharacter.cs" />
      <Compile Include="Assets\Script\App\View\VTile.cs" />
      <Compile Include="Assets\Script\App\View\VTopMap.cs" />
      <Compile Include="Assets\Script\App\ViewModel\VMBase.cs" />
+     <Compile Include="Assets\Script\App\ViewModel\VMBuilding.cs" />
      <Compile Include="Assets\Script\App\ViewModel\VMCharacter.cs" />
      <Compile Include="Assets\Script\App\ViewModel\VMProperty.cs" />
-     <Compile Include="Assets\Script\App\ViewModel\VMTop.cs" />
      <Compile Include="Assets\Script\App\ViewModel\VMTopMap.cs" />
      <Compile Include="Assets\Script\MyEditor\CMasterScene.cs" />
      <Compile Include="Assets\Script\MyEditor\CTopScene.cs" />
@@ -142,25 +146,25 @@
      <None Include="Assets\Script\Plugin\JsonFx\TODO.txt" />
      <None Include="Assets\Script\Plugin\JsonFx\License.txt" />
  <Reference Include="UnityEngine.UI">
- <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
+ <HintPath>/Applications/Unity5.5/Unity5.5.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.Networking">
- <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
+ <HintPath>/Applications/Unity5.5/Unity5.5.app/Contents/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.PlaymodeTestsRunner">
- <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/PlaymodeTestsRunner/UnityEngine.PlaymodeTestsRunner.dll</HintPath>
+ <HintPath>/Applications/Unity5.5/Unity5.5.app/Contents/UnityExtensions/Unity/PlaymodeTestsRunner/UnityEngine.PlaymodeTestsRunner.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.Analytics">
- <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
+ <HintPath>/Applications/Unity5.5/Unity5.5.app/Contents/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.HoloLens">
- <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
+ <HintPath>/Applications/Unity5.5/Unity5.5.app/Contents/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.VR">
- <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>
+ <HintPath>/Applications/Unity5.5/Unity5.5.app/Contents/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>
  </Reference>
  <Reference Include="HOTween">
- <HintPath>/Users/zhanglubin/git/sh/Assets/HOTween/Plugins/HOTween.dll</HintPath>
+ <HintPath>/Users/lubin.zhang/Documents/git/sh/Assets/HOTween/Plugins/HOTween.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

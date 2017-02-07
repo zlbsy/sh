@@ -19,11 +19,11 @@ namespace App.View{
         #endregion
         public void SetData(int index, int tileId, int buildId = 0){
             this.index = index;
-            tileSprite.sprite = AssetBundleManager.GetMapTile(string.Format("tile_{0}", tileId));
+            tileSprite.sprite = App.Model.Master.MTile.GetIcon(tileId);
             if (buildId > 0)
             {
                 buildingSprite.gameObject.SetActive(true);
-                buildingSprite.sprite = AssetBundleManager.GetMapTile(string.Format("tile_{0}", buildId));
+                buildingSprite.sprite = App.Model.Master.MTile.GetIcon(buildId);
             }
             else
             {

@@ -10,6 +10,8 @@ namespace App.Util{
         public static SceneManager SceneManager { get; private set; }
         public static void Initialize()
         {
+            App.Model.Scriptable.LanguageAsset languageAsset = Resources.Load("Language/Japanese/languageasset") as App.Model.Scriptable.LanguageAsset;
+            Language.Reset(languageAsset.words);
             SceneManager = new SceneManager();
             SUser = new SUser();
         }
