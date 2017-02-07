@@ -10,6 +10,7 @@ using App.Controller;
 
 namespace App.View.Top{
     public class VBuildingMenu : VTopMenu{
+        public int currentIndex;
         public void OpenBuildingDialog(){
             (this.Controller as CTop).CloseMenu(()=>{
                 StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.BuildingDialog));

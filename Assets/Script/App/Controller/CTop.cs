@@ -47,6 +47,7 @@ namespace App.Controller{
             App.Model.MTile tile = System.Array.Find(App.Util.Global.SUser.user.top_map, _=>_.x == x && _.y == y);
             if (tile == null)
             {
+                buildingMenu.currentIndex = index;
                 OpenMenu(buildingMenu);
             }
             else
