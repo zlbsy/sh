@@ -7,9 +7,9 @@ namespace App.Controller{
 	public class CBase : MonoBehaviour {
 		public virtual IEnumerator Start()
 		{
-			yield return StartCoroutine (OnLoad());
+			yield return StartCoroutine (OnLoad(null));
 		}
-		public virtual IEnumerator OnLoad( ) 
+        public virtual IEnumerator OnLoad( Request request ) 
 		{  
 			yield return 0;
 		}

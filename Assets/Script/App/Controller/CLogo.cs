@@ -16,7 +16,7 @@ namespace App.Controller{
             Global.Initialize();
             yield return StartCoroutine (base.Start());
         }
-		public override IEnumerator OnLoad( ) 
+        public override IEnumerator OnLoad( Request request ) 
 		{  
 			yield return 0;
 		}

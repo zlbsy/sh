@@ -14,11 +14,27 @@ namespace App.Model{
         public int Id{
             set{
                 this.ViewModel.Id.Value = value;
-                this.ViewModel.Name.Value = Tile.name;
-                this.ViewModel.TileId.Value = Master.tile_id;
+                this.Name = Tile.name;
+                this.TileId = Master.tile_id;
             }
             get{ 
                 return this.ViewModel.Id.Value;
+            }
+        }
+        public string Name{
+            set{
+                this.ViewModel.Name.Value = value;
+            }
+            get{ 
+                return this.ViewModel.Name.Value;
+            }
+        }
+        public int TileId{
+            set{
+                this.ViewModel.TileId.Value = value;
+            }
+            get{ 
+                return this.ViewModel.TileId.Value;
             }
         }
         public Master.MBuilding Master{

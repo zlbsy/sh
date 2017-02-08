@@ -28,10 +28,10 @@ namespace App.Controller{
             height = barPrevious.GetComponent<RectTransform>().offsetMax.y;
             base.OnEnable();
         }
-		public override IEnumerator OnLoad( ) 
+        public override IEnumerator OnLoad( Request request ) 
         {  
             Progress = 0f;
-            yield return StartCoroutine(base.OnLoad());
+            yield return StartCoroutine(base.OnLoad(request));
             StartCoroutine(SetDefaultPromptMessage());
 		}
         public float Progress{

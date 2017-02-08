@@ -15,24 +15,27 @@ namespace App.Util{
             ConnectingDialog
         }
         public static App.Controller.CScene CurrentScene;
+        public static App.Controller.Request CurrentSceneRequest;
         private List<App.Controller.CDialog> Dialogs = new List<App.Controller.CDialog>();
-        public static void LoadScene(string name){
+        public static void LoadScene(string name, App.Controller.Request req = null){
+            CurrentSceneRequest = req;
             UnityEngine.SceneManagement.SceneManager.LoadScene( name );
             Global.SceneManager.DestoryDialog();
             Resources.UnloadUnusedAssets();
             System.GC.Collect();
 		}
 
-        public IEnumerator ShowDialog(Prefabs prefab)
+        public IEnumerator ShowDialog(Prefabs prefab, App.Controller.Request req = null)
         {
 
             GameObject instance = LoadPrefab (prefab.ToString());
             App.Controller.CDialog dialog = instance.GetComponent<App.Controller.CDialog>();
             dialog.SetIndex();
             Dialogs.Add(dialog);
+            yield return CurrentScene.StartCoroutine(dialog.OnLoad(req));
             //LoadDialog( instance.GetComponent<DialogController>(), request , useBackground);
             //yield return instance;
-            yield return 0;
+            //yield return 0;
         }
         public GameObject LoadPrefab(string prefabName)
         {

@@ -11,9 +11,10 @@ namespace App.Controller{
         public override IEnumerator Start()
         {
             App.Util.SceneManager.CurrentScene = this;
-            yield return StartCoroutine (OnLoad());
+            yield return StartCoroutine (OnLoad(App.Util.SceneManager.CurrentSceneRequest));
+            App.Util.SceneManager.CurrentSceneRequest = null;
         }
-		public override IEnumerator OnLoad( ) 
+        public override IEnumerator OnLoad( Request request ) 
 		{  
 			yield return 0;
 		}

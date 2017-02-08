@@ -13,7 +13,8 @@ namespace App.View.Top{
         public int currentIndex;
         public void OpenBuildingDialog(){
             (this.Controller as CTop).CloseMenu(()=>{
-                StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.BuildingDialog));
+                Request req = Request.Create("tile_index", currentIndex);
+                StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.BuildingDialog, req));
             });
         }
         public override void Open()

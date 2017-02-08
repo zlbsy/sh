@@ -30,5 +30,10 @@ namespace App.Model.Master{
                 return _tiles;
             }
         }
+        public Vector2 GetCoordinateFromIndex(int index){
+            int x = index % this.width;
+            int y = Mathf.FloorToInt(index / this.width);
+            return new Vector2(x, y);
+        }
 	}
 }

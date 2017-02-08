@@ -42,7 +42,7 @@ namespace App.View{
 
         #endregion
         public void ClickChild(){
-            Debug.LogError("ClickChild VBuildingChild");
+            (this.Controller as CBuildingDialog).ToBuild(ViewModel.Id.Value);
         }
 
     }

@@ -12,7 +12,7 @@ namespace App.Controller{
         None,//无
         Fade//无
     }
-    public class CDialog : CScene {
+    public class CDialog : CBase {
         [SerializeField]OpenType opentype;
         Transform panel;
         UnityEngine.UI.Image background;
@@ -21,6 +21,10 @@ namespace App.Controller{
         private static int dialogIndex = 0;
         public static int GetIndex(){
             return dialogIndex++;
+        }
+        public override IEnumerator Start()
+        {
+            yield break;
         }
         public virtual void OnEnable(){
             if (panel == null){
@@ -45,7 +49,7 @@ namespace App.Controller{
         public void SetIndex(){
             this.index = CDialog.GetIndex();
         }
-        public override IEnumerator OnLoad( ) 
+        public override IEnumerator OnLoad( Request request ) 
         {  
             HOTween.To(background, 0.1f, new TweenParms().Prop("color", new Color(0,0,0,0.5f)));
             if (opentype == OpenType.Middle)

@@ -17,14 +17,15 @@ namespace App.Controller{
         [SerializeField]VStrengthenMenu strengthenMenu;
         [SerializeField]GameObject menuBackground;
         private VTopMenu currentMenu;
-		public override IEnumerator OnLoad( ) 
+        private MTopMap mTopMap;
+        public override IEnumerator OnLoad( Request request ) 
 		{  
             yield return StartCoroutine (App.Util.Global.SUser.RequestGet());
-            MTopMap mTopMap = new MTopMap();
+            mTopMap = new MTopMap();
             mTopMap.MapId = App.Util.Global.SUser.user.map_id;
-            mTopMap.Tiles = App.Util.Global.SUser.user.top_map;
             vTopMap.BindingContext = mTopMap.ViewModel;
-            vTopMap.ResetAll();
+            mTopMap.Tiles = App.Util.Global.SUser.user.top_map.Clone() as App.Model.MTile[];
+            //vTopMap.ResetAll();
             vTopMap.transform.parent.localScale = Vector3.one;
             vTopMap.MoveToCenter();
             /*SMaster sMaster = new SMaster();
@@ -40,11 +41,10 @@ namespace App.Controller{
 			yield return 0;
         }
         public void OnClickTile(int index){
-            App.Model.Master.MTopMap topMapMaster = TopMapCacher.Instance.Get(App.Util.Global.SUser.user.map_id);
-            int x = index % topMapMaster.width;
-            int y = Mathf.FloorToInt(index / topMapMaster.height);
+            App.Model.Master.MTopMap topMapMaster = TopMapCacher.Instance.Get(mTopMap.MapId);
+            Vector2 coordinate = topMapMaster.GetCoordinateFromIndex(index);
             App.Model.Master.MTile tileMaster = topMapMaster.tiles[index];
-            App.Model.MTile tile = System.Array.Find(App.Util.Global.SUser.user.top_map, _=>_.x == x && _.y == y);
+            App.Model.MTile tile = System.Array.Find(mTopMap.Tiles, _=>_.x == coordinate.x && _.y == coordinate.y);
             if (tile == null)
             {
                 buildingMenu.currentIndex = index;
@@ -75,6 +75,9 @@ namespace App.Controller{
                 vTopMap.Camera3DEnable = true;
                 menuBackground.SetActive(false);
             });
+        }
+        public VTopMap GetVTopMap(){
+            return vTopMap;
         }
 	}
 }

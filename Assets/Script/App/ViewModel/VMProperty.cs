@@ -9,8 +9,8 @@ namespace App.ViewModel{
 	public class VMProperty<T> {
 		public delegate void ValueChangedHandler(T oldValue, T newValue);
 		public ValueChangedHandler OnValueChanged;
-		private T _value;
-		public T Value
+        protected T _value;
+        public virtual T Value
 		{
 			get
 			{
@@ -18,7 +18,7 @@ namespace App.ViewModel{
 			}
 			set
 			{
-				if (!object.Equals(_value, value))
+                if (!object.Equals(_value, value))
 				{
 					T old = _value;
 					_value = value;
@@ -27,8 +27,8 @@ namespace App.ViewModel{
 			}
 		}
 
-		private void ValueChanged(T oldValue, T newValue)
-		{
+        protected void ValueChanged(T oldValue, T newValue)
+        {
 			if (OnValueChanged != null)
 			{
 				OnValueChanged(oldValue, newValue);

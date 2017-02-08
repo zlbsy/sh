@@ -13,9 +13,9 @@ using App.Model.Scriptable;
 namespace App.Controller{
     public class CConnectingDialog : CDialog {
         [SerializeField]private Transform image;
-		public override IEnumerator OnLoad( ) 
+        public override IEnumerator OnLoad( Request request ) 
         {  
-            yield return StartCoroutine(base.OnLoad());
+            yield return StartCoroutine(base.OnLoad(request));
             StartCoroutine(Run());
 		}
         private IEnumerator Run(){

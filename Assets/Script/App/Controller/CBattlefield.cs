@@ -11,7 +11,7 @@ namespace App.Controller{
 		[SerializeField]GameObject mapLayer;
 		[SerializeField]GameObject characterLayer;
 		[SerializeField]GameObject characterPrefab;
-		public override IEnumerator OnLoad( ) 
+        public override IEnumerator OnLoad( Request request ) 
 		{  
 			SBattlefield sBattlefield = new SBattlefield ();
 			yield return StartCoroutine (sBattlefield.Request(this));

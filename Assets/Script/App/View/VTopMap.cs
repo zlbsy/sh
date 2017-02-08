@@ -31,16 +31,22 @@ namespace App.View{
             if (oldVm != null)
             {
                 ViewModel.MapId.OnValueChanged -= MapIdChanged;
+                ViewModel.Tiles.OnValueChanged -= TilesChanged;
             }
             if (ViewModel!=null)
             {
                 ViewModel.MapId.OnValueChanged += MapIdChanged;
+                ViewModel.Tiles.OnValueChanged += TilesChanged;
             }
         }
         private void MapIdChanged(int oldvalue, int newvalue)
         {
             App.Model.Master.MTopMap topMapMaster = TopMapCacher.Instance.Get(newvalue);
             ResetAll(topMapMaster);
+        }
+        private void TilesChanged(App.Model.MTile[] oldvalue, App.Model.MTile[] newvalue)
+        {
+            ResetAll();
         }
         #endregion
         public void ResetAll(App.Model.Master.MTopMap topMapMaster = null){
@@ -59,8 +65,8 @@ namespace App.View{
                 VTile obj = tileUnits[i];
                 obj.gameObject.SetActive (true);
                 App.Model.MTile building = System.Array.Find(ViewModel.Tiles.Value, _=>_.x == widthCount && _.y == heightCount);
-                if(building != null)Debug.LogError((widthCount == ViewModel.Tiles.Value[0].x) + ","+(heightCount  == ViewModel.Tiles.Value[0].y));
-                obj.SetData(i, tile.id, building != null ? building.Master.id : 0);
+                if(building != null)Debug.LogError(widthCount + ","+heightCount + ", " + building.Master);
+                obj.SetData(heightCount * topMapMaster.width + widthCount, tile.id, building != null ? building.Master.id : 0);
                 widthCount++;
                 if (widthCount >= topMapMaster.width)
                 {

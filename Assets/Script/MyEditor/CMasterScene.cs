@@ -10,7 +10,7 @@ using UnityEditor;
 
 namespace App.Controller{
     public class CMasterScene : CScene {
-		public override IEnumerator OnLoad( ) 
+        public override IEnumerator OnLoad( Request req ) 
 		{  
 			yield return 0;
         }

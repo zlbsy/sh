@@ -14,7 +14,7 @@ namespace App.Controller{
         [SerializeField] private int height = 30;
         [SerializeField] private VTile tileUnit;
         [SerializeField] private VTopMap map;
-		public override IEnumerator OnLoad( ) 
+        public override IEnumerator OnLoad( Request req ) 
 		{  
             CreateMap();
 			yield return 0;
