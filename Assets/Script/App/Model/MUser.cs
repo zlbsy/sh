@@ -63,7 +63,7 @@ namespace App.Model{
                 System.DateTime lastStaminaDate = this.LastApDate;
                 System.TimeSpan ts = now - lastStaminaDate;
                 int totalSeconds = (int)ts.TotalSeconds;
-                actionPoint = (int)(totalSeconds / 180) + this.Ap;
+                actionPoint = (int)(totalSeconds / App.Util.Global.Constant.recover_ap_time) + this.Ap;
                 if(actionPoint > this.MaxAp){
                     actionPoint = this.MaxAp;
                 }

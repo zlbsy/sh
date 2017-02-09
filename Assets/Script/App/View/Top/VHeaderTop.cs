@@ -79,7 +79,7 @@ namespace App.View.Top{
             DateTime lastApDate = ViewModel.LastApDate.Value;
             TimeSpan ts = App.Service.HttpClient.Now - lastApDate;
             int totalSeconds = (int)ts.TotalSeconds;
-            int apSeconds = 180 - totalSeconds % 180;
+            int apSeconds = Global.Constant.recover_ap_time - totalSeconds % Global.Constant.recover_ap_time;
             ap.text = string.Format("{0}  <color=\"#FFFFFFFF\">{1}:{2}</color>", ap.text, (int)(apSeconds / 60), (apSeconds % 60).ToString("00"));
         }
     }

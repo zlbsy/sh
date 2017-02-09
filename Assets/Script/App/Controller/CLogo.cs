@@ -73,6 +73,10 @@ namespace App.Controller{
             yield return scene.StartCoroutine(sUser.Download(TopMapAsset.Url, versions.top_map, (AssetBundle assetbundle)=>{
                 TopMapAsset.assetbundle = assetbundle;
             }));
+            yield return scene.StartCoroutine(sUser.Download(ConstantAsset.Url, versions.constant, (AssetBundle assetbundle)=>{
+                ConstantAsset.assetbundle = assetbundle;
+                Global.Constant = ConstantAsset.Data.constant;
+            }));
             CLoadingDialog.SetProgress(40f);
             yield return scene.StartCoroutine(sUser.Download(AssetBundleManager.characterUrl, versions.character, (AssetBundle assetbundle)=>{
                 AssetBundleManager.character = assetbundle;

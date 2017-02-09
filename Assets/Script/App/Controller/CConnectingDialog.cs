@@ -19,7 +19,7 @@ namespace App.Controller{
             StartCoroutine(Run());
 		}
         private IEnumerator Run(){
-            image.eulerAngles =  new Vector3(0, 0, image.eulerAngles.z + 5);
+            image.eulerAngles =  new Vector3(0, 0, image.eulerAngles.z - 5);
             yield return new WaitForEndOfFrame();
             StartCoroutine(Run());
         }

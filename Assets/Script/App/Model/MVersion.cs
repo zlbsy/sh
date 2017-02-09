@@ -10,6 +10,7 @@ namespace App.Model{
         public int building;
         public int prompt_message;
         public int character;
+        public int constant;
         public int horse;
         public int hat;
         public int map;

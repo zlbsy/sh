@@ -29,6 +29,10 @@ namespace App.Controller{
             {
                 this.StartCoroutine(CreateScriptableObjectMasterBuildingRun());
             }
+            if (GUI.Button(new Rect(150, 200, 100, 30), "Create Constant"))
+            {
+                this.StartCoroutine(CreateScriptableObjectMasterConstantRun());
+            }
 
             if (GUI.Button(new Rect(350, 50, 100, 30), "Create Prompt"))
             {
@@ -74,6 +78,17 @@ namespace App.Controller{
             buildingAsset.buildings = sMaster.responseAll.buildings;
 
             UnityEditor.AssetDatabase.CreateAsset(buildingAsset, string.Format("Assets/Editor Default Resources/ScriptableObject/{0}.asset", App.Model.Scriptable.BuildingAsset.Name));
+            UnityEditor.AssetDatabase.Refresh();
+        }
+        IEnumerator CreateScriptableObjectMasterConstantRun()
+        {
+            var constantAsset = ScriptableObject.CreateInstance<App.Model.Scriptable.ConstantAsset>();
+
+            SEditorMaster sMaster = new SEditorMaster();
+            yield return StartCoroutine (sMaster.RequestAll("constant"));
+            constantAsset.constant = sMaster.responseAll.constant;
+
+            UnityEditor.AssetDatabase.CreateAsset(constantAsset, string.Format("Assets/Editor Default Resources/ScriptableObject/{0}.asset", App.Model.Scriptable.ConstantAsset.Name));
             UnityEditor.AssetDatabase.Refresh();
         }
 	}

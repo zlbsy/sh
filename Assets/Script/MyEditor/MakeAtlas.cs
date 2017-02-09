@@ -100,7 +100,7 @@ namespace MyEditor
                 }
                 List<Sprite> assets = new List<Sprite>();
                 //string path = dir + "/" + dirInfo.Name + ".assetbundle";
-                string path = dir + "/" + dirInfo.Name + ".unity3d";
+                string path = dir + dirInfo.Name + ".unity3d";
                 Debug.Log("path=" + path);
                 foreach (FileInfo pngFile in dirInfo.GetFiles("*.png",SearchOption.AllDirectories))
                 {
@@ -125,6 +125,11 @@ namespace MyEditor
         static private void BuildAssetBundleAvatar()
         {
             BuildAssetBundleMaster(App.Model.Avatar.AvatarAsset.Name);
+        }
+        [MenuItem("SH/Build Assetbundle/Master/Constant")]
+        static private void BuildAssetBundleConstant()
+        {
+            BuildAssetBundleMaster(App.Model.Scriptable.ConstantAsset.Name);
         }
         [MenuItem("SH/Build Assetbundle/Master/Tile")]
         static private void BuildAssetBundleTile()
