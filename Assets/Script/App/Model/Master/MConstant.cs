@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace App.Model.Master{
     /**
-     * 多语言对应
+     * 静态变量类
      */
     [System.Serializable]
-	public class MWord {
-        public MWord(){
+	public class MConstant {
+        public MConstant(){
         }
-        public string key;
-        public string value;
+        public int recoverApTime;
 	}
 }

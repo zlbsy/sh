@@ -5,6 +5,10 @@ using UnityEngine.UI;
 using System;
 
 namespace App.Service{
+    public class HttpResponse{
+        public DateTime now;
+        public bool result = false;
+    }
 	public class HttpClient {
 		public HttpClient(){
         }
@@ -35,12 +39,23 @@ namespace App.Service{
 					yield break;
 				}
                 Debug.Log("HttpClient : " + www.text);
-                text = www.text;
-                if (text.IndexOf("\"result\":0") >= 0)
+                HttpResponse response = Deserialize<HttpResponse>(www.text);
+                Debug.LogError("response = " + response.result + ", " + response.now);
+                if (!response.result)
                 {
                     Debug.LogError("Error");
                 }
+                text = www.text;
+                /*if (text.IndexOf("\"result\":0") >= 0)
+                {
+                    Debug.LogError("Error");
+                }*/
                 isWaiting = false;
+                if (response.now > DateTime.MinValue) 
+                {
+                    lastReceivedServerTime = response.now;
+                    lastReceivedClientTime = DateTime.Now;
+                }
 			}
         }
         public static string assetBandleURL{
@@ -73,7 +88,18 @@ namespace App.Service{
 
 			// デコード結果
 			return result;
-		}
+        }
+        static private DateTime lastReceivedServerTime;
+        static private DateTime lastReceivedClientTime;
+
+        static public TimeSpan TimeSpanClientAndServerTime
+        {
+            get { return lastReceivedClientTime - lastReceivedServerTime; }
+        }
+        static public DateTime Now
+        {
+            get { return DateTime.Now - TimeSpanClientAndServerTime; }
+        }
 		/*public T GetResult(){
 			//T resultObject = JsonUtility.FromJson <T>(text);
 			T resultObject = Deserialize <T>(text);

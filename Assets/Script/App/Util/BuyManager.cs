@@ -10,10 +10,10 @@ namespace App.Util{
             MUser mUser = Global.SUser.user;
             if (priceType == "gold")
             {
-                return mUser.gold >= price;
+                return mUser.Gold >= price;
             }else if (priceType == "silver")
             {
-                return mUser.silver >= price;
+                return mUser.Silver >= price;
             }
             return false;
         }

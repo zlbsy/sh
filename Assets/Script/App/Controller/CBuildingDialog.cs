@@ -18,7 +18,7 @@ namespace App.Controller{
 		{  
             yield return StartCoroutine(base.OnLoad(request));
             tileIndex = request.Get<int>("tile_index");
-            App.Model.Master.MBuilding[] builds = BuildingCacher.Instance.GetAll(Global.SUser.user.level);
+            App.Model.Master.MBuilding[] builds = BuildingCacher.Instance.GetAll(Global.SUser.user.Level);
             List<MBuilding> mBuildings = new List<MBuilding>();
             foreach(App.Model.Master.MBuilding build in builds){
                 MBuilding mBuilding = new MBuilding();
