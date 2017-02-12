@@ -19,6 +19,7 @@ namespace App.Controller{
         [HideInInspector]public int index;
         private bool _isClose;
         private static int dialogIndex = 0;
+        protected System.Action closeEvent;
         public static int GetIndex(){
             return dialogIndex++;
         }
@@ -30,7 +31,7 @@ namespace App.Controller{
             if (panel == null){
                 panel = this.transform.FindChild("Panel");
                 GameObject backgroundObj = App.Util.Global.SceneManager.LoadPrefab("DialogBackground");
-                backgroundObj.transform.parent = this.transform;
+                backgroundObj.transform.SetParent(this.transform);
                 RectTransform rect = backgroundObj.GetComponent<RectTransform>();
                 rect.offsetMin = new Vector2(0f, 0f);
                 rect.offsetMax = new Vector2(0f, 0f);
@@ -51,6 +52,14 @@ namespace App.Controller{
         }
         public override IEnumerator OnLoad( Request request ) 
         {  
+            if (request != null && request.Has("closeEvent"))
+            {
+                closeEvent = request.Get<System.Action>("closeEvent");
+            }
+            else
+            {
+                closeEvent = null;
+            }
             HOTween.To(background, 0.1f, new TweenParms().Prop("color", new Color(0,0,0,0.5f)));
             if (opentype == OpenType.Middle)
             {
@@ -79,6 +88,9 @@ namespace App.Controller{
         }
         public void Delete(){
             HOTween.To(background, 0.1f, new TweenParms().Prop("color", new Color(0,0,0,0)).OnComplete(()=>{
+                if(closeEvent != null){
+                    closeEvent();
+                }
                 App.Util.Global.SceneManager.DestoryDialog(this);
             }));
         }

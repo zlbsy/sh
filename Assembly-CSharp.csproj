@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\HOTween\_Demo\HOTweenDemoBrain.cs" />
+     <Compile Include="Assets\Script\App\Controller\CAlertDialog.cs" />
      <Compile Include="Assets\Script\App\Controller\CBase.cs" />
      <Compile Include="Assets\Script\App\Controller\CBattlefield.cs" />
      <Compile Include="Assets\Script\App\Controller\CBuildingDialog.cs" />
@@ -88,9 +89,9 @@
      <Compile Include="Assets\Script\App\Service\SBase.cs" />
      <Compile Include="Assets\Script\App\Service\SBattlefield.cs" />
      <Compile Include="Assets\Script\App\Service\SMaster.cs" />
+     <Compile Include="Assets\Script\App\Service\SShop.cs" />
      <Compile Include="Assets\Script\App\Service\SUser.cs" />
      <Compile Include="Assets\Script\App\UGUI\UGImage.cs" />
-     <Compile Include="Assets\Script\App\UGUI\UGImageEditor.cs" />
      <Compile Include="Assets\Script\App\Util\AssetBundleManager.cs" />
      <Compile Include="Assets\Script\App\Util\BuyManager.cs" />
      <Compile Include="Assets\Script\App\Util\Cacher\BuildingCacher.cs" />

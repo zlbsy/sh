@@ -5,8 +5,9 @@ using UnityEngine;
 namespace App.UGUI{
     public class UGImage: UnityEngine.UI.Image {
         public bool tofullScreen = false;
-        void Start()
+        protected override void Start()
         {
+            base.Start();
             if (tofullScreen)
             {
                 int imgWidth = this.mainTexture.width;

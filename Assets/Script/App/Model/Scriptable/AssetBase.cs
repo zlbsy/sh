@@ -9,7 +9,7 @@ namespace App.Model.Scriptable{
         where TClass : class,new()
     {
         private static TClass _data;
-        private static AssetBundle _assetbundle = null;
+        //private static AssetBundle _assetbundle = null;
         public static AssetBundle assetbundle{
             set{ 
                 //_assetbundle = value;

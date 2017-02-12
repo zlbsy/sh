@@ -5,8 +5,9 @@ using App.Service;
 using App.Model;
 using App.View;
 using System.IO;
+#if UNITY_EDITOR
 using UnityEditor;
-
+#endif
 
 namespace App.Controller{
     public class CMasterScene : CScene {
@@ -14,7 +15,7 @@ namespace App.Controller{
 		{  
 			yield return 0;
         }
-
+        #if UNITY_EDITOR
         void OnGUI()
         {
             if (GUI.Button(new Rect(150, 50, 100, 30), "Create tiles"))
@@ -91,5 +92,6 @@ namespace App.Controller{
             UnityEditor.AssetDatabase.CreateAsset(constantAsset, string.Format("Assets/Editor Default Resources/ScriptableObject/{0}.asset", App.Model.Scriptable.ConstantAsset.Name));
             UnityEditor.AssetDatabase.Refresh();
         }
+        #endif
 	}
 }

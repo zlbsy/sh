@@ -1,0 +1,25 @@
+ManifestFileVersion: 0
+CRC: 3515784116
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 64cbe17fa4ee808f5f23dadf4018078d
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 4d24bf54f46935ed9e6cf78ac481bb9d
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+Assets:
+- Assets/Atlas/map/tile_6.png
+- Assets/Atlas/map/tile_3.png
+- Assets/Atlas/map/tile_4.png
+- Assets/Atlas/map/tile_7.png
+- Assets/Atlas/map/tile_1.png
+- Assets/Atlas/map/tile_2.png
+- Assets/Atlas/map/tile_0.png
+- Assets/Atlas/map/tile_5.png
+Dependencies: []

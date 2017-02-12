@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+#if UNITY_EDITOR
 using UnityEditor;
 using System.IO;
 
@@ -83,36 +84,6 @@ namespace MyEditor
             BuildAssetBundle("");
         }
 
-        static private void BuildAssetBundle(string atlasName)
-        {
-            string dir = Application.dataPath + "/Editor Default Resources/assetbundle/";
-
-            if (!Directory.Exists(dir))
-            {
-                Directory.CreateDirectory(dir);
-            }
-            DirectoryInfo rootDirInfo = new DirectoryInfo(Application.dataPath + "/Atlas");
-            foreach (DirectoryInfo dirInfo in rootDirInfo.GetDirectories())
-            {
-                if (!string.IsNullOrEmpty(atlasName) && dirInfo.FullName.IndexOf("/Atlas/" + atlasName) < 0)
-                {
-                    continue;
-                }
-                List<Sprite> assets = new List<Sprite>();
-                //string path = dir + "/" + dirInfo.Name + ".assetbundle";
-                string path = dir + dirInfo.Name + ".unity3d";
-                Debug.Log("path=" + path);
-                foreach (FileInfo pngFile in dirInfo.GetFiles("*.png",SearchOption.AllDirectories))
-                {
-                    string allPath = pngFile.FullName;
-                    string assetPath = allPath.Substring(allPath.IndexOf("Assets"));
-                    assets.Add(AssetDatabase.LoadAssetAtPath<Sprite>(assetPath));
-                }
-                if (BuildPipeline.BuildAssetBundle(null, assets.ToArray(), path, BuildAssetBundleOptions.ChunkBasedCompression | BuildAssetBundleOptions.CollectDependencies, GetBuildTarget()))
-                {
-                }
-            }	
-        }
         [MenuItem("SH/Build Assetbundle/Master/All")]
         static private void BuildAssetBundleMasterAll()
         {
@@ -155,31 +126,72 @@ namespace MyEditor
         {
             string assetPath = string.Format("ScriptableObject/{0}.asset", name);
             ScriptableObject asset = EditorGUIUtility.Load(assetPath) as ScriptableObject;
-            Debug.LogError("BuildAssetBundleMaster:" + assetPath + ", " + asset);
             if (asset == null)
             {
                 return;
             }
-            List<ScriptableObject> assets = new List<ScriptableObject>();
-            assets.Add(asset);
-            string dir = Application.dataPath + "/Editor Default Resources/assetbundle/";
+            /*List<ScriptableObject> assets = new List<ScriptableObject>();
+            assets.Add(asset);*/
+            string dir = "Editor Default Resources/assetbundle/";
+            /*
+            if (!Directory.Exists(dir))
+            {
+                Directory.CreateDirectory(dir);
+            }*/
+            string path = "Assets/" + dir;
+            assetPath = string.Format("Assets/Editor Default Resources/ScriptableObject/{0}.asset", name);
+            AssetBundleBuild[] builds = new AssetBundleBuild[1];
+            builds[0].assetBundleName = name + ".unity3d";
+            string[] enemyAssets = new string[1];
+            enemyAssets[0] = assetPath;
+            builds[0].assetNames = enemyAssets;
+            BuildPipeline.BuildAssetBundles(path,builds,
+                BuildAssetBundleOptions.ChunkBasedCompression
+                ,GetBuildTarget()
+            );
+            Debug.LogError("BuildAssetBundleMaster success : "+name);
+        }
+        static private void BuildAssetBundle(string atlasName)
+        {
+            /*string dir = Application.dataPath + "/Editor Default Resources/assetbundle/";
 
             if (!Directory.Exists(dir))
             {
                 Directory.CreateDirectory(dir);
-            }
-            string path = dir + "/" + name + ".unity3d";
-            assetPath = string.Format("{0}/Editor Default Resources/ScriptableObject/{1}.asset", Application.dataPath, name);
-            //File.Delete(path);
-            Debug.LogError("path="+path);
-            if (BuildPipeline.BuildAssetBundle(null, assets.ToArray(), path, BuildAssetBundleOptions.ChunkBasedCompression | BuildAssetBundleOptions.CollectDependencies, GetBuildTarget()))
-            {
-            }
-            /*if (toDelete)
-            {
-                File.Delete(assetPath);
             }*/
-            Debug.LogError("assetPath="+assetPath);
+            DirectoryInfo rootDirInfo = new DirectoryInfo(Application.dataPath + "/Atlas");
+            List<AssetBundleBuild> builds = new List<AssetBundleBuild>();
+            foreach (DirectoryInfo dirInfo in rootDirInfo.GetDirectories())
+            {
+                if (!string.IsNullOrEmpty(atlasName) && dirInfo.FullName.IndexOf("/Atlas/" + atlasName) < 0)
+                {
+                    continue;
+                }
+                //List<Sprite> assets = new List<Sprite>();
+                List<string> paths = new List<string>();
+                //string path = dir + dirInfo.Name + ".unity3d";
+                foreach (FileInfo pngFile in dirInfo.GetFiles("*.png",SearchOption.AllDirectories))
+                {
+                    string allPath = pngFile.FullName;
+                    string assetPath = allPath.Substring(allPath.IndexOf("Assets"));
+                    //assets.Add(AssetDatabase.LoadAssetAtPath<Sprite>(assetPath));
+                    paths.Add(assetPath);
+                }
+                AssetBundleBuild build = new AssetBundleBuild();
+                build.assetBundleName = dirInfo.Name + ".unity3d";
+                build.assetNames = paths.ToArray();
+                builds.Add(build);
+                /*if (BuildPipeline.BuildAssetBundle(null, assets.ToArray(), path, BuildAssetBundleOptions.ChunkBasedCompression | BuildAssetBundleOptions.CollectDependencies, GetBuildTarget()))
+                {
+                }*/
+                Debug.LogError("BuildAssetBundle success : "+dirInfo.Name);
+            } 
+            string path = "Assets/Editor Default Resources/assetbundle/";
+            BuildPipeline.BuildAssetBundles(path,builds.ToArray(),
+                BuildAssetBundleOptions.ChunkBasedCompression
+                ,GetBuildTarget()
+            );
+            Debug.LogError("BuildAssetBundle over ");  
         }
 
         [MenuItem("SH/Create ScriptableObject/AvatarAsset")]
@@ -192,18 +204,19 @@ namespace MyEditor
         }
 
 
-
         static public BuildTarget GetBuildTarget()
         {
-            BuildTarget target = BuildTarget.WebPlayer;
             #if UNITY_STANDALONE
-		target = BuildTarget.StandaloneWindows;
+            return BuildTarget.StandaloneWindows;
             #elif UNITY_IPHONE
-            target = BuildTarget.iOS;
+            return BuildTarget.iOS;
             #elif UNITY_ANDROID
-		target = BuildTarget.Android;
+            return BuildTarget.Android;
+            #else
+            return BuildTarget.WebPlayer;
             #endif
-            return target;
         }
     }
 }
+
+#endif

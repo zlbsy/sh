@@ -23,7 +23,7 @@ namespace App.Controller{
             foreach(App.Model.Master.MBuilding build in builds){
                 MBuilding mBuilding = new MBuilding();
                 GameObject obj = Instantiate(childItem);
-                obj.transform.parent = content;
+                obj.transform.SetParent(content);
                 obj.transform.localScale = Vector3.one;
                 VBuildingChild vBuildintChild = obj.GetComponent<VBuildingChild>();
                 vBuildintChild.BindingContext = mBuilding.ViewModel;
@@ -43,19 +43,30 @@ namespace App.Controller{
             {
                 if (BuyManager.CanBuy(buildingMaster.price, buildingMaster.price_type))
                 {
-                    App.Model.Master.MTopMap topMapMaster = TopMapCacher.Instance.Get(vTopMap.ViewModel.MapId.Value);
-                    Vector2 coordinate = topMapMaster.GetCoordinateFromIndex(tileIndex);
-                    App.Model.MTile currentTile = App.Model.MTile.Create(buildingMaster.tile_id, (int)coordinate.x, (int)coordinate.y);
-                    List<App.Model.MTile> tileList = vTopMap.ViewModel.Tiles.Value.ToList();
-                    tileList.Add(currentTile);
-                    vTopMap.ViewModel.Tiles.Value = tileList.ToArray();
-                    this.Close();
+                    this.StartCoroutine(Build(mBuilding.TileId, vTopMap, buildingMaster));
+                }
+                else
+                {
+                    //Confirm dialog
                 }
             }
             else
             {
                 //Confirm dialog
+                CAlertDialog.Show("已经达到了购买的上限了！");
             }
+        }
+        private IEnumerator Build(int buildId, VTopMap vTopMap, App.Model.Master.MBuilding buildingMaster){
+            App.Model.Master.MTopMap topMapMaster = TopMapCacher.Instance.Get(vTopMap.ViewModel.MapId.Value);
+            Vector2 coordinate = topMapMaster.GetCoordinateFromIndex(tileIndex);
+            SShop sShop = new SShop();
+            yield return StartCoroutine(sShop.RequestBuyBuild(buildId, (int)coordinate.x, (int)coordinate.y));
+
+            App.Model.MTile currentTile = App.Model.MTile.Create(buildingMaster.tile_id, (int)coordinate.x, (int)coordinate.y);
+            List<App.Model.MTile> tileList = vTopMap.ViewModel.Tiles.Value.ToList();
+            tileList.Add(currentTile);
+            vTopMap.ViewModel.Tiles.Value = tileList.ToArray();
+            this.Close();
         }
 	}
 }

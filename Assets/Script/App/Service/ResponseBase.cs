@@ -6,11 +6,8 @@ using App.Model;
 
 namespace App.Service{
     public class ResponseBase {
-        public int result;
-        public bool isScuess{
-            get{ 
-                return result == 1;
-            }
-        }
+        public System.DateTime now;
+        public bool result = false;
+        public App.Model.MUser user;
 	}
 }

@@ -5,10 +5,6 @@ using UnityEngine.UI;
 using System;
 
 namespace App.Service{
-    public class HttpResponse{
-        public DateTime now;
-        public bool result = false;
-    }
 	public class HttpClient {
 		public HttpClient(){
         }
@@ -22,7 +18,7 @@ namespace App.Service{
 		string text;
         public bool isWaiting = false;
         public IEnumerator Send(string path, WWWForm form = null){
-            Debug.Log("Send : " + path);
+            //Debug.Log("Send : " + path +"?ssid=" +App.Util.Global.ssid+"&shop_type=building&child_id=" + (form != null ? form.ToString():null));
             isWaiting = true;
             if (!string.IsNullOrEmpty(App.Util.Global.ssid))
             {
@@ -39,17 +35,21 @@ namespace App.Service{
 					yield break;
 				}
                 Debug.Log("HttpClient : " + www.text);
-                HttpResponse response = Deserialize<HttpResponse>(www.text);
-                Debug.LogError("response = " + response.result + ", " + response.now);
+                ResponseBase response = Deserialize<ResponseBase>(www.text);
+                //Debug.LogError("response = " + response);
+                //Debug.LogError("response.result = " + response.result + ", response.now = " + response.now);
                 if (!response.result)
                 {
                     Debug.LogError("Error");
                 }
-                text = www.text;
-                /*if (text.IndexOf("\"result\":0") >= 0)
+                if (response.user != null)
                 {
-                    Debug.LogError("Error");
-                }*/
+                    if (App.Util.Global.SUser.user != null)
+                    {
+                        App.Util.Global.SUser.user.Update(response.user);
+                    }
+                }
+                text = www.text;
                 isWaiting = false;
                 if (response.now > DateTime.MinValue) 
                 {

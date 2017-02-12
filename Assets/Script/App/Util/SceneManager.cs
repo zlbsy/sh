@@ -12,7 +12,8 @@ namespace App.Util{
         public enum Prefabs{
             BuildingDialog,
             LoadingDialog,
-            ConnectingDialog
+            ConnectingDialog,
+            AlertDialog,
         }
         public static App.Controller.CScene CurrentScene;
         public static App.Controller.Request CurrentSceneRequest;

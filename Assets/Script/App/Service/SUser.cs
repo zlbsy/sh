@@ -7,8 +7,7 @@ using System.Linq;
 
 namespace App.Service{
     /**
-     * Master数据每次检索更新版本号，只获取需要更新的数据AssetBundle
-     * 数据保存格式为ScriptableObject
+     * 
     */
 	public class SUser : SBase {
         public MUser user;
@@ -17,7 +16,6 @@ namespace App.Service{
 		}
         public class ResponseAll : ResponseBase
 		{
-            public MUser user;
             public string ssid;
             public MVersion versions;
 		}

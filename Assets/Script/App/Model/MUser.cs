@@ -97,5 +97,31 @@ namespace App.Model{
         public MTile GetTile(int x, int y){
             return System.Array.Find(TopMap, _=>_.x == x && _.y == y);
         }
+        public void Update(MUser user){
+            if(user.Gold != this.Gold){
+                this.Gold = user.Gold;
+            }
+            if(user.Silver != this.Silver){
+                this.Silver = user.Silver;
+            }
+            if(user.Nickname != this.Nickname){
+                this.Nickname = user.Nickname;
+            }
+            if(user.Level != this.Level){
+                this.Level = user.Level;
+            }
+            if(user.Ap != this.Ap){
+                this.Ap = user.Ap;
+            }
+            if(user.MapId != this.MapId){
+                this.MapId = user.MapId;
+            }
+            if(user.LastApDate != this.LastApDate){
+                this.LastApDate = user.LastApDate;
+            }
+            if(user.TopMap != null){
+                this.TopMap = user.TopMap;
+            }
+        }
 	}
 }
