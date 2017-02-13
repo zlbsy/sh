@@ -1,7 +1,7 @@
 ManifestFileVersion: 0
-CRC: 1188765808
+CRC: 1256451876
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
-      Name: map.unity3d
+      Name: promptmessageasset.unity3d
       Dependencies: {}

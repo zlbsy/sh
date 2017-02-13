@@ -47,18 +47,25 @@ namespace App.Controller{
             if (PromptMessageAsset.Data == null)
             {
                 yield return new WaitForEndOfFrame();
-                yield return StartCoroutine(SetDefaultPromptMessage());   
+                StartCoroutine(SetDefaultPromptMessage());
+                yield break;
             }
             if (promptMessages == null)
             {
                 promptMessages = PromptMessageAsset.Data.promptMessages;
                 System.Array.Sort(promptMessages, (a, b)=>{return Random.Range(0f, 1f) > 0.5 ? 1 : -1;});
             }
-            MPromptMessage promptMessage = promptMessages[promptMessageIndex];
+            if (promptMessageIndex >= promptMessages.Length)
+            {
+                promptMessageIndex = 0;
+            }
+            MPromptMessage promptMessage = promptMessages[promptMessageIndex++];
             message.text = promptMessage.message;
             review.material.mainTexture = promptMessage.image;
             message.gameObject.SetActive(true);
             review.gameObject.SetActive(true);
+            yield return new WaitForSeconds(1f);
+            StartCoroutine(SetDefaultPromptMessage());
         }
         public static void ToShow(){
             SceneManager.CurrentScene.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.LoadingDialog));
