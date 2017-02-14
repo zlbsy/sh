@@ -22,17 +22,19 @@ namespace App.Controller{
         private MTopMap mTopMap;
         public override IEnumerator OnLoad( Request request ) 
 		{  
-            MUser mUser = App.Util.Global.SUser.user;
-            InitHeader(mUser);
-            InitMap(mUser);
+            InitHeader();
+            InitMap();
+            yield break;
         }
-        private void InitHeader(MUser mUser){
+        private void InitHeader(){
+            MUser mUser = App.Util.Global.SUser.user;
             headerFace.BindingContext = mUser.ViewModel;
             headerFace.ResetAll();
             headerTop.BindingContext = mUser.ViewModel;
             headerTop.ResetAll();
         }
-        private void InitMap(MUser mUser){
+        private void InitMap(){
+            MUser mUser = App.Util.Global.SUser.user;
             //地图需要判断是否变化，所以另准备一个Model
             mTopMap = new MTopMap();
             mTopMap.MapId = mUser.MapId;
