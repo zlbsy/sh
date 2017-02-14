@@ -22,7 +22,6 @@ namespace App.Controller{
         private MTopMap mTopMap;
         public override IEnumerator OnLoad( Request request ) 
 		{  
-            yield return StartCoroutine (App.Util.Global.SUser.RequestGet());
             MUser mUser = App.Util.Global.SUser.user;
             InitHeader(mUser);
             InitMap(mUser);
@@ -44,7 +43,7 @@ namespace App.Controller{
             vTopMap.MoveToCenter();
         }
         public void OnClickTile(int index){
-            App.Model.Master.MTopMap topMapMaster = TopMapCacher.Instance.Get(mTopMap.MapId);
+            App.Model.Master.MBaseMap topMapMaster = BaseMapCacher.Instance.Get(mTopMap.MapId);
             Vector2 coordinate = topMapMaster.GetCoordinateFromIndex(index);
             App.Model.Master.MTile tileMaster = topMapMaster.tiles[index];
             App.Model.MTile tile = System.Array.Find(mTopMap.Tiles, _=>_.x == coordinate.x && _.y == coordinate.y);
@@ -81,6 +80,9 @@ namespace App.Controller{
         }
         public VTopMap GetVTopMap(){
             return vTopMap;
+        }
+        public void GotoWorld(){
+            App.Util.SceneManager.LoadScene( App.Util.SceneManager.Scenes.World.ToString() );
         }
 	}
 }

@@ -18,30 +18,30 @@ namespace App.Controller{
         #if UNITY_EDITOR
         void OnGUI()
         {
-            if (GUI.Button(new Rect(150, 50, 100, 30), "Create tiles"))
+            if (GUI.Button(new Rect(150, 50, 100, 30), "tiles"))
             {
                 this.StartCoroutine(CreateScriptableObjectMasterTileRun());
             }
-            if (GUI.Button(new Rect(150, 100, 100, 30), "Create top_maps"))
+            if (GUI.Button(new Rect(150, 100, 100, 30), "base_maps"))
             {
                 this.StartCoroutine(CreateScriptableObjectMasterTopMapRun());
             }
-            if (GUI.Button(new Rect(150, 150, 100, 30), "Create buildings"))
+            if (GUI.Button(new Rect(150, 150, 100, 30), "buildings"))
             {
                 this.StartCoroutine(CreateScriptableObjectMasterBuildingRun());
             }
-            if (GUI.Button(new Rect(150, 200, 100, 30), "Create Constant"))
+            if (GUI.Button(new Rect(150, 200, 100, 30), "Constant"))
             {
                 this.StartCoroutine(CreateScriptableObjectMasterConstantRun());
             }
 
-            if (GUI.Button(new Rect(350, 50, 100, 30), "Create Prompt"))
+            if (GUI.Button(new Rect(350, 50, 100, 30), "Prompt"))
             {
                 var promptMessageAsset = ScriptableObject.CreateInstance<App.Model.Scriptable.PromptMessageAsset>();
                 UnityEditor.AssetDatabase.CreateAsset(promptMessageAsset, string.Format("Assets/Editor Default Resources/ScriptableObject/{0}.asset", App.Model.Scriptable.PromptMessageAsset.Name));
                 UnityEditor.AssetDatabase.Refresh();
             }
-            if (GUI.Button(new Rect(350, 100, 100, 30), "Create Language"))
+            if (GUI.Button(new Rect(350, 100, 100, 30), "Language"))
             {
                 var languageAsset = ScriptableObject.CreateInstance<App.Model.Scriptable.LanguageAsset>();
                 UnityEditor.AssetDatabase.CreateAsset(languageAsset, string.Format("Assets/Editor Default Resources/ScriptableObject/{0}.asset", App.Model.Scriptable.LanguageAsset.Name));
@@ -50,13 +50,13 @@ namespace App.Controller{
         }
         IEnumerator CreateScriptableObjectMasterTopMapRun()
         {
-            var topMapAsset = ScriptableObject.CreateInstance<App.Model.Scriptable.TopMapAsset>();
+            var baseMapAsset = ScriptableObject.CreateInstance<App.Model.Scriptable.BaseMapAsset>();
 
             SEditorMaster sMaster = new SEditorMaster();
-            yield return StartCoroutine (sMaster.RequestAll("top_map"));
-            topMapAsset.topMaps = sMaster.responseAll.top_maps;
+            yield return StartCoroutine (sMaster.RequestAll("base_map"));
+            baseMapAsset.baseMaps = sMaster.responseAll.base_maps;
 
-            UnityEditor.AssetDatabase.CreateAsset(topMapAsset, string.Format("Assets/Editor Default Resources/ScriptableObject/{0}.asset", App.Model.Scriptable.TopMapAsset.Name));
+            UnityEditor.AssetDatabase.CreateAsset(baseMapAsset, string.Format("Assets/Editor Default Resources/ScriptableObject/{0}.asset", App.Model.Scriptable.BaseMapAsset.Name));
             UnityEditor.AssetDatabase.Refresh();
         }
         IEnumerator CreateScriptableObjectMasterTileRun()

@@ -49,8 +49,9 @@ namespace App.Controller{
             CLoadingDialog.ToShow();
             yield return StartCoroutine(VersionCheck( App.Util.Global.SUser.versions ));
             TileCacher.Instance.Reset(App.Model.Scriptable.TileAsset.Data.tiles);
-            TopMapCacher.Instance.Reset(App.Model.Scriptable.TopMapAsset.Data.topMaps);
+            BaseMapCacher.Instance.Reset(App.Model.Scriptable.BaseMapAsset.Data.baseMaps);
             BuildingCacher.Instance.Reset(App.Model.Scriptable.BuildingAsset.Data.buildings);
+            yield return StartCoroutine (App.Util.Global.SUser.RequestGet());
             App.Util.SceneManager.LoadScene( App.Util.SceneManager.Scenes.Top.ToString() );
         }
         public IEnumerator VersionCheck(MVersion versions)
@@ -70,8 +71,8 @@ namespace App.Controller{
                 BuildingAsset.assetbundle = assetbundle;
             }));
             CLoadingDialog.SetProgress(30f);
-            yield return scene.StartCoroutine(sUser.Download(TopMapAsset.Url, versions.top_map, (AssetBundle assetbundle)=>{
-                TopMapAsset.assetbundle = assetbundle;
+            yield return scene.StartCoroutine(sUser.Download(BaseMapAsset.Url, versions.top_map, (AssetBundle assetbundle)=>{
+                BaseMapAsset.assetbundle = assetbundle;
             }));
             yield return scene.StartCoroutine(sUser.Download(ConstantAsset.Url, versions.constant, (AssetBundle assetbundle)=>{
                 ConstantAsset.assetbundle = assetbundle;

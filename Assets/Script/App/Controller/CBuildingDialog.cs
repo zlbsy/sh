@@ -39,8 +39,6 @@ namespace App.Controller{
             VTopMap vTopMap = (App.Util.SceneManager.CurrentScene as CTop).GetVTopMap();
             App.Model.MTile[] tiles = vTopMap.ViewModel.Tiles.Value;
             int currentNum = System.Array.FindAll(tiles, _ => _.tile_id == buildingMaster.tile_id).Length;
-            Debug.Log("currentNum="+currentNum);
-            Debug.Log("buildingMaster.sum="+buildingMaster.sum);
             if (currentNum < buildingMaster.sum)
             {
                 if (BuyManager.CanBuy(buildingMaster.price, buildingMaster.price_type))
@@ -59,7 +57,7 @@ namespace App.Controller{
             }
         }
         private IEnumerator Build(int buildId, VTopMap vTopMap, App.Model.Master.MBuilding buildingMaster){
-            App.Model.Master.MTopMap topMapMaster = TopMapCacher.Instance.Get(vTopMap.ViewModel.MapId.Value);
+            App.Model.Master.MBaseMap topMapMaster = BaseMapCacher.Instance.Get(vTopMap.ViewModel.MapId.Value);
             Vector2 coordinate = topMapMaster.GetCoordinateFromIndex(tileIndex);
             SShop sShop = new SShop();
             yield return StartCoroutine(sShop.RequestBuyBuild(buildId, (int)coordinate.x, (int)coordinate.y));

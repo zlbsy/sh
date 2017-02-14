@@ -41,18 +41,18 @@ namespace App.View{
         }
         private void MapIdChanged(int oldvalue, int newvalue)
         {
-            App.Model.Master.MTopMap topMapMaster = TopMapCacher.Instance.Get(newvalue);
-            ResetAll(topMapMaster);
+            App.Model.Master.MBaseMap baseMapMaster = BaseMapCacher.Instance.Get(newvalue);
+            ResetAll(baseMapMaster);
         }
         private void TilesChanged(App.Model.MTile[] oldvalue, App.Model.MTile[] newvalue)
         {
             ResetAll();
         }
         #endregion
-        public void ResetAll(App.Model.Master.MTopMap topMapMaster = null){
-            if (topMapMaster == null)
+        public void ResetAll(App.Model.Master.MBaseMap baseMapMaster = null){
+            if (baseMapMaster == null)
             {
-                topMapMaster = TopMapCacher.Instance.Get(ViewModel.MapId.Value);
+                baseMapMaster = BaseMapCacher.Instance.Get(ViewModel.MapId.Value);
             }
             int widthCount = 0;
             int heightCount = 0;
@@ -60,26 +60,26 @@ namespace App.View{
             foreach(VTile tile in tileUnits){
                 tile.gameObject.SetActive(false);
             }
-            foreach(App.Model.Master.MTile tile in topMapMaster.tiles){
+            foreach(App.Model.Master.MTile tile in baseMapMaster.tiles){
                 i = heightCount * mapWidth + widthCount;
                 VTile obj = tileUnits[i];
                 obj.gameObject.SetActive (true);
                 App.Model.MTile building = System.Array.Find(ViewModel.Tiles.Value, _=>_.x == widthCount && _.y == heightCount);
                 if(building != null)Debug.LogError(widthCount + ","+heightCount + ", " + building.Master);
-                obj.SetData(heightCount * topMapMaster.width + widthCount, tile.id, building != null ? building.Master.id : 0);
+                obj.SetData(heightCount * baseMapMaster.width + widthCount, tile.id, building != null ? building.Master.id : 0);
                 widthCount++;
-                if (widthCount >= topMapMaster.width)
+                if (widthCount >= baseMapMaster.width)
                 {
                     widthCount = 0;
                     heightCount++;
                 }
-                if (heightCount >= topMapMaster.height)
+                if (heightCount >= baseMapMaster.height)
                 {
                     break;
                 }
             }
             BoxCollider collider = this.GetComponent<BoxCollider>();
-            collider.size = new Vector3(topMapMaster.width * tileWidth + 0.345f, topMapMaster.height * tileHeight + 0.2f, 0f);
+            collider.size = new Vector3(baseMapMaster.width * tileWidth + 0.345f, baseMapMaster.height * tileHeight + 0.2f, 0f);
             collider.center = new Vector3(collider.size.x * 0.5f - 0.345f, -collider.size.y * 0.5f + 0.4f, 0f);
             mousePosition.x = int.MinValue;
         }
@@ -89,9 +89,9 @@ namespace App.View{
             }
         }
         public void MoveToCenter(){
-            App.Model.Master.MTopMap topMapMaster = TopMapCacher.Instance.Get(ViewModel.MapId.Value);
-            int widthCount = Mathf.FloorToInt(topMapMaster.width / 2f);
-            int heightCount = Mathf.FloorToInt(topMapMaster.height / 2f);
+            App.Model.Master.MBaseMap baseMapMaster = BaseMapCacher.Instance.Get(ViewModel.MapId.Value);
+            int widthCount = Mathf.FloorToInt(baseMapMaster.width / 2f);
+            int heightCount = Mathf.FloorToInt(baseMapMaster.height / 2f);
             int i = heightCount * mapWidth + widthCount;
             VTile obj = tileUnits[i];
             Camera3dToPosition(obj.transform.position.x, obj.transform.position.y - 9f);

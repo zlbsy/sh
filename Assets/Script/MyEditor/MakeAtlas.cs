@@ -88,7 +88,7 @@ namespace MyEditor
         static private void BuildAssetBundleMasterAll()
         {
             BuildAssetBundleTile();
-            BuildAssetBundleTopMap();
+            BuildAssetBundleBaseMap();
             BuildAssetBundleBuilding();
             BuildAssetBundlePromptMessage();
         }
@@ -107,10 +107,10 @@ namespace MyEditor
         {
             BuildAssetBundleMaster(App.Model.Scriptable.TileAsset.Name);
         }
-        [MenuItem("SH/Build Assetbundle/Master/TopMap")]
-        static private void BuildAssetBundleTopMap()
+        [MenuItem("SH/Build Assetbundle/Master/BaseMap")]
+        static private void BuildAssetBundleBaseMap()
         {
-            BuildAssetBundleMaster(App.Model.Scriptable.TopMapAsset.Name);
+            BuildAssetBundleMaster(App.Model.Scriptable.BaseMapAsset.Name);
         }
         [MenuItem("SH/Build Assetbundle/Master/PromptMessage")]
         static private void BuildAssetBundlePromptMessage()

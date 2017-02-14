@@ -16,7 +16,7 @@ namespace App.Service{
         {
             public App.Model.Master.MCharacter[] characters;
             public App.Model.Master.MTile[] tiles;
-            public App.Model.Master.MTopMap[] top_maps;
+            public App.Model.Master.MBaseMap[] base_maps;
             public App.Model.Master.MBuilding[] buildings;
             public App.Model.Master.MConstant constant;
 		}

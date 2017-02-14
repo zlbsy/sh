@@ -4,5 +4,5 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace App.Util.Cacher{
-    public class TopMapCacher: CacherBase<TopMapCacher, App.Model.Master.MTopMap> {}
+    public class BaseMapCacher: CacherBase<BaseMapCacher, App.Model.Master.MBaseMap> {}
 }

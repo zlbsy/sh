@@ -9,8 +9,8 @@ namespace App.Model.Master{
 	 * 玩家主页面原始地图
 	*/
     [System.Serializable]
-	public class MTopMap : MBase {
-        public MTopMap(){
+	public class MBaseMap : MBase {
+        public MBaseMap(){
 		}
         public int width;//横向格数
         public int height;//纵向格数
