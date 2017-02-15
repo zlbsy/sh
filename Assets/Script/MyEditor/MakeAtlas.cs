@@ -107,6 +107,11 @@ namespace MyEditor
         {
             BuildAssetBundleMaster(App.Model.Scriptable.TileAsset.Name);
         }
+        [MenuItem("SH/Build Assetbundle/Master/World")]
+        static private void BuildAssetBundleWorld()
+        {
+            BuildAssetBundleMaster(App.Model.Scriptable.WorldAsset.Name);
+        }
         [MenuItem("SH/Build Assetbundle/Master/BaseMap")]
         static private void BuildAssetBundleBaseMap()
         {

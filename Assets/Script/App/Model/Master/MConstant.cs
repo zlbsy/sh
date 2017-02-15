@@ -10,5 +10,6 @@ namespace App.Model.Master{
         public MConstant(){
         }
         public int recover_ap_time;
+        public int world_map_id = 1;
 	}
 }

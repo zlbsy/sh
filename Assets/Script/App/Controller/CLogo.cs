@@ -59,50 +59,61 @@ namespace App.Controller{
             Debug.LogError("VersionCheck");
             CScene scene = SceneManager.CurrentScene;
             SUser sUser = Global.SUser;
+            CLoadingDialog.SetNextProgress(10f);
             yield return scene.StartCoroutine(sUser.Download(PromptMessageAsset.Url, versions.prompt_message, (AssetBundle assetbundle)=>{
                 PromptMessageAsset.assetbundle = assetbundle;
             }));
-            CLoadingDialog.SetProgress(10f);
+
+            CLoadingDialog.SetNextProgress(20f);
             yield return scene.StartCoroutine(sUser.Download(TileAsset.Url, versions.tile, (AssetBundle assetbundle)=>{
                 TileAsset.assetbundle = assetbundle;
             }));
-            CLoadingDialog.SetProgress(20f);
+            CLoadingDialog.SetNextProgress(25f);
+            yield return scene.StartCoroutine(sUser.Download(WorldAsset.Url, versions.world, (AssetBundle assetbundle)=>{
+                WorldAsset.assetbundle = assetbundle;
+                List<App.Model.MTile> tileList = new List<MTile>();
+                foreach(App.Model.Master.MWorld world in WorldAsset.Data.worlds){
+                    tileList.Add(App.Model.MTile.Create(world.tile_id, world.x, world.y, world.level));
+                }
+                Global.worlds = tileList.ToArray();
+            }));
+            CLoadingDialog.SetNextProgress(30f);
             yield return scene.StartCoroutine(sUser.Download(BuildingAsset.Url, versions.building, (AssetBundle assetbundle)=>{
                 BuildingAsset.assetbundle = assetbundle;
             }));
-            CLoadingDialog.SetProgress(30f);
+            CLoadingDialog.SetNextProgress(40f);
             yield return scene.StartCoroutine(sUser.Download(BaseMapAsset.Url, versions.top_map, (AssetBundle assetbundle)=>{
                 BaseMapAsset.assetbundle = assetbundle;
             }));
+            CLoadingDialog.SetNextProgress(50f);
             yield return scene.StartCoroutine(sUser.Download(ConstantAsset.Url, versions.constant, (AssetBundle assetbundle)=>{
                 ConstantAsset.assetbundle = assetbundle;
                 Global.Constant = ConstantAsset.Data.constant;
             }));
-            CLoadingDialog.SetProgress(40f);
+            CLoadingDialog.SetNextProgress(60f);
             yield return scene.StartCoroutine(sUser.Download(AssetBundleManager.characterUrl, versions.character, (AssetBundle assetbundle)=>{
                 AssetBundleManager.character = assetbundle;
             }, false));
-            CLoadingDialog.SetProgress(50f);
+            CLoadingDialog.SetNextProgress(70f);
             yield return scene.StartCoroutine(sUser.Download(AssetBundleManager.horseUrl, versions.horse, (AssetBundle assetbundle)=>{
                 AssetBundleManager.horse = assetbundle;
             }, false));
-            CLoadingDialog.SetProgress(60f);
+            CLoadingDialog.SetNextProgress(80f);
             yield return scene.StartCoroutine(sUser.Download(AssetBundleManager.hatUrl, versions.hat, (AssetBundle assetbundle)=>{
                 AssetBundleManager.hat = assetbundle;
             }, false));
-            CLoadingDialog.SetProgress(70f);
+            CLoadingDialog.SetNextProgress(90f);
             yield return scene.StartCoroutine(sUser.Download(AssetBundleManager.mapUrl, versions.map, (AssetBundle assetbundle)=>{
                 AssetBundleManager.map = assetbundle;
             }, false));
-            CLoadingDialog.SetProgress(80f);
+            CLoadingDialog.SetNextProgress(95);
             yield return scene.StartCoroutine(sUser.Download(AssetBundleManager.clothesUrl, versions.clothes, (AssetBundle assetbundle)=>{
                 AssetBundleManager.clothes = assetbundle;
             }, false));
-            CLoadingDialog.SetProgress(90f);
+            CLoadingDialog.SetNextProgress(100f);
             yield return scene.StartCoroutine(sUser.Download(AssetBundleManager.weaponUrl, versions.weapon, (AssetBundle assetbundle)=>{
                 AssetBundleManager.weapon = assetbundle;
             }, false));
-            CLoadingDialog.SetProgress(100f);
             yield return 0;
         }
 	}

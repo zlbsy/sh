@@ -8,6 +8,7 @@ namespace App.Util{
         public static SUser SUser;
         public static string ssid;
         public static App.Model.Master.MConstant Constant;
+        public static App.Model.MTile[] worlds;
         public static SceneManager SceneManager { get; private set; }
         public static void Initialize()
         {

@@ -10,7 +10,17 @@ namespace App.Service{
         public IEnumerator Download (string url, int ver, System.Action<AssetBundle> handle, bool destory = true)
         {
             var www = WWW.LoadFromCacheOrDownload(url, ver);
-            yield return www;
+            while (!www.isDone)
+            {
+                App.Controller.CLoadingDialog.UpdatePlusProgress(www.progress);
+                if(!string.IsNullOrEmpty(www.error))
+                {
+                    Debug.LogError(www.error);
+                    break;
+                }
+                yield return null;
+            }
+            //yield return www;
             if(!string.IsNullOrEmpty(www.error))
             {
                 Debug.LogError(www.error);

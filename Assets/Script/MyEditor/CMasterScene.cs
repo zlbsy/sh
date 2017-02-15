@@ -24,7 +24,7 @@ namespace App.Controller{
             }
             if (GUI.Button(new Rect(150, 100, 100, 30), "base_maps"))
             {
-                this.StartCoroutine(CreateScriptableObjectMasterTopMapRun());
+                this.StartCoroutine(CreateScriptableObjectMasterBaseMapRun());
             }
             if (GUI.Button(new Rect(150, 150, 100, 30), "buildings"))
             {
@@ -33,6 +33,10 @@ namespace App.Controller{
             if (GUI.Button(new Rect(150, 200, 100, 30), "Constant"))
             {
                 this.StartCoroutine(CreateScriptableObjectMasterConstantRun());
+            }
+            if (GUI.Button(new Rect(150, 250, 100, 30), "world"))
+            {
+                this.StartCoroutine(CreateScriptableObjectMasterWorldRun());
             }
 
             if (GUI.Button(new Rect(350, 50, 100, 30), "Prompt"))
@@ -48,7 +52,18 @@ namespace App.Controller{
                 UnityEditor.AssetDatabase.Refresh();
             }
         }
-        IEnumerator CreateScriptableObjectMasterTopMapRun()
+        IEnumerator CreateScriptableObjectMasterWorldRun()
+        {
+            var worldAsset = ScriptableObject.CreateInstance<App.Model.Scriptable.WorldAsset>();
+
+            SEditorMaster sMaster = new SEditorMaster();
+            yield return StartCoroutine (sMaster.RequestAll("world"));
+            worldAsset.worlds = sMaster.responseAll.worlds;
+
+            UnityEditor.AssetDatabase.CreateAsset(worldAsset, string.Format("Assets/Editor Default Resources/ScriptableObject/{0}.asset", App.Model.Scriptable.WorldAsset.Name));
+            UnityEditor.AssetDatabase.Refresh();
+        }
+        IEnumerator CreateScriptableObjectMasterBaseMapRun()
         {
             var baseMapAsset = ScriptableObject.CreateInstance<App.Model.Scriptable.BaseMapAsset>();
 

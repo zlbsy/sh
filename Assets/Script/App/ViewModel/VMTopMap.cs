@@ -6,9 +6,7 @@ using App.Model;
 
 namespace App.ViewModel
 {
-	public class VMTopMap : VMBase
+    public class VMTopMap : VMBaseMap
     {
-        public VMProperty<int> MapId = new VMProperty<int>();
-        public VMProperty<MTile[]> Tiles = new VMProperty<MTile[]>();
 	}
 }

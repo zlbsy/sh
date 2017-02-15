@@ -6,7 +6,7 @@ using UnityEngine;
 namespace App.Model.Scriptable{
     [System.Serializable]
     public class MPromptMessage : MBase{
-        public Texture image;
+        public Texture2D image;
         public string message;
     }
     public class PromptMessageAsset : AssetBase<PromptMessageAsset> {

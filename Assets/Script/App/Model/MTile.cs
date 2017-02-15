@@ -5,13 +5,13 @@ namespace App.Model{
 	public class MTile : MBase {
         public MTile(){
 		}
-        public static MTile Create(int tile_id, int x, int y){
+        public static MTile Create(int tile_id, int x, int y, int level = 1){
             MTile obj = new MTile();
             obj.tile_id = tile_id;
             obj.x = x;
             obj.y = y;
+            obj.level = level;
             obj.num = 1;
-            obj.level = 1;
             return obj;
         }
         public int user_id;//

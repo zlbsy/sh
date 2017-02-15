@@ -8,6 +8,7 @@ using App.Util;
 using App.Util.Cacher;
 using UnityEngine.UI;
 using App.Model.Scriptable;
+using Holoville.HOTween;
 
 
 namespace App.Controller{
@@ -19,6 +20,9 @@ namespace App.Controller{
         [SerializeField]private Image review;
         private float width;
         private float height;
+        private float _nextProgress;
+        private float _nowProgress;
+        private float _plusProgress;
         private MPromptMessage[] promptMessages;
         private int promptMessageIndex = 0;
         public override void OnEnable(){
@@ -33,13 +37,24 @@ namespace App.Controller{
             Progress = 0f;
             yield return StartCoroutine(base.OnLoad(request));
             StartCoroutine(SetDefaultPromptMessage());
-		}
+        }
+        public float NextProgress{
+            set{ 
+                _nextProgress = value;
+                _nowProgress = Progress;
+            }
+        }
+        public float PlusProgress{
+            set{ 
+                Progress = _nowProgress + value * (_nextProgress - _nowProgress);
+            }
+        }
         public float Progress{
             get{ 
-                return float.Parse(progress.text);
+                return float.Parse(progress.text.Substring(0, progress.text.Length - 1));
             }
             set{ 
-                progress.text = string.Format("{0}%", Mathf.Floor(value * 100f) * 0.01f);
+                progress.text = string.Format("{0}%", (Mathf.Floor(value * 100f) * 0.01f).ToString("F"));
                 barPrevious.GetComponent<RectTransform>().offsetMax = new Vector2(width * (100 - value) * 0.01f, height);
             }
         }
@@ -60,20 +75,30 @@ namespace App.Controller{
                 promptMessageIndex = 0;
             }
             MPromptMessage promptMessage = promptMessages[promptMessageIndex++];
+            HOTween.To(review, 0.2f, new TweenParms().Prop("color", new Color(0f, 0f, 0f, 0f)));
+            yield return new WaitForSeconds(0.2f);
             message.text = promptMessage.message;
-            review.material.mainTexture = promptMessage.image;
+            review.sprite = Sprite.Create(promptMessage.image, new Rect (0, 0, promptMessage.image.width, promptMessage.image.height), Vector2.zero);
+            HOTween.To(review, 0.2f, new TweenParms().Prop("color", new Color(1f, 1f, 1f, 1f)));
+            yield return new WaitForSeconds(0.2f);
             message.gameObject.SetActive(true);
             review.gameObject.SetActive(true);
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(2f);
             StartCoroutine(SetDefaultPromptMessage());
         }
         public static void ToShow(){
             SceneManager.CurrentScene.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.LoadingDialog));
         }
-        public static void SetProgress(float value){
+        public static void SetNextProgress(float value){
             if (Global.SceneManager.CurrentDialog is CLoadingDialog)
             {
-                (Global.SceneManager.CurrentDialog as CLoadingDialog).Progress = value;
+                (Global.SceneManager.CurrentDialog as CLoadingDialog).NextProgress = value;
+            }
+        }
+        public static void UpdatePlusProgress(float value){
+            if (Global.SceneManager.CurrentDialog is CLoadingDialog)
+            {
+                (Global.SceneManager.CurrentDialog as CLoadingDialog).PlusProgress = value;
             }
         }
         public static void ToClose(){

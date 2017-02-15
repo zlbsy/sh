@@ -12,18 +12,23 @@ namespace App.View{
     public class VTile : VBase {
         [SerializeField]public SpriteRenderer tileSprite;
         [SerializeField]public SpriteRenderer buildingSprite;
+        [SerializeField]public SpriteRenderer lineSprite;
         private int index = 0;
-        private VTopMap vTopMap;
+        private VBaseMap vBaseMap;
         #region VM处理
 
         #endregion
-        public void SetData(int index, int tileId, int buildId = 0){
+        public void SetData(int index, int tileId, int subId = 0){
             this.index = index;
             tileSprite.sprite = App.Model.Master.MTile.GetIcon(tileId);
-            if (buildId > 0)
+            if (lineSprite.sprite == null)
+            {
+                lineSprite.sprite = App.Model.Master.MTile.GetIcon(0);
+            }
+            if (subId > 0)
             {
                 buildingSprite.gameObject.SetActive(true);
-                buildingSprite.sprite = App.Model.Master.MTile.GetIcon(buildId);
+                buildingSprite.sprite = App.Model.Master.MTile.GetIcon(subId);
             }
             else
             {
@@ -39,21 +44,15 @@ namespace App.View{
             {
                 yield break;
             }
-            if (vTopMap == null)
+            if (vBaseMap == null)
             {
-                vTopMap = this.GetComponentInParent<VTopMap>();
+                vBaseMap = this.GetComponentInParent<VBaseMap>();
             }
-            if (!vTopMap.Camera3DEnable || vTopMap.IsDraging)
+            if (!vBaseMap.Camera3DEnable || vBaseMap.IsDraging)
             {
                 yield break;
             }
-            if (this.Controller is CTop)
-            {
-                (this.Controller as CTop).OnClickTile(this.index);
-            }
-            else
-            {
-            }
+            this.Controller.SendMessage("OnClickTile", this.index);
         }
 
     }
