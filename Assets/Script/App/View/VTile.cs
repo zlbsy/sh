@@ -13,6 +13,7 @@ namespace App.View{
         [SerializeField]public SpriteRenderer tileSprite;
         [SerializeField]public SpriteRenderer buildingSprite;
         [SerializeField]public SpriteRenderer lineSprite;
+        [SerializeField]public TextMesh name;
         private int index = 0;
         private VBaseMap vBaseMap;
         #region VM处理
@@ -21,6 +22,7 @@ namespace App.View{
         public void SetData(int index, int tileId, int subId = 0){
             this.index = index;
             tileSprite.sprite = App.Model.Master.MTile.GetIcon(tileId);
+            name.gameObject.SetActive(false);
             if (lineSprite.sprite == null)
             {
                 lineSprite.sprite = App.Model.Master.MTile.GetIcon(0);
@@ -29,6 +31,12 @@ namespace App.View{
             {
                 buildingSprite.gameObject.SetActive(true);
                 buildingSprite.sprite = App.Model.Master.MTile.GetIcon(subId);
+                if (subId > 2000)
+                {
+                    name.gameObject.SetActive(true);
+                    string nameKey = TileCacher.Instance.Get(subId).name;
+                    name.text = Language.Get(nameKey);
+                }
             }
             else
             {
