@@ -9,9 +9,10 @@ using App.Controller;
 
 namespace App.View.Top{
     public class VTopFooterMenu : VTopMenu{
-        [SerializeField]private Transform mainMenu;
+        [SerializeField]private Transform mainButton;
+        [SerializeField]private RectTransform mainMenu;
         public void OpenMenu(){
-            if (mainMenu.transform.localRotation.z == 0)
+            if (mainButton.transform.localRotation.z == 0)
             {
                 (this.Controller as CTop).OpenMenu(this);
                 //HOTween.To(mainMenu.transform, 0.3f, new TweenParms().Prop("localRotation", new Vector3(0,0,45f)));
@@ -24,10 +25,12 @@ namespace App.View.Top{
         }
         public override void Open()
         {
-            HOTween.To(mainMenu.transform, 0.3f, new TweenParms().Prop("localRotation", new Vector3(0,0,45f)));
+            HOTween.To(mainButton, 0.3f, new TweenParms().Prop("localRotation", new Vector3(0,0,45f)));
+            HOTween.To(mainMenu, 0.3f, new TweenParms().Prop("anchoredPosition", new Vector2(mainMenu.anchoredPosition.x,100f)));
         }
         public override void Close(System.Action complete){
-            HOTween.To(mainMenu.transform, 0.3f, new TweenParms().Prop("localRotation", new Vector3(0,0,0)).OnComplete(()=>{
+            HOTween.To(mainMenu, 0.3f, new TweenParms().Prop("anchoredPosition", new Vector2(mainMenu.anchoredPosition.x,0f)));
+            HOTween.To(mainButton, 0.3f, new TweenParms().Prop("localRotation", new Vector3(0,0,0)).OnComplete(()=>{
                 if(complete != null){
                     complete();
                 }
