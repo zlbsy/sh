@@ -7,6 +7,7 @@ namespace App.Util{
         public enum Scenes{
             Logo,
             Top,
+            Area,
             World,
             Battlefield
         }

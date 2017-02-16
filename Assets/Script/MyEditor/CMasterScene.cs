@@ -38,6 +38,10 @@ namespace App.Controller{
             {
                 this.StartCoroutine(CreateScriptableObjectMasterWorldRun());
             }
+            if (GUI.Button(new Rect(150, 300, 100, 30), "area"))
+            {
+                this.StartCoroutine(CreateScriptableObjectMasterAreaRun());
+            }
 
             if (GUI.Button(new Rect(350, 50, 100, 30), "Prompt"))
             {
@@ -51,6 +55,17 @@ namespace App.Controller{
                 UnityEditor.AssetDatabase.CreateAsset(languageAsset, string.Format("Assets/Editor Default Resources/ScriptableObject/{0}.asset", App.Model.Scriptable.LanguageAsset.Name));
                 UnityEditor.AssetDatabase.Refresh();
             }
+        }
+        IEnumerator CreateScriptableObjectMasterAreaRun()
+        {
+            var areaAsset = ScriptableObject.CreateInstance<App.Model.Scriptable.AreaAsset>();
+
+            SEditorMaster sMaster = new SEditorMaster();
+            yield return StartCoroutine (sMaster.RequestAll("area"));
+            areaAsset.areas = sMaster.responseAll.areas;
+
+            UnityEditor.AssetDatabase.CreateAsset(areaAsset, string.Format("Assets/Editor Default Resources/ScriptableObject/{0}.asset", App.Model.Scriptable.AreaAsset.Name));
+            UnityEditor.AssetDatabase.Refresh();
         }
         IEnumerator CreateScriptableObjectMasterWorldRun()
         {

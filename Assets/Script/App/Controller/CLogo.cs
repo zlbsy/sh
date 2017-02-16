@@ -29,17 +29,6 @@ namespace App.Controller{
         }
         public IEnumerator ToLogin( ) 
         {  
-            /*StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.ConnectingDialog));
-            while (Global.SceneManager.CurrentDialog == null)
-            {
-                yield return 0;
-            }
-            yield break;
-            CLoadingDialog dialog = Global.SceneManager.CurrentDialog as CLoadingDialog;
-            dialog.Progress = 30.66f;
-            yield break;
-            */
-
             yield return StartCoroutine (App.Util.Global.SUser.RequestLogin("aaa", "bbb"));
             CConnectingDialog.ToClose();
             if (App.Util.Global.SUser.user == null)
@@ -51,6 +40,7 @@ namespace App.Controller{
             TileCacher.Instance.Reset(App.Model.Scriptable.TileAsset.Data.tiles);
             BaseMapCacher.Instance.Reset(App.Model.Scriptable.BaseMapAsset.Data.baseMaps);
             BuildingCacher.Instance.Reset(App.Model.Scriptable.BuildingAsset.Data.buildings);
+            AreaCacher.Instance.Reset(App.Model.Scriptable.AreaAsset.Data.areas);
             yield return StartCoroutine (App.Util.Global.SUser.RequestGet());
             App.Util.SceneManager.LoadScene( App.Util.SceneManager.Scenes.Top.ToString() );
         }
@@ -71,13 +61,13 @@ namespace App.Controller{
             CLoadingDialog.SetNextProgress(25f);
             yield return scene.StartCoroutine(sUser.Download(WorldAsset.Url, versions.world, (AssetBundle assetbundle)=>{
                 WorldAsset.assetbundle = assetbundle;
-                List<App.Model.MTile> tileList = new List<MTile>();
-                foreach(App.Model.Master.MWorld world in WorldAsset.Data.worlds){
-                    tileList.Add(App.Model.MTile.Create(world.tile_id, world.x, world.y, world.level));
-                }
-                Global.worlds = tileList.ToArray();
+                Global.worlds = WorldAsset.Data.worlds;
             }));
             CLoadingDialog.SetNextProgress(30f);
+            yield return scene.StartCoroutine(sUser.Download(AreaAsset.Url, versions.area, (AssetBundle assetbundle)=>{
+                AreaAsset.assetbundle = assetbundle;
+            }));
+            CLoadingDialog.SetNextProgress(35f);
             yield return scene.StartCoroutine(sUser.Download(BuildingAsset.Url, versions.building, (AssetBundle assetbundle)=>{
                 BuildingAsset.assetbundle = assetbundle;
             }));

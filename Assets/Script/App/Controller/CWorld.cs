@@ -29,19 +29,15 @@ namespace App.Controller{
             //vWorldMap.MoveToCenter();
         }
         public void OnClickTile(int index){
-            /*App.Model.Master.MBaseMap topMapMaster = BaseMapCacher.Instance.Get(mTopMap.MapId);
+            App.Model.Master.MBaseMap topMapMaster = BaseMapCacher.Instance.Get(mWorldMap.MapId);
             Vector2 coordinate = topMapMaster.GetCoordinateFromIndex(index);
             App.Model.Master.MTile tileMaster = topMapMaster.tiles[index];
-            App.Model.MTile tile = System.Array.Find(mTopMap.Tiles, _=>_.x == coordinate.x && _.y == coordinate.y);
-            if (tile == null)
+            App.Model.Master.MWorld tile = System.Array.Find(mWorldMap.Tiles, _=>_.x == coordinate.x && _.y == coordinate.y) as App.Model.Master.MWorld;
+            if (tile != null)
             {
-                buildingMenu.currentIndex = index;
-                OpenMenu(buildingMenu);
+                Request req = Request.Create("worldId", tile.id);
+                App.Util.SceneManager.LoadScene( App.Util.SceneManager.Scenes.Area.ToString(), req );
             }
-            else
-            {
-                OpenMenu(strengthenMenu);
-            }*/
         }
         public void GotoTop(){
             App.Util.SceneManager.LoadScene( App.Util.SceneManager.Scenes.Top.ToString() );

@@ -19,6 +19,7 @@ namespace App.Service{
             public App.Model.Master.MBaseMap[] base_maps;
             public App.Model.Master.MBuilding[] buildings;
             public App.Model.Master.MWorld[] worlds;
+            public App.Model.Master.MArea[] areas;
             public App.Model.Master.MConstant constant;
 		}
         public IEnumerator RequestAll(string type = "")

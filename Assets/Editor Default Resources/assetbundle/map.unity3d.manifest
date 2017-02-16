@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2522782657
+CRC: 69559064
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 376c6c7889176fec0c5d535e9b2da476
+    Hash: 60fcaf398465582e62d5b62c9433891d
   TypeTreeHash:
     serializedVersion: 2
     Hash: 4d24bf54f46935ed9e6cf78ac481bb9d
@@ -20,8 +20,12 @@ Assets:
 - Assets/Atlas/map/tile_2001.png
 - Assets/Atlas/map/tile_2002.png
 - Assets/Atlas/map/tile_7.png
+- Assets/Atlas/map/tile_3001.png
+- Assets/Atlas/map/tile_3004.png
 - Assets/Atlas/map/tile_1.png
 - Assets/Atlas/map/tile_2.png
 - Assets/Atlas/map/tile_0.png
 - Assets/Atlas/map/tile_5.png
+- Assets/Atlas/map/tile_3003.png
+- Assets/Atlas/map/tile_3002.png
 Dependencies: []

@@ -21,16 +21,16 @@ namespace MyEditor
         {
 		
         }
-        [MenuItem("SH/AtlasMaker/Map")]
+        [MenuItem("SH/ImageAtlasMaker/Map")]
         static private void MakeAtlasMap(){
             MakeAtlasStart("map");
         }
-        [MenuItem("SH/AtlasMaker/Chara")]
+        [MenuItem("SH/ImageAtlasMaker/Chara")]
         static private void MakeAtlasChara(){
             MakeAtlasStart("chara");
         }
 
-        [MenuItem("SH/AtlasMaker/All")]
+        [MenuItem("SH/ImageAtlasMaker/All")]
         static private void MakeAtlasAll()
         {
             MakeAtlasStart("");
@@ -111,6 +111,11 @@ namespace MyEditor
         static private void BuildAssetBundleWorld()
         {
             BuildAssetBundleMaster(App.Model.Scriptable.WorldAsset.Name);
+        }
+        [MenuItem("SH/Build Assetbundle/Master/Area")]
+        static private void BuildAssetBundleArea()
+        {
+            BuildAssetBundleMaster(App.Model.Scriptable.AreaAsset.Name);
         }
         [MenuItem("SH/Build Assetbundle/Master/BaseMap")]
         static private void BuildAssetBundleBaseMap()

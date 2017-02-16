@@ -12,6 +12,7 @@ namespace App.Model{
         public int character;
         public int constant;
         public int world;
+        public int area;
         public int horse;
         public int hat;
         public int map;

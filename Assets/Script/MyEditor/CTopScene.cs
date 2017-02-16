@@ -15,12 +15,26 @@ namespace App.Controller{
         [SerializeField] private VTile tileUnit;
         [SerializeField] private VTopMap topMap;
         [SerializeField] private VWorldMap worldMap;
+        [SerializeField] private VBaseMap baseMap;
         private string prefabDir = "Prefab/"; //「Assets/Resources/」以下のprefabファイルの保存先
         public override IEnumerator OnLoad( Request req ) 
 		{  
-            CreateMap(topMap);
-            CreateMap(worldMap);
 			yield return 0;
+        }
+        void OnGUI()
+        {
+            if (GUI.Button(new Rect(150, 50, 100, 30), "baseMap"))
+            {
+                CreateMap(baseMap);
+            }
+            if (GUI.Button(new Rect(150, 100, 100, 30), "topMap"))
+            {
+                CreateMap(topMap);
+            }
+            if (GUI.Button(new Rect(150, 150, 100, 30), "worldMap"))
+            {
+                CreateMap(worldMap);
+            }
         }
         void CreateMap(VBaseMap vBaseMap)
         {

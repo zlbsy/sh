@@ -1,25 +1,15 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Script/App/Controller/CLoadingDialog.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Script/App/View/VBaseMap.cs">
     <Files>
-      <File FileName="Assets/Script/App/View/Top/VHeaderTop.cs" Line="1" Column="1" />
-      <File FileName="Assets/Script/App/Controller/CTop.cs" Line="1" Column="1" />
-      <File FileName="Assets/Script/App/Controller/CBuildingDialog.cs" Line="1" Column="1" />
-      <File FileName="Assets/Script/App/Model/Master/MTopMap.cs" Line="1" Column="1" />
-      <File FileName="Assets/Script/App/View/VTopMap.cs" Line="1" Column="1" />
-      <File FileName="Assets/Script/App/Model/Master/MBuilding.cs" Line="1" Column="1" />
-      <File FileName="Assets/Script/App/Util/Cacher/BuildingCacher.cs" Line="1" Column="1" />
-      <File FileName="Assets/Script/App/Model/MUser.cs" Line="1" Column="1" />
-      <File FileName="Assets/Script/App/ViewModel/VMUser.cs" Line="18" Column="91" />
-      <File FileName="Assets/Script/App/Util/BuyManager.cs" Line="1" Column="1" />
-      <File FileName="Assets/Script/App/Model/MTopMap.cs" Line="1" Column="1" />
-      <File FileName="Assets/Script/App/ViewModel/VMTopMap.cs" Line="1" Column="1" />
-      <File FileName="Assets/Script/App/ViewModel/VMProperty.cs" Line="1" Column="1" />
-      <File FileName="Assets/Script/App/View/VBase.cs" Line="1" Column="1" />
-      <File FileName="Assets/Script/App/View/VBuildingChild.cs" Line="1" Column="1" />
-      <File FileName="Assets/Script/App/Service/SUser.cs" Line="1" Column="1" />
-      <File FileName="Assets/Script/App/Model/Master/MConstant.cs" Line="12" Column="34" />
-      <File FileName="Assets/Script/App/Controller/CLoadingDialog.cs" Line="56" Column="106" />
+      <File FileName="Assets/Script/MyEditor/MakeAtlas.cs" Line="5" Column="19" />
+      <File FileName="Assets/Script/App/Model/Scriptable/TileAsset.cs" Line="8" Column="51" />
+      <File FileName="Assets/Script/App/Model/Master/MTile.cs" Line="6" Column="2" />
+      <File FileName="Assets/Script/App/Model/Scriptable/AssetBase.cs" Line="50" Column="9" />
+      <File FileName="Assets/Script/MyEditor/EditorCoroutine.cs" Line="7" Column="19" />
+      <File FileName="Assets/Script/MyEditor/CMasterScene.cs" Line="32" Column="14" />
+      <File FileName="Assets/Script/MyEditor/CTopScene.cs" Line="5" Column="17" />
+      <File FileName="Assets/Script/App/View/VBaseMap.cs" Line="61" Column="50" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

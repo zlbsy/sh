@@ -19,6 +19,9 @@ namespace App.View{
         #region VM处理
 
         #endregion
+        void Start(){
+            name.GetComponent<MeshRenderer>().sortingOrder = 5;
+        }
         public void SetData(int index, int tileId, int subId = 0){
             this.index = index;
             tileSprite.sprite = App.Model.Master.MTile.GetIcon(tileId);
