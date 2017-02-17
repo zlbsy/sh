@@ -1,0 +1,35 @@
+ManifestFileVersion: 0
+CRC: 3802697883
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: f3b5d6257f28d1b882d76a3d3044dff7
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 4d24bf54f46935ed9e6cf78ac481bb9d
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+Assets:
+- Assets/Atlas/weapon/weapon_2_cavalry_longKnife_attack_3.png
+- Assets/Atlas/weapon/weapon_1_cavalry_longKnife_attack_2.png
+- Assets/Atlas/weapon/weapon_1_cavalry_longKnife_move_1.png
+- Assets/Atlas/weapon/weapon_2_cavalry_longKnife_move_2.png
+- Assets/Atlas/weapon/weapon_2_cavalry_longKnife_attack_2.png
+- Assets/Atlas/weapon/weapon_1_cavalry_longKnife_attack_1.png
+- Assets/Atlas/weapon/weapon_1_cavalry_longKnife_block_1.png
+- Assets/Atlas/weapon/weapon_2_cavalry_longKnife_hert_1.png
+- Assets/Atlas/weapon/weapon_1_cavalry_longKnife_hert_1.png
+- Assets/Atlas/weapon/weapon_1_cavalry_longKnife_stand_1.png
+- Assets/Atlas/weapon/weapon_2_cavalry_longKnife_stand_1.png
+- Assets/Atlas/weapon/weapon_1_cavalry_longKnife_attack_4.png
+- Assets/Atlas/weapon/weapon_1_cavalry_longKnife_move_2.png
+- Assets/Atlas/weapon/weapon_2_cavalry_longKnife_move_1.png
+- Assets/Atlas/weapon/weapon_2_cavalry_longKnife_block_1.png
+- Assets/Atlas/weapon/weapon_2_cavalry_longKnife_attack_4.png
+- Assets/Atlas/weapon/weapon_1_cavalry_longKnife_attack_3.png
+- Assets/Atlas/weapon/weapon_2_cavalry_longKnife_attack_1.png
+Dependencies: []

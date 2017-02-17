@@ -8,22 +8,22 @@ using App.Service;
 namespace App.Util{
 	public class AssetBundleManager {
         private static AssetBundle _character = null;
-        public static string characterUrl{ get{ return HttpClient.assetBandleURL + "chara.unity3d";} }
+        public static string characterUrl{ get{ return HttpClient.assetBandleURL + "charaimage.unity3d";} }
         public static AssetBundle character{ set{ _character = value; } }
         private static AssetBundle _horse = null;
-        public static string horseUrl{ get{ return HttpClient.assetBandleURL + "horse.unity3d";} }
+        public static string horseUrl{ get{ return HttpClient.assetBandleURL + "horseimage.unity3d";} }
         public static AssetBundle horse{ set{ _horse = value; } }
         private static AssetBundle _hat = null;
-        public static string hatUrl{ get{ return HttpClient.assetBandleURL + "hat.unity3d";} }
+        public static string hatUrl{ get{ return HttpClient.assetBandleURL + "hatimage.unity3d";} }
         public static AssetBundle hat{ set{ _hat = value; } }
         private static AssetBundle _map = null;
-        public static string mapUrl{ get{ return HttpClient.assetBandleURL + "map.unity3d";} }
+        public static string mapUrl{ get{ return HttpClient.assetBandleURL + "mapimage.unity3d";} }
         public static AssetBundle map{ set{ _map = value; } }
         private static AssetBundle _clothes = null;
-        public static string clothesUrl{ get{ return HttpClient.assetBandleURL + "clothes.unity3d";} }
+        public static string clothesUrl{ get{ return HttpClient.assetBandleURL + "clothesimage.unity3d";} }
         public static AssetBundle clothes{ set{ _clothes = value; } }
         private static AssetBundle _weapon = null;
-        public static string weaponUrl{ get{ return HttpClient.assetBandleURL + "weapon.unity3d";} }
+        public static string weaponUrl{ get{ return HttpClient.assetBandleURL + "weaponimage.unity3d";} }
         public static AssetBundle weapon{ set{ _weapon = value; } }
 
 		public static Sprite GetAvatarBody(string name){

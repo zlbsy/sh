@@ -1,7 +1,22 @@
 ManifestFileVersion: 0
-CRC: 2119100570
+CRC: 3750878118
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
-      Name: tileasset.unity3d
+      Name: charaimage.unity3d
+      Dependencies: {}
+    Info_1:
+      Name: clothesimage.unity3d
+      Dependencies: {}
+    Info_2:
+      Name: hatimage.unity3d
+      Dependencies: {}
+    Info_3:
+      Name: horseimage.unity3d
+      Dependencies: {}
+    Info_4:
+      Name: mapimage.unity3d
+      Dependencies: {}
+    Info_5:
+      Name: weaponimage.unity3d
       Dependencies: {}

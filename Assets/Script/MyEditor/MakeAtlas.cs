@@ -21,21 +21,22 @@ namespace MyEditor
         {
 		
         }
-        [MenuItem("SH/ImageAtlasMaker/Map")]
+        /*
+        [MenuItem("SH/Create ImageAtlas/Map")]
         static private void MakeAtlasMap(){
             MakeAtlasStart("map");
         }
-        [MenuItem("SH/ImageAtlasMaker/Chara")]
+        [MenuItem("SH/Create ImageAtlas/Chara")]
         static private void MakeAtlasChara(){
             MakeAtlasStart("chara");
         }
 
-        [MenuItem("SH/ImageAtlasMaker/All")]
+        [MenuItem("SH/Create ImageAtlas/All")]
         static private void MakeAtlasAll()
         {
             MakeAtlasStart("");
         }
-
+        */
         static private void MakeAtlasStart(string atlasName)
         {
             string spriteDir = Application.dataPath + "/Resources/Sprite";
@@ -48,7 +49,7 @@ namespace MyEditor
             DirectoryInfo rootDirInfo = new DirectoryInfo(Application.dataPath + "/Atlas");
             foreach (DirectoryInfo dirInfo in rootDirInfo.GetDirectories())
             {
-                if (!string.IsNullOrEmpty(atlasName) && dirInfo.FullName.IndexOf("/Atlas/" + atlasName) < 0)
+                if (!string.IsNullOrEmpty(atlasName) && dirInfo.Name != atlasName)
                 {
                     continue;
                 }
@@ -59,7 +60,7 @@ namespace MyEditor
                     Sprite sprite = UnityEditor.AssetDatabase.LoadAssetAtPath<Sprite>(assetPath);
                     GameObject go = new GameObject(sprite.name);
                     go.AddComponent<SpriteRenderer>().sprite = sprite;
-                    allPath = spriteDir + "/" + sprite.name + ".prefab";
+                    allPath = spriteDir + "/" + dirInfo.Name + "/" + sprite.name + ".prefab";
                     string prefabPath = allPath.Substring(allPath.IndexOf("Assets"));
                     PrefabUtility.CreatePrefab(prefabPath, go);
                     GameObject.DestroyImmediate(go);
@@ -67,18 +68,37 @@ namespace MyEditor
             }	
         }
 
-        [MenuItem("SH/Build Assetbundle/Map")]
+        [MenuItem("SH/Build Assetbundle/Image/Map")]
         static private void BuildAssetBundleMap()
         {
             BuildAssetBundle("map");
         }
-        [MenuItem("SH/Build Assetbundle/Chara")]
+        [MenuItem("SH/Build Assetbundle/Image/Chara")]
         static private void BuildAssetBundleChara()
         {
             BuildAssetBundle("chara");
         }
-
-        [MenuItem("SH/Build Assetbundle/All")]
+        [MenuItem("SH/Build Assetbundle/Image/Clothes")]
+        static private void BuildAssetBundleClothes()
+        {
+            BuildAssetBundle("clothes");
+        }
+        [MenuItem("SH/Build Assetbundle/Image/Hat")]
+        static private void BuildAssetBundleHat()
+        {
+            BuildAssetBundle("hat");
+        }
+        [MenuItem("SH/Build Assetbundle/Image/Horse")]
+        static private void BuildAssetBundleHorse()
+        {
+            BuildAssetBundle("horse");
+        }
+        [MenuItem("SH/Build Assetbundle/Image/Weapon")]
+        static private void BuildAssetBundleWeapon()
+        {
+            BuildAssetBundle("weapon");
+        }
+        [MenuItem("SH/Build Assetbundle/Image/All")]
         static private void BuildAssetBundleAll()
         {
             BuildAssetBundle("");
@@ -87,10 +107,14 @@ namespace MyEditor
         [MenuItem("SH/Build Assetbundle/Master/All")]
         static private void BuildAssetBundleMasterAll()
         {
+            BuildAssetBundleAvatar();
+            BuildAssetBundleConstant();
             BuildAssetBundleTile();
             BuildAssetBundleBaseMap();
             BuildAssetBundleBuilding();
             BuildAssetBundlePromptMessage();
+            BuildAssetBundleWorld();
+            BuildAssetBundleArea();
         }
         [MenuItem("SH/Build Assetbundle/Master/Avatar")]
         static private void BuildAssetBundleAvatar()
@@ -173,7 +197,7 @@ namespace MyEditor
             List<AssetBundleBuild> builds = new List<AssetBundleBuild>();
             foreach (DirectoryInfo dirInfo in rootDirInfo.GetDirectories())
             {
-                if (!string.IsNullOrEmpty(atlasName) && dirInfo.FullName.IndexOf("/Atlas/" + atlasName) < 0)
+                if (!string.IsNullOrEmpty(atlasName) && dirInfo.Name != atlasName)
                 {
                     continue;
                 }
@@ -188,7 +212,7 @@ namespace MyEditor
                     paths.Add(assetPath);
                 }
                 AssetBundleBuild build = new AssetBundleBuild();
-                build.assetBundleName = dirInfo.Name + ".unity3d";
+                build.assetBundleName = dirInfo.Name + "image.unity3d";
                 build.assetNames = paths.ToArray();
                 builds.Add(build);
                 /*if (BuildPipeline.BuildAssetBundle(null, assets.ToArray(), path, BuildAssetBundleOptions.ChunkBasedCompression | BuildAssetBundleOptions.CollectDependencies, GetBuildTarget()))
