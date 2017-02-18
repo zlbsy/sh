@@ -4,6 +4,7 @@ using App.ViewModel;
 
 
 namespace App.Model.Master{
+    [System.Serializable]
 	public class MCharacter : MBase {
 		public MCharacter(){
 		}

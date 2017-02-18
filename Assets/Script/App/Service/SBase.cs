@@ -15,6 +15,7 @@ namespace App.Service{
                 App.Controller.CLoadingDialog.UpdatePlusProgress(www.progress);
                 if(!string.IsNullOrEmpty(www.error))
                 {
+                    Debug.Log(url);
                     Debug.LogError(www.error);
                     break;
                 }

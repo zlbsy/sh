@@ -7,9 +7,9 @@ using App.Service;
 
 namespace App.Util{
 	public class AssetBundleManager {
-        private static AssetBundle _character = null;
-        public static string characterUrl{ get{ return HttpClient.assetBandleURL + "charaimage.unity3d";} }
-        public static AssetBundle character{ set{ _character = value; } }
+        private static AssetBundle _avatar = null;
+        public static string avatarUrl{ get{ return HttpClient.assetBandleURL + "charaimage.unity3d";} }
+        public static AssetBundle avatar{ set{ _avatar = value; } }
         private static AssetBundle _horse = null;
         public static string horseUrl{ get{ return HttpClient.assetBandleURL + "horseimage.unity3d";} }
         public static AssetBundle horse{ set{ _horse = value; } }
@@ -33,7 +33,7 @@ namespace App.Util{
 			return GetAvatarSprite(name);
 		}
 		public static Sprite GetAvatarSprite(string name){
-			return _character.LoadAsset<Sprite>(name);
+			return _avatar.LoadAsset<Sprite>(name);
 		}
 		public static Sprite GetClothes(string name){
             return _clothes.LoadAsset<Sprite>(name);
