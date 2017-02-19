@@ -20,5 +20,10 @@ namespace App.Util{
             }
             return key;
         }
+        public static bool IsReady{
+            get{ 
+                return dictionaryDatas.Count > 0;
+            }
+        }
     }
 }
