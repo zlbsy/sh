@@ -31,6 +31,10 @@ namespace App.Controller{
                 mBuildings.Add(mBuilding);
             }
             BuildingCacher.Instance.SetBuildings(mBuildings);
+            closeEvent = () =>
+            {
+                    BuildingCacher.Instance.SetBuildings(null);
+            };
 			yield return 0;
 		}
         public void ToBuild(int buildId){
