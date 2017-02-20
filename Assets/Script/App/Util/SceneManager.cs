@@ -16,6 +16,8 @@ namespace App.Util{
             LoadingDialog,
             ConnectingDialog,
             AlertDialog,
+            CharacterListDialog,
+            CharacterDetailDialog,
         }
         public static App.Controller.CScene CurrentScene;
         public static App.Controller.Request CurrentSceneRequest;

@@ -46,6 +46,12 @@ namespace App.Controller{
             {
                 this.StartCoroutine(CreateScriptableObjectMasterCharacterRun());
             }
+            if (GUI.Button(new Rect(150, 400, 100, 30), "face"))
+            {
+                var faceAsset = ScriptableObject.CreateInstance<App.Model.Scriptable.FaceAsset>();
+                UnityEditor.AssetDatabase.CreateAsset(faceAsset, string.Format("Assets/Editor Default Resources/ScriptableObject/{0}.asset", App.Model.Scriptable.FaceAsset.Name));
+                UnityEditor.AssetDatabase.Refresh();
+            }
 
             if (GUI.Button(new Rect(350, 50, 100, 30), "Prompt"))
             {

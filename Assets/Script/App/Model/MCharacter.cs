@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using App.ViewModel;
+using App.Util.Cacher;
 
 
 namespace App.Model{
@@ -30,21 +31,42 @@ namespace App.Model{
 		}
 		public VMCharacter ViewModel { get { return (VMCharacter)viewModel; } }
 		
-		public string name;
-		public int hp;
-		public int mp;
-		public int sp;
+        public int sp;
         public App.Model.Master.MCharacter Master{
             get{ 
-                return null;
+                return CharacterCacher.Instance.Get(CharacterId);
             }
         }
-		public int Horse{
+        public int CharacterId{
+            set{
+                this.ViewModel.CharacterId.Value = value;
+            }
+            get{ 
+                return this.ViewModel.CharacterId.Value;
+            }
+        }
+        public int Horse{
+            set{
+                this.ViewModel.Horse.Value = value;
+            }
+            get{ 
+                return this.ViewModel.Horse.Value;
+            }
+        }
+        public int Hp{
+            set{
+                this.ViewModel.Hp.Value = value;
+            }
+            get{ 
+                return this.ViewModel.Hp.Value;
+            }
+        }
+		public int Mp{
 			set{
-				this.ViewModel.Horse.Value = value;
+                this.ViewModel.Mp.Value = value;
 			}
 			get{ 
-				return this.ViewModel.Horse.Value;
+                return this.ViewModel.Mp.Value;
 			}
 		}
 		public ActionType Action{

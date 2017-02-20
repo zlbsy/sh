@@ -24,7 +24,7 @@ namespace App.Controller{
                 obj.transform.parent = characterLayer.transform;
                 obj.transform.localPosition = positions[count++];
 				obj.SetActive (true);
-                Debug.Log ("chara="+chara.id+","+chara.name);
+                //Debug.Log ("chara="+chara.id+","+chara.name);
                 VCharacter view = obj.GetComponent<VCharacter> ();
                 view.BindingContext = chara.ViewModel;
                 chara.Action = ActionType.stand;

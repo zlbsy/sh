@@ -19,5 +19,6 @@ namespace App.Model{
         public int map;
         public int clothes;
         public int weapon;
+        public int face;
 	}
 }

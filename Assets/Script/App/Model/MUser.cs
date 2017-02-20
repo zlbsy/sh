@@ -11,6 +11,7 @@ namespace App.Model{
         public VMUser ViewModel { get { return (VMUser)viewModel; } }
         public string name;
         public string password;
+        public MCharacter[] characters;
         public string Nickname{
             get{ 
                 return this.ViewModel.Nickname.Value;

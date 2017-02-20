@@ -7,8 +7,13 @@ using App.Model;
 namespace App.ViewModel
 {
 	public class VMCharacter : VMBase
-	{
-		public VMProperty<string> Name = new VMProperty<string>();
+    {
+        public VMProperty<int> CharacterId = new VMProperty<int>();
+        public VMProperty<int> Hp = new VMProperty<int>();
+        public VMProperty<int> Mp = new VMProperty<int>();
+        public VMProperty<string> Name = new VMProperty<string>();
+        public VMProperty<int> Level = new VMProperty<int>();
+        public VMProperty<int> Star = new VMProperty<int>();
 		public VMProperty<int> Head = new VMProperty<int>();
 		public VMProperty<int> Hat = new VMProperty<int>();
 		public VMProperty<int> Horse = new VMProperty<int>();

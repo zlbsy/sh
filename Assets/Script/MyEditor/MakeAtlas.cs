@@ -241,6 +241,45 @@ namespace MyEditor
             AssetDatabase.CreateAsset(avatarAsset, "Assets/Data/avatarasset.asset");
             AssetDatabase.Refresh();
         }
+        [MenuItem("SH/Create ScriptableObject/FaceAsset")]
+        static void CreateFaceAsset()
+        {
+            var faceAsset = ScriptableObject.CreateInstance<App.Model.Scriptable.FaceAsset>();
+            UnityEditor.AssetDatabase.CreateAsset(faceAsset, string.Format("Assets/Editor Default Resources/ScriptableObject/{0}.asset", App.Model.Scriptable.FaceAsset.Name));
+            UnityEditor.AssetDatabase.Refresh();
+        }
+        [MenuItem("SH/Build Assetbundle/Face")]
+        static private void BuildAssetBundleFace()
+        {
+            int index = 1;
+            ScriptableObject asset = null;
+            string assetPath;
+            do{
+                if(asset == null){
+                    assetPath = string.Format("ScriptableObject/face/{0}.asset", index);
+                    asset = EditorGUIUtility.Load(assetPath) as ScriptableObject;
+                }
+                BuildAssetBundleFace(index, asset);
+                index++;
+                assetPath = string.Format("ScriptableObject/face/{0}.asset", index);
+                asset = EditorGUIUtility.Load(assetPath) as ScriptableObject;
+            }while(asset != null);
+        }
+        static private void BuildAssetBundleFace(int index, ScriptableObject asset)
+        {
+            string path = "Assets/Editor Default Resources/assetbundle/face/";
+            string assetPath = string.Format("Assets/Editor Default Resources/ScriptableObject/face/{0}.asset", index);
+            AssetBundleBuild[] builds = new AssetBundleBuild[1];
+            builds[0].assetBundleName = "face_"+index + ".unity3d";
+            string[] enemyAssets = new string[1];
+            enemyAssets[0] = assetPath;
+            builds[0].assetNames = enemyAssets;
+            BuildPipeline.BuildAssetBundles(path,builds,
+                BuildAssetBundleOptions.ChunkBasedCompression
+                ,GetBuildTarget()
+            );
+            Debug.LogError("BuildAssetBundleMaster success face : "+index);
+        }
 
 
         static public BuildTarget GetBuildTarget()

@@ -138,7 +138,7 @@ namespace MyEditor
             MCharacter[] enemys = battlefield.enemys;
             foreach (MCharacter chara in enemys)
             {
-                Debug.Log("chara=" + chara.id + "," + chara.name);
+                //Debug.Log("chara=" + chara.id + "," + chara.name);
             }
         }
     }

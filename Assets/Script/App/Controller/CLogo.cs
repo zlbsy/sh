@@ -41,6 +41,7 @@ namespace App.Controller{
             BaseMapCacher.Instance.Reset(App.Model.Scriptable.BaseMapAsset.Data.baseMaps);
             BuildingCacher.Instance.Reset(App.Model.Scriptable.BuildingAsset.Data.buildings);
             AreaCacher.Instance.Reset(App.Model.Scriptable.AreaAsset.Data.areas);
+            CharacterCacher.Instance.Reset(App.Model.Scriptable.CharacterAsset.Data.characters);
             yield return StartCoroutine (App.Util.Global.SUser.RequestGet());
             App.Util.SceneManager.LoadScene( App.Util.SceneManager.Scenes.Top.ToString() );
         }
