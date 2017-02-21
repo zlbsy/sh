@@ -15,6 +15,7 @@ namespace App.Model.Scriptable{
                 //_assetbundle = value;
                 ScriptableObject[] ts = value.LoadAllAssets<ScriptableObject>();
                 _data = ts[0] as TClass;
+                value.Unload(false);
             }
         }
         public static TClass Data{

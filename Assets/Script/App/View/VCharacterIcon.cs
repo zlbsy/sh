@@ -11,6 +11,7 @@ using App.Controller;
 namespace App.View{
     public class VCharacterIcon : VBase {
         [SerializeField]public RawImage icon;
+        [SerializeField]public App.View.Character.VRawFace faceIcon;
         [SerializeField]public GameObject[] stars;
         [SerializeField]public Text level;
         #region VM处理
@@ -46,7 +47,8 @@ namespace App.View{
         }
         private void CharacterIdChanged(int oldvalue, int newvalue)
         {
-            StartCoroutine(LoadFaceIcon(newvalue));
+            faceIcon.CharacterId = newvalue;
+            //StartCoroutine(LoadFaceIcon(newvalue));
             return;
             App.Model.Master.MCharacter mCharacter = CharacterCacher.Instance.Get(newvalue);
 
@@ -61,7 +63,7 @@ namespace App.View{
         public void ClickChild(){
             (this.Controller as CCharacterListDialog).ShowCharacter(ViewModel.CharacterId.Value);
         }
-        public IEnumerator LoadFaceIcon(int characterId)
+        /*public IEnumerator LoadFaceIcon(int characterId)
         {
             string url = string.Format(App.Model.Scriptable.FaceAsset.FaceUrl, characterId);
             yield return this.StartCoroutine(Global.SUser.Download(url, App.Util.Global.SUser.versions.face, (AssetBundle assetbundle)=>{
@@ -71,6 +73,6 @@ namespace App.View{
                 //icon.texture = Sprite.Create(mFace.image, new Rect (0, 0, mFace.image.width, mFace.image.height), Vector2.zero).texture as Texture;
             }));
         }
-
+        */
     }
 }

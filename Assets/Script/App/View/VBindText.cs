@@ -8,7 +8,7 @@ namespace App.View{
     public class VBindText : VBase {
         [SerializeField]private string key;
         public IEnumerator Start()
-        {Debug.Log("Start");
+        {
             if (string.IsNullOrEmpty(key))
             {
                 yield break;

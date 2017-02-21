@@ -40,6 +40,7 @@ namespace App.Model{
         public int CharacterId{
             set{
                 this.ViewModel.CharacterId.Value = value;
+                this.ViewModel.Name.Value = Master.name;
             }
             get{ 
                 return this.ViewModel.CharacterId.Value;

@@ -28,7 +28,7 @@ namespace App.Service{
                 yield break;
             }
             handle(www.assetBundle);
-            if (destory)
+            if (destory && www.assetBundle != null)
             {
                 www.assetBundle.Unload(false);
             }
