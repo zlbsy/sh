@@ -11,7 +11,7 @@ using App.Controller;
 namespace App.View.Character{
     public class VCharacterDetail : VBase {
         [SerializeField]private VFace faceIcon;
-        [SerializeField]public Text name;
+        [SerializeField]private Text txtName;
         #region VM处理
         public VMCharacter ViewModel { get { return (VMCharacter)BindingContext; } }
         protected override void OnBindingContextChanged(VMBase oldViewModel, VMBase newViewModel)
@@ -33,7 +33,7 @@ namespace App.View.Character{
         }
         private void NameChanged(string oldvalue, string newvalue)
         {
-            name.text = Language.Get(newvalue);
+            txtName.text = Language.Get(newvalue);
         }
         public void ResetAll()
         {

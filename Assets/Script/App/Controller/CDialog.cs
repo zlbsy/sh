@@ -25,6 +25,7 @@ namespace App.Controller{
         }
         public override IEnumerator Start()
         {
+            this.GetComponent<Canvas>().sortingOrder = ++App.Util.Global.DialogSortOrder;
             yield break;
         }
         public virtual void OnEnable(){
@@ -77,6 +78,7 @@ namespace App.Controller{
                 return;
             }
             _isClose = true;
+            App.Util.Global.DialogSortOrder--;
             background.transform.SetAsLastSibling();
             if (opentype == OpenType.Middle)
             {

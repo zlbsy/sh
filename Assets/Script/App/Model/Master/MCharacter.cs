@@ -33,10 +33,10 @@ namespace App.Model.Master{
         public int hidden_weapons;//暗器
         public int dual_wield;//双手
         public float[] face_rect;//小头像范围
-        private UnityEngine.Rect _faceRect;
+        private UnityEngine.Rect _faceRect = UnityEngine.Rect.zero;
         public UnityEngine.Rect FaceRect{
             get{ 
-                if (_faceRect == null)
+                if (_faceRect.Equals(UnityEngine.Rect.zero))
                 {
                     _faceRect = new UnityEngine.Rect(face_rect[0], face_rect[1], face_rect[2], face_rect[3]);
                 }

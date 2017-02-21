@@ -13,19 +13,19 @@ namespace App.View{
         [SerializeField]public SpriteRenderer tileSprite;
         [SerializeField]public SpriteRenderer buildingSprite;
         [SerializeField]public SpriteRenderer lineSprite;
-        [SerializeField]public TextMesh name;
+        [SerializeField]public TextMesh tileName;
         private int index = 0;
         private VBaseMap vBaseMap;
         #region VM处理
 
         #endregion
         void Start(){
-            name.GetComponent<MeshRenderer>().sortingOrder = 5;
+            tileName.GetComponent<MeshRenderer>().sortingOrder = 5;
         }
         public void SetData(int index, int tileId, int subId = 0){
             this.index = index;
             tileSprite.sprite = App.Model.Master.MTile.GetIcon(tileId);
-            name.gameObject.SetActive(false);
+            tileName.gameObject.SetActive(false);
             if (lineSprite.sprite == null)
             {
                 lineSprite.sprite = App.Model.Master.MTile.GetIcon(0);
@@ -36,9 +36,9 @@ namespace App.View{
                 buildingSprite.sprite = App.Model.Master.MTile.GetIcon(subId);
                 if (subId > 2000)
                 {
-                    name.gameObject.SetActive(true);
+                    tileName.gameObject.SetActive(true);
                     string nameKey = TileCacher.Instance.Get(subId).name;
-                    name.text = Language.Get(nameKey);
+                    tileName.text = Language.Get(nameKey);
                 }
             }
             else

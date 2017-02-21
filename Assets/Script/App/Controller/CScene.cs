@@ -10,6 +10,7 @@ namespace App.Controller{
     public class CScene : CBase {
         public override IEnumerator Start()
         {
+            App.Util.Global.DialogSortOrder = 0;
             App.Util.SceneManager.CurrentScene = this;
             yield return StartCoroutine (OnLoad(App.Util.SceneManager.CurrentSceneRequest));
             App.Util.SceneManager.CurrentSceneRequest = null;

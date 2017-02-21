@@ -49,10 +49,10 @@ namespace App.View{
         {
             faceIcon.CharacterId = newvalue;
             //StartCoroutine(LoadFaceIcon(newvalue));
-            return;
+            /*return;
             App.Model.Master.MCharacter mCharacter = CharacterCacher.Instance.Get(newvalue);
 
-            icon.uvRect = mCharacter.FaceRect;
+            icon.uvRect = mCharacter.FaceRect;*/
         }
         public void ResetAll(){
             LevelChanged(0, ViewModel.Level.Value);
