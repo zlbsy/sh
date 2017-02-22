@@ -12,8 +12,10 @@ namespace App.View.Character{
     public class VCharacterDetail : VBase {
         [SerializeField]private VFace faceIcon;
         [SerializeField]private Text txtName;
+        [SerializeField]private Text txtNickname;
         [SerializeField]private GameObject statusChild;
         [SerializeField]private Transform statusContent;
+        [SerializeField]private GameObject[] stars;
         #region VM处理
         public VMCharacter ViewModel { get { return (VMCharacter)BindingContext; } }
         protected override void OnBindingContextChanged(VMBase oldViewModel, VMBase newViewModel)
@@ -24,26 +26,33 @@ namespace App.View.Character{
             VMCharacter oldVm = oldViewModel as VMCharacter;
             if (oldVm != null)
             {
-                //ViewModel.Name.OnValueChanged -= NameChanged;
-                //ViewModel.TileId.OnValueChanged -= TileIdChanged;
+                ViewModel.CharacterId.OnValueChanged -= CharacterIdChanged;
+                ViewModel.Star.OnValueChanged -= StarChanged;
             }
             if (ViewModel!=null)
             {
-                //ViewModel.Name.OnValueChanged += NameChanged;
-                //ViewModel.TileId.OnValueChanged += TileIdChanged;
+                ViewModel.CharacterId.OnValueChanged += CharacterIdChanged;
+                ViewModel.Star.OnValueChanged += StarChanged;
             }
         }
-        private void NameChanged(string oldvalue, string newvalue)
+        private void CharacterIdChanged(int oldvalue, int newvalue)
         {
-            txtName.text = Language.Get(newvalue);
+            txtName.text = Language.GetCharacterWord(ViewModel.Name.Value);
+            txtNickname.text = Language.GetCharacterWord(ViewModel.Nickname.Value);
+            faceIcon.CharacterId = ViewModel.CharacterId.Value;
+        }
+        private void StarChanged(int oldvalue, int newvalue)
+        {
+            int count = 0;
+            foreach (GameObject star in stars)
+            {
+                star.SetActive(count++ < newvalue);
+            }
         }
         public void ResetAll()
         {
-            NameChanged("", ViewModel.Name.Value);
-
-            //App.Model.Master.MCharacter mCharacter = CharacterCacher.Instance.Get(ViewModel.CharacterId.Value);
-            //name.text = Language.Get(mCharacter.name);
-            faceIcon.CharacterId = ViewModel.CharacterId.Value;
+            CharacterIdChanged(0, ViewModel.CharacterId.Value);
+            StarChanged(0, ViewModel.Star.Value);
             SetStatus();
         }
         private void SetStatus()

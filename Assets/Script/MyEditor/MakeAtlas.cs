@@ -161,6 +161,16 @@ namespace MyEditor
         {
             BuildAssetBundleMaster(App.Model.Scriptable.CharacterAsset.Name);
         }
+        [MenuItem("SH/Build Assetbundle/Master/Word")]
+        static private void BuildAssetBundleWord()
+        {
+            BuildAssetBundleMaster("wordasset");
+        }
+        [MenuItem("SH/Build Assetbundle/Master/CharacterWord")]
+        static private void BuildAssetBundleCharacterWord()
+        {
+            BuildAssetBundleMaster("characterwordasset");
+        }
         static private void BuildAssetBundleMaster(string name)
         {
             string assetPath = string.Format("ScriptableObject/{0}.asset", name);

@@ -12,6 +12,7 @@ namespace App.ViewModel
         public VMProperty<int> Hp = new VMProperty<int>();
         public VMProperty<int> Mp = new VMProperty<int>();
         public VMProperty<string> Name = new VMProperty<string>();
+        public VMProperty<string> Nickname = new VMProperty<string>();
         public VMProperty<int> Level = new VMProperty<int>();
         public VMProperty<int> Star = new VMProperty<int>();
 		public VMProperty<int> Head = new VMProperty<int>();

@@ -31,7 +31,6 @@ namespace App.Model{
 		}
 		public VMCharacter ViewModel { get { return (VMCharacter)viewModel; } }
 		
-        public int sp;
         public App.Model.Master.MCharacter Master{
             get{ 
                 return CharacterCacher.Instance.Get(CharacterId);
@@ -39,8 +38,10 @@ namespace App.Model{
         }
         public int CharacterId{
             set{
+                App.Model.Master.MCharacter master = CharacterCacher.Instance.Get(value);
+                this.ViewModel.Name.Value = master.name;
+                this.ViewModel.Nickname.Value = master.nickname;
                 this.ViewModel.CharacterId.Value = value;
-                this.ViewModel.Name.Value = Master.name;
             }
             get{ 
                 return this.ViewModel.CharacterId.Value;
@@ -69,7 +70,23 @@ namespace App.Model{
 			get{ 
                 return this.ViewModel.Mp.Value;
 			}
-		}
+        }
+        public int Level{
+            set{
+                this.ViewModel.Level.Value = value;
+            }
+            get{ 
+                return this.ViewModel.Level.Value;
+            }
+        }
+        public int Star{
+            set{
+                this.ViewModel.Star.Value = value;
+            }
+            get{ 
+                return this.ViewModel.Star.Value;
+            }
+        }
 		public ActionType Action{
 			set{
 				this.ViewModel.Action.Value = value;

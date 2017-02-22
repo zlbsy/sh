@@ -10,10 +10,10 @@ using App.Controller;
 
 namespace App.View{
     public class VCharacterIcon : VBase {
-        [SerializeField]public RawImage icon;
-        [SerializeField]public App.View.Character.VRawFace faceIcon;
-        [SerializeField]public GameObject[] stars;
-        [SerializeField]public Text level;
+        [SerializeField]private RawImage icon;
+        [SerializeField]private App.View.Character.VRawFace faceIcon;
+        [SerializeField]private GameObject[] stars;
+        [SerializeField]private Text level;
         #region VM处理
         public VMCharacter ViewModel { get { return (VMCharacter)BindingContext; } }
         protected override void OnBindingContextChanged(VMBase oldViewModel, VMBase newViewModel)

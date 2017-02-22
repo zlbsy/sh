@@ -54,6 +54,14 @@ namespace App.Controller{
             list.Add(sUser.Download(PromptMessageAsset.Url, versions.prompt_message, (AssetBundle assetbundle)=>{
                 PromptMessageAsset.assetbundle = assetbundle;
             }));
+            list.Add(sUser.Download(LanguageAsset.WORD_URL, versions.word, (AssetBundle assetbundle)=>{
+                LanguageAsset.assetbundle = assetbundle;
+                Language.Reset(LanguageAsset.Data.words);
+            }));
+            list.Add(sUser.Download(LanguageAsset.CHARACTER_WORD_URL, versions.characterword, (AssetBundle assetbundle)=>{
+                LanguageAsset.assetbundle = assetbundle;
+                Language.ResetCharacterWord(LanguageAsset.Data.words);
+            }));
             list.Add(sUser.Download(WorldAsset.Url, versions.world, (AssetBundle assetbundle)=>{
                 WorldAsset.assetbundle = assetbundle;
                 Global.worlds = WorldAsset.Data.worlds;

@@ -13,6 +13,8 @@ namespace App.Model{
         public int avatar;
         public int constant;
         public int world;
+        public int word;
+        public int characterword;
         public int area;
         public int horse;
         public int hat;

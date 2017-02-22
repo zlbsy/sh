@@ -8,7 +8,8 @@ namespace App.Model.Master{
 	public class MCharacter : MBase {
 		public MCharacter(){
 		}
-		public string name;
+        public string name;
+        public string nickname;
 		public int hp;//
 		public int mp;//
 

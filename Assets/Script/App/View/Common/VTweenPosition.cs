@@ -13,11 +13,12 @@ namespace App.View.Common{
         [SerializeField]private float delay = 0f;
         [SerializeField]private bool isLoop;
         [SerializeField]private LoopType loopType;
+        private Sequence sequence;
         public void Start()
         {
             RectTransform rectTransform = this.transform as RectTransform;
             rectTransform.anchoredPosition3D = from;
-            var sequence = new Sequence ();
+            sequence = new Sequence ();
             sequence.Insert (delay, HOTween.To (rectTransform, duration, new TweenParms().Prop("anchoredPosition3D", to, false).Ease(EaseType.EaseInQuart)));
             if (isLoop)
             {
@@ -25,6 +26,9 @@ namespace App.View.Common{
                 sequence.loops = int.MaxValue;
             }
             sequence.Play ();
+        }
+        void OnDestroy(){
+            sequence.Kill();
         }
 	}
 }
