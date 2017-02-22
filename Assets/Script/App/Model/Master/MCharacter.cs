@@ -11,13 +11,21 @@ namespace App.Model.Master{
 		public string name;
 		public int hp;//
 		public int mp;//
-        public int sp;//怒气
+
+        //废除属性
         public int force;//武力
         public int intelligence;//智力
         public int command;//统率
         public int agility;//敏捷
         public int luck;//运气
+
+        public int qualification;//资质
         public int power;//力量
+        public int knowledge;//技巧
+        public int speed;//速度
+        public int trick;//谋略
+        public int endurance;//耐力
+
         public int moving_power;//轻功
         public int riding;//骑术
         public int walker;//步战
@@ -32,17 +40,30 @@ namespace App.Model.Master{
         public int archery;//箭术
         public int hidden_weapons;//暗器
         public int dual_wield;//双手
-        public float[] face_rect;//小头像范围
-        private UnityEngine.Rect _faceRect = UnityEngine.Rect.zero;
-        public UnityEngine.Rect FaceRect{
-            get{ 
-                if (_faceRect.Equals(UnityEngine.Rect.zero))
-                {
-                    _faceRect = new UnityEngine.Rect(face_rect[0], face_rect[1], face_rect[2], face_rect[3]);
-                }
-                return _faceRect;
-            }
-        }
+
+        /*
+资质
+力量
+技巧
+谋略
+速度
+耐力
+
+物攻 = 力量*2+技巧
+法攻 = 技巧+谋略
+物防 = 力量+技巧
+法防 = 谋略
+
+物理攻击
+命中/躲闪 = 技巧+速度*2
+双击 = 技巧+速度-力量
+爆击 = 力量+速度
+
+法术攻击
+命中/躲闪 = 技巧+速度
+双击 = 谋略+速度
+爆击 = 谋略+技巧
+        */
 
 	}
 }

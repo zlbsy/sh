@@ -24,7 +24,7 @@ namespace App.Util{
             for ( int i = 0; i< t.childCount; i++) {
                 GameObject.Destroy(t.GetChild(i).gameObject);
             }
-            t.DetachChildren();    //子要素情報が残っているとテーブルが崩れるため解除処理
+            t.DetachChildren();    //すべての子オブジェクトを親オブジェクトから切り離します
         }
 	}
 }

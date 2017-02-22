@@ -232,7 +232,7 @@ namespace MyEditor
             );
             Debug.LogError("BuildAssetBundle over ");  
         }
-
+        /*
         [MenuItem("SH/Create ScriptableObject/AvatarAsset")]
         static void CreateAvatarAsset()
         {
@@ -240,7 +240,7 @@ namespace MyEditor
 
             AssetDatabase.CreateAsset(avatarAsset, "Assets/Data/avatarasset.asset");
             AssetDatabase.Refresh();
-        }
+        }*/
         [MenuItem("SH/Create ScriptableObject/FaceAsset")]
         static void CreateFaceAsset()
         {

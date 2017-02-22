@@ -77,6 +77,9 @@ namespace App.Controller{
             list.Add(sUser.Download(TileAsset.Url, versions.tile, (AssetBundle assetbundle)=>{
                 TileAsset.assetbundle = assetbundle;
             }));
+            list.Add(sUser.Download(App.Model.Avatar.AvatarAsset.Url, versions.tile, (AssetBundle assetbundle)=>{
+                App.Model.Avatar.AvatarAsset.assetbundle = assetbundle;
+            }));
             list.Add(sUser.Download(AssetBundleManager.avatarUrl, versions.avatar, (AssetBundle assetbundle)=>{
                 AssetBundleManager.avatar = assetbundle;
             }, false));

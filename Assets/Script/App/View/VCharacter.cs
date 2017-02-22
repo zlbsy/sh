@@ -94,7 +94,7 @@ namespace App.View{
                 key = string.Format("horse_{0}_{1}_{2}", ViewModel.Horse.Value, ViewModel.Action.Value, avatarAction.horse.index);
                 imgHorse.sprite = AssetBundleManager.GetHorse(key);
                 //imgHorse.SetNativeSize ();
-                imgHorse.GetComponent<RectTransform> ().localPosition = avatarAction.horse.position;
+                imgHorse.transform.localPosition = avatarAction.horse.position;
             }
             //Body
             key = string.Format("body_{0}_{1}_{2}_{3}", ViewModel.MoveType.Value, ViewModel.WeaponType.Value, ViewModel.Action.Value, avatarAction.body.index);
@@ -121,10 +121,10 @@ namespace App.View{
             }
             //imgWeapon.SetNativeSize ();
 
-            imgBody.GetComponent<RectTransform> ().localPosition = avatarAction.body.position;
-            imgClothes.GetComponent<RectTransform> ().localPosition = avatarAction.clothes.position;
-            imgHead.GetComponent<RectTransform> ().localPosition = avatarAction.head.position;
-            imgWeapon.GetComponent<RectTransform> ().localPosition = avatarAction.weapon.position;
+            imgBody.transform.localPosition = avatarAction.body.position;
+            imgClothes.transform.localPosition = avatarAction.clothes.position;
+            imgHead.transform.localPosition = avatarAction.head.position;
+            imgWeapon.transform.localPosition = avatarAction.weapon.position;
         }
         #endregion
 

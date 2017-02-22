@@ -9,6 +9,7 @@ namespace App.ViewModel
     {
         public VMProperty<int> Id = new VMProperty<int>();
         public VMProperty<string> Nickname = new VMProperty<string>();
+        public VMProperty<int> Face = new VMProperty<int>();
         public VMProperty<int> Level = new VMProperty<int>();
         public VMProperty<int> Gold = new VMProperty<int>();
         public VMProperty<int> Silver = new VMProperty<int>();

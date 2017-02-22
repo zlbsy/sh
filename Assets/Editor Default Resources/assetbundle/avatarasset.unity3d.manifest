@@ -1,0 +1,18 @@
+ManifestFileVersion: 0
+CRC: 119028447
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: ca8505dfb5f9dbdc9421ff62c505689f
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 20d9c471dee965d87e938f83a33e9253
+HashAppended: 0
+ClassTypes:
+- Class: 114
+  Script: {fileID: 11500000, guid: 70ac4c0e999ab48b3885daf0872a666e, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+Assets:
+- Assets/Editor Default Resources/ScriptableObject/avatarasset.asset
+Dependencies: []

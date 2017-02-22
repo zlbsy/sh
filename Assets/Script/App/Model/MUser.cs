@@ -20,6 +20,14 @@ namespace App.Model{
                 this.ViewModel.Nickname.Value = value;
             }
         }
+        public int Face{
+            get{ 
+                return this.ViewModel.Face.Value;
+            }
+            set{ 
+                this.ViewModel.Face.Value = value;
+            }
+        }
         public int Level{
             get{ 
                 return this.ViewModel.Level.Value;

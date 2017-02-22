@@ -10,7 +10,7 @@ using App.Controller;
 
 namespace App.View{
     public class VHeaderFace : VBase {
-        [SerializeField]public RawImage icon;
+        [SerializeField]public App.View.Character.VRawFace icon;
         [SerializeField]public Text nickname;
         [SerializeField]public Text level;
         #region VM处理
@@ -23,14 +23,18 @@ namespace App.View{
             VMUser oldVm = oldViewModel as VMUser;
             if (oldVm != null)
             {
-                //ViewModel.Nickname.OnValueChanged -= NicknameChanged;
+                ViewModel.Face.OnValueChanged -= FaceChanged;
                 ViewModel.Level.OnValueChanged -= LevelChanged;
             }
             if (ViewModel!=null)
             {
-                //ViewModel.Nickname.OnValueChanged += NicknameChanged;
+                ViewModel.Face.OnValueChanged += FaceChanged;
                 ViewModel.Level.OnValueChanged += LevelChanged;
             }
+        }
+        private void FaceChanged(int oldvalue, int newvalue)
+        {
+            icon.CharacterId = newvalue;
         }
         private void LevelChanged(int oldvalue, int newvalue)
         {
@@ -40,6 +44,7 @@ namespace App.View{
         public void ResetAll(){
             level.text = ViewModel.Level.Value.ToString();
             nickname.text = ViewModel.Nickname.Value.ToString();
+            icon.CharacterId = ViewModel.Face.Value;
         }
         void OnMouseUp(){
             
