@@ -59,6 +59,9 @@ define('MASTER_CONSTANT', MASTER_DATABASE.'.constant');
 define('MASTER_VERSION', MASTER_DATABASE.'.version');
 define('MASTER_WORLD', MASTER_DATABASE.'.world');
 define('MASTER_AREA', MASTER_DATABASE.'.area');
+define('MASTER_HORSE', MASTER_DATABASE.'.horse');
+define('MASTER_CLOTHES', MASTER_DATABASE.'.clothes');
+define('MASTER_WEAPON', MASTER_DATABASE.'.weapon');
 
 define('MASTER_CHARACTER_STAR', MASTER_DATABASE.'.character_star');
 define('MASTER_GROWING', MASTER_DATABASE.'.growing');

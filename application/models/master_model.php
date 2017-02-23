@@ -80,6 +80,28 @@ class Master_model extends MY_Model
 		}
 		return $result;
 	}
+	function get_master_horse(){
+		$this->master_db->select("`id`,`name`,`move_power`,`hp`", FALSE);
+		$this->master_db->order_by("id", "asc");
+		$query = $this->master_db->get(MASTER_HORSE);
+		$result = $query->result_array();
+		return $result;
+	}
+	function get_master_weapon(){
+		$this->master_db->select("`id`,`name`,`physical_attack`,`power`", FALSE);
+		$this->master_db->order_by("id", "asc");
+		$query = $this->master_db->get(MASTER_WEAPON);
+		$result = $query->result_array();
+		return $result;
+	}
+	function get_master_clothes(){
+		$this->master_db->select("`id`,`name`,`defense`,`hp`", FALSE);
+		$this->master_db->order_by("id", "asc");
+		$query = $this->master_db->get(MASTER_CLOTHES);
+		$result = $query->result_array();
+		return $result;
+	}
+
 	function get_master_character_star(){
 		$this->master_db->select("grade,star,cost");
 		$this->master_db->order_by("grade", "asc");
