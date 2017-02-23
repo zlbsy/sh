@@ -93,13 +93,19 @@ namespace App.Controller{
             if (opentype == OpenType.Middle)
             {
                 HOTween.To(panel, 0.2f, new TweenParms().Prop("localScale", new Vector3(1f, 0, 1f)).OnComplete(Delete));
-            }else if (opentype == OpenType.Down)
+            }
+            else if (opentype == OpenType.Down)
             {
                 RectTransform trans = panel as RectTransform;
-                HOTween.To(panel as RectTransform, 0.3f, new TweenParms().Prop("anchoredPosition", new Vector2(trans.anchoredPosition.x, trans.sizeDelta.y * -0.5f)));
-            }else if (opentype == OpenType.Fade)
+                HOTween.To(panel as RectTransform, 0.3f, new TweenParms().Prop("anchoredPosition", new Vector2(trans.anchoredPosition.x, trans.sizeDelta.y * -0.5f)).OnComplete(Delete));
+            }
+            else if (opentype == OpenType.Fade)
             {
                 HOTween.To(panel.gameObject.GetComponent<CanvasGroup>(), 0.3f, new TweenParms().Prop("alpha", 0).OnComplete(Delete));
+            }
+            else if (opentype == OpenType.None)
+            {
+                Delete();
             }
         }
         public void Delete(){

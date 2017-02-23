@@ -37,7 +37,7 @@ namespace App.Model{
         }
         public App.Model.Master.MEquipment Master{
             get{ 
-                return App.Util.Cacher.EquipmentCacher.Instance.GetEquipment(this.Id, this.EquipmentType);
+                return App.Util.Cacher.EquipmentCacher.Instance.GetEquipment(this.EquipmentId, this.EquipmentType);
             }
         }
 	}

@@ -7,6 +7,7 @@ using App.View;
 using App.Util;
 using App.Util.Cacher;
 using System.Linq;
+using App.View.Equipment;
 
 
 namespace App.Controller{
@@ -14,13 +15,12 @@ namespace App.Controller{
         [SerializeField]private App.View.Character.VCharacterDetail characterDetail;
         [SerializeField]private VCharacter vCharacter;
         [SerializeField]private GameObject objStatus;
-        [SerializeField]private GameObject objEquipment;
+        [SerializeField]private VEquipments vEquipment;
         [SerializeField]private GameObject objSkill;
         private GameObject currentContent;
         App.Model.MCharacter character;
         public override IEnumerator OnLoad( Request request ) 
         {  
-            Debug.Log("CCharacterDetailDialog");
             yield return StartCoroutine(base.OnLoad(request));
             int characterId = request.Get<int>("character_id");
             if (Global.SUser.user.equipments == null)
@@ -34,23 +34,23 @@ namespace App.Controller{
             characterDetail.ResetAll();
             vCharacter.BindingContext = character.ViewModel;
             vCharacter.ResetAll();
+            vEquipment.BindingContext = character.ViewModel;
+            vEquipment.ResetAll();
             currentContent = objStatus;
-            Debug.Log("currentContent = " + currentContent);
-            Debug.Log("objStatus = " + objStatus);
 			yield return 0;
 		}
-        public void EquipmentIconClick(){
-            this.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.EquipmentListDialog));
+        public void EquipmentIconClick(int id){
+            App.Model.MEquipment mEquipment = System.Array.Find(Global.SUser.user.equipments, _=>_.Id == id);
+            Request req = Request.Create("id", id, "equipmentType", mEquipment.EquipmentType);
+            this.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.EquipmentListDialog, req));
         }
         public void ChangeToEquipment(){
-            Debug.Log("currentContent = " + currentContent);
-            Debug.Log("objEquipment = " + objEquipment);
-            if (currentContent.name == objEquipment.name)
+            if (currentContent.name == vEquipment.gameObject.name)
             {
                 return;
             }
             currentContent.SetActive(false);
-            objEquipment.SetActive(true);
+            vEquipment.gameObject.SetActive(true);
         }
 	}
 }

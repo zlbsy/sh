@@ -23,7 +23,11 @@ namespace App.Controller{
                 yield return StartCoroutine(sEquipment.RequestList());
                 Global.SUser.user.equipments = sEquipment.equipments;
             }
-            foreach(App.Model.MEquipment equipment in Global.SUser.user.equipments){
+            int id = request.Get<int>("id");
+            App.Model.Master.MEquipment.EquipmentType equipmentType = request.Get<App.Model.Master.MEquipment.EquipmentType>("equipmentType");
+            App.Model.MEquipment[] equipments = System.Array.FindAll(Global.SUser.user.equipments, 
+                _=>_.EquipmentType == equipmentType && _.character_id == 0);
+            foreach(App.Model.MEquipment equipment in equipments){
                 GameObject obj = Instantiate(childItem);
                 obj.transform.SetParent(content);
                 obj.transform.localScale = Vector3.one;
