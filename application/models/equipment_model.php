@@ -7,7 +7,7 @@ class Equipment_model extends MY_Model
 	}
 	function get_list($user_id, $chara_id = null){
 		$this->user_db->where("user_id", $user_id);
-		$this->user_db->select("id,character_id,equipment_id as EquipmentId,equipment_type as EquipmentType");
+		$this->user_db->select("id as Id,character_id,equipment_id as EquipmentId,equipment_type as EquipmentType");
 		if($chara_id != null){
 			$this->user_db->where("character_id", $chara_id);
 		}
