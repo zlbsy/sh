@@ -1,0 +1,18 @@
+ManifestFileVersion: 0
+CRC: 3988234434
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 1441e95a5c15f2d4836f006a3cc48d07
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: f1ac915b9ce7aad18386365823cb9620
+HashAppended: 0
+ClassTypes:
+- Class: 114
+  Script: {fileID: 11500000, guid: 0500c62da724f4529aba9badbaef6ed6, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+Assets:
+- Assets/Editor Default Resources/ScriptableObject/tileasset.asset
+Dependencies: []

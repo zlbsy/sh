@@ -1,0 +1,18 @@
+ManifestFileVersion: 0
+CRC: 3454184274
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: c6b2ea09cea012f69f62f802cd0a09a9
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 1b0f8020380520138b67f0844b713a3d
+HashAppended: 0
+ClassTypes:
+- Class: 114
+  Script: {fileID: 11500000, guid: 200ac2060999d4857bf53336411a5649, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+Assets:
+- Assets/Editor Default Resources/ScriptableObject/basemapasset.asset
+Dependencies: []

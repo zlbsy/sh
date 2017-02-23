@@ -1,0 +1,20 @@
+ManifestFileVersion: 0
+CRC: 2092557443
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: fea6f7c5ccd8024851a73db5ef6dacd5
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 4d7db4224d85776ee841e9d79793c0aa
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: 8f8c8a1829d774843965a439bcfc7609, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+Assets:
+- Assets/Editor Default Resources/ScriptableObject/promptmessageasset.asset
+Dependencies: []
