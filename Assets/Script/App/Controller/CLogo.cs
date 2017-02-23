@@ -42,6 +42,9 @@ namespace App.Controller{
             BuildingCacher.Instance.Reset(App.Model.Scriptable.BuildingAsset.Data.buildings);
             AreaCacher.Instance.Reset(App.Model.Scriptable.AreaAsset.Data.areas);
             CharacterCacher.Instance.Reset(App.Model.Scriptable.CharacterAsset.Data.characters);
+            EquipmentCacher.Instance.ResetHorse(App.Model.Scriptable.HorseAsset.Data.equipments);
+            EquipmentCacher.Instance.ResetClothes(App.Model.Scriptable.ClothesAsset.Data.equipments);
+            EquipmentCacher.Instance.ResetWeapon(App.Model.Scriptable.WeaponAsset.Data.equipments);
             yield return StartCoroutine (App.Util.Global.SUser.RequestGet());
             App.Util.SceneManager.LoadScene( App.Util.SceneManager.Scenes.Top.ToString() );
         }
@@ -70,6 +73,15 @@ namespace App.Controller{
                 ConstantAsset.assetbundle = assetbundle;
                 Global.Constant = ConstantAsset.Data.constant;
             }));
+            list.Add(sUser.Download(HorseAsset.Url, versions.horse, (AssetBundle assetbundle)=>{
+                HorseAsset.assetbundle = assetbundle;
+            }));
+            list.Add(sUser.Download(WeaponAsset.Url, versions.weapon, (AssetBundle assetbundle)=>{
+                WeaponAsset.assetbundle = assetbundle;
+            }));
+            list.Add(sUser.Download(ClothesAsset.Url, versions.clothes, (AssetBundle assetbundle)=>{
+                ClothesAsset.assetbundle = assetbundle;
+            }));
             list.Add(sUser.Download(AreaAsset.Url, versions.area, (AssetBundle assetbundle)=>{
                 AreaAsset.assetbundle = assetbundle;
             }));
@@ -88,23 +100,26 @@ namespace App.Controller{
             list.Add(sUser.Download(App.Model.Avatar.AvatarAsset.Url, versions.tile, (AssetBundle assetbundle)=>{
                 App.Model.Avatar.AvatarAsset.assetbundle = assetbundle;
             }));
-            list.Add(sUser.Download(AssetBundleManager.avatarUrl, versions.avatar, (AssetBundle assetbundle)=>{
-                AssetBundleManager.avatar = assetbundle;
+            list.Add(sUser.Download(ImageAssetBundleManager.avatarUrl, versions.avatar, (AssetBundle assetbundle)=>{
+                ImageAssetBundleManager.avatar = assetbundle;
             }, false));
-            list.Add(sUser.Download(AssetBundleManager.horseUrl, versions.horse, (AssetBundle assetbundle)=>{
-                AssetBundleManager.horse = assetbundle;
+            list.Add(sUser.Download(ImageAssetBundleManager.horseUrl, versions.horse_img, (AssetBundle assetbundle)=>{
+                ImageAssetBundleManager.horse = assetbundle;
             }, false));
-            list.Add(sUser.Download(AssetBundleManager.hatUrl, versions.hat, (AssetBundle assetbundle)=>{
-                AssetBundleManager.hat = assetbundle;
+            list.Add(sUser.Download(ImageAssetBundleManager.hatUrl, versions.hat, (AssetBundle assetbundle)=>{
+                ImageAssetBundleManager.hat = assetbundle;
             }, false));
-            list.Add(sUser.Download(AssetBundleManager.mapUrl, versions.map, (AssetBundle assetbundle)=>{
-                AssetBundleManager.map = assetbundle;
+            list.Add(sUser.Download(ImageAssetBundleManager.mapUrl, versions.map, (AssetBundle assetbundle)=>{
+                ImageAssetBundleManager.map = assetbundle;
             }, false));
-            list.Add(sUser.Download(AssetBundleManager.clothesUrl, versions.clothes, (AssetBundle assetbundle)=>{
-                AssetBundleManager.clothes = assetbundle;
+            list.Add(sUser.Download(ImageAssetBundleManager.clothesUrl, versions.clothes_img, (AssetBundle assetbundle)=>{
+                ImageAssetBundleManager.clothes = assetbundle;
             }, false));
-            list.Add(sUser.Download(AssetBundleManager.weaponUrl, versions.weapon, (AssetBundle assetbundle)=>{
-                AssetBundleManager.weapon = assetbundle;
+            list.Add(sUser.Download(ImageAssetBundleManager.weaponUrl, versions.weapon_img, (AssetBundle assetbundle)=>{
+                ImageAssetBundleManager.weapon = assetbundle;
+            }, false));
+            list.Add(sUser.Download(ImageAssetBundleManager.equipmentIconUrl, versions.equipmenticon_img, (AssetBundle assetbundle)=>{
+                ImageAssetBundleManager.equipmentIcon = assetbundle;
             }, false));
             float step = 100f / list.Count;
             for (int i = 0; i < list.Count; i++)

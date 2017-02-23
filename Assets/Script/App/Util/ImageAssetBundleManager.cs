@@ -6,7 +6,7 @@ using App.ViewModel;
 using App.Service;
 
 namespace App.Util{
-	public class AssetBundleManager {
+	public class ImageAssetBundleManager {
         private static AssetBundle _avatar = null;
         public static string avatarUrl{ get{ return HttpClient.assetBandleURL + "charaimage.unity3d";} }
         public static AssetBundle avatar{ set{ _avatar = value; } }
@@ -25,12 +25,15 @@ namespace App.Util{
         private static AssetBundle _weapon = null;
         public static string weaponUrl{ get{ return HttpClient.assetBandleURL + "weaponimage.unity3d";} }
         public static AssetBundle weapon{ set{ _weapon = value; } }
+        private static AssetBundle _equipmentIcon = null;
+        public static string equipmentIconUrl{ get{ return HttpClient.assetBandleURL + "equipmenticonimage.unity3d";} }
+        public static AssetBundle equipmentIcon{ set{ _equipmentIcon = value; } }
 
 		public static Sprite GetAvatarBody(string name){
 			return GetAvatarSprite(name);
 		}
-		public static Sprite GetAvatarHead(string name){
-			return GetAvatarSprite(name);
+		public static Sprite GetAvatarHead(int id){
+            return GetAvatarSprite("head_" + id);
 		}
 		public static Sprite GetAvatarSprite(string name){
 			return _avatar.LoadAsset<Sprite>(name);
@@ -44,11 +47,14 @@ namespace App.Util{
 		public static Sprite GetHorse(string name){
 			return _horse.LoadAsset<Sprite>(name);
 		}
-		public static Sprite GetAvatarHat(string name){
-			return _hat.LoadAsset<Sprite>(name);
+        public static Sprite GetAvatarHat(int id){
+            return _hat.LoadAsset<Sprite>("hat_" + id);
 		}
 		public static Sprite GetMapTile(string name){
 			return _map.LoadAsset<Sprite>(name);
-		}
+        }
+        public static Sprite GetEquipmentIcon(string name){
+            return _equipmentIcon.LoadAsset<Sprite>(name);
+        }
 	}
 }

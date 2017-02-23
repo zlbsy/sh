@@ -18,6 +18,7 @@ namespace App.Util{
             AlertDialog,
             CharacterListDialog,
             CharacterDetailDialog,
+            EquipmentListDialog,
         }
         public static App.Controller.CScene CurrentScene;
         public static App.Controller.Request CurrentSceneRequest;

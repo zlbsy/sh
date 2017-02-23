@@ -9,6 +9,7 @@ using UnityEngine.UI;
 namespace App.Controller{
     public enum OpenType{
         Middle,//从中间扩大
+        Down,//从下面上升
         None,//无
         Fade//无
     }
@@ -18,6 +19,7 @@ namespace App.Controller{
         UnityEngine.UI.Image background;
         [HideInInspector]public int index;
         private bool _isClose;
+        private Vector2 _savePosition;
         private static int dialogIndex = 0;
         protected System.Action closeEvent;
         public static int GetIndex(){
@@ -43,6 +45,11 @@ namespace App.Controller{
             if (opentype == OpenType.Middle)
             {
                 panel.localScale = new Vector3(panel.localScale.x, 0, panel.localScale.z);
+            }else if (opentype == OpenType.Down)
+            {
+                RectTransform trans = panel as RectTransform;
+                _savePosition = trans.anchoredPosition;
+                trans.anchoredPosition = new Vector2(trans.anchoredPosition.x, trans.sizeDelta.y * -0.5f);
             }else if (opentype == OpenType.Fade)
             {
                 panel.gameObject.AddComponent<CanvasGroup>().alpha = 0;
@@ -65,6 +72,9 @@ namespace App.Controller{
             if (opentype == OpenType.Middle)
             {
                 HOTween.To(panel, 0.3f, new TweenParms().Prop("localScale", new Vector3(1f, 1f, 1f)));
+            }else if (opentype == OpenType.Down)
+            {
+                HOTween.To(panel as RectTransform, 0.3f, new TweenParms().Prop("anchoredPosition", _savePosition));
             }else if (opentype == OpenType.Fade)
             {
                 HOTween.To(panel.gameObject.GetComponent<CanvasGroup>(), 0.3f, new TweenParms().Prop("alpha", 1));
@@ -83,6 +93,10 @@ namespace App.Controller{
             if (opentype == OpenType.Middle)
             {
                 HOTween.To(panel, 0.2f, new TweenParms().Prop("localScale", new Vector3(1f, 0, 1f)).OnComplete(Delete));
+            }else if (opentype == OpenType.Down)
+            {
+                RectTransform trans = panel as RectTransform;
+                HOTween.To(panel as RectTransform, 0.3f, new TweenParms().Prop("anchoredPosition", new Vector2(trans.anchoredPosition.x, trans.sizeDelta.y * -0.5f)));
             }else if (opentype == OpenType.Fade)
             {
                 HOTween.To(panel.gameObject.GetComponent<CanvasGroup>(), 0.3f, new TweenParms().Prop("alpha", 0).OnComplete(Delete));

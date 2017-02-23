@@ -16,9 +16,13 @@ namespace App.Model{
         public int word;
         public int characterword;
         public int area;
-        public int horse;
         public int hat;
         public int map;
+        public int horse_img;
+        public int clothes_img;
+        public int weapon_img;
+        public int equipmenticon_img;
+        public int horse;
         public int clothes;
         public int weapon;
         public int face;

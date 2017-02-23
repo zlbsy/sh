@@ -7,6 +7,7 @@ using App.View;
 using App.Util;
 using App.Util.Cacher;
 using System.Linq;
+using App.View.Character;
 
 
 namespace App.Controller{

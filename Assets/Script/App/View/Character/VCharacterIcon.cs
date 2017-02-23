@@ -8,9 +8,8 @@ using App.Model.Avatar;
 using App.Util.Cacher;
 using App.Controller;
 
-namespace App.View{
+namespace App.View.Character{
     public class VCharacterIcon : VBase {
-        [SerializeField]private RawImage icon;
         [SerializeField]private App.View.Character.VRawFace faceIcon;
         [SerializeField]private GameObject[] stars;
         [SerializeField]private Text level;

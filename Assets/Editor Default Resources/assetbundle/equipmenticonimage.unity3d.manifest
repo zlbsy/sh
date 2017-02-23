@@ -1,0 +1,23 @@
+ManifestFileVersion: 0
+CRC: 4283560365
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: d717c43ed993c790ec4fddcb30e2e758
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 4d24bf54f46935ed9e6cf78ac481bb9d
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+Assets:
+- Assets/Atlas/equipmenticon/clothes_2.png
+- Assets/Atlas/equipmenticon/horse_2.png
+- Assets/Atlas/equipmenticon/weapon_2.png
+- Assets/Atlas/equipmenticon/horse_1.png
+- Assets/Atlas/equipmenticon/weapon_1.png
+- Assets/Atlas/equipmenticon/clothes_1.png
+Dependencies: []

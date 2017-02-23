@@ -52,6 +52,18 @@ namespace App.Controller{
                 UnityEditor.AssetDatabase.CreateAsset(faceAsset, string.Format("Assets/Editor Default Resources/ScriptableObject/{0}.asset", App.Model.Scriptable.FaceAsset.Name));
                 UnityEditor.AssetDatabase.Refresh();
             }
+            if (GUI.Button(new Rect(150, 450, 100, 30), "horse"))
+            {
+                this.StartCoroutine(CreateScriptableObjectMasterHorseRun());
+            }
+            if (GUI.Button(new Rect(150, 500, 100, 30), "clothes"))
+            {
+                this.StartCoroutine(CreateScriptableObjectMasterClothesRun());
+            }
+            if (GUI.Button(new Rect(150, 550, 100, 30), "weapon"))
+            {
+                this.StartCoroutine(CreateScriptableObjectMasterWeaponRun());
+            }
 
             if (GUI.Button(new Rect(350, 50, 100, 30), "Prompt"))
             {
@@ -65,6 +77,39 @@ namespace App.Controller{
                 UnityEditor.AssetDatabase.CreateAsset(languageAsset, string.Format("Assets/Editor Default Resources/ScriptableObject/{0}.asset", App.Model.Scriptable.LanguageAsset.Name));
                 UnityEditor.AssetDatabase.Refresh();
             }
+        }
+        IEnumerator CreateScriptableObjectMasterHorseRun()
+        {
+            var asset = ScriptableObject.CreateInstance<App.Model.Scriptable.HorseAsset>();
+
+            SEditorMaster sMaster = new SEditorMaster();
+            yield return StartCoroutine (sMaster.RequestAll("character"));
+            asset.equipments = sMaster.responseAll.horses;
+
+            UnityEditor.AssetDatabase.CreateAsset(asset, string.Format("Assets/Editor Default Resources/ScriptableObject/{0}.asset", App.Model.Scriptable.HorseAsset.Name));
+            UnityEditor.AssetDatabase.Refresh();
+        }
+        IEnumerator CreateScriptableObjectMasterClothesRun()
+        {
+            var asset = ScriptableObject.CreateInstance<App.Model.Scriptable.ClothesAsset>();
+
+            SEditorMaster sMaster = new SEditorMaster();
+            yield return StartCoroutine (sMaster.RequestAll("character"));
+            asset.equipments = sMaster.responseAll.clothes;
+
+            UnityEditor.AssetDatabase.CreateAsset(asset, string.Format("Assets/Editor Default Resources/ScriptableObject/{0}.asset", App.Model.Scriptable.ClothesAsset.Name));
+            UnityEditor.AssetDatabase.Refresh();
+        }
+        IEnumerator CreateScriptableObjectMasterWeaponRun()
+        {
+            var asset = ScriptableObject.CreateInstance<App.Model.Scriptable.WeaponAsset>();
+
+            SEditorMaster sMaster = new SEditorMaster();
+            yield return StartCoroutine (sMaster.RequestAll("character"));
+            asset.equipments = sMaster.responseAll.weapons;
+
+            UnityEditor.AssetDatabase.CreateAsset(asset, string.Format("Assets/Editor Default Resources/ScriptableObject/{0}.asset", App.Model.Scriptable.WeaponAsset.Name));
+            UnityEditor.AssetDatabase.Refresh();
         }
         IEnumerator CreateScriptableObjectMasterCharacterRun()
         {

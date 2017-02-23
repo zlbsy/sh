@@ -5,6 +5,8 @@ using UnityEngine.UI;
 using App.ViewModel;
 using App.Util;
 using App.Model.Avatar;
+using App.Model.Master;
+using App.Util.Cacher;
 
 namespace App.View{
     public class VCharacter : VBase {
@@ -65,11 +67,11 @@ namespace App.View{
         }
         private void HeadChanged(int oldvalue, int newvalue)
         {
-            imgHead.sprite = AssetBundleManager.GetAvatarHead("head_" + newvalue);
+            imgHead.sprite = ImageAssetBundleManager.GetAvatarHead(newvalue);
         }
         private void HatChanged(int oldvalue, int newvalue)
         {
-            imgHat.sprite = AssetBundleManager.GetAvatarHat("hat_" + newvalue);
+            imgHat.sprite = ImageAssetBundleManager.GetAvatarHat(newvalue);
         }
         private void WeaponChanged(int oldvalue, int newvalue)
         {
@@ -91,18 +93,20 @@ namespace App.View{
                 imgHorse.gameObject.SetActive (false);
             } else {
                 imgHorse.gameObject.SetActive (true);
+                //MEquipment horse = EquipmentCacher.Instance.GetEquipment(ViewModel.Horse.Value, MEquipment.EquipmentType.horse);
                 key = string.Format("horse_{0}_{1}_{2}", ViewModel.Horse.Value, ViewModel.Action.Value, avatarAction.horse.index);
-                imgHorse.sprite = AssetBundleManager.GetHorse(key);
+                imgHorse.sprite = ImageAssetBundleManager.GetHorse(key);
                 //imgHorse.SetNativeSize ();
                 imgHorse.transform.localPosition = avatarAction.horse.position;
             }
             //Body
             key = string.Format("body_{0}_{1}_{2}_{3}", ViewModel.MoveType.Value, ViewModel.WeaponType.Value, ViewModel.Action.Value, avatarAction.body.index);
-            imgBody.sprite = AssetBundleManager.GetAvatarBody(key);
+            imgBody.sprite = ImageAssetBundleManager.GetAvatarBody(key);
             //imgBody.SetNativeSize ();
             //Clothes
+            //MEquipment clothes = EquipmentCacher.Instance.GetEquipment(ViewModel.Clothes.Value, MEquipment.EquipmentType.clothes);
             key = string.Format("clothes_{0}_{1}_{2}_{3}_{4}", ViewModel.Clothes.Value, ViewModel.MoveType.Value, ViewModel.WeaponType.Value, ViewModel.Action.Value, avatarAction.clothes.index);
-            imgClothes.sprite = AssetBundleManager.GetClothes(key);
+            imgClothes.sprite = ImageAssetBundleManager.GetClothes(key);
             imgClothes.transform.SetSiblingIndex (avatarAction.clothes.sibling);
             //imgClothes.SetNativeSize ();
             if (imgHead.gameObject.activeSelf && avatarAction.head.index == 0)
@@ -113,8 +117,9 @@ namespace App.View{
                 imgHead.gameObject.SetActive(true);
             }
             //Weapon
+            //MEquipment weapon = EquipmentCacher.Instance.GetEquipment(ViewModel.Weapon.Value, MEquipment.EquipmentType.weapon);
             key = string.Format("weapon_{0}_{1}_{2}_{3}_{4}", ViewModel.Weapon.Value, ViewModel.MoveType.Value, ViewModel.WeaponType.Value, ViewModel.Action.Value, avatarAction.body.index);
-            imgWeapon.sprite = AssetBundleManager.GetWeapon(key);
+            imgWeapon.sprite = ImageAssetBundleManager.GetWeapon(key);
             if (avatarAction.weapon.sibling >= 0)
             {
                 imgWeapon.transform.SetSiblingIndex(avatarAction.weapon.sibling);

@@ -1,0 +1,18 @@
+ManifestFileVersion: 0
+CRC: 2658138775
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 608d65bec699da28135a0b184fad27b3
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 111b76ca3346b745425a95147af50ce5
+HashAppended: 0
+ClassTypes:
+- Class: 114
+  Script: {fileID: 11500000, guid: 12525823b950b445e905954983c3b940, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+Assets:
+- Assets/Editor Default Resources/ScriptableObject/clothesasset.asset
+Dependencies: []

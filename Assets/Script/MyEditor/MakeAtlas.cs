@@ -71,37 +71,42 @@ namespace MyEditor
         [MenuItem("SH/Build Assetbundle/Image/Map")]
         static private void BuildAssetBundleMap()
         {
-            BuildAssetBundle("map");
+            BuildImageAssetBundle("map");
         }
         [MenuItem("SH/Build Assetbundle/Image/Chara")]
         static private void BuildAssetBundleChara()
         {
-            BuildAssetBundle("chara");
+            BuildImageAssetBundle("chara");
         }
         [MenuItem("SH/Build Assetbundle/Image/Clothes")]
         static private void BuildAssetBundleClothes()
         {
-            BuildAssetBundle("clothes");
+            BuildImageAssetBundle("clothes");
         }
         [MenuItem("SH/Build Assetbundle/Image/Hat")]
         static private void BuildAssetBundleHat()
         {
-            BuildAssetBundle("hat");
+            BuildImageAssetBundle("hat");
         }
         [MenuItem("SH/Build Assetbundle/Image/Horse")]
         static private void BuildAssetBundleHorse()
         {
-            BuildAssetBundle("horse");
+            BuildImageAssetBundle("horse");
         }
         [MenuItem("SH/Build Assetbundle/Image/Weapon")]
         static private void BuildAssetBundleWeapon()
         {
-            BuildAssetBundle("weapon");
+            BuildImageAssetBundle("weapon");
+        }
+        [MenuItem("SH/Build Assetbundle/Image/EquipmentIcon")]
+        static private void BuildAssetBundleEquipmentIcon()
+        {
+            BuildImageAssetBundle("equipmenticon");
         }
         [MenuItem("SH/Build Assetbundle/Image/All")]
         static private void BuildAssetBundleAll()
         {
-            BuildAssetBundle("");
+            BuildImageAssetBundle("");
         }
 
         [MenuItem("SH/Build Assetbundle/Master/All")]
@@ -171,6 +176,21 @@ namespace MyEditor
         {
             BuildAssetBundleMaster("characterwordasset");
         }
+        [MenuItem("SH/Build Assetbundle/Master/Horse")]
+        static private void BuildAssetBundleMasterHorse()
+        {
+            BuildAssetBundleMaster(App.Model.Scriptable.HorseAsset.Name);
+        }
+        [MenuItem("SH/Build Assetbundle/Master/Clothes")]
+        static private void BuildAssetBundleMasterClothes()
+        {
+            BuildAssetBundleMaster(App.Model.Scriptable.ClothesAsset.Name);
+        }
+        [MenuItem("SH/Build Assetbundle/Master/Weapon")]
+        static private void BuildAssetBundleMasterWeapon()
+        {
+            BuildAssetBundleMaster(App.Model.Scriptable.WeaponAsset.Name);
+        }
         static private void BuildAssetBundleMaster(string name)
         {
             string assetPath = string.Format("ScriptableObject/{0}.asset", name);
@@ -200,7 +220,7 @@ namespace MyEditor
             );
             Debug.LogError("BuildAssetBundleMaster success : "+name);
         }
-        static private void BuildAssetBundle(string atlasName)
+        static private void BuildImageAssetBundle(string atlasName)
         {
             /*string dir = Application.dataPath + "/Editor Default Resources/assetbundle/";
 
