@@ -131,6 +131,11 @@ namespace MyEditor
         {
             BuildAssetBundleMaster(App.Model.Scriptable.ConstantAsset.Name);
         }
+        [MenuItem("SH/Build Assetbundle/Master/Skill")]
+        static private void BuildAssetBundleSkill()
+        {
+            BuildAssetBundleMaster(App.Model.Scriptable.SkillAsset.Name);
+        }
         [MenuItem("SH/Build Assetbundle/Master/Tile")]
         static private void BuildAssetBundleTile()
         {

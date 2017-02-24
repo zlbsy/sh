@@ -64,6 +64,10 @@ namespace App.Controller{
             {
                 this.StartCoroutine(CreateScriptableObjectMasterWeaponRun());
             }
+            if (GUI.Button(new Rect(150, 600, 100, 30), "skill"))
+            {
+                this.StartCoroutine(CreateScriptableObjectMasterSkillRun());
+            }
 
             if (GUI.Button(new Rect(350, 50, 100, 30), "Prompt"))
             {
@@ -77,6 +81,17 @@ namespace App.Controller{
                 UnityEditor.AssetDatabase.CreateAsset(languageAsset, string.Format("Assets/Editor Default Resources/ScriptableObject/{0}.asset", App.Model.Scriptable.LanguageAsset.Name));
                 UnityEditor.AssetDatabase.Refresh();
             }
+        }
+        IEnumerator CreateScriptableObjectMasterSkillRun()
+        {
+            var asset = ScriptableObject.CreateInstance<App.Model.Scriptable.SkillAsset>();
+
+            SEditorMaster sMaster = new SEditorMaster();
+            yield return StartCoroutine (sMaster.RequestAll("skill"));
+            asset.skills = sMaster.responseAll.skills;
+
+            UnityEditor.AssetDatabase.CreateAsset(asset, string.Format("Assets/Editor Default Resources/ScriptableObject/{0}.asset", App.Model.Scriptable.SkillAsset.Name));
+            UnityEditor.AssetDatabase.Refresh();
         }
         IEnumerator CreateScriptableObjectMasterHorseRun()
         {

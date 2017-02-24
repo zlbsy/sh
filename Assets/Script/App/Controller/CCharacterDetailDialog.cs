@@ -21,7 +21,6 @@ namespace App.Controller{
         App.Model.MCharacter character;
         public override IEnumerator OnLoad( Request request ) 
         {  
-            yield return StartCoroutine(base.OnLoad(request));
             int characterId = request.Get<int>("character_id");
             if (Global.SUser.user.equipments == null)
             {
@@ -37,7 +36,7 @@ namespace App.Controller{
             vEquipment.BindingContext = character.ViewModel;
             vEquipment.ResetAll();
             currentContent = objStatus;
-			yield return 0;
+            yield return StartCoroutine(base.OnLoad(request));
 		}
         public void EquipmentIconClick(int id){
             App.Model.MEquipment mEquipment = System.Array.Find(Global.SUser.user.equipments, _=>_.Id == id);

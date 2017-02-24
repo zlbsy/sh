@@ -1,7 +1,7 @@
 ManifestFileVersion: 0
-CRC: 1448467266
+CRC: 3012861061
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
-      Name: equipmenticonimage.unity3d
+      Name: skillasset.unity3d
       Dependencies: {}
