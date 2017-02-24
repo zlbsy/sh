@@ -49,6 +49,10 @@ class Master extends MY_Controller {
 			$master_clothes = $this->master_model->get_master_clothes();
 			$result["clothes"]=$master_clothes;
 		}
+		if($args["skill"]){
+			$master_skill = $this->master_model->get_master_skill();
+			$result["skills"]=$master_skill;
+		}
 
 		if($args["character_star"]){
 			$master_character_star = $this->master_model->get_master_character_star();
@@ -65,10 +69,6 @@ class Master extends MY_Controller {
 		if($args["growing"]){
 			$master_growing = $this->master_model->get_master_growing();
 			$result["growing"]=$master_growing;
-		}
-		if($args["skill"]){
-			$master_skill = $this->master_model->get_master_skill();
-			$result["skill"]=$master_skill;
 		}
 		
 		return $result;

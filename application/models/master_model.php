@@ -146,7 +146,7 @@ class Master_model extends MY_Model
 		return $result;
 	}
 	function get_master_skill(){
-		$this->master_db->select('id, five');
+		$this->master_db->select('id, name, type, price');
 		$query = $this->master_db->get(MASTER_SKILL);
 		if ($query->num_rows() == 0){
 			return null;
