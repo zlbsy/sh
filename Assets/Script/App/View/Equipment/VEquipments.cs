@@ -51,9 +51,9 @@ namespace App.View.Equipment{
             App.Model.MEquipment mEquipment = System.Array.Find(Global.SUser.user.equipments, 
                 _=>_.EquipmentId == equipmentId && _.character_id == ViewModel.CharacterId.Value && _.EquipmentType == equipmentType);
             equipmentIcon.BindingContext = mEquipment.ViewModel;
-            equipmentIcon.ResetAll();
+            equipmentIcon.UpdateView();
         }
-        public void ResetAll(){
+        public override void UpdateView(){
             EquipmentChanged(weapon, ViewModel.Weapon.Value, App.Model.Master.MEquipment.EquipmentType.weapon);
             EquipmentChanged(clothes, ViewModel.Clothes.Value, App.Model.Master.MEquipment.EquipmentType.clothes);
             EquipmentChanged(horse, ViewModel.Horse.Value, App.Model.Master.MEquipment.EquipmentType.horse);

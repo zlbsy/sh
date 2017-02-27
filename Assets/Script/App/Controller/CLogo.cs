@@ -50,7 +50,6 @@ namespace App.Controller{
         }
         public IEnumerator VersionCheck(MVersion versions)
         {
-            Debug.LogError("VersionCheck");
             CScene scene = SceneManager.CurrentScene;
             SUser sUser = Global.SUser;
             List<IEnumerator> list = new List<IEnumerator>();

@@ -8,16 +8,18 @@ using App.Util;
 using App.Util.Cacher;
 using System.Linq;
 using App.View.Equipment;
+using App.View.Character;
 
 
 namespace App.Controller{
     public class CCharacterDetailDialog : CDialog {
         [SerializeField]private App.View.Character.VCharacterDetail characterDetail;
         [SerializeField]private VCharacter vCharacter;
-        [SerializeField]private GameObject objStatus;
+        [SerializeField]private VCharacterStatus vCharacterStatus;
         [SerializeField]private VEquipments vEquipment;
-        [SerializeField]private GameObject objSkill;
+        [SerializeField]private VCharacterSkill vCharacterSkill;
         private GameObject currentContent;
+        private VBase[] contents;
         App.Model.MCharacter character;
         public override IEnumerator OnLoad( Request request ) 
         {  
@@ -30,12 +32,17 @@ namespace App.Controller{
             }
             character = System.Array.Find(Global.SUser.user.characters, _=>_.CharacterId == characterId);
             characterDetail.BindingContext = character.ViewModel;
-            characterDetail.ResetAll();
+            characterDetail.UpdateView();
             vCharacter.BindingContext = character.ViewModel;
-            vCharacter.ResetAll();
+            vCharacter.UpdateView();
+            vCharacterStatus.BindingContext = character.ViewModel;
+            vCharacterStatus.UpdateView();
             vEquipment.BindingContext = character.ViewModel;
-            vEquipment.ResetAll();
-            currentContent = objStatus;
+            vEquipment.UpdateView();
+            vCharacterSkill.BindingContext = character.ViewModel;
+            vCharacterSkill.UpdateView();
+            contents = new VBase[]{ vCharacterStatus, vEquipment, vCharacterSkill };
+            ShowContentFromIndex(0);
             yield return StartCoroutine(base.OnLoad(request));
 		}
         public void EquipmentIconClick(int id){
@@ -43,13 +50,18 @@ namespace App.Controller{
             Request req = Request.Create("id", id, "equipmentType", mEquipment.EquipmentType);
             this.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.EquipmentListDialog, req));
         }
-        public void ChangeToEquipment(){
-            if (currentContent.name == vEquipment.gameObject.name)
+        public void ChangeContent(){
+            int index = System.Array.FindIndex(contents, _=>_.gameObject.name == currentContent.name) + 1;
+            ShowContentFromIndex(index);
+        }
+        public void ShowContentFromIndex(int index){
+            System.Array.ForEach(contents, _=>_.gameObject.SetActive(false));
+            if (index >= contents.Length)
             {
-                return;
+                index = 0; 
             }
-            currentContent.SetActive(false);
-            vEquipment.gameObject.SetActive(true);
+            currentContent = contents[index].gameObject;
+            currentContent.SetActive(true);
         }
 	}
 }

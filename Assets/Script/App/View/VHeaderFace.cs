@@ -41,7 +41,7 @@ namespace App.View{
             level.text = newvalue.ToString();
         }
         #endregion
-        public void ResetAll(){
+        public override void UpdateView(){
             level.text = ViewModel.Level.Value.ToString();
             nickname.text = ViewModel.Nickname.Value.ToString();
             icon.CharacterId = ViewModel.Face.Value;

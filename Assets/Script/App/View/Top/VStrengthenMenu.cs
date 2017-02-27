@@ -26,5 +26,10 @@ namespace App.View.Top{
                 }
             }));
         }
+        public void ClickLevelUp(){
+            /*CTalkDialog.ToShow(2,"这是一个测试，测试对话。这是一个测试，测试对话。这是一个测试，测试对话。",true, ()=>{
+                CTalkDialog.ToShow(1,"这是一个测试，测试对话。这是一个测试，测试对话。这是一个测试，测试对话。", false);
+            });*/
+        }
 	}
 }

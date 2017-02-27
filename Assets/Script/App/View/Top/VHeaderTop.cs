@@ -51,7 +51,7 @@ namespace App.View.Top{
             StartCoroutine("UpdateAp");
         }
         #endregion
-        public void ResetAll(){
+        public override void UpdateView(){
             gold.text = ViewModel.Gold.Value.ToString();
             silver.text = ViewModel.Silver.Value.ToString();
             StopCoroutine("UpdateAp");

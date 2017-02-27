@@ -26,9 +26,9 @@ namespace App.Controller{
             mBaseMap.MapId = worldId;
             mBaseMap.Tiles = AreaCacher.Instance.GetAreas(worldId);
             vBaseMap.BindingContext = mBaseMap.ViewModel;
-            vBaseMap.ResetAll();
+            vBaseMap.UpdateView();
             vBaseMap.transform.parent.localScale = Vector3.one;
-            //vWorldMap.MoveToCenter();
+            vBaseMap.MoveToCenter();
         }
         public void OnClickTile(int index){
             /*App.Model.Master.MBaseMap topMapMaster = BaseMapCacher.Instance.Get(mWorldMap.MapId);

@@ -53,7 +53,7 @@ namespace App.View.Character{
 
             icon.uvRect = mCharacter.FaceRect;*/
         }
-        public void ResetAll(){
+        public override void UpdateView(){
             LevelChanged(0, ViewModel.Level.Value);
             StarChanged(0, ViewModel.Star.Value);
             CharacterIdChanged(0, ViewModel.CharacterId.Value);

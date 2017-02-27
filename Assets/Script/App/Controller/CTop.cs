@@ -30,9 +30,9 @@ namespace App.Controller{
         private void InitHeader(){
             MUser mUser = App.Util.Global.SUser.user;
             headerFace.BindingContext = mUser.ViewModel;
-            headerFace.ResetAll();
+            headerFace.UpdateView();
             headerTop.BindingContext = mUser.ViewModel;
-            headerTop.ResetAll();
+            headerTop.UpdateView();
         }
         private void InitMap(){
             MUser mUser = App.Util.Global.SUser.user;
@@ -41,7 +41,7 @@ namespace App.Controller{
             mTopMap.MapId = mUser.MapId;
             mTopMap.Tiles = mUser.TopMap.Clone() as App.Model.MTile[];
             vTopMap.BindingContext = mTopMap.ViewModel;
-            vTopMap.ResetAll();
+            vTopMap.UpdateView();
             vTopMap.transform.parent.localScale = Vector3.one;
             vTopMap.MoveToCenter();
         }

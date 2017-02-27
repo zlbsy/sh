@@ -37,5 +37,8 @@ namespace App.View{
         {
             Util.Global.ClearChild(this.gameObject);
         }
+        public virtual void UpdateView(){
+        
+        }
 	}
 }

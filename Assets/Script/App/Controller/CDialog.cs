@@ -16,19 +16,18 @@ namespace App.Controller{
     public class CDialog : CBase {
         [SerializeField]OpenType opentype;
         Transform panel;
-        UnityEngine.UI.Image background;
+        protected UnityEngine.UI.Image background;
         [HideInInspector]public int index;
         private bool _isClose;
         private Vector2 _savePosition;
         private static int dialogIndex = 0;
         protected System.Action closeEvent;
-        public static int GetIndex(){
-            return dialogIndex++;
-        }
         public override IEnumerator Start()
         {
-            this.GetComponent<Canvas>().sortingOrder = ++App.Util.Global.DialogSortOrder;
             yield break;
+        }
+        public static int GetIndex(){
+            return dialogIndex++;
         }
         public virtual void OnEnable(){
             if (panel == null){
@@ -38,9 +37,9 @@ namespace App.Controller{
                 RectTransform rect = backgroundObj.GetComponent<RectTransform>();
                 rect.offsetMin = new Vector2(0f, 0f);
                 rect.offsetMax = new Vector2(0f, 0f);
-                backgroundObj.transform.SetAsFirstSibling();
                 background = backgroundObj.GetComponent<UnityEngine.UI.Image>();
             }
+            background.transform.SetAsFirstSibling();
             background.color = new Color(0, 0, 0, 0);
             if (opentype == OpenType.Middle)
             {
@@ -52,8 +51,14 @@ namespace App.Controller{
                 trans.anchoredPosition = new Vector2(trans.anchoredPosition.x, trans.sizeDelta.y * -0.5f);
             }else if (opentype == OpenType.Fade)
             {
-                panel.gameObject.AddComponent<CanvasGroup>().alpha = 0;
+                CanvasGroup canvasGroup = panel.gameObject.GetComponent<CanvasGroup>();
+                if (canvasGroup == null)
+                {
+                    canvasGroup = panel.gameObject.AddComponent<CanvasGroup>();
+                }
+                canvasGroup.alpha = 0;
             }
+            this.GetComponent<Canvas>().sortingOrder = ++App.Util.Global.DialogSortOrder;
         }
         public void SetIndex(){
             this.index = CDialog.GetIndex();
@@ -68,7 +73,7 @@ namespace App.Controller{
             {
                 closeEvent = null;
             }
-            HOTween.To(background, 0.1f, new TweenParms().Prop("color", new Color(0,0,0,0.5f)));
+            HOTween.To(background, 0.1f, new TweenParms().Prop("color", new Color(0,0,0,0.6f)));
             if (opentype == OpenType.Middle)
             {
                 HOTween.To(panel, 0.3f, new TweenParms().Prop("localScale", new Vector3(1f, 1f, 1f)));
@@ -108,12 +113,12 @@ namespace App.Controller{
                 Delete();
             }
         }
-        public void Delete(){
+        public virtual void Delete(){
             HOTween.To(background, 0.1f, new TweenParms().Prop("color", new Color(0,0,0,0)).OnComplete(()=>{
+                App.Util.Global.SceneManager.DestoryDialog(this);
                 if(closeEvent != null){
                     closeEvent();
                 }
-                App.Util.Global.SceneManager.DestoryDialog(this);
             }));
         }
 	}

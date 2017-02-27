@@ -28,7 +28,7 @@ namespace App.Controller{
                 VCharacter view = obj.GetComponent<VCharacter> ();
                 view.BindingContext = chara.ViewModel;
                 chara.Action = ActionType.stand;
-                view.ResetAll();
+                view.UpdateView();
 			}
 			yield return 0;
 		}

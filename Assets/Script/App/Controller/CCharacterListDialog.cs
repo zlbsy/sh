@@ -29,7 +29,7 @@ namespace App.Controller{
                 obj.transform.localScale = Vector3.one;
                 VCharacterIcon vCharacterIcon = obj.GetComponent<VCharacterIcon>();
                 vCharacterIcon.BindingContext = character.ViewModel;
-                vCharacterIcon.ResetAll();
+                vCharacterIcon.UpdateView();
             }
 			yield return 0;
 		}

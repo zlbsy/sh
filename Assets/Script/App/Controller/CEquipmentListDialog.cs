@@ -28,12 +28,16 @@ namespace App.Controller{
             App.Model.MEquipment[] equipments = System.Array.FindAll(Global.SUser.user.equipments, 
                 _=>_.EquipmentType == equipmentType && _.character_id == 0);
             foreach(App.Model.MEquipment equipment in equipments){
+                if (equipment.Id == id)
+                {
+                    continue;
+                }
                 GameObject obj = Instantiate(childItem);
                 obj.transform.SetParent(content);
                 obj.transform.localScale = Vector3.one;
                 VEquipmentIcon vEquipmentIcon = obj.GetComponent<VEquipmentIcon>();
                 vEquipmentIcon.BindingContext = equipment.ViewModel;
-                vEquipmentIcon.ResetAll();
+                vEquipmentIcon.UpdateView();
             }
 			yield return 0;
         }

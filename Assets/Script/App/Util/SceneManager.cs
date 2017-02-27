@@ -19,29 +19,39 @@ namespace App.Util{
             CharacterListDialog,
             CharacterDetailDialog,
             EquipmentListDialog,
+            TalkDialog
         }
         public static App.Controller.CScene CurrentScene;
         public static App.Controller.Request CurrentSceneRequest;
         private List<App.Controller.CDialog> Dialogs = new List<App.Controller.CDialog>();
         public static void LoadScene(string name, App.Controller.Request req = null){
+            App.Controller.CConnectingDialog.ToShow();
+            CurrentScene.StartCoroutine(LoadSceneCoroutine(name, req));
+        }
+        public static IEnumerator LoadSceneCoroutine(string name, App.Controller.Request req = null){
+            yield return new WaitForSeconds(0.1f);
             CurrentSceneRequest = req;
             UnityEngine.SceneManagement.SceneManager.LoadScene( name );
             Global.SceneManager.DestoryDialog();
             Resources.UnloadUnusedAssets();
             System.GC.Collect();
-		}
+        }
 
         public IEnumerator ShowDialog(Prefabs prefab, App.Controller.Request req = null)
         {
-
-            GameObject instance = LoadPrefab (prefab.ToString());
-            App.Controller.CDialog dialog = instance.GetComponent<App.Controller.CDialog>();
-            dialog.SetIndex();
-            Dialogs.Add(dialog);
+            App.Controller.CDialog dialog = Dialogs.Find(_=>_ is App.Controller.CTalkDialog);
+            if (dialog == null)
+            {
+                GameObject instance = LoadPrefab(prefab.ToString());
+                dialog = instance.GetComponent<App.Controller.CDialog>();
+                dialog.SetIndex();
+                Dialogs.Add(dialog);
+            }
+            else
+            {
+                dialog.gameObject.SetActive(true);
+            }
             yield return CurrentScene.StartCoroutine(dialog.OnLoad(req));
-            //LoadDialog( instance.GetComponent<DialogController>(), request , useBackground);
-            //yield return instance;
-            //yield return 0;
         }
         public GameObject LoadPrefab(string prefabName)
         {

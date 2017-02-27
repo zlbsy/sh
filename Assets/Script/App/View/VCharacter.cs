@@ -59,10 +59,10 @@ namespace App.View{
         {
             animationIndex = 0;
             animator.Play(newvalue.ToString());
-            ResetAll();
+            UpdateView();
             if (newvalue == App.Model.ActionType.stand || newvalue == App.Model.ActionType.block)
             {
-                ResetAll();
+                UpdateView();
             }
         }
         private void HeadChanged(int oldvalue, int newvalue)
@@ -75,17 +75,17 @@ namespace App.View{
         }
         private void WeaponChanged(int oldvalue, int newvalue)
         {
-            ResetAll();
+            UpdateView();
         }
         private void HorseChanged(int oldvalue, int newvalue)
         {
-            ResetAll();
+            UpdateView();
         }
         private void ClothesChanged(int oldvalue, int newvalue)
         {
-            ResetAll();
+            UpdateView();
         }
-        public void ResetAll(){Debug.LogError(ViewModel.MoveType.Value+", " + ViewModel.WeaponType.Value + ", " + ViewModel.Action.Value + ", " + animationIndex);
+        public override void UpdateView(){Debug.LogError(ViewModel.MoveType.Value+", " + ViewModel.WeaponType.Value + ", " + ViewModel.Action.Value + ", " + animationIndex);
             AvatarAction avatarAction = AvatarAsset.Data.GetAvatarAction(ViewModel.MoveType.Value, ViewModel.WeaponType.Value, ViewModel.Action.Value, animationIndex);
             string key;
             //Horse
@@ -148,7 +148,7 @@ namespace App.View{
         }
         public void ChangeAnimationIdex(int index){
             animationIndex = index;
-            ResetAll ();
+            UpdateView ();
         }
         public void EmptyAction(){
         }
