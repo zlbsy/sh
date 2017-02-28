@@ -1,9 +1,16 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Script/App/Controller/CCharacterDetailDialog.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Script/App/Util/LSharp/LSharpLoad.cs">
     <Files>
-      <File FileName="Assets/Script/App/Controller/CCharacterDetailDialog.cs" Line="17" Column="19" />
-      <File FileName="Assets/Script/App/Controller/CCharacterListDialog.cs" Line="37" Column="111" />
+      <File FileName="Assets/Script/App/Util/LSharp/LSharpLoad.cs" Line="25" Column="18" />
+      <File FileName="Assets/Script/App/Util/LSharp/LSharpFunction.cs" Line="10" Column="41" />
+      <File FileName="Assets/Script/App/Util/LSharp/LSharpBase.cs" Line="9" Column="39" />
+      <File FileName="Assets/Script/App/Util/LSharp/LSharpScript.cs" Line="34" Column="15" />
+      <File FileName="Assets/Script/App/Util/LSharp/LSharpCharacter.cs" Line="11" Column="37" />
+      <File FileName="Assets/Script/App/Util/LSharp/LSharpVarlable.cs" Line="11" Column="37" />
+      <File FileName="Assets/Script/App/Util/SingleClass.cs" Line="7" Column="29" />
+      <File FileName="Assets/Script/App/Model/Scenario/MScenario.cs" Line="11" Column="34" />
+      <File FileName="Assets/Script/App/Util/LSharp/LSharpTalk.cs" Line="9" Column="43" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

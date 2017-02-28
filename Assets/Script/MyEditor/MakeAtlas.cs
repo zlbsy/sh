@@ -283,6 +283,47 @@ namespace MyEditor
             UnityEditor.AssetDatabase.CreateAsset(faceAsset, string.Format("Assets/Editor Default Resources/ScriptableObject/{0}.asset", App.Model.Scriptable.FaceAsset.Name));
             UnityEditor.AssetDatabase.Refresh();
         }
+        [MenuItem("SH/Create ScriptableObject/ScenarioAsset")]
+        static void CreateScenarioAsset()
+        {
+            var scenarioAsset = ScriptableObject.CreateInstance<App.Model.Scriptable.ScenarioAsset>();
+            UnityEditor.AssetDatabase.CreateAsset(scenarioAsset, string.Format("Assets/Editor Default Resources/ScriptableObject/{0}.asset", App.Model.Scriptable.ScenarioAsset.Name));
+            UnityEditor.AssetDatabase.Refresh();
+        }
+        [MenuItem("SH/Build Assetbundle/Scenario")]
+        static private void BuildAssetBundleScenario()
+        {
+            ScriptableObject asset = null;
+            string assetPath;
+            DirectoryInfo rootDirInfo = new DirectoryInfo(Application.dataPath + "/Editor Default Resources/ScriptableObject/scenario");
+            FileInfo[] files = rootDirInfo.GetFiles();
+            foreach (FileInfo file in files)
+            {
+                if (file.Extension != ".asset")
+                {
+                    continue;
+                }
+                string name = file.Name;
+                assetPath = string.Format("ScriptableObject/scenario/{0}", name);
+                asset = EditorGUIUtility.Load(assetPath) as ScriptableObject;
+                BuildAssetBundleScenario(name.Replace(".asset",""), asset);
+            }
+        }
+        static private void BuildAssetBundleScenario(string name, ScriptableObject asset)
+        {
+            string path = "Assets/Editor Default Resources/assetbundle/scenario/";
+            string assetPath = string.Format("Assets/Editor Default Resources/ScriptableObject/scenario/{0}.asset", name);
+            AssetBundleBuild[] builds = new AssetBundleBuild[1];
+            builds[0].assetBundleName = "scenario_"+name + ".unity3d";
+            string[] enemyAssets = new string[1];
+            enemyAssets[0] = assetPath;
+            builds[0].assetNames = enemyAssets;
+            BuildPipeline.BuildAssetBundles(path,builds,
+                BuildAssetBundleOptions.ChunkBasedCompression
+                ,GetBuildTarget()
+            );
+            Debug.LogError("BuildAssetBundleMaster success scenario : "+name);
+        }
         [MenuItem("SH/Build Assetbundle/Face")]
         static private void BuildAssetBundleFace()
         {
