@@ -18,6 +18,14 @@ namespace App.Model{
                 return this.ViewModel.MapId.Value;
             }
         }
+        public MCharacter[] Characters{
+            set{
+                this.ViewModel.Characters.Value = value;
+            }
+            get{ 
+                return this.ViewModel.Characters.Value;
+            }
+        }
         public MTile[] Tiles{
             set{
                 this.ViewModel.Tiles.Value = value;

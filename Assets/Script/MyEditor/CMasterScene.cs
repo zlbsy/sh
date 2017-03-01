@@ -68,6 +68,10 @@ namespace App.Controller{
             {
                 this.StartCoroutine(CreateScriptableObjectMasterSkillRun());
             }
+            if (GUI.Button(new Rect(150, 650, 100, 30), "stage"))
+            {
+                this.StartCoroutine(CreateScriptableObjectMasterStageRun());
+            }
 
             if (GUI.Button(new Rect(350, 50, 100, 30), "Prompt"))
             {
@@ -135,6 +139,17 @@ namespace App.Controller{
             areaAsset.characters = sMaster.responseAll.characters;
 
             UnityEditor.AssetDatabase.CreateAsset(areaAsset, string.Format("Assets/Editor Default Resources/ScriptableObject/{0}.asset", App.Model.Scriptable.CharacterAsset.Name));
+            UnityEditor.AssetDatabase.Refresh();
+        }
+        IEnumerator CreateScriptableObjectMasterStageRun()
+        {
+            var asset = ScriptableObject.CreateInstance<App.Model.Scriptable.StageAsset>();
+
+            SEditorMaster sMaster = new SEditorMaster();
+            yield return StartCoroutine (sMaster.RequestAll("stage"));
+            asset.stages = sMaster.responseAll.stages;
+
+            UnityEditor.AssetDatabase.CreateAsset(asset, string.Format("Assets/Editor Default Resources/ScriptableObject/{0}.asset", App.Model.Scriptable.StageAsset.Name));
             UnityEditor.AssetDatabase.Refresh();
         }
         IEnumerator CreateScriptableObjectMasterAreaRun()

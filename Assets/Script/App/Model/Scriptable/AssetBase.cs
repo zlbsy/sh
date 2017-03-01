@@ -57,7 +57,6 @@ namespace App.Model.Scriptable{
         }
         public static void Clear(){
             _data = null;
-            Debug.Log("Clear : " + Path + ", ");
             Resources.UnloadUnusedAssets();
             System.GC.Collect();
         }

@@ -6,7 +6,7 @@ using App.ViewModel;
 using App.Service;
 
 namespace App.Util.LSharp{
-    public class LSharpFunction : LSharpBase {
+    public class LSharpFunction : LSharpBase<LSharpFunction> {
         public override void analysis(){
             LSharpScript.Instance.analysis();
         }

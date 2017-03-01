@@ -55,6 +55,22 @@ namespace App.Model{
                 return this.ViewModel.Horse.Value;
             }
         }
+        public int X{
+            set{
+                this.ViewModel.X.Value = value;
+            }
+            get{ 
+                return this.ViewModel.X.Value;
+            }
+        }
+        public int Y{
+            set{
+                this.ViewModel.Y.Value = value;
+            }
+            get{ 
+                return this.ViewModel.Y.Value;
+            }
+        }
         public int Hp{
             set{
                 this.ViewModel.Hp.Value = value;

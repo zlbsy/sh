@@ -20,6 +20,7 @@ namespace App.Service{
             public App.Model.Master.MBuilding[] buildings;
             public App.Model.Master.MWorld[] worlds;
             public App.Model.Master.MArea[] areas;
+            public App.Model.Master.MStage[] stages;
             public App.Model.Master.MEquipment[] weapons;
             public App.Model.Master.MEquipment[] horses;
             public App.Model.Master.MEquipment[] clothes;

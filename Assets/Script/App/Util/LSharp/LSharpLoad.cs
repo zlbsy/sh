@@ -8,28 +8,19 @@ using System;
 using System.Reflection;
 
 namespace App.Util.LSharp{
-    public class LSharpLoad : LSharpBase {
-        string[] data;
-        protected void analysis(string value, out string methodName, out string[] arguments){
-            int methodStart = value.IndexOf('.');
-            int start = value.IndexOf("(");
-            int end = value.IndexOf(")");
-            methodName = value.Substring(methodStart + 1, start).Trim();
-            arguments = value.Substring(start + 1, end).Split(',');
+    public class LSharpLoad : LSharpBase<LSharpLoad> {
+        public void script(string[] arguments){
+            string url = string.Format(ScenarioUrl, arguments[0]);
+            SceneManager.CurrentScene.StartCoroutine(Global.SUser.Download(url,App.Util.Global.SUser.versions.scenario, (AssetBundle assetbundle)=>{
+                App.Model.Scriptable.ScenarioAsset.assetbundle = assetbundle;
+                List<string> script = App.Model.Scriptable.ScenarioAsset.Data.script;
+                LSharpScript.Instance.SaveList();
+                LSharpScript.Instance.analysis(script);
+            }));
         }
-        public override void analysis(string value){
-            string methodName;
-            string[] arguments;
-            analysis(value, out methodName, out arguments);
-            Type t = this.GetType();
-            MethodInfo mi = t.GetMethod(methodName);
-            if (mi != null)
-            {
-                mi.Invoke(this, arguments);
-            }
-            else
-            {
-                LSharpScript.Instance.analysis();
+        public static string ScenarioUrl{
+            get{ 
+                return App.Service.HttpClient.assetBandleURL + "scenario/scenario_{0}.unity3d";
             }
         }
 	}

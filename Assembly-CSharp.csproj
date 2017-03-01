@@ -88,6 +88,7 @@
      <Compile Include="Assets\Script\App\Model\Master\MConstant.cs" />
      <Compile Include="Assets\Script\App\Model\Master\MEquipment.cs" />
      <Compile Include="Assets\Script\App\Model\Master\MSkill.cs" />
+     <Compile Include="Assets\Script\App\Model\Master\MStage.cs" />
      <Compile Include="Assets\Script\App\Model\Master\MTile.cs" />
      <Compile Include="Assets\Script\App\Model\Master\MWord.cs" />
      <Compile Include="Assets\Script\App\Model\Master\MWorld.cs" />
@@ -105,6 +106,7 @@
      <Compile Include="Assets\Script\App\Model\Scriptable\PromptMessageAsset.cs" />
      <Compile Include="Assets\Script\App\Model\Scriptable\ScenarioAsset.cs" />
      <Compile Include="Assets\Script\App\Model\Scriptable\SkillAsset.cs" />
+     <Compile Include="Assets\Script\App\Model\Scriptable\StageAsset.cs" />
      <Compile Include="Assets\Script\App\Model\Scriptable\TileAsset.cs" />
      <Compile Include="Assets\Script\App\Model\Scriptable\WeaponAsset.cs" />
      <Compile Include="Assets\Script\App\Model\Scriptable\WorldAsset.cs" />
@@ -126,6 +128,7 @@
      <Compile Include="Assets\Script\App\Util\Cacher\CharacterCacher.cs" />
      <Compile Include="Assets\Script\App\Util\Cacher\EquipmentCacher.cs" />
      <Compile Include="Assets\Script\App\Util\Cacher\SkillCacher.cs" />
+     <Compile Include="Assets\Script\App\Util\Cacher\StageCacher.cs" />
      <Compile Include="Assets\Script\App\Util\Cacher\TileCacher.cs" />
      <Compile Include="Assets\Script\App\Util\FullScreen.cs" />
      <Compile Include="Assets\Script\App\Util\Global.cs" />

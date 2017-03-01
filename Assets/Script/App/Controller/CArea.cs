@@ -35,14 +35,16 @@ namespace App.Controller{
             Vector2 coordinate = topMapMaster.GetCoordinateFromIndex(index);
             App.Model.Master.MTile tileMaster = topMapMaster.tiles[index];
             App.Model.MTile tile = System.Array.Find(mBaseMap.Tiles, _=>_.x == coordinate.x && _.y == coordinate.y);
-            if (tile != null)
+            App.Model.Master.MArea area = tile as App.Model.Master.MArea;
+
+            if (area != null)
             {
-                Request req = Request.Create("areaId", tile.tile_id);
+                Request req = Request.Create("area", area);
                 App.Util.SceneManager.LoadScene( App.Util.SceneManager.Scenes.Stage.ToString(), req );
             }
         }
-        public void GotoTop(){
-            App.Util.SceneManager.LoadScene( App.Util.SceneManager.Scenes.Top.ToString() );
+        public void GotoWorld(){
+            App.Util.SceneManager.LoadScene( App.Util.SceneManager.Scenes.World.ToString() );
         }
 	}
 }

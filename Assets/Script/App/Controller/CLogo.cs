@@ -37,14 +37,6 @@ namespace App.Controller{
             }
             CLoadingDialog.ToShow();
             yield return StartCoroutine(VersionCheck( App.Util.Global.SUser.versions ));
-            TileCacher.Instance.Reset(App.Model.Scriptable.TileAsset.Data.tiles);
-            BaseMapCacher.Instance.Reset(App.Model.Scriptable.BaseMapAsset.Data.baseMaps);
-            BuildingCacher.Instance.Reset(App.Model.Scriptable.BuildingAsset.Data.buildings);
-            AreaCacher.Instance.Reset(App.Model.Scriptable.AreaAsset.Data.areas);
-            CharacterCacher.Instance.Reset(App.Model.Scriptable.CharacterAsset.Data.characters);
-            EquipmentCacher.Instance.ResetHorse(App.Model.Scriptable.HorseAsset.Data.equipments);
-            EquipmentCacher.Instance.ResetClothes(App.Model.Scriptable.ClothesAsset.Data.equipments);
-            EquipmentCacher.Instance.ResetWeapon(App.Model.Scriptable.WeaponAsset.Data.equipments);
             yield return StartCoroutine (App.Util.Global.SUser.RequestGet());
             App.Util.SceneManager.LoadScene( App.Util.SceneManager.Scenes.Top.ToString() );
         }
@@ -59,10 +51,12 @@ namespace App.Controller{
             list.Add(sUser.Download(LanguageAsset.WORD_URL, versions.word, (AssetBundle assetbundle)=>{
                 LanguageAsset.assetbundle = assetbundle;
                 Language.Reset(LanguageAsset.Data.words);
+                LanguageAsset.Clear();
             }));
             list.Add(sUser.Download(LanguageAsset.CHARACTER_WORD_URL, versions.characterword, (AssetBundle assetbundle)=>{
                 LanguageAsset.assetbundle = assetbundle;
                 Language.ResetCharacterWord(LanguageAsset.Data.words);
+                LanguageAsset.Clear();
             }));
             list.Add(sUser.Download(WorldAsset.Url, versions.world, (AssetBundle assetbundle)=>{
                 WorldAsset.assetbundle = assetbundle;
@@ -74,27 +68,48 @@ namespace App.Controller{
             }));
             list.Add(sUser.Download(HorseAsset.Url, versions.horse, (AssetBundle assetbundle)=>{
                 HorseAsset.assetbundle = assetbundle;
+                EquipmentCacher.Instance.ResetHorse(HorseAsset.Data.equipments);
+                HorseAsset.Clear();
             }));
             list.Add(sUser.Download(WeaponAsset.Url, versions.weapon, (AssetBundle assetbundle)=>{
                 WeaponAsset.assetbundle = assetbundle;
+                EquipmentCacher.Instance.ResetWeapon(WeaponAsset.Data.equipments);
+                WeaponAsset.Clear();
             }));
             list.Add(sUser.Download(ClothesAsset.Url, versions.clothes, (AssetBundle assetbundle)=>{
                 ClothesAsset.assetbundle = assetbundle;
+                EquipmentCacher.Instance.ResetClothes(ClothesAsset.Data.equipments);
+                ClothesAsset.Clear();
             }));
             list.Add(sUser.Download(AreaAsset.Url, versions.area, (AssetBundle assetbundle)=>{
                 AreaAsset.assetbundle = assetbundle;
+                AreaCacher.Instance.Reset(AreaAsset.Data.areas);
+                AreaAsset.Clear();
             }));
+            /*list.Add(sUser.Download(StageAsset.Url, versions.stage, (AssetBundle assetbundle)=>{
+                StageAsset.assetbundle = assetbundle;
+                StageCacher.Instance.Reset(StageAsset.Data.stages);
+                StageAsset.Clear();
+            }));*/
             list.Add(sUser.Download(BuildingAsset.Url, versions.building, (AssetBundle assetbundle)=>{
                 BuildingAsset.assetbundle = assetbundle;
+                BuildingCacher.Instance.Reset(BuildingAsset.Data.buildings);
+                BuildingAsset.Clear();
             }));
             list.Add(sUser.Download(BaseMapAsset.Url, versions.top_map, (AssetBundle assetbundle)=>{
                 BaseMapAsset.assetbundle = assetbundle;
+                BaseMapCacher.Instance.Reset(BaseMapAsset.Data.baseMaps);
+                BaseMapAsset.Clear();
             }));
             list.Add(sUser.Download(CharacterAsset.Url, versions.character, (AssetBundle assetbundle)=>{
                 CharacterAsset.assetbundle = assetbundle;
+                CharacterCacher.Instance.Reset(CharacterAsset.Data.characters);
+                CharacterAsset.Clear();
             }));
             list.Add(sUser.Download(TileAsset.Url, versions.tile, (AssetBundle assetbundle)=>{
                 TileAsset.assetbundle = assetbundle;
+                TileCacher.Instance.Reset(TileAsset.Data.tiles);
+                TileAsset.Clear();
             }));
             list.Add(sUser.Download(App.Model.Avatar.AvatarAsset.Url, versions.tile, (AssetBundle assetbundle)=>{
                 App.Model.Avatar.AvatarAsset.assetbundle = assetbundle;
@@ -126,65 +141,6 @@ namespace App.Controller{
                 CLoadingDialog.SetNextProgress((i + 1) * step);
                 yield return scene.StartCoroutine(list[i]);
             }
-            /*
-            CLoadingDialog.SetNextProgress(10f);
-            yield return scene.StartCoroutine(sUser.Download(PromptMessageAsset.Url, versions.prompt_message, (AssetBundle assetbundle)=>{
-                PromptMessageAsset.assetbundle = assetbundle;
-            }));
-            CLoadingDialog.SetNextProgress(20f);
-            yield return scene.StartCoroutine(sUser.Download(WorldAsset.Url, versions.world, (AssetBundle assetbundle)=>{
-                WorldAsset.assetbundle = assetbundle;
-                Global.worlds = WorldAsset.Data.worlds;
-            }));
-            CLoadingDialog.SetNextProgress(25f);
-            yield return scene.StartCoroutine(sUser.Download(ConstantAsset.Url, versions.constant, (AssetBundle assetbundle)=>{
-                ConstantAsset.assetbundle = assetbundle;
-                Global.Constant = ConstantAsset.Data.constant;
-            }));
-            CLoadingDialog.SetNextProgress(30f);
-            yield return scene.StartCoroutine(sUser.Download(AreaAsset.Url, versions.area, (AssetBundle assetbundle)=>{
-                AreaAsset.assetbundle = assetbundle;
-            }));
-            CLoadingDialog.SetNextProgress(35f);
-            yield return scene.StartCoroutine(sUser.Download(BuildingAsset.Url, versions.building, (AssetBundle assetbundle)=>{
-                BuildingAsset.assetbundle = assetbundle;
-            }));
-            CLoadingDialog.SetNextProgress(40f);
-            yield return scene.StartCoroutine(sUser.Download(BaseMapAsset.Url, versions.top_map, (AssetBundle assetbundle)=>{
-                BaseMapAsset.assetbundle = assetbundle;
-            }));
-            CLoadingDialog.SetNextProgress(45f);
-            yield return scene.StartCoroutine(sUser.Download(CharacterAsset.Url, versions.character, (AssetBundle assetbundle)=>{
-                CharacterAsset.assetbundle = assetbundle;
-            }));
-            CLoadingDialog.SetNextProgress(50f);
-            yield return scene.StartCoroutine(sUser.Download(TileAsset.Url, versions.tile, (AssetBundle assetbundle)=>{
-                TileAsset.assetbundle = assetbundle;
-            }));
-            CLoadingDialog.SetNextProgress(60f);
-            yield return scene.StartCoroutine(sUser.Download(AssetBundleManager.avatarUrl, versions.avatar, (AssetBundle assetbundle)=>{
-                AssetBundleManager.avatar = assetbundle;
-            }, false));
-            CLoadingDialog.SetNextProgress(70f);
-            yield return scene.StartCoroutine(sUser.Download(AssetBundleManager.horseUrl, versions.horse, (AssetBundle assetbundle)=>{
-                AssetBundleManager.horse = assetbundle;
-            }, false));
-            CLoadingDialog.SetNextProgress(80f);
-            yield return scene.StartCoroutine(sUser.Download(AssetBundleManager.hatUrl, versions.hat, (AssetBundle assetbundle)=>{
-                AssetBundleManager.hat = assetbundle;
-            }, false));
-            CLoadingDialog.SetNextProgress(90f);
-            yield return scene.StartCoroutine(sUser.Download(AssetBundleManager.mapUrl, versions.map, (AssetBundle assetbundle)=>{
-                AssetBundleManager.map = assetbundle;
-            }, false));
-            CLoadingDialog.SetNextProgress(95);
-            yield return scene.StartCoroutine(sUser.Download(AssetBundleManager.clothesUrl, versions.clothes, (AssetBundle assetbundle)=>{
-                AssetBundleManager.clothes = assetbundle;
-            }, false));
-            CLoadingDialog.SetNextProgress(100f);
-            yield return scene.StartCoroutine(sUser.Download(AssetBundleManager.weaponUrl, versions.weapon, (AssetBundle assetbundle)=>{
-                AssetBundleManager.weapon = assetbundle;
-            }, false));*/
             yield return 0;
         }
 	}

@@ -9,12 +9,8 @@ namespace App.Model.Master{
     public class MArea : App.Model.MTile {
         public MArea(){
         }
-        //public int id;
-        //public int tile_id;
-        //public int x;
-        //public int y;
-        //public int level;
         public int world_id;
         public int map_id;
+        public App.Model.MTile[] stages;
 	}
 }

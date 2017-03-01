@@ -6,7 +6,7 @@ using App.ViewModel;
 using App.Service;
 
 namespace App.Util.LSharp{
-    public class LSharpVarlable : LSharpBase {
+    public class LSharpVarlable : LSharpBase<LSharpVarlable> {
 		public override void analysis(){
 			LSharpScript.Instance.analysis();
         }

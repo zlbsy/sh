@@ -8,23 +8,26 @@ using UnityEngine.UI;
 using App.Util.Cacher;
 using Holoville.HOTween;
 using App.View.Top;
+using System.Linq;
 
 
 namespace App.Controller{
     public class CStage : CScene {
         [SerializeField]VBaseMap vBaseMap;
         private MBaseMap mBaseMap;
-        private int areaId;
+        private App.Model.Master.MArea area;
         public override IEnumerator OnLoad( Request request ) 
         {  
-            areaId = request.Get<int>("areaId");
+            Debug.LogError("CStage OnLoad");
+            area = request.Get<App.Model.Master.MArea>("area");
             InitMap();
             yield break;
         }
         private void InitMap(){
+            Debug.LogError("CStage InitMap");
             mBaseMap = new MBaseMap();
-            mBaseMap.MapId = areaId;
-            mBaseMap.Tiles = StageCacher.Instance.GetStages(areaId);
+            mBaseMap.MapId = area.map_id;
+            mBaseMap.Tiles = area.stages;
             vBaseMap.BindingContext = mBaseMap.ViewModel;
             vBaseMap.UpdateView();
             vBaseMap.transform.parent.localScale = Vector3.one;
@@ -33,8 +36,18 @@ namespace App.Controller{
         public void OnClickTile(int index){
             
         }
-        public void GotoTop(){
-            App.Util.SceneManager.LoadScene( App.Util.SceneManager.Scenes.Top.ToString() );
+        public void GotoArea(){
+            App.Util.SceneManager.LoadScene( App.Util.SceneManager.Scenes.Area.ToString() );
+        }
+        public void addCharacter(int characterId, ActionType action, string direction, int x, int y){
+            MCharacter mCharacter = new MCharacter();
+            mCharacter.CharacterId = characterId;
+            mCharacter.Action = action;
+            mCharacter.X = x;
+            mCharacter.Y = y;
+            List<MCharacter> characters = mBaseMap.Characters.ToList();
+            characters.Add(mCharacter);
+            mBaseMap.Characters = characters.ToArray();
         }
 	}
 }

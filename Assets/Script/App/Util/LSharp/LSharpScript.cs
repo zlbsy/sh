@@ -4,19 +4,22 @@ using UnityEngine;
 using UnityEngine.UI;
 using App.ViewModel;
 using App.Service;
+using System;
+using System.Reflection;
 
 namespace App.Util.LSharp{
-    public class LSharpScript : LSharpBase {
-        private Dictionary<string, LSharpBase> subClasses;
+    public class LSharpScript : LSharpBase<LSharpScript> {
+        private Dictionary<string, object> subClasses;
         private List<List<string>[]> dataList = new List<List<string>[]>();
         private List<string> lineList;
         private List<string> copyList;
         public LSharpScript(){
-            subClasses = new Dictionary<string, LSharpBase>();
+            subClasses = new Dictionary<string, object>();
             subClasses.Add("if", LSharpIf.Instance);
             subClasses.Add("function", LSharpFunction.Instance);
+            subClasses.Add("Load", LSharpLoad.Instance);
             subClasses.Add("Character", LSharpCharacter.Instance);
-            subClasses.Add("Talk", LSharpCharacter.Instance);
+            subClasses.Add("Talk", LSharpTalk.Instance);
         }
         public void ToList(List<string> datas){
             lineList = new List<string>(datas);
@@ -32,8 +35,9 @@ namespace App.Util.LSharp{
             }
         }
         public void analysis(List<string> datas){
-            List<string>[] arr = new List<string>[]{datas};
+            List<string>[] arr = new List<string>[]{datas, null, null};
             dataList.Insert(0, arr);
+            ToList(datas);
         }
         public override void analysis(){
             string lineValue = "";
@@ -43,13 +47,13 @@ namespace App.Util.LSharp{
                 if (dataList.Count > 0)
                 {
                     List<string>[] arr = dataList[0];
-                    lineList = arr[0];
-                    copyList = arr[1];
+                    lineList = arr[1];
+                    copyList = arr[2];
                     analysis();
                 }
                 return;
             }
-            while (lineList.Count > 0)
+            while (lineList.Count > 0 && lineValue.Length == 0)
             {
                 lineValue = lineList[0].Trim(); 
                 lineList.RemoveAt(0);
@@ -60,20 +64,30 @@ namespace App.Util.LSharp{
                 return;
             }
             lineValue = LSharpVarlable.GetVarlable(lineValue);
+            Debug.Log("lineValue = " + lineValue);
             if(lineValue.IndexOf("if") >= 0){
-                subClasses["if"].analysis();
+                CallAnalysis(subClasses["if"], lineValue);
             }else if(lineValue.IndexOf("function") >= 0){
-                subClasses["function"].analysis();
+                CallAnalysis(subClasses["function"], lineValue);
             }
             string[] sarr = lineValue.Split('.');
-            if (subClasses.ContainsKey(sarr[0]))
+            string key = sarr[0];
+            if (subClasses.ContainsKey(key))
             {
-                LSharpBase subClass = subClasses[sarr[0]];
-                subClass.analysis(lineValue);
+                object subClass = subClasses[key];
+                CallAnalysis(subClass, lineValue);
             }
             else
             {
                 analysis();
+            }
+        }
+        public void CallAnalysis(object o, string lineValue){
+            Type t = o.GetType();
+            MethodInfo mi = t.GetMethod("analysis",new Type[]{typeof(String)});
+            if (mi != null)
+            {
+                mi.Invoke(o, new string[]{lineValue});
             }
         }
 	}

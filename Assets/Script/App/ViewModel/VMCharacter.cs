@@ -22,6 +22,8 @@ namespace App.ViewModel
         public VMProperty<int> Clothes = new VMProperty<int>();
 		public VMProperty<WeaponType> WeaponType = new VMProperty<WeaponType>();
 		public VMProperty<MoveType> MoveType = new VMProperty<MoveType>();
-		public VMProperty<ActionType> Action = new VMProperty<ActionType>();
+        public VMProperty<ActionType> Action = new VMProperty<ActionType>();
+        public VMProperty<int> X = new VMProperty<int>();
+        public VMProperty<int> Y = new VMProperty<int>();
 	}
 }

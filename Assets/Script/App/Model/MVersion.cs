@@ -16,6 +16,7 @@ namespace App.Model{
         public int word;
         public int characterword;
         public int area;
+        public int stage;
         public int hat;
         public int map;
         public int horse_img;
@@ -26,5 +27,6 @@ namespace App.Model{
         public int clothes;
         public int weapon;
         public int face;
+        public int scenario;
 	}
 }

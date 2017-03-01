@@ -6,7 +6,7 @@ using App.ViewModel;
 using App.Service;
 
 namespace App.Util.LSharp{
-    public class LSharpIf : LSharpBase {
+    public class LSharpIf : LSharpBase<LSharpIf> {
         public override void analysis(){
             
         }
