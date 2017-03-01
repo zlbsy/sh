@@ -44,7 +44,6 @@ namespace App.Controller{
             vTopMap.UpdateView();
             vTopMap.transform.parent.localScale = Vector3.one;
             vTopMap.MoveToCenter();
-            App.Util.LSharp.LSharpScript.Instance.analysis(new List<string>{string.Format("Load.script({0})", 3001)});
         }
         public void OnClickTile(int index){
             App.Model.Master.MBaseMap topMapMaster = BaseMapCacher.Instance.Get(mTopMap.MapId);

@@ -14,6 +14,7 @@ namespace App.View{
         [SerializeField]public int mapHeight;
         [SerializeField]public VTile[] tileUnits;
         [SerializeField]protected Camera camera3d;
+        [SerializeField]protected GameObject characterPrefab;
         protected Vector2 camera3dPosition;
         protected Vector2 mousePosition = Vector2.zero;
         protected Vector2 dragPosition = Vector2.zero;
@@ -23,6 +24,7 @@ namespace App.View{
         protected bool _camera3DEnable = true;
         protected const float tileWidth = 0.69f;
         protected const float tileHeight = 0.6f;
+        protected GameObject characterLayer;
         #region VM处理
         public VMBaseMap ViewModel { get { return (VMBaseMap)BindingContext; } }
         protected override void OnBindingContextChanged(VMBase oldViewModel, VMBase newViewModel)
@@ -35,11 +37,13 @@ namespace App.View{
             {
                 ViewModel.MapId.OnValueChanged -= MapIdChanged;
                 ViewModel.Tiles.OnValueChanged -= TilesChanged;
+                ViewModel.Characters.OnValueChanged -= CharactersChanged;
             }
             if (ViewModel!=null)
             {
                 ViewModel.MapId.OnValueChanged += MapIdChanged;
                 ViewModel.Tiles.OnValueChanged += TilesChanged;
+                ViewModel.Characters.OnValueChanged += CharactersChanged;
             }
         }
         private void MapIdChanged(int oldvalue, int newvalue)
@@ -51,7 +55,23 @@ namespace App.View{
         {
             ResetAll();
         }
+        private void CharactersChanged(App.Model.MCharacter[] oldvalue, App.Model.MCharacter[] newvalue)
+        {
+            Debug.LogError("CharactersChanged");
+            foreach (App.Model.MCharacter mCharacter in newvalue)
+            {
+                
+            }
+        }
         #endregion
+        public GameObject CharacterLayer{
+            get{ 
+                if (characterLayer == null)
+                {
+                }
+                return characterLayer;
+            }
+        }
         public override void UpdateView(){
             ResetAll();
         }

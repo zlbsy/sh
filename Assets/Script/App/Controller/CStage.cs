@@ -27,11 +27,13 @@ namespace App.Controller{
             Debug.LogError("CStage InitMap");
             mBaseMap = new MBaseMap();
             mBaseMap.MapId = area.map_id;
+            mBaseMap.Characters = new MCharacter[]{};
             mBaseMap.Tiles = area.stages;
             vBaseMap.BindingContext = mBaseMap.ViewModel;
             vBaseMap.UpdateView();
             vBaseMap.transform.parent.localScale = Vector3.one;
             vBaseMap.MoveToCenter();
+            App.Util.LSharp.LSharpScript.Instance.analysis(new List<string>{string.Format("Load.script({0})", area.tile_id)});
         }
         public void OnClickTile(int index){
             
