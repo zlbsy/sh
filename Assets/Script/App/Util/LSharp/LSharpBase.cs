@@ -17,19 +17,22 @@ namespace App.Util.LSharp{
                 return instance ?? (instance = new T()); 
             }
         }
-        public virtual void analysis(){
+        public virtual void Analysis(){
         }
-        protected void analysis(string value, out string methodName, out string[] arguments){
+        protected void Analysis(string value, out string methodName, out string[] arguments){
             int methodStart = value.IndexOf('.');
             int start = value.IndexOf("(");
             int end = value.IndexOf(")");
             methodName = value.Substring(methodStart + 1, start - methodStart - 1).Trim();
+            Debug.LogError("methodName="+methodName);
+            methodName = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(methodName);
+            Debug.LogError("methodName ToTitleCase ="+methodName);
             arguments = value.Substring(start + 1, end - start - 1).Split(',');
         }
-        public virtual void analysis(string value){
+        public virtual void Analysis(string value){
             string methodName;
             string[] arguments;
-            analysis(value, out methodName, out arguments);
+            Analysis(value, out methodName, out arguments);
             Type t = this.GetType();
             MethodInfo mi = t.GetMethod(methodName,new Type[]{typeof(string[])});
             if (mi != null)
@@ -38,7 +41,7 @@ namespace App.Util.LSharp{
             }
             else
             {
-                LSharpScript.Instance.analysis();
+                LSharpScript.Instance.Analysis();
             }
         }
 	}

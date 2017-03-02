@@ -16,7 +16,7 @@ namespace App.Util.LSharp{
         public LSharpScript(){
             subClasses = new Dictionary<string, object>();
             subClasses.Add("if", LSharpIf.Instance);
-            subClasses.Add("function", LSharpFunction.Instance);
+            subClasses.Add("Call", LSharpFunction.Instance);
             subClasses.Add("Load", LSharpLoad.Instance);
             subClasses.Add("Character", LSharpCharacter.Instance);
             subClasses.Add("Talk", LSharpTalk.Instance);
@@ -24,7 +24,7 @@ namespace App.Util.LSharp{
         public void ToList(List<string> datas){
             lineList = new List<string>(datas);
             copyList = new List<string>(datas);
-            analysis();
+            Analysis();
         }
         public void SaveList(){
             List<string>[] arr = dataList[0];
@@ -34,12 +34,24 @@ namespace App.Util.LSharp{
                 arr[2]=copyList;
             }
         }
-        public void analysis(List<string> datas){
+        public void Analysis(List<string> datas){
             List<string>[] arr = new List<string>[]{datas, null, null};
             dataList.Insert(0, arr);
             ToList(datas);
         }
-        public override void analysis(){
+        public string ShiftLine(){
+            if (lineList.Count == 0)
+            {
+                return string.Empty;
+            }
+            string lineValue = lineList[0].Trim(); 
+            lineList.RemoveAt(0);
+            return lineValue;
+        }
+        public void UnshiftLine(string lineValue){
+            lineList.Insert(0, lineValue);
+        }
+        public override void Analysis(){
             string lineValue = "";
             if (lineList.Count == 0)
             {
@@ -49,7 +61,7 @@ namespace App.Util.LSharp{
                     List<string>[] arr = dataList[0];
                     lineList = arr[1];
                     copyList = arr[2];
-                    analysis();
+                    Analysis();
                 }
                 return;
             }
@@ -60,15 +72,17 @@ namespace App.Util.LSharp{
             }
             if (lineValue.Length == 0)
             {
-                analysis();
+                Analysis();
                 return;
             }
             lineValue = LSharpVarlable.GetVarlable(lineValue);
             Debug.Log("lineValue = " + lineValue);
             if(lineValue.IndexOf("if") >= 0){
-                CallAnalysis(subClasses["if"], lineValue);
+                LSharpIf.GetIf(lineValue);
+                return;
             }else if(lineValue.IndexOf("function") >= 0){
-                CallAnalysis(subClasses["function"], lineValue);
+                LSharpFunction.AddFunction(lineValue);
+                return;
             }
             string[] sarr = lineValue.Split('.');
             string key = sarr[0];
@@ -79,12 +93,12 @@ namespace App.Util.LSharp{
             }
             else
             {
-                analysis();
+                Analysis();
             }
         }
         public void CallAnalysis(object o, string lineValue){
             Type t = o.GetType();
-            MethodInfo mi = t.GetMethod("analysis",new Type[]{typeof(String)});
+            MethodInfo mi = t.GetMethod("Analysis",new Type[]{typeof(String)});
             if (mi != null)
             {
                 mi.Invoke(o, new string[]{lineValue});

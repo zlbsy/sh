@@ -7,6 +7,7 @@ using App.Util;
 using App.Model.Avatar;
 using App.Util.Cacher;
 using Holoville.HOTween;
+using System.Linq;
 
 namespace App.View{
     public class VBaseMap : VBase {
@@ -15,6 +16,7 @@ namespace App.View{
         [SerializeField]public VTile[] tileUnits;
         [SerializeField]protected Camera camera3d;
         [SerializeField]protected GameObject characterPrefab;
+        [SerializeField]protected GameObject characterLayer;
         protected Vector2 camera3dPosition;
         protected Vector2 mousePosition = Vector2.zero;
         protected Vector2 dragPosition = Vector2.zero;
@@ -24,7 +26,7 @@ namespace App.View{
         protected bool _camera3DEnable = true;
         protected const float tileWidth = 0.69f;
         protected const float tileHeight = 0.6f;
-        protected GameObject characterLayer;
+        private List<VCharacter> vCharacters = new List<VCharacter>();
         #region VM处理
         public VMBaseMap ViewModel { get { return (VMBaseMap)BindingContext; } }
         protected override void OnBindingContextChanged(VMBase oldViewModel, VMBase newViewModel)
@@ -60,16 +62,37 @@ namespace App.View{
             Debug.LogError("CharactersChanged");
             foreach (App.Model.MCharacter mCharacter in newvalue)
             {
-                
+                VCharacter vCharacter = vCharacters.Find(_=>_.ViewModel.Id.Value == mCharacter.Id);
+                if (vCharacter == null)
+                {
+                    //新建武将
+                    GameObject obj = GameObject.Instantiate(characterPrefab);
+                    obj.transform.SetParent(characterLayer.transform);
+                    int i = mCharacter.CoordinateY * mapWidth + mCharacter.CoordinateX;
+                    VTile vTile = tileUnits[i];
+                    obj.transform.eulerAngles = new Vector3(-30f, 0f, 0f);
+                    obj.transform.localPosition = vTile.transform.localPosition;
+                    obj.SetActive(true);
+                    VCharacter view = obj.GetComponent<VCharacter>();
+                    view.BindingContext = mCharacter.ViewModel;
+                    view.UpdateView();
+                }
+                else
+                {
+                    vCharacters.Remove(vCharacter);
+                    //更新武将
+                }
             }
+            if (vCharacters.Count > 0)
+            {
+                //删除多余武将
+            }
+            vCharacters = characterLayer.GetComponentsInChildren<VCharacter>(true).ToList();
         }
         #endregion
-        public GameObject CharacterLayer{
+        public List<VCharacter> Characters{
             get{ 
-                if (characterLayer == null)
-                {
-                }
-                return characterLayer;
+                return vCharacters;
             }
         }
         public override void UpdateView(){

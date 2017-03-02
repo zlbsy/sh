@@ -8,6 +8,7 @@ namespace App.ViewModel
 {
 	public class VMCharacter : VMBase
     {
+        public VMProperty<int> Id = new VMProperty<int>();
         public VMProperty<int> CharacterId = new VMProperty<int>();
         public VMProperty<int> Hp = new VMProperty<int>();
         public VMProperty<int> Mp = new VMProperty<int>();
@@ -23,7 +24,9 @@ namespace App.ViewModel
 		public VMProperty<WeaponType> WeaponType = new VMProperty<WeaponType>();
 		public VMProperty<MoveType> MoveType = new VMProperty<MoveType>();
         public VMProperty<ActionType> Action = new VMProperty<ActionType>();
-        public VMProperty<int> X = new VMProperty<int>();
-        public VMProperty<int> Y = new VMProperty<int>();
+        public VMProperty<float> X = new VMProperty<float>();
+        public VMProperty<float> Y = new VMProperty<float>();
+        public VMProperty<int> CoordinateX = new VMProperty<int>();
+        public VMProperty<int> CoordinateY = new VMProperty<int>();
 	}
 }

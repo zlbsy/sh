@@ -7,8 +7,20 @@ using App.Service;
 
 namespace App.Util.LSharp{
     public class LSharpVarlable : LSharpBase<LSharpVarlable> {
-		public override void analysis(){
-			LSharpScript.Instance.analysis();
+        private Dictionary<string, string> varList = new Dictionary<string, string>();
+        public Dictionary<string, string> VarList
+        {
+            get{ 
+                return varList;
+            }
+        }
+
+        public void Set(string[] arguments){
+            LSharpVarlable.SetVarlable(arguments[0], arguments[1]);
+            LSharpScript.Instance.Analysis();
+        }
+        public static void SetVarlable(string key, string value){
+            LSharpVarlable.Instance.VarList.Add(key, value);
         }
         public static string GetVarlable(string str){
             string result = str;

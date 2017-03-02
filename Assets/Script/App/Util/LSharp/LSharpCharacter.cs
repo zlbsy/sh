@@ -9,7 +9,7 @@ using System;
 
 namespace App.Util.LSharp{
     public class LSharpCharacter : LSharpBase<LSharpCharacter> {
-        public void add(string[] arguments){
+        public void Add(string[] arguments){
             int characterId = int.Parse(arguments[0]);
             string action = arguments[1];
             string direction = arguments[2];
@@ -18,11 +18,12 @@ namespace App.Util.LSharp{
             CStage cStage = App.Util.SceneManager.CurrentScene as CStage;
             if (cStage == null)
             {
-                LSharpScript.Instance.analysis();
+                LSharpScript.Instance.Analysis();
                 return;
             }
             App.Model.ActionType actionType = (App.Model.ActionType)Enum.Parse(typeof(App.Model.ActionType), action);
             cStage.addCharacter(characterId, actionType, direction, x, y);
+            LSharpScript.Instance.Analysis();
         }
 	}
 }

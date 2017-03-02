@@ -33,10 +33,18 @@ namespace App.Controller{
             vBaseMap.UpdateView();
             vBaseMap.transform.parent.localScale = Vector3.one;
             vBaseMap.MoveToCenter();
-            App.Util.LSharp.LSharpScript.Instance.analysis(new List<string>{string.Format("Load.script({0})", area.tile_id)});
+            App.Util.LSharp.LSharpScript.Instance.Analysis(new List<string>{string.Format("Load.script({0})", area.tile_id)});
         }
         public void OnClickTile(int index){
-            
+            App.Model.Master.MBaseMap topMapMaster = BaseMapCacher.Instance.Get(mBaseMap.MapId);
+            Vector2 coordinate = topMapMaster.GetCoordinateFromIndex(index);
+            List<VCharacter> vCharacters = vBaseMap.Characters;
+            VCharacter vCharacter = vBaseMap.Characters.Find(_=>_.ViewModel.CoordinateX.Value == coordinate.x && _.ViewModel.CoordinateY.Value == coordinate.y);
+            Debug.LogError("OnClickTile vCharacter="+vCharacter);
+            if (vCharacter != null)
+            {
+                App.Util.LSharp.LSharpScript.Instance.Analysis(new List<string>{string.Format("Call.characterclick_{0}();", vCharacter.ViewModel.CharacterId.Value)});
+            }
         }
         public void GotoArea(){
             App.Util.SceneManager.LoadScene( App.Util.SceneManager.Scenes.Area.ToString() );
@@ -45,8 +53,17 @@ namespace App.Controller{
             MCharacter mCharacter = new MCharacter();
             mCharacter.CharacterId = characterId;
             mCharacter.Action = action;
-            mCharacter.X = x;
-            mCharacter.Y = y;
+            mCharacter.CoordinateX = x;
+            mCharacter.CoordinateY = y;
+
+            mCharacter.MoveType = MoveType.cavalry;
+            mCharacter.WeaponType = WeaponType.longKnife;
+            mCharacter.Weapon = 1;
+            mCharacter.Clothes = 1;
+            mCharacter.Horse = 1;
+            mCharacter.Head = 1;
+            mCharacter.Hat = 1;
+
             List<MCharacter> characters = mBaseMap.Characters.ToList();
             characters.Add(mCharacter);
             mBaseMap.Characters = characters.ToArray();

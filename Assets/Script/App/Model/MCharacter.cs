@@ -36,6 +36,14 @@ namespace App.Model{
                 return CharacterCacher.Instance.Get(CharacterId);
             }
         }
+        public int Id{
+            set{
+                this.ViewModel.Id.Value = value;
+            }
+            get{ 
+                return this.ViewModel.Id.Value;
+            }
+        }
         public int CharacterId{
             set{
                 App.Model.Master.MCharacter master = CharacterCacher.Instance.Get(value);
@@ -55,7 +63,23 @@ namespace App.Model{
                 return this.ViewModel.Horse.Value;
             }
         }
-        public int X{
+        public int CoordinateX{
+            set{
+                this.ViewModel.CoordinateX.Value = value;
+            }
+            get{ 
+                return this.ViewModel.CoordinateX.Value;
+            }
+        }
+        public int CoordinateY{
+            set{
+                this.ViewModel.CoordinateY.Value = value;
+            }
+            get{ 
+                return this.ViewModel.CoordinateY.Value;
+            }
+        }
+        public float X{
             set{
                 this.ViewModel.X.Value = value;
             }
@@ -63,7 +87,7 @@ namespace App.Model{
                 return this.ViewModel.X.Value;
             }
         }
-        public int Y{
+        public float Y{
             set{
                 this.ViewModel.Y.Value = value;
             }

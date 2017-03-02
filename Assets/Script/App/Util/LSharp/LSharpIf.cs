@@ -7,7 +7,7 @@ using App.Service;
 
 namespace App.Util.LSharp{
     public class LSharpIf : LSharpBase<LSharpIf> {
-        public override void analysis(){
+        public static void GetIf(string lineValue){
             
         }
 	}
