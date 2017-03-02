@@ -23,7 +23,44 @@ namespace App.Util.LSharp{
             LSharpVarlable.Instance.VarList.Add(key, value);
         }
         public static string GetVarlable(string str){
-            string result = str;
+            int sIndex = str.IndexOf("@");
+            int iIndex = 0;
+            string sStr;
+            string eStr;
+            string vStr;
+            string result = "";
+            System.Text.RegularExpressions.Regex regex = new System.Text.RegularExpressions.Regex("^([a-z]|[A-Z]|[0-9]|_)+$");
+            while (sIndex >= 0)
+            {
+                int eIndex = str.IndexOf("@",sIndex+1);
+                if (sIndex + 1 == eIndex)
+                {
+                    sStr = str.Substring(iIndex, sIndex - iIndex);
+                    vStr = "@";
+                    eStr = str.Substring(eIndex + 1);
+                    iIndex = eIndex + 1;
+                }
+                else
+                {
+                    sStr = str.Substring(iIndex, sIndex - iIndex);
+                    vStr = "";
+                    sIndex++;
+                    while (regex.IsMatch(str.Substring(sIndex, 1)))
+                    {
+                        vStr += str.Substring(sIndex, 1);
+                        sIndex++;
+                    }
+                    if (LSharpVarlable.Instance.VarList.ContainsKey(vStr))
+                    {
+                        vStr = LSharpVarlable.Instance.VarList[vStr];
+                    }
+                    eStr = str.Substring(sIndex);
+                    iIndex = sIndex;
+                }
+                result += (sStr + vStr);
+                sIndex = str.IndexOf("@",iIndex);
+            }
+            result += str.Substring(iIndex);
             return result;
         }
 	}
