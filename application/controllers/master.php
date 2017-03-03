@@ -53,14 +53,14 @@ class Master extends MY_Controller {
 			$master_skill = $this->master_model->get_master_skill();
 			$result["skills"]=$master_skill;
 		}
+		if($args["item"]){
+			$master_item = $this->master_model->get_master_items();
+			$result["items"]=$master_item;
+		}
 
 		if($args["character_star"]){
 			$master_character_star = $this->master_model->get_master_character_star();
 			$result["character_star"]=$master_character_star;
-		}
-		if($args["item"]){
-			$master_item = $this->master_model->get_master_items();
-			$result["item"]=$master_item;
 		}
 		if($args["exp"]){
 			$master_exp = $this->master_model->get_master_exps();
