@@ -86,6 +86,11 @@ namespace App.Controller{
                 AreaCacher.Instance.Reset(AreaAsset.Data.areas);
                 AreaAsset.Clear();
             }));
+            list.Add(sUser.Download(ItemAsset.Url, versions.item, (AssetBundle assetbundle)=>{
+                ItemAsset.assetbundle = assetbundle;
+                ItemCacher.Instance.Reset(ItemAsset.Data.items);
+                ItemAsset.Clear();
+            }));
             /*list.Add(sUser.Download(StageAsset.Url, versions.stage, (AssetBundle assetbundle)=>{
                 StageAsset.assetbundle = assetbundle;
                 StageCacher.Instance.Reset(StageAsset.Data.stages);

@@ -34,6 +34,11 @@ namespace App.Util.LSharp{
                 arr[2]=copyList;
             }
         }
+        public int LineListCount{
+            get{
+                return lineList.Count;
+            }
+        }
         public void Analysis(List<string> datas){
             List<string>[] arr = new List<string>[]{datas, null, null};
             dataList.Insert(0, arr);

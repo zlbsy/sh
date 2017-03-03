@@ -25,6 +25,7 @@ namespace App.Service{
             public App.Model.Master.MEquipment[] horses;
             public App.Model.Master.MEquipment[] clothes;
             public App.Model.Master.MSkill[] skills;
+            public App.Model.Master.MItem[] items;
             public App.Model.Master.MConstant constant;
 		}
         public IEnumerator RequestAll(string type = "")

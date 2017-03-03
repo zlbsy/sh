@@ -72,6 +72,10 @@ namespace App.Controller{
             {
                 this.StartCoroutine(CreateScriptableObjectMasterStageRun());
             }
+            if (GUI.Button(new Rect(150, 700, 100, 30), "item"))
+            {
+                this.StartCoroutine(CreateScriptableObjectMasterItemRun());
+            }
 
             if (GUI.Button(new Rect(350, 50, 100, 30), "Prompt"))
             {
@@ -85,6 +89,17 @@ namespace App.Controller{
                 UnityEditor.AssetDatabase.CreateAsset(languageAsset, string.Format("Assets/Editor Default Resources/ScriptableObject/{0}.asset", App.Model.Scriptable.LanguageAsset.Name));
                 UnityEditor.AssetDatabase.Refresh();
             }
+        }
+        IEnumerator CreateScriptableObjectMasterItemRun()
+        {
+            var asset = ScriptableObject.CreateInstance<App.Model.Scriptable.ItemAsset>();
+
+            SEditorMaster sMaster = new SEditorMaster();
+            yield return StartCoroutine (sMaster.RequestAll("item"));
+            asset.items = sMaster.responseAll.items;
+
+            UnityEditor.AssetDatabase.CreateAsset(asset, string.Format("Assets/Editor Default Resources/ScriptableObject/{0}.asset", App.Model.Scriptable.ItemAsset.Name));
+            UnityEditor.AssetDatabase.Refresh();
         }
         IEnumerator CreateScriptableObjectMasterSkillRun()
         {

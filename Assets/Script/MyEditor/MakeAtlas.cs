@@ -69,42 +69,47 @@ namespace MyEditor
         }
 
         [MenuItem("SH/Build Assetbundle/Image/Map")]
-        static private void BuildAssetBundleMap()
+        static private void BuildAssetBundleImageMap()
         {
             BuildImageAssetBundle("map");
         }
         [MenuItem("SH/Build Assetbundle/Image/Chara")]
-        static private void BuildAssetBundleChara()
+        static private void BuildAssetBundleImageChara()
         {
             BuildImageAssetBundle("chara");
         }
         [MenuItem("SH/Build Assetbundle/Image/Clothes")]
-        static private void BuildAssetBundleClothes()
+        static private void BuildAssetBundleImageClothes()
         {
             BuildImageAssetBundle("clothes");
         }
         [MenuItem("SH/Build Assetbundle/Image/Hat")]
-        static private void BuildAssetBundleHat()
+        static private void BuildAssetBundleImageHat()
         {
             BuildImageAssetBundle("hat");
         }
         [MenuItem("SH/Build Assetbundle/Image/Horse")]
-        static private void BuildAssetBundleHorse()
+        static private void BuildAssetBundleImageHorse()
         {
             BuildImageAssetBundle("horse");
         }
         [MenuItem("SH/Build Assetbundle/Image/Weapon")]
-        static private void BuildAssetBundleWeapon()
+        static private void BuildAssetBundleImageWeapon()
         {
             BuildImageAssetBundle("weapon");
         }
         [MenuItem("SH/Build Assetbundle/Image/EquipmentIcon")]
-        static private void BuildAssetBundleEquipmentIcon()
+        static private void BuildAssetBundleImageEquipmentIcon()
         {
             BuildImageAssetBundle("equipmenticon");
         }
+        [MenuItem("SH/Build Assetbundle/Image/Item")]
+        static private void BuildAssetBundleImageItem()
+        {
+            BuildImageAssetBundle("item");
+        }
         [MenuItem("SH/Build Assetbundle/Image/All")]
-        static private void BuildAssetBundleAll()
+        static private void BuildAssetBundleImageAll()
         {
             BuildImageAssetBundle("");
         }
@@ -135,6 +140,11 @@ namespace MyEditor
         static private void BuildAssetBundleSkill()
         {
             BuildAssetBundleMaster(App.Model.Scriptable.SkillAsset.Name);
+        }
+        [MenuItem("SH/Build Assetbundle/Master/Item")]
+        static private void BuildAssetBundleItem()
+        {
+            BuildAssetBundleMaster(App.Model.Scriptable.ItemAsset.Name);
         }
         [MenuItem("SH/Build Assetbundle/Master/Tile")]
         static private void BuildAssetBundleTile()

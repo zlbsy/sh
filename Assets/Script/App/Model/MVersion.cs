@@ -17,6 +17,7 @@ namespace App.Model{
         public int characterword;
         public int area;
         public int stage;
+        public int item;
         public int hat;
         public int map;
         public int horse_img;

@@ -26,7 +26,6 @@ namespace App.Util.LSharp{
             int sIndex = str.IndexOf("@");
             int iIndex = 0;
             string sStr;
-            string eStr;
             string vStr;
             string result = "";
             System.Text.RegularExpressions.Regex regex = new System.Text.RegularExpressions.Regex("^([a-z]|[A-Z]|[0-9]|_)+$");
@@ -37,7 +36,6 @@ namespace App.Util.LSharp{
                 {
                     sStr = str.Substring(iIndex, sIndex - iIndex);
                     vStr = "@";
-                    eStr = str.Substring(eIndex + 1);
                     iIndex = eIndex + 1;
                 }
                 else
@@ -54,7 +52,6 @@ namespace App.Util.LSharp{
                     {
                         vStr = LSharpVarlable.Instance.VarList[vStr];
                     }
-                    eStr = str.Substring(sIndex);
                     iIndex = sIndex;
                 }
                 result += (sStr + vStr);
