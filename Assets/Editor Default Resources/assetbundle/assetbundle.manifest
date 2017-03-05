@@ -1,7 +1,7 @@
 ManifestFileVersion: 0
-CRC: 4242168641
+CRC: 921241053
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
-      Name: itemimage.unity3d
+      Name: gachaasset.unity3d
       Dependencies: {}

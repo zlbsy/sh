@@ -92,7 +92,7 @@ namespace App.Service{
         static private DateTime lastReceivedServerTime;
         static private DateTime lastReceivedClientTime;
 
-        static public TimeSpan TimeSpanClientAndServerTime
+        static private TimeSpan TimeSpanClientAndServerTime
         {
             get { return lastReceivedClientTime - lastReceivedServerTime; }
         }

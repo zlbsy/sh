@@ -39,10 +39,10 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="UnityEngine">
-      <HintPath>/Applications/Unity5.5/Unity5.5.app/Contents/Managed/UnityEngine.dll</HintPath>
+      <HintPath>/Applications/Unity/Unity.app/Contents/Managed/UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor">
-      <HintPath>/Applications/Unity5.5/Unity5.5.app/Contents/Managed/UnityEditor.dll</HintPath>
+      <HintPath>/Applications/Unity/Unity.app/Contents/Managed/UnityEditor.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -57,6 +57,8 @@
      <Compile Include="Assets\Script\App\Controller\CConnectingDialog.cs" />
      <Compile Include="Assets\Script\App\Controller\CDialog.cs" />
      <Compile Include="Assets\Script\App\Controller\CEquipmentListDialog.cs" />
+     <Compile Include="Assets\Script\App\Controller\CGachaDialog.cs" />
+     <Compile Include="Assets\Script\App\Controller\CItemListDialog.cs" />
      <Compile Include="Assets\Script\App\Controller\CLoadingDialog.cs" />
      <Compile Include="Assets\Script\App\Controller\CLogo.cs" />
      <Compile Include="Assets\Script\App\Controller\CScene.cs" />
@@ -76,6 +78,8 @@
      <Compile Include="Assets\Script\App\Model\MBuilding.cs" />
      <Compile Include="Assets\Script\App\Model\MCharacter.cs" />
      <Compile Include="Assets\Script\App\Model\MEquipment.cs" />
+     <Compile Include="Assets\Script\App\Model\MGacha.cs" />
+     <Compile Include="Assets\Script\App\Model\MItem.cs" />
      <Compile Include="Assets\Script\App\Model\MTile.cs" />
      <Compile Include="Assets\Script\App\Model\MTopMap.cs" />
      <Compile Include="Assets\Script\App\Model\MUser.cs" />
@@ -87,6 +91,8 @@
      <Compile Include="Assets\Script\App\Model\Master\MCharacter.cs" />
      <Compile Include="Assets\Script\App\Model\Master\MConstant.cs" />
      <Compile Include="Assets\Script\App\Model\Master\MEquipment.cs" />
+     <Compile Include="Assets\Script\App\Model\Master\MGacha.cs" />
+     <Compile Include="Assets\Script\App\Model\Master\MGachaChild.cs" />
      <Compile Include="Assets\Script\App\Model\Master\MItem.cs" />
      <Compile Include="Assets\Script\App\Model\Master\MSkill.cs" />
      <Compile Include="Assets\Script\App\Model\Master\MStage.cs" />
@@ -102,6 +108,7 @@
      <Compile Include="Assets\Script\App\Model\Scriptable\ClothesAsset.cs" />
      <Compile Include="Assets\Script\App\Model\Scriptable\ConstantAsset.cs" />
      <Compile Include="Assets\Script\App\Model\Scriptable\FaceAsset.cs" />
+     <Compile Include="Assets\Script\App\Model\Scriptable\GachaAsset.cs" />
      <Compile Include="Assets\Script\App\Model\Scriptable\HorseAsset.cs" />
      <Compile Include="Assets\Script\App\Model\Scriptable\ItemAsset.cs" />
      <Compile Include="Assets\Script\App\Model\Scriptable\LanguageAsset.cs" />
@@ -118,6 +125,8 @@
      <Compile Include="Assets\Script\App\Service\SBattlefield.cs" />
      <Compile Include="Assets\Script\App\Service\SCharacter.cs" />
      <Compile Include="Assets\Script\App\Service\SEquipment.cs" />
+     <Compile Include="Assets\Script\App\Service\SGacha.cs" />
+     <Compile Include="Assets\Script\App\Service\SItem.cs" />
      <Compile Include="Assets\Script\App\Service\SMaster.cs" />
      <Compile Include="Assets\Script\App\Service\SShop.cs" />
      <Compile Include="Assets\Script\App\Service\SUser.cs" />
@@ -129,6 +138,7 @@
      <Compile Include="Assets\Script\App\Util\Cacher\CacherBase.cs" />
      <Compile Include="Assets\Script\App\Util\Cacher\CharacterCacher.cs" />
      <Compile Include="Assets\Script\App\Util\Cacher\EquipmentCacher.cs" />
+     <Compile Include="Assets\Script\App\Util\Cacher\GachaCacher.cs" />
      <Compile Include="Assets\Script\App\Util\Cacher\ItemCacher.cs" />
      <Compile Include="Assets\Script\App\Util\Cacher\SkillCacher.cs" />
      <Compile Include="Assets\Script\App\Util\Cacher\StageCacher.cs" />
@@ -157,6 +167,7 @@
      <Compile Include="Assets\Script\App\View\Common\VTweenPosition.cs" />
      <Compile Include="Assets\Script\App\View\Equipment\VEquipmentIcon.cs" />
      <Compile Include="Assets\Script\App\View\Equipment\VEquipments.cs" />
+     <Compile Include="Assets\Script\App\View\Item\VItemIcon.cs" />
      <Compile Include="Assets\Script\App\View\Skill\VSkillChild.cs" />
      <Compile Include="Assets\Script\App\View\Top\VBuildingMenu.cs" />
      <Compile Include="Assets\Script\App\View\Top\VHeaderTop.cs" />
@@ -169,6 +180,7 @@
      <Compile Include="Assets\Script\App\View\VBindText.cs" />
      <Compile Include="Assets\Script\App\View\VBuildingChild.cs" />
      <Compile Include="Assets\Script\App\View\VCharacter.cs" />
+     <Compile Include="Assets\Script\App\View\VGachaChild.cs" />
      <Compile Include="Assets\Script\App\View\VHeaderFace.cs" />
      <Compile Include="Assets\Script\App\View\VTile.cs" />
      <Compile Include="Assets\Script\App\View\VTopMap.cs" />
@@ -178,6 +190,8 @@
      <Compile Include="Assets\Script\App\ViewModel\VMBuilding.cs" />
      <Compile Include="Assets\Script\App\ViewModel\VMCharacter.cs" />
      <Compile Include="Assets\Script\App\ViewModel\VMEquipment.cs" />
+     <Compile Include="Assets\Script\App\ViewModel\VMGacha.cs" />
+     <Compile Include="Assets\Script\App\ViewModel\VMItem.cs" />
      <Compile Include="Assets\Script\App\ViewModel\VMProperty.cs" />
      <Compile Include="Assets\Script\App\ViewModel\VMTopMap.cs" />
      <Compile Include="Assets\Script\App\ViewModel\VMUser.cs" />
@@ -265,28 +279,28 @@
      <None Include="Assets\TextMesh Pro\Fonts\Bangers - OFL.txt" />
      <None Include="Assets\Script\Plugin\JsonFx\License.txt" />
  <Reference Include="UnityEngine.UI">
- <HintPath>/Applications/Unity5.5/Unity5.5.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
+ <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.Networking">
- <HintPath>/Applications/Unity5.5/Unity5.5.app/Contents/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
+ <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.PlaymodeTestsRunner">
- <HintPath>/Applications/Unity5.5/Unity5.5.app/Contents/UnityExtensions/Unity/PlaymodeTestsRunner/UnityEngine.PlaymodeTestsRunner.dll</HintPath>
+ <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/PlaymodeTestsRunner/UnityEngine.PlaymodeTestsRunner.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.Analytics">
- <HintPath>/Applications/Unity5.5/Unity5.5.app/Contents/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
+ <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.HoloLens">
- <HintPath>/Applications/Unity5.5/Unity5.5.app/Contents/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
+ <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.VR">
- <HintPath>/Applications/Unity5.5/Unity5.5.app/Contents/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>
+ <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>
  </Reference>
  <Reference Include="HOTween">
- <HintPath>/Users/lubin.zhang/Documents/git/sh/Assets/HOTween/Plugins/HOTween.dll</HintPath>
+ <HintPath>/Users/zhanglubin/git/sh/Assets/HOTween/Plugins/HOTween.dll</HintPath>
  </Reference>
  <Reference Include="TextMeshPro">
- <HintPath>/Users/lubin.zhang/Documents/git/sh/Assets/TextMesh Pro/Plugins/TextMeshPro.dll</HintPath>
+ <HintPath>/Users/zhanglubin/git/sh/Assets/TextMesh Pro/Plugins/TextMeshPro.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

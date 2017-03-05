@@ -24,6 +24,8 @@ namespace App.Model{
         public int clothes_img;
         public int weapon_img;
         public int equipmenticon_img;
+        public int gacha;
+        public int item_img;
         public int horse;
         public int clothes;
         public int weapon;

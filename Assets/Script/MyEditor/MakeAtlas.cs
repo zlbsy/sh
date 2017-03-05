@@ -68,6 +68,11 @@ namespace MyEditor
             }	
         }
 
+        [MenuItem("SH/Build Assetbundle/Image/Gacha")]
+        static private void BuildAssetBundleImageGacha()
+        {
+            BuildImageAssetBundle("gacha");
+        }
         [MenuItem("SH/Build Assetbundle/Image/Map")]
         static private void BuildAssetBundleImageMap()
         {
@@ -103,10 +108,10 @@ namespace MyEditor
         {
             BuildImageAssetBundle("equipmenticon");
         }
-        [MenuItem("SH/Build Assetbundle/Image/Item")]
-        static private void BuildAssetBundleImageItem()
+        [MenuItem("SH/Build Assetbundle/Image/ItemIcon")]
+        static private void BuildAssetBundleImageItemIcon()
         {
-            BuildImageAssetBundle("item");
+            BuildImageAssetBundle("itemicon");
         }
         [MenuItem("SH/Build Assetbundle/Image/All")]
         static private void BuildAssetBundleImageAll()
@@ -125,6 +130,11 @@ namespace MyEditor
             BuildAssetBundlePromptMessage();
             BuildAssetBundleWorld();
             BuildAssetBundleArea();
+        }
+        [MenuItem("SH/Build Assetbundle/Master/Gacha")]
+        static private void BuildAssetBundleGacha()
+        {
+            BuildAssetBundleMaster(App.Model.Scriptable.GachaAsset.Name);
         }
         [MenuItem("SH/Build Assetbundle/Master/Avatar")]
         static private void BuildAssetBundleAvatar()

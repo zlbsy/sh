@@ -28,6 +28,12 @@ namespace App.Util{
         private static AssetBundle _equipmentIcon = null;
         public static string equipmentIconUrl{ get{ return HttpClient.assetBandleURL + "equipmenticonimage.unity3d";} }
         public static AssetBundle equipmentIcon{ set{ _equipmentIcon = value; } }
+        private static AssetBundle _itemIcon = null;
+        public static string itemIconUrl{ get{ return HttpClient.assetBandleURL + "itemiconimage.unity3d";} }
+        public static AssetBundle itemIcon{ set{ _itemIcon = value; } }
+        private static AssetBundle _gachaIcon = null;
+        public static string gachaIconUrl{ get{ return HttpClient.assetBandleURL + "gachaimage.unity3d";} }
+        public static AssetBundle gachaIcon{ set{ _gachaIcon = value; } }
 
 		public static Sprite GetAvatarBody(string name){
 			return GetAvatarSprite(name);
@@ -55,6 +61,12 @@ namespace App.Util{
         }
         public static Sprite GetEquipmentIcon(string name){
             return _equipmentIcon.LoadAsset<Sprite>(name);
+        }
+        public static Sprite GetItemIcon(int id){
+            return _itemIcon.LoadAsset<Sprite>("item_"+id);
+        }
+        public static Sprite GetGachaIcon(int id){
+            return _gachaIcon.LoadAsset<Sprite>("gacha_"+id);
         }
 	}
 }

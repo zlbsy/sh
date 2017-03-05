@@ -159,7 +159,6 @@ namespace App.View{
             i = (baseMapMaster.height - 1) * mapWidth + baseMapMaster.width - 1;
             obj = tileUnits[i];
             maxPosition = new Vector2(obj.transform.position.x, obj.transform.position.y - 9f);
-            Debug.LogError(minPosition+","+maxPosition);
         }
         void OnMouseDrag(){
             if (mousePosition.x == int.MinValue)

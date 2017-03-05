@@ -140,6 +140,9 @@ namespace App.Controller{
             list.Add(sUser.Download(ImageAssetBundleManager.equipmentIconUrl, versions.equipmenticon_img, (AssetBundle assetbundle)=>{
                 ImageAssetBundleManager.equipmentIcon = assetbundle;
             }, false));
+            list.Add(sUser.Download(ImageAssetBundleManager.itemIconUrl, versions.item_img, (AssetBundle assetbundle)=>{
+                ImageAssetBundleManager.itemIcon = assetbundle;
+            }, false));
             float step = 100f / list.Count;
             for (int i = 0; i < list.Count; i++)
             {

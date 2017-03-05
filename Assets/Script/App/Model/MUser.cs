@@ -13,6 +13,7 @@ namespace App.Model{
         public string password;
         public MCharacter[] characters;
         public MEquipment[] equipments;
+        public MItem[] items;
         public string Nickname{
             get{ 
                 return this.ViewModel.Nickname.Value;

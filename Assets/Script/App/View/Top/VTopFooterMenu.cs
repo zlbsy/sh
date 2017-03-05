@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using App.ViewModel;
 using Holoville.HOTween;
 using App.Controller;
+using App.Util;
 
 namespace App.View.Top{
     public class VTopFooterMenu : VTopMenu{
@@ -37,6 +38,9 @@ namespace App.View.Top{
                     complete();
                 }
             }));
+        }
+        public void OpenGacha(){
+            this.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.GachaDialog));
         }
 	}
 }

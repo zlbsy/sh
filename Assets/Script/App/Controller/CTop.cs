@@ -90,5 +90,8 @@ namespace App.Controller{
         public void OpenCharacterList(){
             this.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.CharacterListDialog));
         }
+        public void OpenItemList(){
+            this.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.ItemListDialog));
+        }
 	}
 }

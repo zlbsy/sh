@@ -76,6 +76,10 @@ namespace App.Controller{
             {
                 this.StartCoroutine(CreateScriptableObjectMasterItemRun());
             }
+            if (GUI.Button(new Rect(150, 750, 100, 30), "gacha"))
+            {
+                this.StartCoroutine(CreateScriptableObjectMasterGachaRun());
+            }
 
             if (GUI.Button(new Rect(350, 50, 100, 30), "Prompt"))
             {
@@ -89,6 +93,17 @@ namespace App.Controller{
                 UnityEditor.AssetDatabase.CreateAsset(languageAsset, string.Format("Assets/Editor Default Resources/ScriptableObject/{0}.asset", App.Model.Scriptable.LanguageAsset.Name));
                 UnityEditor.AssetDatabase.Refresh();
             }
+        }
+        IEnumerator CreateScriptableObjectMasterGachaRun()
+        {
+            var asset = ScriptableObject.CreateInstance<App.Model.Scriptable.GachaAsset>();
+
+            SEditorMaster sMaster = new SEditorMaster();
+            yield return StartCoroutine (sMaster.RequestAll("gacha"));
+            asset.gachas = sMaster.responseAll.gachas;
+
+            UnityEditor.AssetDatabase.CreateAsset(asset, string.Format("Assets/Editor Default Resources/ScriptableObject/{0}.asset", App.Model.Scriptable.GachaAsset.Name));
+            UnityEditor.AssetDatabase.Refresh();
         }
         IEnumerator CreateScriptableObjectMasterItemRun()
         {
