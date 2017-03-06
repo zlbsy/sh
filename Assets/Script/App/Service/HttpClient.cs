@@ -29,11 +29,12 @@ namespace App.Service{
                 form.AddField("ssid", App.Util.Global.ssid);
             }
             using (WWW www = (form == null ? new WWW(docmain + path) : new WWW (docmain + path, form))) {
-				yield return www;
+                yield return www;
 				if (!string.IsNullOrEmpty (www.error)) {
                     Debug.LogError("www Error:" + www.error + "\n" + path);
 					yield break;
-				}
+                }
+                App.Controller.CLoadingDialog.UpdatePlusProgress(1f);
                 Debug.Log("HttpClient : " + www.text);
                 ResponseBase response = Deserialize<ResponseBase>(www.text);
                 //Debug.LogError("response = " + response);

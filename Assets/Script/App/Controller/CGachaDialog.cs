@@ -45,5 +45,9 @@ namespace App.Controller{
                 vGachaChild.UpdateView();
             }
 		}
+
+        public void OnClickGacha(int gachaId, int cnt = 1){
+            
+        }
 	}
 }

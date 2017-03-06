@@ -22,7 +22,8 @@ namespace App.Util{
             CharacterDetailDialog,
             EquipmentListDialog,
             TalkDialog,
-            GachaDialog
+            GachaDialog,
+            GachaResultDialog
         }
         public static App.Controller.CScene CurrentScene;
         public static App.Controller.Request CurrentSceneRequest;

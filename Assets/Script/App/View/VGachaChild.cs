@@ -43,6 +43,11 @@ namespace App.View{
             GachaIdChanged(0, ViewModel.GachaId.Value);
         }
         #endregion
-
+        public void OnClickSingle(){
+            (this.Controller as CGachaDialog).OnClickGacha(ViewModel.GachaId.Value, 1);
+        }
+        public void OnClickMultiple(){
+            (this.Controller as CGachaDialog).OnClickGacha(ViewModel.GachaId.Value, 10);
+        }
     }
 }

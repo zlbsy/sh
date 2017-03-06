@@ -36,11 +36,10 @@ namespace App.Controller{
                 yield break;
             }
             CLoadingDialog.ToShow();
-            yield return StartCoroutine(VersionCheck( App.Util.Global.SUser.versions ));
-            yield return StartCoroutine (App.Util.Global.SUser.RequestGet());
+            yield return StartCoroutine(Init( App.Util.Global.SUser.versions ));
             App.Util.SceneManager.LoadScene( App.Util.SceneManager.Scenes.Top.ToString() );
         }
-        public IEnumerator VersionCheck(MVersion versions)
+        public IEnumerator Init(MVersion versions)
         {
             CScene scene = SceneManager.CurrentScene;
             SUser sUser = Global.SUser;
@@ -143,6 +142,8 @@ namespace App.Controller{
             list.Add(sUser.Download(ImageAssetBundleManager.itemIconUrl, versions.item_img, (AssetBundle assetbundle)=>{
                 ImageAssetBundleManager.itemIcon = assetbundle;
             }, false));
+
+            list.Add(sUser.RequestGet());
             float step = 100f / list.Count;
             for (int i = 0; i < list.Count; i++)
             {
