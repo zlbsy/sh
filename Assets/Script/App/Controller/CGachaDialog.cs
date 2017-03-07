@@ -46,7 +46,12 @@ namespace App.Controller{
 		}
 
         public void OnClickGacha(int gachaId, int cnt = 1){
-            
+            Debug.LogError("OnClickGacha");
+            StartCoroutine (GachaSlot(gachaId, cnt));
+        }
+        public IEnumerator GachaSlot(int gachaId, int cnt = 1){
+            Debug.LogError("GachaSlot");
+            yield return StartCoroutine (sGacha.RequestSlot(gachaId, cnt));
         }
 	}
 }
