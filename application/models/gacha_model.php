@@ -53,6 +53,104 @@ class Gacha_model extends MY_Model
 		$result = $query->result_array();
 		return $result;
 	}
+	function can_gacha($args, $gacha){
+		$now = date("Y-m-d H:i:s",time());
+		if(($gacha["from_time"] != "0000-00-00 00:00:00" && $gacha["from_time"] > $now) || ($gacha["to_time"] != "0000-00-00 00:00:00" && $gacha["to_time"] < $now)){
+			return false;
+		}
+		if($args["buy_type"] == "free"){
+			$log = $this->get_free_log($user["id"],$gacha["id"]);
+			$free_cnt = 0;
+			$last_log_time = null;
+			if(!empty($log)){
+				foreach ($log as $logchild) {
+					if($logchild["register_time"] > DAY_START){
+						$free_cnt++;
+					}
+				}
+				$last_log_time = $log[0]["register_time"];
+			}
+			$limit_count = $gacha["free_count"] - $free_cnt;
+			if($limit_count <= 0){
+				return false;
+			}
+		}
+		return true;
+	}
+	function slot($args){
+		$gacha = $this->get_gacha_master($args["gacha_id"]);
+		if(!$gacha || !$this->can_gacha($args, $gacha)){
+			return null;
+		}
+		$now = date("Y-m-d H:i:s",time());
+		$user = $this->getSessionData("user");
+		$gold = 0;
+		$silver = 0;
+		if($args["buy_type"] == "free"){
+			$limit = $liqueur["free_count"];
+			$log = $this->get_liqueur_free_log($user["id"],$liqueur["id"]);
+			if(!empty($log)){
+				$free_cnt = 0;
+				foreach ($log as $logchild) {
+					if($logchild["register_time"] > DAY_START){
+						$free_cnt++;
+					}
+				}
+				if($free_cnt >= $limit){
+					return null;
+				}
+				$last_log = $log[0];
+				if($last_log["register_time"] > date("Y-m-d H:i:s",strtotime("-".$liqueur["free_time"]." minute"))){
+					return null;
+				}
+			}
+		}else{
+			$gold = $liqueur["gold"];
+			$silver = $liqueur["silver"];
+			if($user["gold"] < $gold || $user["silver"] < $silver){
+				return null;
+			}
+		}
+		
+		$liqueur_gets = $this->get_liqueur_get($liqueur["id"]);
+		$probability_sum = 0;
+		foreach($liqueur_gets as $val){
+			$probability_sum += $val["probability"];
+		}
+		$rand_index = rand(0,$probability_sum - 1);
+		$liqueur_get = null;
+		$probability_sum = 0;
+		foreach($liqueur_gets as $val){
+			$probability_sum += $val["probability"];
+			if($rand_index <= $probability_sum){
+				$liqueur_get = $val;
+				break;
+			}
+		}
+		$this->user_db->trans_begin();
+		$error = false;
+		//买酒记录(消费)
+		if(!$error){
+			$setlog = $this->set_liqueur_free_log($user["id"],$liqueur["id"],$gold,$silver);
+			$error = ($setlog ? false : true);
+		}
+		//奖品
+		if(!$error){
+			$item_get = $this->item_model->set_item($user["id"], $liqueur_get["item_id"]);
+			$error = ($item_get ? false : true);
+		}
+		if ($error || $this->user_db->trans_status() === FALSE)
+		{
+		    $this->user_db->trans_rollback();
+			return null;
+		}
+		else
+		{
+		    $this->user_db->trans_commit();
+		}
+		$item = $this->item_model->get_master($liqueur_get["item_id"]);
+		return $item;
+	}
 
 
 

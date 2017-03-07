@@ -21,6 +21,23 @@ class Gacha extends MY_Controller {
 			$this->error("Gacha->freelog error");
 		}
 	}
+	public function slot()
+	{
+		$user_id = $this->args["user_id"];
+		if(is_null($user_id)){
+			$user = $this->getSessionData("user");
+			$user_id = $user["id"];
+		}
+		$gacha_id = $this->args["gacha_id"];
+		$cnt = $this->args["cnt"];
+
+		$contents = $this->gacha_model->slot($user_id, $gacha_id, $cnt);
+		if($contents){
+			$this->out(array("contents"=>$contents));
+		}else{
+			$this->error("Gacha->slot error");
+		}
+	}
 
 	public function liqueur_list()
 	{
