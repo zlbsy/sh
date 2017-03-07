@@ -30,11 +30,12 @@ class Gacha_model extends MY_Model
 				}
 				$last_log_time = $log[0]["register_time"];
 			}
+			$freelog["GachaId"] = $gacha["id"];
 			$freelog["LimitCount"] = $gacha["free_count"] - $free_cnt;
 			$freelog["LastTime"] = $last_log_time;
 			$freelogs[] = $freelog;
 		}
-		return $result;
+		return $freelogs;
 	}
 	function get_free_log($user_id, $gacha_id){
 		$this->user_db->where('type', 'gacha');

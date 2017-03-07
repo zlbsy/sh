@@ -2,7 +2,7 @@
 
 class Gacha extends MY_Controller {
 	function __construct() {
-		$this->needAuth = true;
+	//	$this->needAuth = true;
 		parent::__construct();
 		$this->load->model(array('gacha_model','user_model','item_model'));
 	}
