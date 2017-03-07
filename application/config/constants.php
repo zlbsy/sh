@@ -62,12 +62,12 @@ define('MASTER_AREA', MASTER_DATABASE.'.area');
 define('MASTER_HORSE', MASTER_DATABASE.'.horse');
 define('MASTER_CLOTHES', MASTER_DATABASE.'.clothes');
 define('MASTER_WEAPON', MASTER_DATABASE.'.weapon');
+define('MASTER_GACHA', MASTER_DATABASE.'.gacha');
+define('MASTER_GACHA_CHILD', MASTER_DATABASE.'.gacha_child');
 
 define('MASTER_CHARACTER_STAR', MASTER_DATABASE.'.character_star');
 define('MASTER_GROWING', MASTER_DATABASE.'.growing');
 define('MASTER_ITEM', MASTER_DATABASE.'.item');
-define('MASTER_LIQUEUR', MASTER_DATABASE.'.liqueur');
-define('MASTER_LIQUEUR_GET', MASTER_DATABASE.'.liqueur_get');
 define('MASTER_CHAPTER', MASTER_DATABASE.'.chapter');
 define('MASTER_AREA', MASTER_DATABASE.'.area');
 define('MASTER_AREA_GET', MASTER_DATABASE.'.area_get');

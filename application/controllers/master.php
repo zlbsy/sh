@@ -57,14 +57,14 @@ class Master extends MY_Controller {
 			$master_item = $this->master_model->get_master_items();
 			$result["items"]=$master_item;
 		}
+		if($args["gacha"]){
+			$master_gacha = $this->master_model->get_master_gachas();
+			$result["gachas"]=$master_gacha;
+		}
 
 		if($args["character_star"]){
 			$master_character_star = $this->master_model->get_master_character_star();
 			$result["character_star"]=$master_character_star;
-		}
-		if($args["exp"]){
-			$master_exp = $this->master_model->get_master_exps();
-			$result["exp"]=$master_exp;
 		}
 		if($args["growing"]){
 			$master_growing = $this->master_model->get_master_growing();

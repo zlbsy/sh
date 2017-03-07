@@ -146,7 +146,7 @@ class Item_model extends MY_Model
 		return $this->user_db->insert(USER_BANKBOOK);
 	}
 	function get_item_list($user_id){
-		$this->user_db->select('item_id, cnt');
+		$this->user_db->select('id as Id, item_id as ItemId, cnt as Cnt');
 		$this->user_db->where('user_id', $user_id);
 	//	$this->user_db->group_by('item_id');
 		$query = $this->user_db->get(USER_ITEM);

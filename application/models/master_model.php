@@ -118,11 +118,25 @@ class Master_model extends MY_Model
 		$result = $query->result_array();
 		return $result;
 	}
-	function get_master_exps(){
-		$this->master_db->select('id, value');
-		$query = $this->master_db->get(MASTER_EXP);
+	function get_master_gachas(){
+		$this->master_db->select('id, name, gold, silver, from_time, to_time, free_time, free_count');
+		$query = $this->master_db->get(MASTER_GACHA);
 		if ($query->num_rows() == 0){
 			return null;
+		}
+		$result = $query->result_array();
+		foreach ($result as $key => $child) {
+			$child["childs"] = $this->get_master_gacha_childs($child["id"]);
+			$result[$key] = $child;
+		}
+		return $result;
+	}
+	function get_master_gacha_childs($gacha_id){
+		$this->master_db->select('id, gacha_id, type, child_id, probability');
+		$this->master_db->where("gacha_id", $gacha_id);
+		$query = $this->master_db->get(MASTER_GACHA_CHILD);
+		if ($query->num_rows() == 0){
+			return array();
 		}
 		$result = $query->result_array();
 		return $result;
@@ -130,15 +144,6 @@ class Master_model extends MY_Model
 	function get_master_growing(){
 		$this->master_db->select('id, character_id, star, strength, force, strategy, command, intelligence, agility');
 		$query = $this->master_db->get(MASTER_GROWING);
-		if ($query->num_rows() == 0){
-			return null;
-		}
-		$result = $query->result_array();
-		return $result;
-	}
-	function get_master_equipment(){
-		$this->master_db->select('id, arms, level, star, position, img, explanation, five1, five2, five3, five4, five5, hp, attack, magic, def, magicDef, speed, dodge, breakout, strength, force, strategy, command, intelligence, agility');
-		$query = $this->master_db->get(MASTER_EQUIPMENT);
 		if ($query->num_rows() == 0){
 			return null;
 		}
