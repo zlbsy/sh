@@ -7,13 +7,14 @@ using App.View;
 
 
 namespace App.Controller{
-    public class CBattlefield : CScene {
+    public class CBattlefield : CBaseMap {
 		[SerializeField]GameObject mapLayer;
 		[SerializeField]GameObject characterLayer;
 		[SerializeField]GameObject characterPrefab;
         public override IEnumerator OnLoad( Request request ) 
 		{  
-			SBattlefield sBattlefield = new SBattlefield ();
+			
+            /*SBattlefield sBattlefield = new SBattlefield ();
 			yield return StartCoroutine (sBattlefield.Request(this));
 			MBattlefield battlefield = sBattlefield.battlefield;
 			MCharacter[] enemys = battlefield.enemys;
@@ -29,8 +30,8 @@ namespace App.Controller{
                 view.BindingContext = chara.ViewModel;
                 chara.Action = ActionType.stand;
                 view.UpdateView();
-			}
-			yield return 0;
+			}*/
+            yield return this.StartCoroutine(base.OnLoad(request));
 		}
 	}
 }

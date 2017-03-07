@@ -48,7 +48,6 @@ namespace App.Controller{
         public void OnClickTile(int index){
             App.Model.Master.MBaseMap topMapMaster = BaseMapCacher.Instance.Get(mTopMap.MapId);
             Vector2 coordinate = topMapMaster.GetCoordinateFromIndex(index);
-            App.Model.Master.MTile tileMaster = topMapMaster.tiles[index];
             App.Model.MTile tile = System.Array.Find(mTopMap.Tiles, _=>_.x == coordinate.x && _.y == coordinate.y);
             if (tile == null)
             {

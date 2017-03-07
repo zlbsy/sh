@@ -14,6 +14,10 @@ namespace App.Service{
         {
             public App.Model.MGacha[] gachas;
         }
+        public class ResponseSlot : ResponseBase
+        {
+            public App.Model.MContent[] contents;
+        }
         public IEnumerator RequestFreeLog()
         {
             var url = "gacha/freelog";
@@ -22,9 +26,9 @@ namespace App.Service{
             ResponseFreeLog response = client.Deserialize<ResponseFreeLog>();
             this.gachas = response.gachas;
         }
-        public IEnumerator RequestGacha(int gacha_id, int cnt)
+        public IEnumerator RequestSlot(int gacha_id, int cnt)
         {
-            var url = "shop/buy";
+            var url = "gacha/slot";
             WWWForm form = new WWWForm();
             form.AddField("gacha_id", gacha_id);
             form.AddField("cnt", cnt);

@@ -26,8 +26,7 @@ namespace App.Controller{
                 GachaCacher.Instance.Reset(GachaAsset.Data.gachas);
                 GachaAsset.Clear();
             }));
-            //yield return StartCoroutine (sGacha.RequestFreeLog());
-            sGacha.gachas = new MGacha[]{};
+            yield return StartCoroutine (sGacha.RequestFreeLog());
             //int gachaId = request.Get<int>("gachaId");
             App.Model.Master.MGacha[] gachas = GachaCacher.Instance.GetAllOpen();
             foreach(App.Model.Master.MGacha gacha in gachas){

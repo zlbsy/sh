@@ -7,12 +7,18 @@ using UnityEngine.UI;
 
 
 namespace App.Controller{
+    /// <summary>
+    /// 窗口弹出方式
+    /// </summary>
     public enum OpenType{
         Middle,//从中间扩大
         Down,//从下面上升
         None,//无
-        Fade//无
+        Fade//逐渐显示
     }
+    /// <summary>
+    /// 新窗口
+    /// </summary>
     public class CDialog : CBase {
         [SerializeField]OpenType opentype;
         Transform panel;
@@ -24,6 +30,7 @@ namespace App.Controller{
         protected System.Action closeEvent;
         public override IEnumerator Start()
         {
+            //覆盖CBase的Start，防止OnLoad自动发生
             yield break;
         }
         public static int GetIndex(){
@@ -60,6 +67,9 @@ namespace App.Controller{
             }
             this.GetComponent<Canvas>().sortingOrder = ++App.Util.Global.DialogSortOrder;
         }
+        /// <summary>
+        /// 设置新窗口唯一标示索引
+        /// </summary>
         public void SetIndex(){
             this.index = CDialog.GetIndex();
         }

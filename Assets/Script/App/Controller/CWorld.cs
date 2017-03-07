@@ -11,6 +11,9 @@ using App.View.Top;
 
 
 namespace App.Controller{
+    /// <summary>
+    /// 大地图场景
+    /// </summary>
     public class CWorld : CScene {
         [SerializeField]VWorldMap vWorldMap;
         private MWorldMap mWorldMap;
@@ -28,14 +31,20 @@ namespace App.Controller{
             vWorldMap.transform.parent.localScale = Vector3.one;
             vWorldMap.MoveToCenter();
         }
+        /// <summary>
+        /// 点击州府县，进入州府县场景
+        /// </summary>
+        /// <param name="index">州府县索引</param>
         public void OnClickTile(int index){
+            //地图信息
             App.Model.Master.MBaseMap topMapMaster = BaseMapCacher.Instance.Get(mWorldMap.MapId);
+            //根据索引获取所点击的州府县坐标
             Vector2 coordinate = topMapMaster.GetCoordinateFromIndex(index);
-            App.Model.Master.MTile tileMaster = topMapMaster.tiles[index];
+            //根据州府县坐标获取州府县
             App.Model.Master.MWorld tile = System.Array.Find(mWorldMap.Tiles, _=>_.x == coordinate.x && _.y == coordinate.y) as App.Model.Master.MWorld;
             if (tile != null)
             {
-                Request req = Request.Create("worldId", tile.id);
+                Request req = Request.Create("worldId", tile.id, "nameKey", tile.Master.name);
                 App.Util.SceneManager.LoadScene( App.Util.SceneManager.Scenes.Area.ToString(), req );
             }
         }

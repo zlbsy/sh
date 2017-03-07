@@ -11,17 +11,17 @@ using App.View.Top;
 
 
 namespace App.Controller{
-    public class CArea : CScene {
-        [SerializeField]VBaseMap vBaseMap;
-        private MBaseMap mBaseMap;
+    public class CArea : CBaseMap {
+        [SerializeField]Text title;
         private int worldId;
         public override IEnumerator OnLoad( Request request ) 
         {  
             worldId = request.Get<int>("worldId");
-            InitMap();
-            yield break;
+            string nameKey = request.Get<string>("nameKey");
+            title.text = App.Util.Language.Get(nameKey);
+            yield return this.StartCoroutine(base.OnLoad(request));
         }
-        private void InitMap(){
+        protected override void InitMap(){
             mBaseMap = new MBaseMap();
             mBaseMap.MapId = worldId;
             mBaseMap.Tiles = AreaCacher.Instance.GetAreas(worldId);
@@ -30,13 +30,8 @@ namespace App.Controller{
             vBaseMap.transform.parent.localScale = Vector3.one;
             vBaseMap.MoveToCenter();
         }
-        public void OnClickTile(int index){
-            App.Model.Master.MBaseMap topMapMaster = BaseMapCacher.Instance.Get(mBaseMap.MapId);
-            Vector2 coordinate = topMapMaster.GetCoordinateFromIndex(index);
-            App.Model.Master.MTile tileMaster = topMapMaster.tiles[index];
-            App.Model.MTile tile = System.Array.Find(mBaseMap.Tiles, _=>_.x == coordinate.x && _.y == coordinate.y);
+        public override void OnClickTile(App.Model.MTile tile){
             App.Model.Master.MArea area = tile as App.Model.Master.MArea;
-
             if (area != null)
             {
                 Request req = Request.Create("area", area);

@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scene/Logo.unity
+- path: Assets/Scene/Battlefield.unity
   isLoaded: 1
   isActive: 1

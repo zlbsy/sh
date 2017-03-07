@@ -12,19 +12,16 @@ using System.Linq;
 
 
 namespace App.Controller{
-    public class CStage : CScene {
-        [SerializeField]VBaseMap vBaseMap;
-        private MBaseMap mBaseMap;
+    public class CStage : CBaseMap {
+        [SerializeField]Text title;
         private App.Model.Master.MArea area;
         public override IEnumerator OnLoad( Request request ) 
         {  
-            Debug.LogError("CStage OnLoad");
             area = request.Get<App.Model.Master.MArea>("area");
-            InitMap();
-            yield break;
+            title.text = App.Util.Language.Get(area.Master.name);
+            yield return this.StartCoroutine(base.OnLoad(request));
         }
-        private void InitMap(){
-            Debug.LogError("CStage InitMap");
+        protected override void InitMap(){
             mBaseMap = new MBaseMap();
             mBaseMap.MapId = area.map_id;
             mBaseMap.Characters = new MCharacter[]{};
@@ -35,7 +32,7 @@ namespace App.Controller{
             vBaseMap.MoveToCenter();
             App.Util.LSharp.LSharpScript.Instance.Analysis(new List<string>{string.Format("Load.script({0})", area.tile_id)});
         }
-        public void OnClickTile(int index){
+        public override void OnClickTile(int index){
             App.Model.Master.MBaseMap topMapMaster = BaseMapCacher.Instance.Get(mBaseMap.MapId);
             Vector2 coordinate = topMapMaster.GetCoordinateFromIndex(index);
             List<VCharacter> vCharacters = vBaseMap.Characters;

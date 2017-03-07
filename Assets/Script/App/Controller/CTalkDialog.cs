@@ -12,6 +12,9 @@ using App.View.Character;
 
 
 namespace App.Controller{
+    /// <summary>
+    /// 对话框
+    /// </summary>
     public class CTalkDialog : CDialog {
         [SerializeField]private VFace face;
         [SerializeField]private Text characterName;
@@ -54,6 +57,13 @@ namespace App.Controller{
             StartCoroutine(UpdateMessage());
             yield return StartCoroutine(base.OnLoad(request));
         }
+        /// <summary>
+        /// 显示对话框
+        /// </summary>
+        /// <param name="characterId">武将ID</param>
+        /// <param name="message">对话内容</param>
+        /// <param name="isLeft">武将立绘是否出现在左侧</param>
+        /// <param name="onComplete">对话框结束回掉</param>
         public static void ToShow(int characterId, string message, bool isLeft = true, System.Action onComplete = null){
             Request req = Request.Create("characterId",characterId,"message",message,"isLeft",isLeft,"closeEvent",onComplete);
             SceneManager.CurrentScene.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.TalkDialog, req));
@@ -78,6 +88,9 @@ namespace App.Controller{
                 this.Close();
             }
         }
+        /// <summary>
+        /// 覆盖CDialog的Delete，使对话框重复利用
+        /// </summary>
         public override void Delete(){
             Holoville.HOTween.HOTween.To(background, 0.1f, new Holoville.HOTween.TweenParms().Prop("color", new Color(0,0,0,0)).OnComplete(()=>{
                 this.gameObject.SetActive(false);
