@@ -1,10 +1,60 @@
 <?php 
 if(!defined('BASEPATH')) exit('No direct script access allowed');
-class Tavern_model extends MY_Model
+class Gacha_model extends MY_Model
 {
 	function __construct(){
 		parent::__construct();
 	}
+	function get_free_logs(){
+		$this->master_db->select('id, gold, silver, from_time, to_time, free_time,free_count');
+		$now = date("Y-m-d H:i:s",time());
+		$this->master_db->where("(`from_time`='0000-00-00 00:00:00' OR `from_time`<'{$now}')");
+		$this->master_db->where("(`to_time`='0000-00-00 00:00:00' OR `to_time`>'{$now}')");
+		$query = $this->master_db->get(MASTER_GACHA);
+		if ($query->num_rows() == 0){
+			return array();
+		}
+		$result = $query->result_array();
+		$user = $this->getSessionData("user");
+		$freelogs = array();
+		foreach ($result as $key => $gacha) {
+			$freelog = array();
+			$log = $this->get_free_log($user["id"],$gacha["id"]);
+			$free_cnt = 0;
+			$last_log_time = null;
+			if(!empty($log)){
+				foreach ($log as $logchild) {
+					if($logchild["register_time"] > DAY_START){
+						$free_cnt++;
+					}
+				}
+				$last_log_time = $log[0]["register_time"];
+			}
+			$freelog["LimitCount"] = $gacha["free_count"] - $free_cnt;
+			$freelog["LastTime"] = $last_log_time;
+			$freelogs[] = $freelog;
+		}
+		return $result;
+	}
+	function get_free_log($user_id, $gacha_id){
+		$this->user_db->where('type', 'gacha');
+		$this->user_db->where('user_id', $user_id);
+		$this->user_db->where('child_id', $gacha_id);
+		$this->user_db->where('gold', 0);
+		$this->user_db->where('silver', 0);
+		$this->user_db->where('register_time >', strtotime("-2 day"));
+		//$this->user_db->where('register_time >', date("Y-m-d 00:00:00",time()));
+		$this->user_db->order_by("id", "desc");
+		$query = $this->user_db->get(USER_BANKBOOK);
+		if ($query->num_rows() == 0){
+			return null;
+		}
+		$result = $query->result_array();
+		return $result;
+	}
+
+
+
 	function liqueur_list(){
 		$this->master_db->select('id, name, gold, silver, from, to, free_time,free_count');
 		$now = date("Y-m-d H:i:s",time());
