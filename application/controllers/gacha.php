@@ -22,8 +22,7 @@ class Gacha extends MY_Controller {
 		}
 	}
 	public function slot()
-	{
-		exit("slot");
+	{$this->error("test");
 		$user = $this->getSessionData("user");
 		$user_id = $user["id"];
 		$gacha_id = $this->args["gacha_id"];
