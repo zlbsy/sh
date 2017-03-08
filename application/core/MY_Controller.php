@@ -129,18 +129,17 @@
 		*/
 	}
 	protected function error($message){
-		$this->out(array("result"=>0,"message"=>$message));
+		die(json_encode(array("result"=>0,"message"=>$message)));
 	}
 	protected function out($arr){
-		die("out");if(empty($arr)){
+		if(empty($arr)){
 			$arr = array();
 		}
 		$arr["now"] = date("Y-m-d H:i:s");
 		$arr["result"] = 1;
 		//die(json_encode(array("result"=>1,"data"=>$arr)));
 		//die(json_encode($arr));
-		$this->set_viewdata("out_list",$arr);
-		$this->load->view('out');
+		$this->load->view('out', array(("out_list" => $arr)));
 		//$this->set_viewname("out");
 	}
 	protected function checkParam($list){
