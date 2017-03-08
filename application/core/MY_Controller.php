@@ -137,9 +137,9 @@
 		}
 		$arr["now"] = date("Y-m-d H:i:s");
 		$arr["result"] = 1;
-		//die(json_encode(array("result"=>1,"data"=>$arr)));
+		die(json_encode(array("result"=>1,"data"=>$arr)));
 		//die(json_encode($arr));
-		$this->load->view('out', array(("out_list" => $arr)));
+		//$this->load->view('out', array(("out_list" => $arr)));
 		//$this->set_viewname("out");
 	}
 	protected function checkParam($list){
