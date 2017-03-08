@@ -4,7 +4,7 @@ class Gacha extends MY_Controller {
 	function __construct() {
 	//	$this->needAuth = true;
 		parent::__construct();
-		$this->load->model(array('gacha_model','user_model','item_model'));
+		$this->load->model(array('gacha_model','user_model','item_model','equipment_model'));
 	}
 	public function freelog()
 	{
@@ -19,6 +19,20 @@ class Gacha extends MY_Controller {
 			$this->out(array("gachas"=>$logs));
 		}else{
 			$this->error("Gacha->freelog error");
+		}
+	}
+	public function slot()
+	{
+		exit("slot");
+		$user = $this->getSessionData("user");
+		$user_id = $user["id"];
+		$gacha_id = $this->args["gacha_id"];
+		$cnt = $this->args["cnt"];
+		$contents = $this->gacha_model->slot($this->args);
+		if($contents){
+			$this->out(array("contents"=>$contents));
+		}else{
+			$this->error("Gacha->slot error");
 		}
 	}
 

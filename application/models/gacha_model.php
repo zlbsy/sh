@@ -5,6 +5,11 @@ class Gacha_model extends MY_Model
 	function __construct(){
 		parent::__construct();
 	}
+	function log($text){
+		$fp = fopen('/var/www/d/test/test.txt','a+');
+		fwrite( $fp, $text."\n" );
+		fclose( $fp );
+	}
 	function get_free_logs(){
 		$this->master_db->select('id, gold, silver, from_time, to_time, free_time,free_count');
 		$now = date("Y-m-d H:i:s",time());
@@ -52,6 +57,147 @@ class Gacha_model extends MY_Model
 		}
 		$result = $query->result_array();
 		return $result;
+	}
+	function can_slot($args, $gacha){
+		if(!$gacha){
+			return false;
+		}
+		$now = date("Y-m-d H:i:s",time());
+		if(($gacha["from_time"] != "0000-00-00 00:00:00" && $gacha["from_time"] > $now) || ($gacha["to_time"] != "0000-00-00 00:00:00" && $gacha["to_time"] < $now)){
+			return false;
+		}
+		return true;
+	}
+	function slot($args){return null;
+		$gacha = $this->get_gacha_master($args["gacha_id"]);
+	/*	if(!$this->can_slot($args, $gacha)){
+			$this->error("can not gacha");
+		}
+		$user = $this->getSessionData("user");
+		$this->log("can gacha");
+		$gold = 0;
+		$silver = 0;
+		if(isset($args["buy_type"]) && $args["buy_type"] == "free"){
+			$limit = $gacha["free_count"];
+			$log = $this->get_free_log($user["id"], $gacha["id"]);
+			if(!empty($log)){
+				$free_cnt = 0;
+				foreach ($log as $logchild) {
+					if($logchild["register_time"] > DAY_START){
+						$free_cnt++;
+					}
+				}
+				if($free_cnt >= $limit){
+					return null;
+				}
+				$last_log = $log[0];
+				if($last_log["register_time"] > date("Y-m-d H:i:s",strtotime("-".$gacha["free_time"]." minute"))){
+					return null;
+				}
+			}
+		}else{
+			$cnt = $args["cnt"];
+			if($cnt == 10){
+				$cnt = 9;
+			}
+			$gold = $gacha["Gold"] * $cnt;
+			$silver = $gacha["Silver"] * $cnt;
+			if($user["Gold"] < $gold || $user["Silver"] < $silver){
+				$this->error("no money " . $user["Gold"] . " < " . $gold . ", " . $user["Silver"] . " < " . $silver);
+			}
+		}
+	*/	
+	//	$gacha_childs = $this->get_gacha_childs($gacha["id"]);
+		$slot_list = array();
+	/*	$i = 0;
+		$this->log("gacha_childs=".count($gacha_childs));
+		while(count($slot_list) < $args["cnt"]){
+			$probability_sum = 0;
+			foreach($gacha_childs as $val){
+				$probability_sum += $val["probability"];
+			}
+			$rand_index = rand(0,$probability_sum - 1);
+			$this->log("rand_index=".$rand_index.", probability_sum=".$probability_sum);
+			$probability_sum = 0;
+			foreach($gacha_childs as $val){
+				$probability_sum += $val["probability"];
+				$this->log($rand_index . "<" . $probability_sum);
+				if($rand_index <= $probability_sum){
+					$slot_list[] = $val;
+					break;
+				}
+			}
+			$this->log("slot_list_count=". count($slot_list));
+		}
+		$this->user_db->trans_begin();
+		$error = false;
+		//购买记录(消费)
+		if(!$error){
+			$setlog = $this->set_gacha_log($user["id"], $gacha["id"], $gold, $silver);
+			$error = ($setlog ? false : true);
+		}
+		$this->log("set_gacha_log");
+		//奖品
+		if(!$error){
+			for($i=0;!$error && $i<count($slot_list);$i++){
+				$gacha_child = $slot_list[$i];
+				$this->log("i=".$i.", ".$gacha_child["type"]);
+				switch($gacha_child["type"]){
+					case "item":
+						$gacha_get = $this->item_model->set_item($user["id"], $gacha_child["child_id"]);
+						break;
+					case "horse":
+					case "weapon":
+					case "clothes":
+						$gacha_get = $this->equipment_model->set_equipment($user["id"], $gacha_child["child_id"], $gacha_child["type"]);
+						break;
+				}
+				$error = ($gacha_get ? false : true);
+			}
+		}*/
+		$this->log("gacha get over");
+		if ($error || $this->user_db->trans_status() === FALSE)
+		{
+		    $this->user_db->trans_rollback();
+			return null;
+		}
+		else
+		{
+		    $this->user_db->trans_commit();
+		}
+		$contents = array();
+		foreach ($slot_list as $slot) {
+			$contents[] = array("type"=>$slot["type"], "content_id"=>$slot["child_id"]);
+		}
+		return $contents;
+	}
+	function get_gacha_master($id){
+		$this->master_db->where('id', $id);
+		$query = $this->master_db->get(MASTER_GACHA);
+		if ($query->num_rows() == 0){
+			return null;
+		}
+		$result = $query->first_row('array');
+		return $result;
+	}
+	function get_gacha_childs($gacha_id){
+		$this->master_db->where('gacha_id', $gacha_id);
+		$query = $this->master_db->get(MASTER_GACHA_CHILD);
+		if ($query->num_rows() == 0){
+			return null;
+		}
+		$result = $query->result_array();
+		return $result;
+	}
+	function set_gacha_log($user_id, $gacha_id, $gold, $silver){
+		$this->user_db->set('user_id', $user_id);
+		$this->user_db->set('type', 'gacha');
+		$this->user_db->set('child_id', $gacha_id);
+		$this->user_db->set('gold', -$gold);
+		$this->user_db->set('silver', -$silver);
+		$this->user_db->set('register_time', date("Y-m-d H:i:s",time()));
+		$res = $this->user_db->insert(USER_BANKBOOK);
+		return $res;
 	}
 
 
@@ -161,34 +307,6 @@ class Gacha_model extends MY_Model
 		}
 		$item = $this->item_model->get_master($liqueur_get["item_id"]);
 		return $item;
-	}
-	function get_liqueur_master($id){
-		$this->master_db->where('id', $id);
-		$query = $this->master_db->get(MASTER_LIQUEUR);
-		if ($query->num_rows() == 0){
-			return null;
-		}
-		$result = $query->first_row('array');
-		return $result;
-	}
-	function get_liqueur_get($liqueur_id){
-		$this->master_db->where('liqueur_id', $liqueur_id);
-		$query = $this->master_db->get(MASTER_LIQUEUR_GET);
-		if ($query->num_rows() == 0){
-			return null;
-		}
-		$result = $query->result_array();
-		return $result;
-	}
-	function set_liqueur_free_log($user_id, $liqueur_id, $gold, $silver){
-		$this->user_db->set('user_id', $user_id);
-		$this->user_db->set('type', 'liqueur');
-		$this->user_db->set('child_id', $liqueur_id);
-		$this->user_db->set('gold', -$gold);
-		$this->user_db->set('silver', -$silver);
-		$this->user_db->set('register_time', date("Y-m-d H:i:s",time()));
-		$res = $this->user_db->insert(USER_BANKBOOK);
-		return $res;
 	}
 	function get_liqueur_free_log($user_id, $liqueur_id){
 		$this->user_db->where('type', 'liqueur');

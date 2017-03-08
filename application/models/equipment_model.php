@@ -5,6 +5,15 @@ class Equipment_model extends MY_Model
 	function __construct(){
 		parent::__construct();
 	}
+	function set_equipment($user_id, $equipment_id, $equipment_type){
+		$item = $this->get_item($user_id, $item_id);
+		$this->user_db->set('user_id', $user_id);
+		$this->user_db->set('equipment_id', $equipment_id);
+		$this->user_db->set('equipment_type', $equipment_type);
+		$this->user_db->set('register_time', date("Y-m-d H:i:s",time()));
+		return $res;
+	}
+	
 	function get_list($user_id, $chara_id = null){
 		$this->user_db->where("user_id", $user_id);
 		$this->user_db->select("id as Id,character_id,equipment_id as EquipmentId,equipment_type as EquipmentType");

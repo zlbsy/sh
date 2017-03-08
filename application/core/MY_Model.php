@@ -30,6 +30,9 @@ class MY_Model extends CI_Model {
 		//$this->session->set_userdata($key,$value);
 		$_SESSION[$key] = $value;
 	}
+	protected function error($message){
+		die(json_encode(array("result"=>0,"message"=>$message)));
+	}
 	protected function transBool($result){
 		if(!$result){
 			$this->user_db->trans_rollback();
