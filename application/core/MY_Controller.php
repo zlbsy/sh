@@ -132,7 +132,7 @@
 		$this->out(array("result"=>0,"message"=>$message));
 	}
 	protected function out($arr){
-		if(empty($arr)){
+		die("out");if(empty($arr)){
 			$arr = array();
 		}
 		$arr["now"] = date("Y-m-d H:i:s");
@@ -140,7 +140,8 @@
 		//die(json_encode(array("result"=>1,"data"=>$arr)));
 		//die(json_encode($arr));
 		$this->set_viewdata("out_list",$arr);
-		$this->set_viewname("out");
+		$this->load->view('out');
+		//$this->set_viewname("out");
 	}
 	protected function checkParam($list){
 		foreach ($list as $value) {
