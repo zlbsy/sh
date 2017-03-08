@@ -8,6 +8,7 @@ using System.Linq;
 namespace App.Service{
     public class SGacha : SBase {
         public App.Model.MGacha[] gachas;
+        public App.Model.MContent[] contents;
         public SGacha(){
         }
         public class ResponseFreeLog : ResponseBase
@@ -34,7 +35,8 @@ namespace App.Service{
             form.AddField("cnt", cnt);
             HttpClient client = new HttpClient();
             yield return App.Util.SceneManager.CurrentScene.StartCoroutine(client.Send( url, form));
-
+            ResponseSlot response = client.Deserialize<ResponseSlot>();
+            contents = response.contents;
         }
     }
 }
