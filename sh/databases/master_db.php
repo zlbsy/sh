@@ -1,5 +1,8 @@
 <?php 
 class Master_DB extends Base_Database {
+	public var $base_character = "base_character";
+	public var $constant = "constant";
+	public var $building = "building";
 	function __construct() {
 		parent::__construct();
 		$db = mysql_select_db('fsyy_master_lufylegend', $this->connect);
