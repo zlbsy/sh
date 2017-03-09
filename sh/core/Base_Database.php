@@ -1,9 +1,4 @@
 <?php 
-class Database_Result{
-	static var DEFAULT;
-	static var TYPE_ARRAY;
-	static var TYPE_ROW;
-}
 class Base_Database {
 	var $connect;
 	//function Base_Database() {
