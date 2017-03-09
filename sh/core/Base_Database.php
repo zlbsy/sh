@@ -38,6 +38,9 @@ class Base_Database {
 		if(!is_null($limit)){
 			$sql .= " LIMIT " . $limit;
 		}
+		if(isset($_GET["debug"])){
+			echo $sql;
+		}
 		$result_select = mysql_query($sql, $this->connect);
 		if($result_type == Database_Result::TYPE_ARRAY){
 			$result = array();

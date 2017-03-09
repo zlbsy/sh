@@ -10,7 +10,7 @@ class Master_model extends MY_Model
 		`long_knife`,`knife`,`long_ax`,`ax`,`sticks`,`fist`,`archery`,`hidden_weapons`,`dual_wield`, `start_star`, `face_rect`";
 		$table = $this->master_db->base_character;
 		$order_by = "id";
-		$result = $this->master_db->select($select, $table, null, $order_by, Database_Result::DEFAULT);
+		$result = $this->master_db->select($select, $table, null, $order_by, null, Database_Result::TYPE_DEFAULT);
 		$result_array = array();
 		while ($row = mysql_fetch_assoc($result)) {
 			$row['face_rect'] = explode(',', $row['face_rect']);
@@ -37,7 +37,7 @@ class Master_model extends MY_Model
 			$where[] = "tile_id = {$building_id}";
 		}
 		$order_by = "id asc";
-		$result_select = $this->master_db->select($select, $table, $where, $order_by, Database_Result::DEFAULT);
+		$result_select = $this->master_db->select($select, $table, $where, $order_by,null, Database_Result::TYPE_DEFAULT);
 		if(!is_null($level)){
 			$result = mysql_fetch_assoc($result_select);
 		}else{
@@ -59,7 +59,7 @@ class Master_model extends MY_Model
 		$select = "`id`,`width`,`height`,`tile_ids`";
 		$table = $this->master_db->base_map;
 		$order_by = "id asc";
-		$result_select = $this->master_db->select($select, $table, null, $order_by, Database_Result::DEFAULT);
+		$result_select = $this->master_db->select($select, $table, null, $order_by, null, Database_Result::TYPE_DEFAULT);
 		$result = array();
 		while ($row = mysql_fetch_assoc($result_select)) {
 			$row["tile_ids"] = explode(",", $row["tile_ids"]);
@@ -117,7 +117,7 @@ class Master_model extends MY_Model
 		return $result;
 	}
 	function get_master_gachas(){
-		$select = "'id, name, gold, silver, from_time, to_time, free_time, free_count'";
+		$select = "id, name, gold, silver, from_time, to_time, free_time, free_count";
 		$table = $this->master_db->gacha;
 		$order_by = "id asc";
 		$result = $this->master_db->select($select, $table, null, $order_by);
@@ -128,7 +128,7 @@ class Master_model extends MY_Model
 		return $result;
 	}
 	function get_master_gacha_childs($gacha_id){
-		$select = "'id, gacha_id, type, child_id, probability'";
+		$select = "id, gacha_id, type, child_id, probability";
 		$table = $this->master_db->gacha_child;
 		$where = array("gacha_id = {$gacha_id}");
 		$result = $this->master_db->select($select, $table, $where);

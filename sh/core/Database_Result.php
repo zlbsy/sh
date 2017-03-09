@@ -1,7 +1,7 @@
 <?php 
 class Database_Result{
-	const DEFAULT;
-	const TYPE_ARRAY;
-	const TYPE_ROW;
+	const TYPE_DEFAULT = "default";
+	const TYPE_ARRAY = "array";
+	const TYPE_ROW = "row";
 }
 ?>
