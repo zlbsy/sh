@@ -1,7 +1,7 @@
 <?php 
 class Database_Result{
-	static $DEFAULT;
-	static $TYPE_ARRAY;
-	static $TYPE_ROW;
+	const DEFAULT;
+	const TYPE_ARRAY;
+	const TYPE_ROW;
 }
 ?>
