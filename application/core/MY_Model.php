@@ -33,4 +33,15 @@ class MY_Model extends CI_Model {
 	protected function error($message){
 		die(json_encode(array("result"=>0,"message"=>$message)));
 	}
+	public static function CloseDB(){
+	/*	$query= MY_Model::$_master_db->query("SHOW PROCESSLIST");
+		$processlist = $query->result_array();
+		foreach ($processlist as $item) {
+                	if ($item['Command'] == 'Sleep' && $item['Time'] > 120) {
+                		MY_Model::$_master_db->query('KILL ' . $item['Id']);
+            		}
+		}
+	*/	MY_Model::$_user_db->close();
+		MY_Model::$_master_db->close();
+	}
 }

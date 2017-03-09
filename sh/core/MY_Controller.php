@@ -1,16 +1,12 @@
-<?php class MY_Controller extends CI_Controller {
+<?php 
+class MY_Controller {
 	var $args;
 	var $needAuth = false;
-	function MY_Controller() {
+	function __construct() {
 		date_default_timezone_set('PRC');
-		parent::__construct();
-		//$this->load->library('viewloader');
-		//$this->set_viewdata("page",strtolower($this->uri->segment(1)));
-		($this->args = $this->input->get()) || ($this->args = $this->input->post());
+		($this->args = $_POST) || ($this->args = $_GET);
 		if($this->args["ssid"]){
 			session_id($this->args["ssid"]);
-		}else{
-			session_id($this->session->userdata('session_id'));
 		}
 		session_start();
 		if(!$this->args["ssid"]){
@@ -29,12 +25,10 @@
 		}
 		$arr["now"] = date("Y-m-d H:i:s");
 		$arr["result"] = 1;
-		MY_Model::CloseDB();
+		//MY_Model::CloseDB();
 		die(json_encode(array("result"=>1,"data"=>$arr)));
-		//die(json_encode($arr));
-		$data = array("out_list" => array("result"=>1,"data"=>$arr));
-		$this->load->view('out_view', $data);
-		//$this->set_viewname("out");
+		//$data = array("out_list" => array("result"=>1,"data"=>$arr));
+		//$this->load->view('out_view', $data);
 	}
 	protected function checkParam($list){
 		foreach ($list as $value) {
@@ -43,23 +37,10 @@
 			}
 		}
 	}
-	protected function set_layoutname($_layoutname){
-		ViewLoader::set_layoutname($_layoutname);
-	}
-	
-	protected function set_viewname($_viewname){
-		ViewLoader::set_viewname($_viewname);
-	}
-	
-	protected function set_viewdata($_viewdata,$_viewdata_value = null){
-		$this->load->vars($_viewdata,$_viewdata_value);
-	}
 	protected function getSessionData($key){
-		//return $this->session->userdata($key);
 		return $_SESSION[$key];
 	}
 	protected function setSessionData($key,$value){
-		//$this->session->set_userdata($key,$value);
 		$_SESSION[$key] = $value;
 	}
 	protected function checkAuth(){
