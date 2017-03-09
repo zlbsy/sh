@@ -4,7 +4,7 @@ class Master extends MY_Controller {
 	function __construct() {
 		//$this->needAuth = true;
 		parent::__construct();
-		//$this->load->model(array('master_model'));
+		load_model(array("master_model"));
 	}
 	private function master_data($args)
 	{
@@ -62,21 +62,11 @@ class Master extends MY_Controller {
 			$master_gacha = $master_model->get_master_gachas();
 			$result["gachas"]=$master_gacha;
 		}
-
-		if($args["character_star"]){
-			$master_character_star = $this->master_model->get_master_character_star();
-			$result["character_star"]=$master_character_star;
-		}
-		if($args["growing"]){
-			$master_growing = $this->master_model->get_master_growing();
-			$result["growing"]=$master_growing;
-		}
 		
 		return $result;
 	}
 	public function alldata()
 	{
-		load_model(array("master_model"));
 		$master_data = $this->master_data($this->args);
 		if(!is_null($master_data)){
 			$this->out($master_data);
@@ -86,19 +76,11 @@ class Master extends MY_Controller {
 	}
 	public function version()
 	{
-		$this->load->model(array('version_model'));
+		load_model(array("version_model"));
 		$result = array();
-		$versions = $this->version_model->get_master();
+		$version_model = new Version_model();
+		$versions = $version_model->get_master();
 		$result["versions"]=$versions;
 		$this->out($result);
-	}
-	public function all()
-	{
-		$master_data = $this->master_version($this->args);
-		if(!is_null($master_data)){
-			$this->out($master_data);
-		}else{
-			$this->error("Master->all error");
-		}
 	}
 }

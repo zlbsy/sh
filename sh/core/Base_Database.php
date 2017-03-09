@@ -53,4 +53,33 @@ class Base_Database {
 		}
 		return $result_select;
 	}
+	public function updateSQL($sql){
+		$result = mysql_query($sql, $this->connect);
+		return $result;
+	}
+	public function update($values, $table, $where){
+		$sql = "UPDATE " . $table;
+		$sql .= " (".implode(", ", $values).") "
+		$sql .= " WHERE " . implode(" AND ", $where);
+		$result = mysql_query($sql, $this->connect);
+		return $result;
+	}
+	public function insertSQL($sql){
+		$result = mysql_query($sql, $this->connect);
+		return $result;
+	}
+	public function insert($values, $table){
+		$sql = "INSERT INTO " . $table;
+		$child_names = array();
+		$child_values = array();
+		foreach ($values as $key => $value) {
+			$child_names[] = $key;
+			$child_values[] = $value;
+		}
+		$sql .= " (".implode(", ", $child_names).") "
+		$sql .= " VALUES ";
+		$sql .= " (".implode(", ", $child_values).") "
+		$result = mysql_query($sql, $this->connect);
+		return $result;
+	}
 }

@@ -6,7 +6,7 @@ class MY_Model {
 	var $master_db = null;
 	function __construct(){
 		if(MY_Model::$_user_db == null){
-			//MY_Model::$_user_db = ;
+			MY_Model::$_user_db = new User_DB();
 		}
 		if(MY_Model::$_master_db == null){
 			MY_Model::$_master_db = new Master_DB();
@@ -24,7 +24,7 @@ class MY_Model {
 		die(json_encode(array("result"=>0,"message"=>$message)));
 	}
 	public static function CloseDB(){
-		//MY_Model::$_user_db->close();
+		MY_Model::$_user_db->close();
 		MY_Model::$_master_db->close();
 	}
 }
