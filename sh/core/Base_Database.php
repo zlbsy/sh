@@ -1,4 +1,9 @@
 <?php 
+class Database_Result{
+	static var DEFAULT;
+	static var TYPE_ARRAY;
+	static var TYPE_ROW;
+}
 class Base_Database {
 	var $connect;
 	//function Base_Database() {
@@ -17,7 +22,7 @@ class Base_Database {
 		$result = mysql_query($sql, $this->connect);
 		return $result;
 	}
-	public function select($select, $table, $where = null, $order = null, $limit = null){
+	public function select($select, $table, $where = null, $order = null, $limit = null, $result_type = Database_Result::TYPE_ARRAY){
 		$sql = "";
 		if(is_array($select)){
 			$sql .= "SELECT " . implode(",", $select);
@@ -38,7 +43,16 @@ class Base_Database {
 		if(!is_null($limit)){
 			$sql .= " LIMIT " . $limit;
 		}
-		$result = mysql_query($sql, $this->connect);
-		return $result;
+		$result_select = mysql_query($sql, $this->connect);
+		if($result_type == Database_Result::TYPE_ARRAY){
+			$result = array();
+			while ($row = mysql_fetch_assoc($result_select)) {
+				$result[] = $row;
+			}
+			return $result;
+		}else if($result_type == Database_Result::TYPE_ROW){
+			return mysql_fetch_assoc($result_select);
+		}
+		return $result_select;
 	}
 }

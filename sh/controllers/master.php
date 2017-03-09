@@ -19,19 +19,19 @@ class Master extends MY_Controller {
 			$result["buildings"]=$master_building;
 		}
 		if($args["tile"]){
-			$master_tile = $this->master_model->get_master_tile();
+			$master_tile = $master_model->get_master_tile();
 			$result["tiles"]=$master_tile;
 		}
 		if($args["base_map"]){
-			$master_base_map	 = $this->master_model->get_master_base_map();
+			$master_base_map	 = $master_model->get_master_base_map();
 			$result["base_maps"]=$master_base_map;
 		}
 		if($args["world"]){
-			$master_world	 = $this->master_model->get_master_world();
+			$master_world	 = $master_model->get_master_world();
 			$result["worlds"]=$master_world;
 		}
 		if($args["area"]){
-			$master_area	 = $this->master_model->get_master_area();
+			$master_area	 = $master_model->get_master_area();
 			$result["areas"]=$master_area;
 		}
 		if($args["character"]){
@@ -39,27 +39,27 @@ class Master extends MY_Controller {
 			$result["characters"]=$master_character;
 		}
 		if($args["horse"]){
-			$master_horse = $this->master_model->get_master_horse();
+			$master_horse = $master_model->get_master_horse();
 			$result["horses"]=$master_horse;
 		}
 		if($args["weapon"]){
-			$master_weapon = $this->master_model->get_master_weapon();
+			$master_weapon = $master_model->get_master_weapon();
 			$result["weapons"]=$master_weapon;
 		}
 		if($args["clothes"]){
-			$master_clothes = $this->master_model->get_master_clothes();
+			$master_clothes = $master_model->get_master_clothes();
 			$result["clothes"]=$master_clothes;
 		}
 		if($args["skill"]){
-			$master_skill = $this->master_model->get_master_skill();
+			$master_skill = $master_model->get_master_skill();
 			$result["skills"]=$master_skill;
 		}
 		if($args["item"]){
-			$master_item = $this->master_model->get_master_items();
+			$master_item = $master_model->get_master_items();
 			$result["items"]=$master_item;
 		}
 		if($args["gacha"]){
-			$master_gacha = $this->master_model->get_master_gachas();
+			$master_gacha = $master_model->get_master_gachas();
 			$result["gachas"]=$master_gacha;
 		}
 
