@@ -18,7 +18,9 @@ namespace App.Service{
 		string text;
         public bool isWaiting = false;
         public IEnumerator Send(string path, WWWForm form = null){
-            //Debug.Log("Send : " + path +"?ssid=" +App.Util.Global.ssid+"&shop_type=building&child_id=" + (form != null ? form.ToString():null));
+            string[] paths = path.Split('/');
+            string url = string.Format("{0}sh.php?class={1}&method={2}", docmain, paths[0], paths[1]);
+            Debug.Log("url : " + url);
             isWaiting = true;
             if (!string.IsNullOrEmpty(App.Util.Global.ssid))
             {
@@ -28,7 +30,7 @@ namespace App.Service{
                 }
                 form.AddField("ssid", App.Util.Global.ssid);
             }
-            using (WWW www = (form == null ? new WWW(docmain + path) : new WWW (docmain + path, form))) {
+            using (WWW www = (form == null ? new WWW(url) : new WWW (url, form))) {
                 yield return www;
 				if (!string.IsNullOrEmpty (www.error)) {
                     Debug.LogError("www Error:" + www.error + "\n" + path);

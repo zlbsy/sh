@@ -27,7 +27,7 @@ namespace App.Controller{
             SceneManager.CurrentScene.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.ConnectingDialog));
         }
         public static void ToClose(){
-            if (Global.SceneManager.CurrentDialog is CLoadingDialog)
+            if (Global.SceneManager.CurrentDialog is CConnectingDialog)
             {
                 Global.SceneManager.CurrentDialog.Close();
             }
