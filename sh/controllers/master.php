@@ -11,11 +11,11 @@ class Master extends MY_Controller {
 		$result = array();
 		$master_model = new Master_model();
 		if($args["constant"]){
-			$master_constant = $this->master_model->get_master_constant();
+			$master_constant = $master_model->get_master_constant();
 			$result["constant"]=$master_constant;
 		}
 		if($args["building"]){
-			$master_building = $this->master_model->get_master_building();
+			$master_building = $master_model->get_master_building();
 			$result["buildings"]=$master_building;
 		}
 		if($args["tile"]){

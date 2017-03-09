@@ -33,7 +33,7 @@ class Base_Database {
 			$sql .= " WHERE " . implode(" AND ", $where);
 		}
 		if(!is_null($order)){
-			$sql .= " ORDER BY " . implode(" , ", $order);
+			$sql .= " ORDER BY " . (is_array($order) ? implode(" , ", $order) : $order);
 		}
 		if(!is_null($limit)){
 			$sql .= " LIMIT " . $limit;
