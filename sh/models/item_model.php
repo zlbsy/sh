@@ -11,6 +11,42 @@ class Item_model extends MY_Model
 	function __construct(){
 		parent::__construct();
 	}
+	function get_item_list($user_id){
+		$select = "id as Id, item_id as ItemId, cnt as Cnt";
+		$table = $this->user_db->item;
+		$where = array();
+		$where[] = "user_id={$user_id}";
+		$result = $this->user_db->select($select, $table, $where);
+		return $result;
+	}
+	function set_item($user_id, $item_id, $cnt = 1){
+		$item = $this->get_item($user_id, $item_id);
+		if($item == null){
+			$values = array();
+			$values["user_id"] = $user_id;
+			$values["item_id"] = $item_id;
+			$values["cnt"] = $cnt;
+			$values["register_time"] = "'".date("Y-m-d H:i:s",time())."'";
+			return $this->user_db->insert($values, $this->user_db->item);
+		}else{
+			$values = array();
+			$values["cnt"] = $item['cnt'] +  $cnt;
+			$where = array();
+			$where["id"] = $item['id'];
+			return $this->user_db->update($values, $this->user_db->item, $where);
+		}
+	}
+	function get_item($user_id, $item_id){
+		$select = 'id, item_id, cnt';
+		$table = $this->user_db->item;
+		$where = array();
+		$where["user_id"] = $user_id;
+		$where["item_id"] = $item_id;
+		$result = $this->user_db->select($select, $table, $where, null, null, Database_Result::TYPE_ROW);
+		return $result;
+	}
+
+
 	function use_item($user_id, $item_id, $number){
 		$item_master = $this->get_master($item_id);
 		if($item_master == null){
@@ -143,40 +179,6 @@ class Item_model extends MY_Model
 		$this->user_db->set("user_id",$user_id);
 		$this->user_db->set("child_id",$item_id);
 		return $this->user_db->insert(USER_BANKBOOK);
-	}
-	function get_item_list($user_id){
-		$select = "id as Id, item_id as ItemId, cnt as Cnt";
-		$table = $this->user_db->item;
-		$where = array();
-		$where[] = "user_id={$user_id}";
-		$result = $this->user_db->select($select, $table, $where);
-		return $result;
-	}
-	function get_item($user_id, $item_id){
-		$this->user_db->select('id, item_id, cnt');
-		$this->user_db->where('user_id', $user_id);
-		$this->user_db->where('item_id', $item_id);
-		$query = $this->user_db->get(USER_ITEM);
-		if ($query->num_rows() == 0){
-			return null;
-		}
-		$result = $query->first_row('array');
-		return $result;
-	}
-	function set_item($user_id, $item_id, $cnt = 1){
-		$item = $this->get_item($user_id, $item_id);
-		$this->user_db->set('user_id', $user_id);
-		$this->user_db->set('item_id', $item_id);
-		if($item == null){
-			$this->user_db->set('cnt', $cnt);
-			$this->user_db->set('register_time', date("Y-m-d H:i:s",time()));
-			$res = $this->user_db->insert(USER_ITEM);
-		}else{
-			$this->user_db->set('cnt',$item['cnt'] +  $cnt);
-			$this->user_db->where('id', $item['id']);
-			$res = $this->user_db->update(USER_ITEM);
-		}
-		return $res;
 	}
 	function get_master($item_id){
 		$this->master_db->select('id, name, type, child_id, price, explanation');

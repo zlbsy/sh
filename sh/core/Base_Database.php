@@ -6,7 +6,6 @@ class Database_Result{
 }
 class Base_Database {
 	var $connect;
-	//function Base_Database() {
 	function __construct() {
 		$this->connect = mysql_connect('localhost', 'lufy', '3gj_lufy');
 		if (!$this->connect) {
@@ -34,7 +33,7 @@ class Base_Database {
 		}else{
 			$sql .= " FROM " . $table;
 		}
-		if(!is_null($where)){
+		if(!is_null($where) && count($where) > 0){
 			$sql .= " WHERE " . implode(" AND ", $where);
 		}
 		if(!is_null($order)){
@@ -86,5 +85,17 @@ class Base_Database {
 		$sql .= " (".implode(", ", $child_values).") ";
 		$result = mysql_query($sql, $this->connect);
 		return $result;
+	}
+	public function trans_begin(){
+		mysql_query('set autocommit = 0', $this->connect);
+		mysql_query('begin', $this->connect);
+	}
+	public function trans_rollback(){
+		mysql_query('rollback', $this->connect);
+		mysql_query('set autocommit = 1', $this->connect);
+	}
+	public function trans_commit(){
+		mysql_query('commit', $this->connect);
+		mysql_query('set autocommit = 1', $this->connect);
 	}
 }

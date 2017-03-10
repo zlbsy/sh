@@ -9,6 +9,7 @@ class User_DB extends Base_Database {
 	var $area = "fsyy_lufylegend.area";
 	var $stage = "fsyy_lufylegend.stage";
 	var $equipment = "fsyy_lufylegend.equipment";
+	var $gacha_free_log = "fsyy_lufylegend.gacha_free_log";
 	function __construct() {
 		parent::__construct();
 		$db = mysql_select_db('fsyy_lufylegend', $this->connect);
