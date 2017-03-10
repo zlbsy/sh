@@ -1,4 +1,9 @@
 <?php 
+class Database_Result{
+	const TYPE_DEFAULT = "default";
+	const TYPE_ARRAY = "array";
+	const TYPE_ROW = "row";
+}
 class Base_Database {
 	var $connect;
 	//function Base_Database() {
@@ -59,7 +64,7 @@ class Base_Database {
 	}
 	public function update($values, $table, $where){
 		$sql = "UPDATE " . $table;
-		$sql .= " (".implode(", ", $values).") "
+		$sql .= " (".implode(", ", $values).") ";
 		$sql .= " WHERE " . implode(" AND ", $where);
 		$result = mysql_query($sql, $this->connect);
 		return $result;
@@ -76,9 +81,9 @@ class Base_Database {
 			$child_names[] = $key;
 			$child_values[] = $value;
 		}
-		$sql .= " (".implode(", ", $child_names).") "
+		$sql .= " (".implode(", ", $child_names).") ";
 		$sql .= " VALUES ";
-		$sql .= " (".implode(", ", $child_values).") "
+		$sql .= " (".implode(", ", $child_values).") ";
 		$result = mysql_query($sql, $this->connect);
 		return $result;
 	}

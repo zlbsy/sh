@@ -5,7 +5,6 @@ sh.php?class=XXX&method=XXX
 $controller_p = $_GET["class"];
 $method = $_GET["method"];
 $class = ucfirst($controller_p);
-require_once("sh/core/Database_Result.php");
 require_once("sh/core/Base_Database.php");
 require_once("sh/databases/master_db.php");
 require_once("sh/databases/user_db.php");

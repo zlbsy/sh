@@ -26,9 +26,7 @@ class MY_Controller {
 		$arr["now"] = date("Y-m-d H:i:s");
 		$arr["result"] = 1;
 		//MY_Model::CloseDB();
-		die(json_encode(array("result"=>1,"data"=>$arr)));
-		//$data = array("out_list" => array("result"=>1,"data"=>$arr));
-		//$this->load->view('out_view', $data);
+		die(json_encode($arr));
 	}
 	protected function checkParam($list){
 		foreach ($list as $value) {

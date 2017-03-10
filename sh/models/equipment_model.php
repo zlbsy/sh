@@ -15,7 +15,7 @@ class Equipment_model extends MY_Model
 	
 	function get_list($user_id, $chara_id = null){
 		$select = "id as Id,character_id,equipment_id as EquipmentId,equipment_type as EquipmentType";
-		$table = $this->master_db->equipment;
+		$table = $this->user_db->equipment;
 		$where = array();
 		$where[] = "user_id={$user_id}";
 		if($chara_id != null){
