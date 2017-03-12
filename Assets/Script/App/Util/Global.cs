@@ -6,6 +6,7 @@ using App.Service;
 namespace App.Util{
 	public class Global {
         public static SUser SUser;
+        public static SGacha SGacha;
         public static string ssid;
         public static int DialogSortOrder = 0;
         public static App.Model.Master.MConstant Constant;
@@ -17,6 +18,7 @@ namespace App.Util{
             Language.Reset(languageAsset.words);
             SceneManager = new SceneManager();
             SUser = new SUser();
+            SGacha = new SGacha();
         }
         public static void ClearChild(GameObject obj)
         {

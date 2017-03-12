@@ -45,13 +45,12 @@ namespace App.View.Equipment{
             }
         }
         public override void UpdateView(){
-            App.Model.MEquipment mEquipment = System.Array.Find(Global.SUser.user.equipments, _=>_.Id == ViewModel.Id.Value);
-            icon.sprite = ImageAssetBundleManager.GetEquipmentIcon(string.Format("{0}_{1}", mEquipment.EquipmentType, mEquipment.EquipmentId));
+            //App.Model.MEquipment mEquipment = System.Array.Find(Global.SUser.user.equipments, _=>_.Id == ViewModel.Id.Value);
+            icon.sprite = ImageAssetBundleManager.GetEquipmentIcon(string.Format("{0}_{1}", ViewModel.EquipmentType.Value, ViewModel.EquipmentId.Value));
         }
         #endregion
         public void ClickChild(){
             this.Controller.SendMessage("EquipmentIconClick", ViewModel.Id.Value);
-            //this.Controller.SendMessage("EquipmentIconClick", 1);
         }
     }
 }

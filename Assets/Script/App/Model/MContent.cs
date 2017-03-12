@@ -5,7 +5,9 @@ using App.ViewModel;
 
 namespace App.Model{
     public enum ContentType{
-        equipment,
+        clothes,
+        horse,
+        weapon,
         item,
         character
     }

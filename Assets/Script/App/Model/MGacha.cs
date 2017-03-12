@@ -41,5 +41,15 @@ namespace App.Model{
                 return App.Util.Cacher.GachaCacher.Instance.Get(GachaId);
             }
         }
+        public void Update(MGacha newGacha){
+            if (LimitCount != newGacha.LimitCount)
+            {
+                LimitCount = newGacha.LimitCount;
+            }
+            if (LastTime.CompareTo(newGacha.LastTime) != 0)
+            {
+                LastTime = newGacha.LastTime;
+            }
+        }
 	}
 }

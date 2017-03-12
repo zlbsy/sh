@@ -8,29 +8,29 @@ using App.Util;
 using App.Util.Cacher;
 using System.Linq;
 using App.Model.Scriptable;
+using App.View.Gacha;
 
 
 namespace App.Controller{
     public class CGachaDialog : CDialog {
         [SerializeField]private Transform content;
         [SerializeField]private GameObject childItem;
-        private SGacha sGacha = new SGacha();
         public override IEnumerator OnLoad( Request request ) 
 		{  
             StartCoroutine(base.OnLoad(request));
-            yield return StartCoroutine(sGacha.Download(ImageAssetBundleManager.gachaIconUrl, App.Util.Global.SUser.versions.gacha, (AssetBundle assetbundle)=>{
+            yield return StartCoroutine(Global.SGacha.Download(ImageAssetBundleManager.gachaIconUrl, App.Util.Global.SUser.versions.gacha, (AssetBundle assetbundle)=>{
                 ImageAssetBundleManager.gachaIcon = assetbundle;
             }, false));
-            yield return StartCoroutine(sGacha.Download(GachaAsset.Url, App.Util.Global.SUser.versions.gacha, (AssetBundle assetbundle)=>{
+            yield return StartCoroutine(Global.SGacha.Download(GachaAsset.Url, App.Util.Global.SUser.versions.gacha, (AssetBundle assetbundle)=>{
                 GachaAsset.assetbundle = assetbundle;
                 GachaCacher.Instance.Reset(GachaAsset.Data.gachas);
                 GachaAsset.Clear();
             }));
-            yield return StartCoroutine (sGacha.RequestFreeLog());
+            yield return StartCoroutine (Global.SGacha.RequestFreeLog());
             //int gachaId = request.Get<int>("gachaId");
             App.Model.Master.MGacha[] gachas = GachaCacher.Instance.GetAllOpen();
             foreach(App.Model.Master.MGacha gacha in gachas){
-                App.Model.MGacha mGacha = System.Array.Find(sGacha.gachas, _=>_.GachaId == gacha.id);
+                App.Model.MGacha mGacha = System.Array.Find(Global.SGacha.gachas, _=>_.GachaId == gacha.id);
                 if (mGacha == null)
                 {
                     mGacha = new MGacha();
@@ -45,13 +45,15 @@ namespace App.Controller{
             }
 		}
 
-        public void OnClickGacha(int gachaId, int cnt = 1){
-            Debug.LogError("OnClickGacha");
-            StartCoroutine (GachaSlot(gachaId, cnt));
+        public void OnClickGacha(int gachaId, int priceId, int cnt = 1, bool free_gacha = false){
+            StartCoroutine (GachaSlot(gachaId, priceId, cnt, free_gacha));
         }
-        public IEnumerator GachaSlot(int gachaId, int cnt = 1){
-            Debug.LogError("GachaSlot");
-            yield return StartCoroutine (sGacha.RequestSlot(gachaId, cnt));
+        public IEnumerator GachaSlot(int gachaId, int priceId, int cnt = 1, bool free_gacha = false){
+            yield return StartCoroutine (Global.SGacha.RequestSlot(gachaId, priceId, cnt, free_gacha));
+            App.Model.MGacha mGacha = System.Array.Find(Global.SGacha.gachas, _=>_.GachaId == gachaId);
+            mGacha.Update(Global.SGacha.currentGacha);
+            Request req = Request.Create("contents", Global.SGacha.contents);
+            this.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.GachaResultDialog, req));
         }
 	}
 }

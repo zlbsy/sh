@@ -29,6 +29,7 @@ namespace App.Service{
                     form = new WWWForm();
                 }
                 form.AddField("ssid", App.Util.Global.ssid);
+                Debug.Log("ssid : " + App.Util.Global.ssid);
             }
             using (WWW www = (form == null ? new WWW(url) : new WWW (url, form))) {
                 yield return www;
@@ -36,7 +37,10 @@ namespace App.Service{
                     Debug.LogError("www Error:" + www.error + "\n" + path);
 					yield break;
                 }
-                App.Controller.CLoadingDialog.UpdatePlusProgress(1f);
+                if (App.Util.Global.SceneManager != null && App.Util.Global.SceneManager.CurrentDialog != null)
+                {
+                    App.Controller.CLoadingDialog.UpdatePlusProgress(1f);
+                }
                 Debug.Log("HttpClient : " + www.text);
                 ResponseBase response = Deserialize<ResponseBase>(www.text);
                 //Debug.LogError("response = " + response);

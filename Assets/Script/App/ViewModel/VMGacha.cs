@@ -9,7 +9,6 @@ namespace App.ViewModel
     public class VMGacha : VMBase
     {
         public VMProperty<int> Id = new VMProperty<int>();
-        public VMProperty<string> Name = new VMProperty<string>();
         public VMProperty<int> GachaId = new VMProperty<int>();
         public VMProperty<int> LimitCount = new VMProperty<int>();
         public VMProperty<DateTime> LastTime = new VMProperty<DateTime>();

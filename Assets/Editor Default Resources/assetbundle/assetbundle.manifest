@@ -1,7 +1,7 @@
 ManifestFileVersion: 0
-CRC: 921241053
+CRC: 938789913
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
-      Name: gachaasset.unity3d
+      Name: wordasset.unity3d
       Dependencies: {}

@@ -9,7 +9,7 @@ namespace App.Model.Master{
         public int to_level;
         public int tile_id;
         public int price;
-        public string price_type;//gold, silver
+        public App.Model.PriceType price_type;//gold, silver
         public int sum;
 	}
 }

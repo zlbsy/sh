@@ -24,9 +24,8 @@ namespace App.Model.Master{
                 return Convert.ToDateTime(to_time);
             }
         }
-		public int free_time;
-		public int free_count;
         public MGachaChild[] childs;//
+        public MGachaPrice[] prices;//
         public static Sprite GetIcon(int id){
             return App.Util.ImageAssetBundleManager.GetGachaIcon(id);
         }

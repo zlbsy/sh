@@ -6,12 +6,12 @@ using App.Model;
 
 namespace App.Util{
     public class BuyManager{
-        public static bool CanBuy(int price, string priceType = "silver"){
+        public static bool CanBuy(int price, App.Model.PriceType priceType = App.Model.PriceType.silver){
             MUser mUser = Global.SUser.user;
-            if (priceType == "gold")
+            if (priceType == App.Model.PriceType.gold)
             {
                 return mUser.Gold >= price;
-            }else if (priceType == "silver")
+            }else if (priceType == App.Model.PriceType.silver)
             {
                 return mUser.Silver >= price;
             }

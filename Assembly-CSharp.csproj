@@ -83,6 +83,7 @@
      <Compile Include="Assets\Script\App\Model\MEquipment.cs" />
      <Compile Include="Assets\Script\App\Model\MGacha.cs" />
      <Compile Include="Assets\Script\App\Model\MItem.cs" />
+     <Compile Include="Assets\Script\App\Model\MPrice.cs" />
      <Compile Include="Assets\Script\App\Model\MTile.cs" />
      <Compile Include="Assets\Script\App\Model\MTopMap.cs" />
      <Compile Include="Assets\Script\App\Model\MUser.cs" />
@@ -96,6 +97,7 @@
      <Compile Include="Assets\Script\App\Model\Master\MEquipment.cs" />
      <Compile Include="Assets\Script\App\Model\Master\MGacha.cs" />
      <Compile Include="Assets\Script\App\Model\Master\MGachaChild.cs" />
+     <Compile Include="Assets\Script\App\Model\Master\MGachaPrice.cs" />
      <Compile Include="Assets\Script\App\Model\Master\MItem.cs" />
      <Compile Include="Assets\Script\App\Model\Master\MSkill.cs" />
      <Compile Include="Assets\Script\App\Model\Master\MStage.cs" />
@@ -167,9 +169,12 @@
      <Compile Include="Assets\Script\App\View\Character\VFace.cs" />
      <Compile Include="Assets\Script\App\View\Character\VRawFace.cs" />
      <Compile Include="Assets\Script\App\View\Character\VStatusChild.cs" />
+     <Compile Include="Assets\Script\App\View\Common\VContentsChild.cs" />
      <Compile Include="Assets\Script\App\View\Common\VTweenPosition.cs" />
      <Compile Include="Assets\Script\App\View\Equipment\VEquipmentIcon.cs" />
      <Compile Include="Assets\Script\App\View\Equipment\VEquipments.cs" />
+     <Compile Include="Assets\Script\App\View\Gacha\VGachaButton.cs" />
+     <Compile Include="Assets\Script\App\View\Gacha\VGachaChild.cs" />
      <Compile Include="Assets\Script\App\View\Item\VItemIcon.cs" />
      <Compile Include="Assets\Script\App\View\Skill\VSkillChild.cs" />
      <Compile Include="Assets\Script\App\View\Top\VBuildingMenu.cs" />
@@ -183,7 +188,6 @@
      <Compile Include="Assets\Script\App\View\VBindText.cs" />
      <Compile Include="Assets\Script\App\View\VBuildingChild.cs" />
      <Compile Include="Assets\Script\App\View\VCharacter.cs" />
-     <Compile Include="Assets\Script\App\View\VGachaChild.cs" />
      <Compile Include="Assets\Script\App\View\VHeaderFace.cs" />
      <Compile Include="Assets\Script\App\View\VTile.cs" />
      <Compile Include="Assets\Script\App\View\VTopMap.cs" />
@@ -194,6 +198,7 @@
      <Compile Include="Assets\Script\App\ViewModel\VMCharacter.cs" />
      <Compile Include="Assets\Script\App\ViewModel\VMEquipment.cs" />
      <Compile Include="Assets\Script\App\ViewModel\VMGacha.cs" />
+     <Compile Include="Assets\Script\App\ViewModel\VMGachaButton.cs" />
      <Compile Include="Assets\Script\App\ViewModel\VMItem.cs" />
      <Compile Include="Assets\Script\App\ViewModel\VMProperty.cs" />
      <Compile Include="Assets\Script\App\ViewModel\VMTopMap.cs" />
@@ -226,60 +231,10 @@
      <Compile Include="Assets\Script\Plugin\JsonFx\JsonWriter.cs" />
      <Compile Include="Assets\Script\Plugin\JsonFx\JsonWriterSettings.cs" />
      <Compile Include="Assets\Script\Plugin\JsonFx\TypeCoercionUtility.cs" />
-     <Compile Include="Assets\TextMesh Pro\Examples\Scripts\Benchmark01.cs" />
-     <Compile Include="Assets\TextMesh Pro\Examples\Scripts\Benchmark01_UGUI.cs" />
-     <Compile Include="Assets\TextMesh Pro\Examples\Scripts\Benchmark02.cs" />
-     <Compile Include="Assets\TextMesh Pro\Examples\Scripts\Benchmark03.cs" />
-     <Compile Include="Assets\TextMesh Pro\Examples\Scripts\Benchmark04.cs" />
-     <Compile Include="Assets\TextMesh Pro\Examples\Scripts\CameraController.cs" />
-     <Compile Include="Assets\TextMesh Pro\Examples\Scripts\ChatController.cs" />
-     <Compile Include="Assets\TextMesh Pro\Examples\Scripts\ObjectSpin.cs" />
-     <Compile Include="Assets\TextMesh Pro\Examples\Scripts\ShaderPropAnimator.cs" />
-     <Compile Include="Assets\TextMesh Pro\Examples\Scripts\SimpleScript.cs" />
-     <Compile Include="Assets\TextMesh Pro\Examples\Scripts\SkewTextExample.cs" />
-     <Compile Include="Assets\TextMesh Pro\Examples\Scripts\TMP_DigitValidator.cs" />
-     <Compile Include="Assets\TextMesh Pro\Examples\Scripts\TMP_ExampleScript_01.cs" />
-     <Compile Include="Assets\TextMesh Pro\Examples\Scripts\TMP_FrameRateCounter.cs" />
-     <Compile Include="Assets\TextMesh Pro\Examples\Scripts\TMP_TextEventCheck.cs" />
-     <Compile Include="Assets\TextMesh Pro\Examples\Scripts\TMP_TextEventHandler.cs" />
-     <Compile Include="Assets\TextMesh Pro\Examples\Scripts\TMP_TextInfoDebugTool.cs" />
-     <Compile Include="Assets\TextMesh Pro\Examples\Scripts\TMP_TextSelector_A.cs" />
-     <Compile Include="Assets\TextMesh Pro\Examples\Scripts\TMP_TextSelector_B.cs" />
-     <Compile Include="Assets\TextMesh Pro\Examples\Scripts\TMP_UiFrameRateCounter.cs" />
-     <Compile Include="Assets\TextMesh Pro\Examples\Scripts\TMPro_InstructionOverlay.cs" />
-     <Compile Include="Assets\TextMesh Pro\Examples\Scripts\TeleType.cs" />
-     <Compile Include="Assets\TextMesh Pro\Examples\Scripts\TextConsoleSimulator.cs" />
-     <Compile Include="Assets\TextMesh Pro\Examples\Scripts\TextMeshProFloatingText.cs" />
-     <Compile Include="Assets\TextMesh Pro\Examples\Scripts\TextMeshSpawner.cs" />
-     <Compile Include="Assets\TextMesh Pro\Examples\Scripts\VertexColorCycler.cs" />
-     <Compile Include="Assets\TextMesh Pro\Examples\Scripts\VertexJitter.cs" />
-     <Compile Include="Assets\TextMesh Pro\Examples\Scripts\VertexShakeA.cs" />
-     <Compile Include="Assets\TextMesh Pro\Examples\Scripts\VertexShakeB.cs" />
-     <Compile Include="Assets\TextMesh Pro\Examples\Scripts\VertexZoom.cs" />
-     <Compile Include="Assets\TextMesh Pro\Examples\Scripts\WarpTextExample.cs" />
-     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
-     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Mobile.shader" />
      <None Include="Assets\Script\Plugin\JsonFx\History.txt" />
-     <None Include="Assets\TextMesh Pro\Fonts\Anton OFL.txt" />
-     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Surface.cginc" />
-     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface.shader" />
-     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF.shader" />
      <None Include="Assets\HOTween\readme.txt" />
-     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />
-     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Properties.cginc" />
-     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
-     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF Overlay.shader" />
-     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
      <None Include="Assets\Script\Plugin\JsonFx\Readme.txt" />
-     <None Include="Assets\TextMesh Pro\Fonts\Oswald-Bold - OFL.txt" />
-     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Masking.shader" />
      <None Include="Assets\Script\Plugin\JsonFx\TODO.txt" />
-     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap.shader" />
-     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Sprite.shader" />
-     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile.shader" />
-     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
-     <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
-     <None Include="Assets\TextMesh Pro\Fonts\Bangers - OFL.txt" />
      <None Include="Assets\Script\Plugin\JsonFx\License.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
@@ -301,9 +256,6 @@
  </Reference>
  <Reference Include="HOTween">
  <HintPath>/Users/zhanglubin/git/sh/Assets/HOTween/Plugins/HOTween.dll</HintPath>
- </Reference>
- <Reference Include="TextMeshPro">
- <HintPath>/Users/zhanglubin/git/sh/Assets/TextMesh Pro/Plugins/TextMeshPro.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
