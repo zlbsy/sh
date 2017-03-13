@@ -7,6 +7,7 @@ namespace App.Model.Master{
 		}
         public string[] enemys;
         public int map_id;
+        public List<string> script;
         public MTile[] Tiles;
 	}
 }
