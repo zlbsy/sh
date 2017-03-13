@@ -34,7 +34,15 @@ namespace App.View.Character{
         }
         private void LevelChanged(int oldvalue, int newvalue)
         {
-            level.text = newvalue.ToString();
+            if (newvalue == 0)
+            {
+                level.transform.parent.gameObject.SetActive(false);
+            }
+            else
+            {
+                level.transform.parent.gameObject.SetActive(true);
+                level.text = newvalue.ToString();
+            }
         }
         private void StarChanged(int oldvalue, int newvalue)
         {

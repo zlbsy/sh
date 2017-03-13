@@ -45,7 +45,7 @@ namespace App.View.Common{
         private void SetCharacter(MContent mContent){
             App.Model.MCharacter character = new MCharacter();
             character.CharacterId = mContent.content_id;
-            character.Level = 1;
+            character.Level = 0;
             vCharacterIcon.gameObject.SetActive(true);
             vCharacterIcon.BindingContext = character.ViewModel;
             vCharacterIcon.UpdateView();
