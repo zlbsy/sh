@@ -7,11 +7,13 @@ using App.Util;
 using App.View.Item;
 using App.View.Equipment;
 using App.Model;
+using App.View.Character;
 
 namespace App.View.Common{
     public class VContentsChild : VBase {
         [SerializeField]private VItemIcon vItemIcon;
         [SerializeField]private VEquipmentIcon vEquipmentIcon;
+        [SerializeField]private VCharacterIcon vCharacterIcon;
         private bool _showComplete = false;
         public bool showComplete{
             get{ 
@@ -24,6 +26,7 @@ namespace App.View.Common{
         public void UpdateView(MContent mContent){
             vItemIcon.gameObject.SetActive(false);
             vEquipmentIcon.gameObject.SetActive(false);
+            vCharacterIcon.gameObject.SetActive(false);
             switch (mContent.type)
             {
                 case ContentType.item:
@@ -34,7 +37,18 @@ namespace App.View.Common{
                 case ContentType.clothes:
                     SetEquipment(mContent);
                     break;
+                case ContentType.character:
+                    SetCharacter(mContent);
+                    break;
             }
+        }
+        private void SetCharacter(MContent mContent){
+            App.Model.MCharacter character = new MCharacter();
+            character.CharacterId = mContent.content_id;
+            character.Level = 1;
+            vCharacterIcon.gameObject.SetActive(true);
+            vCharacterIcon.BindingContext = character.ViewModel;
+            vCharacterIcon.UpdateView();
         }
         private void SetEquipment(MContent mContent){
             App.Model.MEquipment equipment = new MEquipment();
