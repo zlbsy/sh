@@ -17,13 +17,13 @@ namespace App.Controller{
         public override IEnumerator OnLoad( Request request ) 
 		{  
             yield return StartCoroutine(base.OnLoad(request));
-            if (Global.SUser.user.characters == null)
+            if (Global.SUser.self.characters == null)
             {
                 SCharacter sCharacter = new SCharacter();
-                yield return StartCoroutine(sCharacter.RequestList(Global.SUser.user.id));
-                Global.SUser.user.characters = sCharacter.characters;
+                yield return StartCoroutine(sCharacter.RequestList(Global.SUser.self.id));
+                Global.SUser.self.characters = sCharacter.characters;
             }
-            foreach(App.Model.MCharacter character in Global.SUser.user.characters){
+            foreach(App.Model.MCharacter character in Global.SUser.self.characters){
                 GameObject obj = Instantiate(childItem);
                 obj.transform.SetParent(content);
                 obj.transform.localScale = Vector3.one;

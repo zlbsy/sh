@@ -46,13 +46,13 @@ namespace App.Controller{
         public void GotoArea(){
             App.Util.SceneManager.LoadScene( App.Util.SceneManager.Scenes.Area.ToString() );
         }
-        public void addCharacter(int characterId, ActionType action, string direction, int x, int y){
-            MCharacter mCharacter = new MCharacter();
-            mCharacter.CharacterId = characterId;
+        public void addCharacter(int npcId, ActionType action, string direction, int x, int y){
+            MCharacter mCharacter = NpcCacher.Instance.GetFromNpc(npcId);
             mCharacter.Action = action;
             mCharacter.CoordinateX = x;
             mCharacter.CoordinateY = y;
-
+            /*
+            mCharacter.CharacterId = characterId;
             mCharacter.MoveType = MoveType.cavalry;
             mCharacter.WeaponType = WeaponType.longKnife;
             mCharacter.Weapon = 1;
@@ -60,7 +60,7 @@ namespace App.Controller{
             mCharacter.Horse = 1;
             mCharacter.Head = 1;
             mCharacter.Hat = 1;
-
+            */
             List<MCharacter> characters = mBaseMap.Characters.ToList();
             characters.Add(mCharacter);
             mBaseMap.Characters = characters.ToArray();

@@ -24,13 +24,13 @@ namespace App.Controller{
         public override IEnumerator OnLoad( Request request ) 
         {  
             int characterId = request.Get<int>("character_id");
-            if (Global.SUser.user.equipments == null)
+            if (Global.SUser.self.equipments == null)
             {
                 SEquipment sEquipment = new SEquipment();
                 yield return StartCoroutine(sEquipment.RequestList());
-                Global.SUser.user.equipments = sEquipment.equipments;
+                Global.SUser.self.equipments = sEquipment.equipments;
             }
-            character = System.Array.Find(Global.SUser.user.characters, _=>_.CharacterId == characterId);
+            character = System.Array.Find(Global.SUser.self.characters, _=>_.CharacterId == characterId);
             characterDetail.BindingContext = character.ViewModel;
             characterDetail.UpdateView();
             vCharacter.BindingContext = character.ViewModel;
@@ -46,7 +46,7 @@ namespace App.Controller{
             yield return StartCoroutine(base.OnLoad(request));
 		}
         public void EquipmentIconClick(int id){
-            App.Model.MEquipment mEquipment = System.Array.Find(Global.SUser.user.equipments, _=>_.Id == id);
+            App.Model.MEquipment mEquipment = System.Array.Find(Global.SUser.self.equipments, _=>_.Id == id);
             Request req = Request.Create("id", id, "equipmentType", mEquipment.EquipmentType);
             this.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.EquipmentListDialog, req));
         }

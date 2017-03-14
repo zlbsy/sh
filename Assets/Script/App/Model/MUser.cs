@@ -130,6 +130,7 @@ namespace App.Model{
             if(user.LastApDate != this.LastApDate){
                 this.LastApDate = user.LastApDate;
             }
+            UnityEngine.Debug.LogError("user.TopMap = " + user.TopMap);
             if(user.TopMap != null){
                 this.TopMap = user.TopMap;
             }

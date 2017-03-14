@@ -42,7 +42,7 @@ namespace App.Service{
                     App.Controller.CLoadingDialog.UpdatePlusProgress(1f);
                 }
                 Debug.Log("HttpClient : " + www.text);
-                ResponseBase response = Deserialize<ResponseBase>(www.text);
+                ResponseBase response = HttpClient.Deserialize<ResponseBase>(www.text);
                 //Debug.LogError("response = " + response);
                 //Debug.LogError("response.result = " + response.result + ", response.now = " + response.now);
                 if (!response.result)
@@ -51,10 +51,7 @@ namespace App.Service{
                 }
                 if (response.user != null)
                 {
-                    if (App.Util.Global.SUser.user != null)
-                    {
-                        App.Util.Global.SUser.user.Update(response.user);
-                    }
+                    App.Util.Cacher.UserCacher.Instance.Update(response.user);
                 }
                 text = www.text;
                 isWaiting = false;
@@ -70,7 +67,7 @@ namespace App.Service{
                 return docmain + "download/assetbundle/";
             }
         }
-        public T Deserialize<T>(string text)
+        public static T Deserialize<T>(string text)
         {
             return (T)Deserialize(text, typeof(T));
         }
@@ -78,7 +75,7 @@ namespace App.Service{
 		{
 			return (T)Deserialize(text, typeof(T));
 		}
-		public object Deserialize(string json, Type type)
+		public static object Deserialize(string json, Type type)
 		{
 			object result;
 

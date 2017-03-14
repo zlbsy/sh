@@ -20,7 +20,7 @@ namespace App.Service{
             public App.Model.Master.MBuilding[] buildings;
             public App.Model.Master.MWorld[] worlds;
             public App.Model.Master.MArea[] areas;
-            public App.Model.Master.MStage[] stages;
+            public App.Model.Master.MBattlefield[] battlefields;
             public App.Model.Master.MEquipment[] weapons;
             public App.Model.Master.MEquipment[] horses;
             public App.Model.Master.MEquipment[] clothes;
@@ -28,6 +28,7 @@ namespace App.Service{
             public App.Model.Master.MItem[] items;
             public App.Model.Master.MGacha[] gachas;
             public App.Model.Master.MConstant constant;
+            public App.Model.Master.MWord[] words;
 		}
         public IEnumerator RequestAll(string type = "")
 		{

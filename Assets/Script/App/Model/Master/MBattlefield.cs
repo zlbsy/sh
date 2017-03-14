@@ -4,10 +4,12 @@ using UnityEngine;
 namespace App.Model.Master{
 	public class MBattlefield : MBase {
 		public MBattlefield(){
-		}
-        public string[] enemys;
+        }
+        public string name;
+        public MBattleNpc[] enemys;
+        public int[][] own_positions;
         public int map_id;
         public List<string> script;
-        public MTile[] Tiles;
+        public App.Model.MTile[] tiles;
 	}
 }

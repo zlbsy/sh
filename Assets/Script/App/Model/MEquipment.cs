@@ -10,7 +10,10 @@ namespace App.Model{
         }
         public VMEquipment ViewModel { get { return (VMEquipment)viewModel; } }
         public int user_id;//
-        public int character_id;//
+        /// <summary>
+        /// user的MCharacter表的id
+        /// </summary>
+        public int character_id;
         public int Id{
             set{ 
                 ViewModel.Id.Value = value;

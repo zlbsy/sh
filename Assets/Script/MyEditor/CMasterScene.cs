@@ -93,6 +93,21 @@ namespace App.Controller{
                 UnityEditor.AssetDatabase.CreateAsset(languageAsset, string.Format("Assets/Editor Default Resources/ScriptableObject/{0}.asset", App.Model.Scriptable.LanguageAsset.Name));
                 UnityEditor.AssetDatabase.Refresh();
             }
+            if (GUI.Button(new Rect(350, 150, 100, 30), "word"))
+            {
+                this.StartCoroutine(CreateScriptableObjectMasterWordRun());
+            }
+        }
+        IEnumerator CreateScriptableObjectMasterWordRun()
+        {
+            var asset = ScriptableObject.CreateInstance<App.Model.Scriptable.WordAsset>();
+
+            SEditorMaster sMaster = new SEditorMaster();
+            yield return StartCoroutine (sMaster.RequestAll("word"));
+            asset.words = sMaster.responseAll.words;
+
+            UnityEditor.AssetDatabase.CreateAsset(asset, string.Format("Assets/Editor Default Resources/ScriptableObject/{0}.asset", App.Model.Scriptable.WordAsset.Name));
+            UnityEditor.AssetDatabase.Refresh();
         }
         IEnumerator CreateScriptableObjectMasterGachaRun()
         {
@@ -173,13 +188,13 @@ namespace App.Controller{
         }
         IEnumerator CreateScriptableObjectMasterStageRun()
         {
-            var asset = ScriptableObject.CreateInstance<App.Model.Scriptable.StageAsset>();
+            var asset = ScriptableObject.CreateInstance<App.Model.Scriptable.BattlefieldAsset>();
 
             SEditorMaster sMaster = new SEditorMaster();
-            yield return StartCoroutine (sMaster.RequestAll("stage"));
-            asset.stages = sMaster.responseAll.stages;
+            yield return StartCoroutine (sMaster.RequestAll("battlefield"));
+            asset.battlefields = sMaster.responseAll.battlefields;
 
-            UnityEditor.AssetDatabase.CreateAsset(asset, string.Format("Assets/Editor Default Resources/ScriptableObject/{0}.asset", App.Model.Scriptable.StageAsset.Name));
+            UnityEditor.AssetDatabase.CreateAsset(asset, string.Format("Assets/Editor Default Resources/ScriptableObject/{0}.asset", App.Model.Scriptable.BattlefieldAsset.Name));
             UnityEditor.AssetDatabase.Refresh();
         }
         IEnumerator CreateScriptableObjectMasterAreaRun()

@@ -17,15 +17,15 @@ namespace App.Controller{
         public override IEnumerator OnLoad( Request request ) 
 		{  
             yield return StartCoroutine(base.OnLoad(request));
-            if (Global.SUser.user.equipments == null)
+            if (Global.SUser.self.equipments == null)
             {
                 SEquipment sEquipment = new SEquipment();
                 yield return StartCoroutine(sEquipment.RequestList());
-                Global.SUser.user.equipments = sEquipment.equipments;
+                Global.SUser.self.equipments = sEquipment.equipments;
             }
             int id = request.Get<int>("id");
             App.Model.Master.MEquipment.EquipmentType equipmentType = request.Get<App.Model.Master.MEquipment.EquipmentType>("equipmentType");
-            App.Model.MEquipment[] equipments = System.Array.FindAll(Global.SUser.user.equipments, 
+            App.Model.MEquipment[] equipments = System.Array.FindAll(Global.SUser.self.equipments, 
                 _=>_.EquipmentType == equipmentType && _.character_id == 0);
             foreach(App.Model.MEquipment equipment in equipments){
                 if (equipment.Id == id)

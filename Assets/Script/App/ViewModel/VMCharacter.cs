@@ -9,6 +9,7 @@ namespace App.ViewModel
 	public class VMCharacter : VMBase
     {
         public VMProperty<int> Id = new VMProperty<int>();
+        public VMProperty<int> UserId = new VMProperty<int>();
         public VMProperty<int> CharacterId = new VMProperty<int>();
         public VMProperty<int> Hp = new VMProperty<int>();
         public VMProperty<int> Mp = new VMProperty<int>();

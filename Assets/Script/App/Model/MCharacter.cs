@@ -28,7 +28,16 @@ namespace App.Model{
 	public class MCharacter : MBase {
 		public MCharacter(){
 			viewModel = new VMCharacter ();
-		}
+        }
+        public static MCharacter Create(App.Model.Master.MNpc npc){
+            MCharacter mCharacter = new MCharacter();
+            mCharacter.Id = npc.id;
+            mCharacter.CharacterId = npc.character_id;
+            mCharacter.Horse = npc.horse;
+            mCharacter.Clothes = npc.clothes;
+            mCharacter.Weapon = npc.weapon;
+            return mCharacter;
+        }
 		public VMCharacter ViewModel { get { return (VMCharacter)viewModel; } }
 		
         public App.Model.Master.MCharacter Master{
@@ -42,6 +51,14 @@ namespace App.Model{
             }
             get{ 
                 return this.ViewModel.Id.Value;
+            }
+        }
+        public int UserId{
+            set{
+                this.ViewModel.UserId.Value = value;
+            }
+            get{ 
+                return this.ViewModel.UserId.Value;
             }
         }
         public int CharacterId{

@@ -135,11 +135,11 @@ namespace MyEditor
             SBattlefield battleS = new SBattlefield();
             yield return StartCoroutine(battleS.Request(this));
             MBattlefield battlefield = battleS.battlefield;
-            MCharacter[] enemys = battlefield.enemys;
+            /*MCharacter[] enemys = battlefield.enemys;
             foreach (MCharacter chara in enemys)
             {
                 //Debug.Log("chara=" + chara.id + "," + chara.name);
-            }
+            }*/
         }
     }
 }

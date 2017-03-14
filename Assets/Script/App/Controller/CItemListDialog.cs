@@ -15,13 +15,13 @@ namespace App.Controller{
         public override IEnumerator OnLoad( Request request ) 
         {  
             yield return StartCoroutine(base.OnLoad(request));
-            if (Global.SUser.user.items == null)
+            if (Global.SUser.self.items == null)
             {
                 SItem sItem = new SItem();
                 yield return StartCoroutine(sItem.RequestList());
-                Global.SUser.user.items = sItem.items;
+                Global.SUser.self.items = sItem.items;
             }
-            foreach(App.Model.MItem item in Global.SUser.user.items){
+            foreach(App.Model.MItem item in Global.SUser.self.items){
                 GameObject obj = Instantiate(childItem);
                 obj.transform.SetParent(content);
                 obj.transform.localScale = Vector3.one;

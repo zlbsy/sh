@@ -4,8 +4,8 @@ using UnityEngine;
 
 
 namespace App.Model.Scriptable{
-    public class StageAsset : AssetBase<StageAsset> {
-        [SerializeField]public App.Model.Master.MStage[] stages;
+    public class WordAsset : AssetBase<WordAsset> {
+        [SerializeField]public App.Model.Master.MWord[] words;
 
 	}
 }

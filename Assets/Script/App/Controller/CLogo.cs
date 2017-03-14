@@ -31,8 +31,8 @@ namespace App.Controller{
         {  
             yield return StartCoroutine (App.Util.Global.SUser.RequestLogin("aaa", "bbb"));
             CConnectingDialog.ToClose();
-            Debug.Log("App.Util.Global.SUser.user="+App.Util.Global.SUser.user);
-            if (App.Util.Global.SUser.user == null)
+            Debug.Log("App.Util.Global.SUser.user="+App.Util.Global.SUser.self);
+            if (App.Util.Global.SUser.self == null)
             {
                 yield break;
             }

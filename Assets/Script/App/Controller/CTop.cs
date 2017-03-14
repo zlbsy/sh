@@ -28,17 +28,19 @@ namespace App.Controller{
             yield break;
         }
         private void InitHeader(){
-            MUser mUser = App.Util.Global.SUser.user;
+            MUser mUser = App.Util.Global.SUser.self;
             headerFace.BindingContext = mUser.ViewModel;
             headerFace.UpdateView();
             headerTop.BindingContext = mUser.ViewModel;
             headerTop.UpdateView();
         }
         private void InitMap(){
-            MUser mUser = App.Util.Global.SUser.user;
+            MUser mUser = App.Util.Global.SUser.self;
             //地图需要判断是否变化，所以另准备一个Model
             mTopMap = new MTopMap();
             mTopMap.MapId = mUser.MapId;
+            Debug.LogError("mUser.TopMap=" + mUser.TopMap);
+            Debug.LogError("UserCacher.TopMap=" + UserCacher.Instance.Get(mUser.id).TopMap);
             mTopMap.Tiles = mUser.TopMap.Clone() as App.Model.MTile[];
             vTopMap.BindingContext = mTopMap.ViewModel;
             vTopMap.UpdateView();

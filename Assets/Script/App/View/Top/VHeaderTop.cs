@@ -59,13 +59,13 @@ namespace App.View.Top{
         }
         private IEnumerator UpdateAp()
         {
-            int maxAp = Global.SUser.user.MaxAp;
+            int maxAp = Global.SUser.self.MaxAp;
             if (ViewModel.Ap.Value >= maxAp)
             {
                 ap.text = string.Format("{0}/{1}", maxAp, maxAp);
                 yield break;
             }
-            int currentAp = Global.SUser.user.GetCurrentAp(App.Service.HttpClient.Now);
+            int currentAp = Global.SUser.self.GetCurrentAp(App.Service.HttpClient.Now);
             ap.text = string.Format("{0}/{1}", currentAp, maxAp);
             if (currentAp >= maxAp)
             {

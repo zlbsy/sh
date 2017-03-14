@@ -36,27 +36,45 @@ namespace App.View.Equipment{
         }
         private void WeaponChanged(int oldvalue, int newvalue)
         {
-            EquipmentChanged(weapon, newvalue, App.Model.Master.MEquipment.EquipmentType.weapon);
+            StartCoroutine(EquipmentChanged(weapon, newvalue, App.Model.Master.MEquipment.EquipmentType.weapon));
         }
         private void ClothesChanged(int oldvalue, int newvalue)
         {
-            EquipmentChanged(clothes, newvalue, App.Model.Master.MEquipment.EquipmentType.clothes);
+            StartCoroutine(EquipmentChanged(clothes, newvalue, App.Model.Master.MEquipment.EquipmentType.clothes));
         }
         private void HorseChanged(int oldvalue, int newvalue)
         {
-            EquipmentChanged(horse, newvalue, App.Model.Master.MEquipment.EquipmentType.horse);
+            StartCoroutine(EquipmentChanged(horse, newvalue, App.Model.Master.MEquipment.EquipmentType.horse));
         }
-        private void EquipmentChanged(VEquipmentIcon equipmentIcon, int equipmentId, App.Model.Master.MEquipment.EquipmentType equipmentType)
+        private IEnumerator EquipmentChanged(VEquipmentIcon equipmentIcon, int equipmentId, App.Model.Master.MEquipment.EquipmentType equipmentType)
         {
-            App.Model.MEquipment mEquipment = System.Array.Find(Global.SUser.user.equipments, 
-                _=>_.EquipmentId == equipmentId && _.character_id == ViewModel.CharacterId.Value && _.EquipmentType == equipmentType);
+            App.Model.MEquipment mEquipment;
+            if (ViewModel.UserId.Value > 0)
+            {
+                App.Model.MUser user = UserCacher.Instance.Get(ViewModel.UserId.Value);
+                if (user == null)
+                {
+                    yield return StartCoroutine(Global.SUser.RequestGet( ViewModel.UserId.Value ));
+                    user = UserCacher.Instance.Get(ViewModel.UserId.Value);
+                }
+                mEquipment = System.Array.Find(user.equipments, 
+                    _=>_.EquipmentId == equipmentId && _.character_id == ViewModel.Id.Value && _.EquipmentType == equipmentType);
+            }
+            else
+            {
+                mEquipment = NpcEquipmentCacher.Instance.Get(ViewModel.Id.Value, equipmentId, equipmentType);
+            }
             equipmentIcon.BindingContext = mEquipment.ViewModel;
             equipmentIcon.UpdateView();
+            yield break;
         }
         public override void UpdateView(){
-            EquipmentChanged(weapon, ViewModel.Weapon.Value, App.Model.Master.MEquipment.EquipmentType.weapon);
-            EquipmentChanged(clothes, ViewModel.Clothes.Value, App.Model.Master.MEquipment.EquipmentType.clothes);
-            EquipmentChanged(horse, ViewModel.Horse.Value, App.Model.Master.MEquipment.EquipmentType.horse);
+            App.Util.SceneManager.CurrentScene.StartCoroutine(CoroutineUpdateView());
+        }
+        public IEnumerator CoroutineUpdateView(){
+            yield return App.Util.SceneManager.CurrentScene.StartCoroutine(EquipmentChanged(weapon, ViewModel.Weapon.Value, App.Model.Master.MEquipment.EquipmentType.weapon));
+            yield return App.Util.SceneManager.CurrentScene.StartCoroutine(EquipmentChanged(clothes, ViewModel.Clothes.Value, App.Model.Master.MEquipment.EquipmentType.clothes));
+            yield return App.Util.SceneManager.CurrentScene.StartCoroutine(EquipmentChanged(horse, ViewModel.Horse.Value, App.Model.Master.MEquipment.EquipmentType.horse));
         }
         #endregion
 

@@ -18,10 +18,10 @@ namespace App.Util.Cacher{
         public void Reset(TValue[] datas){
             this.datas = datas;
         }
-        public TValue Get(int id){
+        public virtual TValue Get(int id){
             return System.Array.Find(datas, _=>_.id == id);
         }
-        public TValue[] GetAll(){
+        public virtual TValue[] GetAll(){
             return datas;
         }
 	}

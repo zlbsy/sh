@@ -10,7 +10,7 @@ namespace App.Service{
      * 
     */
 	public class SUser : SBase {
-        public MUser user;
+        public MUser self;
         public MVersion versions;
         public SUser(){
         }
@@ -28,22 +28,21 @@ namespace App.Service{
             HttpClient client = new HttpClient();
             yield return App.Util.SceneManager.CurrentScene.StartCoroutine(client.Send( url, form));
             ResponseAll response = client.Deserialize<ResponseAll>();
-            this.user = response.user;
+            this.self = App.Util.Cacher.UserCacher.Instance.Get(response.user.id);
             this.versions = response.versions;
             App.Util.Global.ssid = response.ssid;
         }
-        public IEnumerator RequestGet(string name = "")
+        public IEnumerator RequestGet(int id)
         {
             var url = "user/get";
             HttpClient client = new HttpClient();
-            WWWForm form = null;
-            if (!string.IsNullOrEmpty(name))
-            {
-                form = new WWWForm();
-                form.AddField("name", name);
-            }
+            WWWForm form = new WWWForm();
+            form.AddField("id", id);
             yield return App.Util.SceneManager.CurrentScene.StartCoroutine(client.Send( url, form));
-            this.user = client.Deserialize<MUser>();
+        }
+        public IEnumerator RequestGet()
+        {
+            yield return App.Util.SceneManager.CurrentScene.StartCoroutine(RequestGet( this.self.id ));
         }
 	}
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 using App.Service;
 
 namespace App.Util{
-	public class Global {
+    public class Global {
         public static SUser SUser;
         public static SGacha SGacha;
         public static string ssid;

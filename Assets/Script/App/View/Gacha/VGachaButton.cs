@@ -66,14 +66,14 @@ namespace App.View.Gacha{
         public void OnClickGacha(){
             if (gachaPrice.price_type == App.Model.PriceType.gold)
             {
-                if (Global.SUser.user.Gold < gachaPrice.price)
+                if (Global.SUser.self.Gold < gachaPrice.price)
                 {
                     CAlertDialog.Show("元宝不够");
                     return;
                 }
             }else if (gachaPrice.price_type == App.Model.PriceType.silver)
             {
-                if (Global.SUser.user.Silver < gachaPrice.price)
+                if (Global.SUser.self.Silver < gachaPrice.price)
                 {
                     CAlertDialog.Show("银两不够");
                     return;

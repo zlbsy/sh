@@ -8,30 +8,36 @@ using App.View;
 
 namespace App.Controller{
     public class CBattlefield : CBaseMap {
-		[SerializeField]GameObject mapLayer;
-		[SerializeField]GameObject characterLayer;
-		[SerializeField]GameObject characterPrefab;
+		//[SerializeField]GameObject mapLayer;
+		//[SerializeField]GameObject characterLayer;
+		//[SerializeField]GameObject characterPrefab;
+        private int battlefieldId;
+        private MCharacter[] owns;
         public override IEnumerator OnLoad( Request request ) 
-		{  
-			
-            /*SBattlefield sBattlefield = new SBattlefield ();
-			yield return StartCoroutine (sBattlefield.Request(this));
-			MBattlefield battlefield = sBattlefield.battlefield;
-			MCharacter[] enemys = battlefield.enemys;
-            Vector3[] positions = new Vector3[]{ new Vector3 (100f, 100f,0f), new Vector3 (200f, 100f,0f)};
-            int count = 0;
-			foreach (MCharacter chara in enemys) {
-				GameObject obj = GameObject.Instantiate (characterPrefab);
-                obj.transform.parent = characterLayer.transform;
-                obj.transform.localPosition = positions[count++];
-				obj.SetActive (true);
-                //Debug.Log ("chara="+chara.id+","+chara.name);
-                VCharacter view = obj.GetComponent<VCharacter> ();
-                view.BindingContext = chara.ViewModel;
-                chara.Action = ActionType.stand;
-                view.UpdateView();
-			}*/
+        {  
+            battlefieldId = request.Get<int>("battlefieldId");
+            List<int> characterIds = request.Get<List<int>>("characterIds");
+            owns = System.Array.FindAll(App.Util.Global.SUser.self.characters, _=>characterIds.IndexOf(_.Id) >= 0);
             yield return this.StartCoroutine(base.OnLoad(request));
-		}
+        }
+        protected override void InitMap(){
+            App.Model.Master.MBattlefield battlefieldMaster = App.Util.Cacher.BattlefieldCacher.Instance.Get(battlefieldId);
+            mBaseMap = new MBaseMap();
+            mBaseMap.MapId = battlefieldMaster.map_id;
+            mBaseMap.Tiles = battlefieldMaster.tiles.Clone() as App.Model.MTile[];
+            foreach(App.Model.Master.MBattleNpc battleNpc in battlefieldMaster.enemys){
+                
+            }
+            /*MCharacter[] enemys = App.Service.HttpClient.Deserialize<MCharacter[]>(battlefieldMaster.enemys);
+            MCharacter[] characters = new MCharacter[owns.Length + enemys.Length];
+            owns.CopyTo(characters, 0);
+            enemys.CopyTo(characters, owns.Length);
+            mBaseMap.Characters = characters;*/
+            vBaseMap.BindingContext = mBaseMap.ViewModel;
+            vBaseMap.UpdateView();
+            vBaseMap.transform.parent.localScale = Vector3.one;
+            vBaseMap.MoveToCenter();
+            App.Util.LSharp.LSharpScript.Instance.Analysis(battlefieldMaster.script);
+        }
 	}
 }
