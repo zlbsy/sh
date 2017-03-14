@@ -91,6 +91,7 @@
      <Compile Include="Assets\Script\App\Model\MWorldMap.cs" />
      <Compile Include="Assets\Script\App\Model\Master\MArea.cs" />
      <Compile Include="Assets\Script\App\Model\Master\MBaseMap.cs" />
+     <Compile Include="Assets\Script\App\Model\Master\MBattleNpc.cs" />
      <Compile Include="Assets\Script\App\Model\Master\MBattlefield.cs" />
      <Compile Include="Assets\Script\App\Model\Master\MBuilding.cs" />
      <Compile Include="Assets\Script\App\Model\Master\MCharacter.cs" />
@@ -100,6 +101,7 @@
      <Compile Include="Assets\Script\App\Model\Master\MGachaChild.cs" />
      <Compile Include="Assets\Script\App\Model\Master\MGachaPrice.cs" />
      <Compile Include="Assets\Script\App\Model\Master\MItem.cs" />
+     <Compile Include="Assets\Script\App\Model\Master\MNpc.cs" />
      <Compile Include="Assets\Script\App\Model\Master\MSkill.cs" />
      <Compile Include="Assets\Script\App\Model\Master\MTile.cs" />
      <Compile Include="Assets\Script\App\Model\Master\MWord.cs" />
@@ -118,6 +120,7 @@
      <Compile Include="Assets\Script\App\Model\Scriptable\HorseAsset.cs" />
      <Compile Include="Assets\Script\App\Model\Scriptable\ItemAsset.cs" />
      <Compile Include="Assets\Script\App\Model\Scriptable\LanguageAsset.cs" />
+     <Compile Include="Assets\Script\App\Model\Scriptable\NpcAsset.cs" />
      <Compile Include="Assets\Script\App\Model\Scriptable\PromptMessageAsset.cs" />
      <Compile Include="Assets\Script\App\Model\Scriptable\ScenarioAsset.cs" />
      <Compile Include="Assets\Script\App\Model\Scriptable\SkillAsset.cs" />
@@ -147,6 +150,7 @@
      <Compile Include="Assets\Script\App\Util\Cacher\EquipmentCacher.cs" />
      <Compile Include="Assets\Script\App\Util\Cacher\GachaCacher.cs" />
      <Compile Include="Assets\Script\App\Util\Cacher\ItemCacher.cs" />
+     <Compile Include="Assets\Script\App\Util\Cacher\NpcCacher.cs" />
      <Compile Include="Assets\Script\App\Util\Cacher\NpcEquipmentCacher.cs" />
      <Compile Include="Assets\Script\App\Util\Cacher\SkillCacher.cs" />
      <Compile Include="Assets\Script\App\Util\Cacher\TileCacher.cs" />
