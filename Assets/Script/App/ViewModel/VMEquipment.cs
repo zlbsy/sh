@@ -11,6 +11,7 @@ namespace App.ViewModel
         public VMProperty<int> Id = new VMProperty<int>();
         public VMProperty<int> EquipmentId = new VMProperty<int>();
         public VMProperty<App.Model.Master.MEquipment.EquipmentType> EquipmentType = new VMProperty<App.Model.Master.MEquipment.EquipmentType>();
+        public VMProperty<int> Level = new VMProperty<int>();
         public VMProperty<string> Name = new VMProperty<string>();
 	}
 }

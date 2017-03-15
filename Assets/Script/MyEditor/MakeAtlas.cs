@@ -216,6 +216,16 @@ namespace MyEditor
         {
             BuildAssetBundleMaster(App.Model.Scriptable.WeaponAsset.Name);
         }
+        [MenuItem("SH/Build Assetbundle/Master/NpcEquipment")]
+        static private void BuildAssetBundleMasterNpcEquipment()
+        {
+            BuildAssetBundleMaster(App.Model.Scriptable.NpcEquipmentAsset.Name);
+        }
+        [MenuItem("SH/Build Assetbundle/Master/Battlefield")]
+        static private void BuildAssetBundleMasterBattlefield()
+        {
+            BuildAssetBundleMaster(App.Model.Scriptable.BattlefieldAsset.Name);
+        }
         static private void BuildAssetBundleMaster(string name)
         {
             string assetPath = string.Format("ScriptableObject/{0}.asset", name);

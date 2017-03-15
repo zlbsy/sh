@@ -1,7 +1,7 @@
 ManifestFileVersion: 0
-CRC: 938789913
+CRC: 3605203981
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
-      Name: wordasset.unity3d
+      Name: npcequipmentasset.unity3d
       Dependencies: {}

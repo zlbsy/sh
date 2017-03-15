@@ -8,6 +8,14 @@ namespace App.Model{
         public MEquipment(){
             viewModel = new VMEquipment ();
         }
+        public static MEquipment Create(App.Model.Master.MNpcEquipment npcEquipment){
+            MEquipment equipment = new MEquipment();
+            equipment.Id = npcEquipment.id;
+            equipment.EquipmentId = npcEquipment.equipment_id;
+            equipment.EquipmentType = npcEquipment.equipment_type;
+            equipment.Level = npcEquipment.level;
+            return equipment;
+        }
         public VMEquipment ViewModel { get { return (VMEquipment)viewModel; } }
         public int user_id;//
         /// <summary>
@@ -36,6 +44,14 @@ namespace App.Model{
             }
             get{ 
                 return ViewModel.EquipmentType.Value;
+            }
+        }
+        public int Level{
+            set{ 
+                ViewModel.Level.Value = value;
+            }
+            get{ 
+                return ViewModel.Level.Value;
             }
         }
         public App.Model.Master.MEquipment Master{

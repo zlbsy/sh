@@ -68,9 +68,9 @@ namespace App.Controller{
             {
                 this.StartCoroutine(CreateScriptableObjectMasterSkillRun());
             }
-            if (GUI.Button(new Rect(150, 650, 100, 30), "stage"))
+            if (GUI.Button(new Rect(150, 650, 100, 30), "battlefield"))
             {
-                this.StartCoroutine(CreateScriptableObjectMasterStageRun());
+                this.StartCoroutine(CreateScriptableObjectMasterBattleFieldRun());
             }
             if (GUI.Button(new Rect(150, 700, 100, 30), "item"))
             {
@@ -97,6 +97,21 @@ namespace App.Controller{
             {
                 this.StartCoroutine(CreateScriptableObjectMasterWordRun());
             }
+            if (GUI.Button(new Rect(350, 200, 100, 30), "npc_equip"))
+            {
+                this.StartCoroutine(CreateScriptableObjectMasterNpcEquipmentRun());
+            }
+        }
+        IEnumerator CreateScriptableObjectMasterNpcEquipmentRun()
+        {
+            var asset = ScriptableObject.CreateInstance<App.Model.Scriptable.NpcEquipmentAsset>();
+
+            SEditorMaster sMaster = new SEditorMaster();
+            yield return StartCoroutine (sMaster.RequestAll("npc_equipment"));
+            asset.npc_equipments = sMaster.responseAll.npc_equipments;
+
+            UnityEditor.AssetDatabase.CreateAsset(asset, string.Format("Assets/Editor Default Resources/ScriptableObject/{0}.asset", App.Model.Scriptable.NpcEquipmentAsset.Name));
+            UnityEditor.AssetDatabase.Refresh();
         }
         IEnumerator CreateScriptableObjectMasterWordRun()
         {
@@ -186,7 +201,7 @@ namespace App.Controller{
             UnityEditor.AssetDatabase.CreateAsset(areaAsset, string.Format("Assets/Editor Default Resources/ScriptableObject/{0}.asset", App.Model.Scriptable.CharacterAsset.Name));
             UnityEditor.AssetDatabase.Refresh();
         }
-        IEnumerator CreateScriptableObjectMasterStageRun()
+        IEnumerator CreateScriptableObjectMasterBattleFieldRun()
         {
             var asset = ScriptableObject.CreateInstance<App.Model.Scriptable.BattlefieldAsset>();
 

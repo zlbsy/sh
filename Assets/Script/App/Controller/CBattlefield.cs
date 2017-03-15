@@ -4,6 +4,7 @@ using UnityEngine;
 using App.Service;
 using App.Model;
 using App.View;
+using App.Util.Cacher;
 
 
 namespace App.Controller{
@@ -25,14 +26,15 @@ namespace App.Controller{
             mBaseMap = new MBaseMap();
             mBaseMap.MapId = battlefieldMaster.map_id;
             mBaseMap.Tiles = battlefieldMaster.tiles.Clone() as App.Model.MTile[];
+            List<MCharacter> enemys = new List<MCharacter>();
             foreach(App.Model.Master.MBattleNpc battleNpc in battlefieldMaster.enemys){
-                
+                MCharacter mCharacter = NpcCacher.Instance.GetFromBattleNpc(battleNpc);
+                enemys.Add(mCharacter);
             }
-            /*MCharacter[] enemys = App.Service.HttpClient.Deserialize<MCharacter[]>(battlefieldMaster.enemys);
-            MCharacter[] characters = new MCharacter[owns.Length + enemys.Length];
+            MCharacter[] characters = new MCharacter[owns.Length + enemys.Count];
             owns.CopyTo(characters, 0);
             enemys.CopyTo(characters, owns.Length);
-            mBaseMap.Characters = characters;*/
+            mBaseMap.Characters = characters;
             vBaseMap.BindingContext = mBaseMap.ViewModel;
             vBaseMap.UpdateView();
             vBaseMap.transform.parent.localScale = Vector3.one;

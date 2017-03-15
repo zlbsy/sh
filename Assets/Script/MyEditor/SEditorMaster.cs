@@ -29,6 +29,7 @@ namespace App.Service{
             public App.Model.Master.MGacha[] gachas;
             public App.Model.Master.MConstant constant;
             public App.Model.Master.MWord[] words;
+            public App.Model.Master.MNpcEquipment[] npc_equipments;
 		}
         public IEnumerator RequestAll(string type = "")
 		{

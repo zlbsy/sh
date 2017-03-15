@@ -62,7 +62,7 @@ namespace App.View.Equipment{
             }
             else
             {
-                mEquipment = NpcEquipmentCacher.Instance.Get(ViewModel.Id.Value, equipmentId, equipmentType);
+                mEquipment = NpcEquipmentCacher.Instance.GetEquipment(equipmentId);
             }
             equipmentIcon.BindingContext = mEquipment.ViewModel;
             equipmentIcon.UpdateView();
