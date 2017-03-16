@@ -5,102 +5,135 @@ using App.Service;
 using App.Model;
 using App.View;
 using System.IO;
+using System.Linq;
+
+
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 
 namespace App.Controller{
     public class CMasterScene : CScene {
+        Dictionary<string, IEnumerator> apis = new Dictionary<string, IEnumerator>();
+        Dictionary<string, IEnumerator> assets = new Dictionary<string, IEnumerator>();
+        Dictionary<string, IEnumerator> scenarios = new Dictionary<string, IEnumerator>();
+        private string type = "";
+        private int page = 0;
+        private string[] apiKeys;
+        private string[] assetsKeys;
         public override IEnumerator OnLoad( Request req ) 
 		{  
+
+            apis.Add("tiles", CreateScriptableObjectMasterTileRun());
+            apis.Add("base_maps", CreateScriptableObjectMasterBaseMapRun());
+            apis.Add("buildings", CreateScriptableObjectMasterBuildingRun());
+            apis.Add("Constant", CreateScriptableObjectMasterConstantRun());
+            apis.Add("world", CreateScriptableObjectMasterWorldRun());
+            apis.Add("area", CreateScriptableObjectMasterAreaRun());
+            apis.Add("character", CreateScriptableObjectMasterCharacterRun());
+            apis.Add("horse", CreateScriptableObjectMasterHorseRun());
+            apis.Add("clothes", CreateScriptableObjectMasterClothesRun());
+            apis.Add("weapon", CreateScriptableObjectMasterWeaponRun());
+            apis.Add("skill", CreateScriptableObjectMasterSkillRun());
+            apis.Add("battlefield", CreateScriptableObjectMasterBattleFieldRun());
+            apis.Add("item", CreateScriptableObjectMasterItemRun());
+            apis.Add("gacha", CreateScriptableObjectMasterGachaRun());
+            apis.Add("word", CreateScriptableObjectMasterWordRun());
+            apis.Add("npc", CreateScriptableObjectMasterNpcRun());
+            apis.Add("npc_equip", CreateScriptableObjectMasterNpcEquipmentRun());
+            apiKeys = apis.Keys.ToArray();
+
+            assets.Add("face", CreateScriptableObjectFaceAssetRun());
+            assets.Add("Prompt", CreateScriptableObjectPromptAssetRun());
+            assets.Add("Language", CreateScriptableObjectLanguageAssetRun());
+            assetsKeys = assets.Keys.ToArray();
 			yield return 0;
         }
         #if UNITY_EDITOR
         void OnGUI()
         {
-            if (GUI.Button(new Rect(150, 50, 100, 30), "tiles"))
+            if (string.IsNullOrEmpty(type))
             {
-                this.StartCoroutine(CreateScriptableObjectMasterTileRun());
+                if (GUI.Button(new Rect(50, 100, 200, 30), "apis"))
+                {
+                    type = "apis";
+                    page = 0;
+                }
+                if (GUI.Button(new Rect(50, 150, 200, 30), "assets"))
+                {
+                    type = "assets";
+                    page = 0;
+                }
+                if (GUI.Button(new Rect(50, 200, 200, 30), "scenarios"))
+                {
+                    type = "scenarios";
+                    page = 0;
+                }
             }
-            if (GUI.Button(new Rect(150, 100, 100, 30), "base_maps"))
+            else if (type == "apis")
             {
-                this.StartCoroutine(CreateScriptableObjectMasterBaseMapRun());
+                SubGUI(apiKeys);
             }
-            if (GUI.Button(new Rect(150, 150, 100, 30), "buildings"))
+            else if (type == "assets")
             {
-                this.StartCoroutine(CreateScriptableObjectMasterBuildingRun());
+                SubGUI(assetsKeys);
             }
-            if (GUI.Button(new Rect(150, 200, 100, 30), "Constant"))
+        }
+        void SubGUI(string[] keys)
+        {
+            if (GUI.Button(new Rect(10, 10, 200, 30), "前一页"))
             {
-                this.StartCoroutine(CreateScriptableObjectMasterConstantRun());
+                page--;
             }
-            if (GUI.Button(new Rect(150, 250, 100, 30), "world"))
+            if (GUI.Button(new Rect(220, 10, 200, 30), "下一页"))
             {
-                this.StartCoroutine(CreateScriptableObjectMasterWorldRun());
+                page++;
             }
-            if (GUI.Button(new Rect(150, 300, 100, 30), "area"))
+            if (GUI.Button(new Rect(430, 10, 200, 30), "返回"))
             {
-                this.StartCoroutine(CreateScriptableObjectMasterAreaRun());
+                type = "";
             }
-            if (GUI.Button(new Rect(150, 350, 100, 30), "character"))
+            for (int i = page * 10; i < (page + 1) * 10 && i < keys.Length; i++)
             {
-                this.StartCoroutine(CreateScriptableObjectMasterCharacterRun());
-            }
-            if (GUI.Button(new Rect(150, 400, 100, 30), "face"))
-            {
-                var faceAsset = ScriptableObject.CreateInstance<App.Model.Scriptable.FaceAsset>();
-                UnityEditor.AssetDatabase.CreateAsset(faceAsset, string.Format("Assets/Editor Default Resources/ScriptableObject/{0}.asset", App.Model.Scriptable.FaceAsset.Name));
-                UnityEditor.AssetDatabase.Refresh();
-            }
-            if (GUI.Button(new Rect(150, 450, 100, 30), "horse"))
-            {
-                this.StartCoroutine(CreateScriptableObjectMasterHorseRun());
-            }
-            if (GUI.Button(new Rect(150, 500, 100, 30), "clothes"))
-            {
-                this.StartCoroutine(CreateScriptableObjectMasterClothesRun());
-            }
-            if (GUI.Button(new Rect(150, 550, 100, 30), "weapon"))
-            {
-                this.StartCoroutine(CreateScriptableObjectMasterWeaponRun());
-            }
-            if (GUI.Button(new Rect(150, 600, 100, 30), "skill"))
-            {
-                this.StartCoroutine(CreateScriptableObjectMasterSkillRun());
-            }
-            if (GUI.Button(new Rect(150, 650, 100, 30), "battlefield"))
-            {
-                this.StartCoroutine(CreateScriptableObjectMasterBattleFieldRun());
-            }
-            if (GUI.Button(new Rect(150, 700, 100, 30), "item"))
-            {
-                this.StartCoroutine(CreateScriptableObjectMasterItemRun());
-            }
-            if (GUI.Button(new Rect(150, 750, 100, 30), "gacha"))
-            {
-                this.StartCoroutine(CreateScriptableObjectMasterGachaRun());
-            }
+                string key = keys[i];
 
-            if (GUI.Button(new Rect(350, 50, 100, 30), "Prompt"))
-            {
-                var promptMessageAsset = ScriptableObject.CreateInstance<App.Model.Scriptable.PromptMessageAsset>();
-                UnityEditor.AssetDatabase.CreateAsset(promptMessageAsset, string.Format("Assets/Editor Default Resources/ScriptableObject/{0}.asset", App.Model.Scriptable.PromptMessageAsset.Name));
-                UnityEditor.AssetDatabase.Refresh();
+                if (GUI.Button(new Rect(50, 100 + (i - page * 10) * 50, 200, 30), key))
+                {
+                    this.StartCoroutine(apis[key]);
+                }
             }
-            if (GUI.Button(new Rect(350, 100, 100, 30), "Language"))
-            {
-                var languageAsset = ScriptableObject.CreateInstance<App.Model.Scriptable.LanguageAsset>();
-                UnityEditor.AssetDatabase.CreateAsset(languageAsset, string.Format("Assets/Editor Default Resources/ScriptableObject/{0}.asset", App.Model.Scriptable.LanguageAsset.Name));
-                UnityEditor.AssetDatabase.Refresh();
-            }
-            if (GUI.Button(new Rect(350, 150, 100, 30), "word"))
-            {
-                this.StartCoroutine(CreateScriptableObjectMasterWordRun());
-            }
-            if (GUI.Button(new Rect(350, 200, 100, 30), "npc_equip"))
-            {
-                this.StartCoroutine(CreateScriptableObjectMasterNpcEquipmentRun());
-            }
+        }
+        IEnumerator CreateScriptableObjectLanguageAssetRun()
+        {
+            var languageAsset = ScriptableObject.CreateInstance<App.Model.Scriptable.LanguageAsset>();
+            UnityEditor.AssetDatabase.CreateAsset(languageAsset, string.Format("Assets/Editor Default Resources/ScriptableObject/{0}.asset", App.Model.Scriptable.LanguageAsset.Name));
+            UnityEditor.AssetDatabase.Refresh();
+            yield break;
+        }
+        IEnumerator CreateScriptableObjectPromptAssetRun()
+        {
+            var promptMessageAsset = ScriptableObject.CreateInstance<App.Model.Scriptable.PromptMessageAsset>();
+            UnityEditor.AssetDatabase.CreateAsset(promptMessageAsset, string.Format("Assets/Editor Default Resources/ScriptableObject/{0}.asset", App.Model.Scriptable.PromptMessageAsset.Name));
+            UnityEditor.AssetDatabase.Refresh();
+            yield break;
+        }
+        IEnumerator CreateScriptableObjectFaceAssetRun()
+        {
+            var faceAsset = ScriptableObject.CreateInstance<App.Model.Scriptable.FaceAsset>();
+            UnityEditor.AssetDatabase.CreateAsset(faceAsset, string.Format("Assets/Editor Default Resources/ScriptableObject/{0}.asset", App.Model.Scriptable.FaceAsset.Name));
+            UnityEditor.AssetDatabase.Refresh();
+            yield break;
+        }
+        IEnumerator CreateScriptableObjectMasterNpcRun()
+        {
+            var asset = ScriptableObject.CreateInstance<App.Model.Scriptable.NpcAsset>();
+
+            SEditorMaster sMaster = new SEditorMaster();
+            yield return StartCoroutine (sMaster.RequestAll("npc"));
+            asset.npcs = sMaster.responseAll.npcs;
+
+            UnityEditor.AssetDatabase.CreateAsset(asset, string.Format("Assets/Editor Default Resources/ScriptableObject/{0}.asset", App.Model.Scriptable.NpcAsset.Name));
+            UnityEditor.AssetDatabase.Refresh();
         }
         IEnumerator CreateScriptableObjectMasterNpcEquipmentRun()
         {

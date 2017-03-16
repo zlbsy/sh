@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 namespace App.Model.Master{
+    [System.Serializable]
 	public class MBattlefield : MBase {
 		public MBattlefield(){
         }

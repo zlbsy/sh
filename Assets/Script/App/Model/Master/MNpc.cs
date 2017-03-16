@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 namespace App.Model.Master{
+    [System.Serializable]
 	public class MNpc : MBase {
         public int character_id;
         public int horse;//NpcEquipmentCacher id

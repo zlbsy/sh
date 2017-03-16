@@ -30,6 +30,7 @@ namespace App.Service{
             public App.Model.Master.MConstant constant;
             public App.Model.Master.MWord[] words;
             public App.Model.Master.MNpcEquipment[] npc_equipments;
+            public App.Model.Master.MNpc[] npcs;
 		}
         public IEnumerator RequestAll(string type = "")
 		{

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 namespace App.Model.Master{
+    [System.Serializable]
 	public class MBattleNpc : MBase {
 		public int level;
 		/// <summary>
@@ -19,7 +20,7 @@ namespace App.Model.Master{
 		/// 0表示使用MNpc的默认装备
 		/// </summary>
 		public int weapon;
-		public int star;
+        public int star;
 		public int x;
 		public int y;
 	}
