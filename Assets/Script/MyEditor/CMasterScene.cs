@@ -23,35 +23,41 @@ namespace App.Controller{
         private string[] assetsKeys;
         public override IEnumerator OnLoad( Request req ) 
 		{  
-
-            apis.Add("tiles", CreateScriptableObjectMasterTileRun());
-            apis.Add("base_maps", CreateScriptableObjectMasterBaseMapRun());
-            apis.Add("buildings", CreateScriptableObjectMasterBuildingRun());
-            apis.Add("Constant", CreateScriptableObjectMasterConstantRun());
-            apis.Add("world", CreateScriptableObjectMasterWorldRun());
-            apis.Add("area", CreateScriptableObjectMasterAreaRun());
-            apis.Add("character", CreateScriptableObjectMasterCharacterRun());
-            apis.Add("horse", CreateScriptableObjectMasterHorseRun());
-            apis.Add("clothes", CreateScriptableObjectMasterClothesRun());
-            apis.Add("weapon", CreateScriptableObjectMasterWeaponRun());
-            apis.Add("skill", CreateScriptableObjectMasterSkillRun());
-            apis.Add("battlefield", CreateScriptableObjectMasterBattleFieldRun());
-            apis.Add("item", CreateScriptableObjectMasterItemRun());
-            apis.Add("gacha", CreateScriptableObjectMasterGachaRun());
-            apis.Add("word", CreateScriptableObjectMasterWordRun());
-            apis.Add("npc", CreateScriptableObjectMasterNpcRun());
-            apis.Add("npc_equip", CreateScriptableObjectMasterNpcEquipmentRun());
-            apiKeys = apis.Keys.ToArray();
-
-            assets.Add("face", CreateScriptableObjectFaceAssetRun());
-            assets.Add("Prompt", CreateScriptableObjectPromptAssetRun());
-            assets.Add("Language", CreateScriptableObjectLanguageAssetRun());
-            assetsKeys = assets.Keys.ToArray();
 			yield return 0;
         }
         #if UNITY_EDITOR
         void OnGUI()
         {
+            if (apis.Count == 0)
+            {
+                if (GUI.Button(new Rect(50, 100, 200, 30), "Init"))
+                {
+                    apis.Add("tiles", CreateScriptableObjectMasterTileRun());
+                    apis.Add("base_maps", CreateScriptableObjectMasterBaseMapRun());
+                    apis.Add("buildings", CreateScriptableObjectMasterBuildingRun());
+                    apis.Add("Constant", CreateScriptableObjectMasterConstantRun());
+                    apis.Add("world", CreateScriptableObjectMasterWorldRun());
+                    apis.Add("area", CreateScriptableObjectMasterAreaRun());
+                    apis.Add("character", CreateScriptableObjectMasterCharacterRun());
+                    apis.Add("horse", CreateScriptableObjectMasterHorseRun());
+                    apis.Add("clothes", CreateScriptableObjectMasterClothesRun());
+                    apis.Add("weapon", CreateScriptableObjectMasterWeaponRun());
+                    apis.Add("skill", CreateScriptableObjectMasterSkillRun());
+                    apis.Add("battlefield", CreateScriptableObjectMasterBattleFieldRun());
+                    apis.Add("item", CreateScriptableObjectMasterItemRun());
+                    apis.Add("gacha", CreateScriptableObjectMasterGachaRun());
+                    apis.Add("word", CreateScriptableObjectMasterWordRun());
+                    apis.Add("npc", CreateScriptableObjectMasterNpcRun());
+                    apis.Add("npc_equip", CreateScriptableObjectMasterNpcEquipmentRun());
+                    apiKeys = apis.Keys.ToArray();
+
+                    assets.Add("face", CreateScriptableObjectFaceAssetRun());
+                    assets.Add("Prompt", CreateScriptableObjectPromptAssetRun());
+                    assets.Add("Language", CreateScriptableObjectLanguageAssetRun());
+                    assetsKeys = assets.Keys.ToArray();
+                }
+                return;
+            }
             if (string.IsNullOrEmpty(type))
             {
                 if (GUI.Button(new Rect(50, 100, 200, 30), "apis"))

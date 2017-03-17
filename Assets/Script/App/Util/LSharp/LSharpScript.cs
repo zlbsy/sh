@@ -20,6 +20,7 @@ namespace App.Util.LSharp{
             subClasses.Add("Load", LSharpLoad.Instance);
             subClasses.Add("Character", LSharpCharacter.Instance);
             subClasses.Add("Talk", LSharpTalk.Instance);
+            subClasses.Add("Battle", LSharpBattle.Instance);
         }
         public void ToList(List<string> datas){
             lineList = new List<string>(datas);

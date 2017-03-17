@@ -9,7 +9,7 @@ namespace App.Model{
 	public enum MoveType{
 		infantry,//步兵
 		cavalry,//骑兵
-	}
+    }
 	public enum WeaponType{
 		shortKnife,//短刀
 		longKnife,//长刀
@@ -36,6 +36,8 @@ namespace App.Model{
             mCharacter.Horse = npc.horse;
             mCharacter.Clothes = npc.clothes;
             mCharacter.Weapon = npc.weapon;
+            mCharacter.MoveType = (MoveType)System.Enum.Parse(typeof(MoveType), npc.move_type, true);
+            mCharacter.WeaponType = (WeaponType)System.Enum.Parse(typeof(WeaponType), npc.weapon_type, true);
             return mCharacter;
         }
 		public VMCharacter ViewModel { get { return (VMCharacter)viewModel; } }
@@ -176,7 +178,7 @@ namespace App.Model{
 				return this.ViewModel.Weapon.Value;
 			}
 		}
-		public MoveType MoveType{
+        public MoveType MoveType{
 			set{ 
 				this.ViewModel.MoveType.Value = value;
 			}

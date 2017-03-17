@@ -10,10 +10,10 @@ using System;
 namespace App.Util.LSharp{
     public class LSharpBattle : LSharpBase<LSharpBattle> {
         public void Start(string[] arguments){
+            Debug.LogError("LSharpBattle Start");
             int battleId = int.Parse(arguments[0]);
             Request req = Request.Create("", battleId);
-            IEnumerator enumerator = Global.SceneManager.ShowDialog(SceneManager.Prefabs.ReadyBattleDialog, req);
-            App.Util.SceneManager.CurrentScene.StartCoroutine(enumerator);
+            App.Util.SceneManager.CurrentScene.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.ReadyBattleDialog, req));
             //LSharpScript.Instance.Analysis();
         }
 	}

@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Script/MyEditor/MasterScene.unity
+- path: Assets/Dialog/ReadyBattleDialog.unity
   isLoaded: 1
   isActive: 1

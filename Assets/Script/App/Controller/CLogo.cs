@@ -66,6 +66,16 @@ namespace App.Controller{
                 ConstantAsset.assetbundle = assetbundle;
                 Global.Constant = ConstantAsset.Data.constant;
             }));
+            list.Add(sUser.Download(NpcAsset.Url, versions.world, (AssetBundle assetbundle)=>{
+                NpcAsset.assetbundle = assetbundle;
+                NpcCacher.Instance.Reset(NpcAsset.Data.npcs);
+                NpcAsset.Clear();
+            }));
+            list.Add(sUser.Download(NpcEquipmentAsset.Url, versions.world, (AssetBundle assetbundle)=>{
+                NpcEquipmentAsset.assetbundle = assetbundle;
+                NpcEquipmentCacher.Instance.Reset(NpcEquipmentAsset.Data.npc_equipments);
+                NpcEquipmentAsset.Clear();
+            }));
             list.Add(sUser.Download(HorseAsset.Url, versions.horse, (AssetBundle assetbundle)=>{
                 HorseAsset.assetbundle = assetbundle;
                 EquipmentCacher.Instance.ResetHorse(HorseAsset.Data.equipments);

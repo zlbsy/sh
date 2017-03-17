@@ -19,7 +19,9 @@ namespace App.Model.Master{
 		/// NpcEquipmentCacher id
 		/// 0表示使用MNpc的默认装备
 		/// </summary>
-		public int weapon;
+        public int weapon;
+        public string move_type;
+        public string weapon_type;
         public int star;
 		public int x;
 		public int y;

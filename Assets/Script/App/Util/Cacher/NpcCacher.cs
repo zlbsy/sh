@@ -28,6 +28,14 @@ namespace App.Util.Cacher{
             {
                 mCharacter.Star = mBattleNpc.star;
             }
+            /*if (mBattleNpc.move_type > 0)
+            {
+                mCharacter.MoveType = mBattleNpc.move_type;
+            }
+            if (mBattleNpc.weapon_type > 0)
+            {
+                mCharacter.WeaponType = mBattleNpc.weapon_type;
+            }*/
             mCharacter.X = mBattleNpc.x;
             mCharacter.Y = mBattleNpc.y;
 

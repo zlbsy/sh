@@ -85,7 +85,7 @@ namespace App.View{
         {
             UpdateView();
         }
-        public override void UpdateView(){//Debug.LogError(ViewModel.MoveType.Value+", " + ViewModel.WeaponType.Value + ", " + ViewModel.Action.Value + ", " + animationIndex);
+        public override void UpdateView(){Debug.LogError(ViewModel.MoveType.Value+", " + ViewModel.WeaponType.Value + ", " + ViewModel.Action.Value + ", " + animationIndex);
             AvatarAction avatarAction = AvatarAsset.Data.GetAvatarAction(ViewModel.MoveType.Value, ViewModel.WeaponType.Value, ViewModel.Action.Value, animationIndex);
             string key;
             //Horse

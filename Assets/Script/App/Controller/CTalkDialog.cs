@@ -15,7 +15,7 @@ namespace App.Controller{
     /// <summary>
     /// 对话框
     /// </summary>
-    public class CTalkDialog : CDialog {
+    public class CTalkDialog : CSingleDialog {
         [SerializeField]private VFace face;
         [SerializeField]private Text characterName;
         [SerializeField]private Text characterTalk;
@@ -87,17 +87,6 @@ namespace App.Controller{
             {
                 this.Close();
             }
-        }
-        /// <summary>
-        /// 覆盖CDialog的Delete，使对话框重复利用
-        /// </summary>
-        public override void Delete(){
-            Holoville.HOTween.HOTween.To(background, 0.1f, new Holoville.HOTween.TweenParms().Prop("color", new Color(0,0,0,0)).OnComplete(()=>{
-                this.gameObject.SetActive(false);
-                if(closeEvent != null){
-                    closeEvent();
-                }
-            }));
         }
 	}
 }

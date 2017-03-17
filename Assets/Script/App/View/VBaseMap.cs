@@ -192,8 +192,7 @@ namespace App.View{
             {
                 return;
             }
-            _isDraging = Input.mousePosition.x != mousePosition.x || Input.mousePosition.y != mousePosition.y;
-
+            _isDraging = Mathf.Abs(Input.mousePosition.x - mousePosition.x) > 2f || Mathf.Abs(Input.mousePosition.y - mousePosition.y) > 2f;
             float mx = Input.mousePosition.x - dragPosition.x;
             float my = Input.mousePosition.y - dragPosition.y;
             if (mx != 0 || my != 0)

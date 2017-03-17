@@ -44,7 +44,7 @@ namespace App.Util{
 
         public IEnumerator ShowDialog(Prefabs prefab, App.Controller.Request req = null)
         {
-            App.Controller.CDialog dialog = Dialogs.Find(_=>_ is App.Controller.CTalkDialog);
+            App.Controller.CDialog dialog = Dialogs.Find(_=>_.name == (prefab.ToString() + "(Clone)") && _ is App.Controller.CSingleDialog);
             if (dialog == null)
             {
                 GameObject instance = LoadPrefab(prefab.ToString());

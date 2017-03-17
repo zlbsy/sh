@@ -44,7 +44,7 @@ namespace App.Util.LSharp{
                         child = child.Replace("@"+v,"@param_"+v);
                     }
                 }
-                funLineList.Add(child);
+                funLineList.Insert(0, child);
             }
             funArr.Add("function", funLineList);
             LSharpFunction.Instance.FunList.Add(funName, funArr);
