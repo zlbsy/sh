@@ -14,7 +14,6 @@ namespace App.Util.LSharp{
             SceneManager.CurrentScene.StartCoroutine(Global.SUser.Download(url,App.Util.Global.SUser.versions.scenario, (AssetBundle assetbundle)=>{
                 App.Model.Scriptable.ScenarioAsset.assetbundle = assetbundle;
                 List<string> script = App.Model.Scriptable.ScenarioAsset.Data.script;
-                LSharpScript.Instance.SaveList();
                 LSharpScript.Instance.Analysis(script);
             }));
         }

@@ -32,12 +32,7 @@ namespace App.Controller{
                 {
                     continue;
                 }
-                GameObject obj = Instantiate(childItem);
-                obj.transform.SetParent(content);
-                obj.transform.localScale = Vector3.one;
-                VEquipmentIcon vEquipmentIcon = obj.GetComponent<VEquipmentIcon>();
-                vEquipmentIcon.BindingContext = equipment.ViewModel;
-                vEquipmentIcon.UpdateView();
+                ScrollViewSetChild(content, childItem, equipment);
             }
 			yield return 0;
         }

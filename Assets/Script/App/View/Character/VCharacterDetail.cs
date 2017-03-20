@@ -24,8 +24,8 @@ namespace App.View.Character{
             VMCharacter oldVm = oldViewModel as VMCharacter;
             if (oldVm != null)
             {
-                ViewModel.CharacterId.OnValueChanged -= CharacterIdChanged;
-                ViewModel.Star.OnValueChanged -= StarChanged;
+                oldVm.CharacterId.OnValueChanged -= CharacterIdChanged;
+                oldVm.Star.OnValueChanged -= StarChanged;
             }
             if (ViewModel!=null)
             {

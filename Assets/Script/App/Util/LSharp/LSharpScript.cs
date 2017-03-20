@@ -41,6 +41,10 @@ namespace App.Util.LSharp{
             }
         }
         public void Analysis(List<string> datas){
+            if (dataList.Count > 0)
+            {
+                SaveList();
+            }
             List<string>[] arr = new List<string>[]{datas, null, null};
             dataList.Insert(0, arr);
             ToList(datas);
@@ -59,6 +63,7 @@ namespace App.Util.LSharp{
         }
         public override void Analysis(){
             string lineValue = "";
+            Debug.LogError("lineList="+lineList);
             if (lineList.Count == 0)
             {
                 dataList.RemoveAt(0);
@@ -76,7 +81,7 @@ namespace App.Util.LSharp{
                 lineValue = lineList[0].Trim(); 
                 lineList.RemoveAt(0);
             }
-            if (lineValue.Length == 0)
+            if (string.IsNullOrEmpty(lineValue.Trim()))
             {
                 Analysis();
                 return;

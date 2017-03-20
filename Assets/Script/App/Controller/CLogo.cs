@@ -101,11 +101,11 @@ namespace App.Controller{
                 ItemCacher.Instance.Reset(ItemAsset.Data.items);
                 ItemAsset.Clear();
             }));
-            /*list.Add(sUser.Download(StageAsset.Url, versions.stage, (AssetBundle assetbundle)=>{
-                StageAsset.assetbundle = assetbundle;
-                StageCacher.Instance.Reset(StageAsset.Data.stages);
-                StageAsset.Clear();
-            }));*/
+            list.Add(sUser.Download(BattlefieldAsset.Url, versions.stage, (AssetBundle assetbundle)=>{
+                BattlefieldAsset.assetbundle = assetbundle;
+                BattlefieldCacher.Instance.Reset(BattlefieldAsset.Data.battlefields);
+                BattlefieldAsset.Clear();
+            }));
             list.Add(sUser.Download(BuildingAsset.Url, versions.building, (AssetBundle assetbundle)=>{
                 BuildingAsset.assetbundle = assetbundle;
                 BuildingCacher.Instance.Reset(BuildingAsset.Data.buildings);

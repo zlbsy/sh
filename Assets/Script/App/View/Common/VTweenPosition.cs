@@ -27,7 +27,7 @@ namespace App.View.Common{
             }
             sequence.Play ();
         }
-        void OnDestroy(){
+        public override void OnDestroy(){
             sequence.Kill();
         }
 	}

@@ -23,18 +23,11 @@ namespace App.Controller{
                 yield return StartCoroutine(sCharacter.RequestList(Global.SUser.self.id));
                 Global.SUser.self.characters = sCharacter.characters;
             }
-            foreach(App.Model.MCharacter character in Global.SUser.self.characters){
-                GameObject obj = Instantiate(childItem);
-                obj.transform.SetParent(content);
-                obj.transform.localScale = Vector3.one;
-                VCharacterIcon vCharacterIcon = obj.GetComponent<VCharacterIcon>();
-                vCharacterIcon.BindingContext = character.ViewModel;
-                vCharacterIcon.UpdateView();
-            }
+            ScrollViewSets(content, childItem, Global.SUser.self.characters);
 			yield return 0;
 		}
-        public void ShowCharacter(int characterId){
-            Request req = Request.Create("character_id", characterId);
+        public void ClickCharacterIcon(VCharacterIcon vCharacterIcon){
+            Request req = Request.Create("character_id", vCharacterIcon.ViewModel.CharacterId.Value);
             this.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.CharacterDetailDialog, req));
         }
 	}

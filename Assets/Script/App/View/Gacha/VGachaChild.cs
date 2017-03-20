@@ -22,11 +22,11 @@ namespace App.View.Gacha{
 
             base.OnBindingContextChanged(oldViewModel, newViewModel);
 
-            VMBuilding oldVm = oldViewModel as VMBuilding;
+            VMGacha oldVm = oldViewModel as VMGacha;
             if (oldVm != null)
             {
-                ViewModel.LimitCount.OnValueChanged -= LimitCountChanged;
-                ViewModel.LastTime.OnValueChanged -= LastTimeChanged;
+                oldVm.LimitCount.OnValueChanged -= LimitCountChanged;
+                oldVm.LastTime.OnValueChanged -= LastTimeChanged;
             }
             if (ViewModel!=null)
             {

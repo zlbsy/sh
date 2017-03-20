@@ -21,14 +21,7 @@ namespace App.Controller{
                 yield return StartCoroutine(sItem.RequestList());
                 Global.SUser.self.items = sItem.items;
             }
-            foreach(App.Model.MItem item in Global.SUser.self.items){
-                GameObject obj = Instantiate(childItem);
-                obj.transform.SetParent(content);
-                obj.transform.localScale = Vector3.one;
-                VItemIcon vItemIcon = obj.GetComponent<VItemIcon>();
-                vItemIcon.BindingContext = item.ViewModel;
-                vItemIcon.UpdateView();
-            }
+            ScrollViewSets(content, childItem, Global.SUser.self.items);
             yield return 0;
         }
         public void ItemIconClick(int itemId){

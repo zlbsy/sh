@@ -19,7 +19,7 @@ namespace App.View{
             VMTopMap oldVm = oldViewModel as VMTopMap;
             if (oldVm != null)
             {
-                //ViewModel.MapId.OnValueChanged -= MapIdChanged;
+                //oldVm.MapId.OnValueChanged -= MapIdChanged;
             }
             if (ViewModel!=null)
             {

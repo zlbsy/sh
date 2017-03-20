@@ -38,12 +38,12 @@ namespace App.View{
             VMCharacter oldVm = oldViewModel as VMCharacter;
             if (oldVm != null)
             {
-                ViewModel.Head.OnValueChanged -= HeadChanged;
-                ViewModel.Hat.OnValueChanged -= HatChanged;
-                ViewModel.Horse.OnValueChanged -= HorseChanged;
-                ViewModel.Clothes.OnValueChanged -= ClothesChanged;
-                ViewModel.Weapon.OnValueChanged -= WeaponChanged;
-                ViewModel.Action.OnValueChanged -= ActionChanged;
+                oldVm.Head.OnValueChanged -= HeadChanged;
+                oldVm.Hat.OnValueChanged -= HatChanged;
+                oldVm.Horse.OnValueChanged -= HorseChanged;
+                oldVm.Clothes.OnValueChanged -= ClothesChanged;
+                oldVm.Weapon.OnValueChanged -= WeaponChanged;
+                oldVm.Action.OnValueChanged -= ActionChanged;
             }
             if (ViewModel!=null)
             {
@@ -60,18 +60,20 @@ namespace App.View{
             animationIndex = 0;
             animator.Play(newvalue.ToString());
             UpdateView();
-            if (newvalue == App.Model.ActionType.stand || newvalue == App.Model.ActionType.block)
+            /*if (newvalue == App.Model.ActionType.stand || newvalue == App.Model.ActionType.block)
             {
                 UpdateView();
-            }
+            }*/
         }
         private void HeadChanged(int oldvalue, int newvalue)
         {
-            imgHead.sprite = ImageAssetBundleManager.GetAvatarHead(newvalue);
+            //imgHead.sprite = ImageAssetBundleManager.GetAvatarHead(newvalue);
+            UpdateView();
         }
         private void HatChanged(int oldvalue, int newvalue)
         {
-            imgHat.sprite = ImageAssetBundleManager.GetAvatarHat(newvalue);
+            //imgHat.sprite = ImageAssetBundleManager.GetAvatarHat(newvalue);
+            UpdateView();
         }
         private void WeaponChanged(int oldvalue, int newvalue)
         {
@@ -85,7 +87,8 @@ namespace App.View{
         {
             UpdateView();
         }
-        public override void UpdateView(){Debug.LogError(ViewModel.MoveType.Value+", " + ViewModel.WeaponType.Value + ", " + ViewModel.Action.Value + ", " + animationIndex);
+        public override void UpdateView(){
+            //Debug.Log(ViewModel.MoveType.Value+", " + ViewModel.WeaponType.Value + ", " + ViewModel.Action.Value + ", " + animationIndex);
             AvatarAction avatarAction = AvatarAsset.Data.GetAvatarAction(ViewModel.MoveType.Value, ViewModel.WeaponType.Value, ViewModel.Action.Value, animationIndex);
             string key;
             //Horse
@@ -93,22 +96,19 @@ namespace App.View{
                 imgHorse.gameObject.SetActive (false);
             } else {
                 imgHorse.gameObject.SetActive (true);
-                //MEquipment horse = EquipmentCacher.Instance.GetEquipment(ViewModel.Horse.Value, MEquipment.EquipmentType.horse);
                 key = string.Format("horse_{0}_{1}_{2}", ViewModel.Horse.Value, ViewModel.Action.Value, avatarAction.horse.index);
                 imgHorse.sprite = ImageAssetBundleManager.GetHorse(key);
-                //imgHorse.SetNativeSize ();
                 imgHorse.transform.localPosition = avatarAction.horse.position;
+                imgHorse.sortingOrder = avatarAction.horse.sibling;
             }
+
             //Body
             key = string.Format("body_{0}_{1}_{2}_{3}", ViewModel.MoveType.Value, ViewModel.WeaponType.Value, ViewModel.Action.Value, avatarAction.body.index);
             imgBody.sprite = ImageAssetBundleManager.GetAvatarBody(key);
-            //imgBody.SetNativeSize ();
             //Clothes
-            //MEquipment clothes = EquipmentCacher.Instance.GetEquipment(ViewModel.Clothes.Value, MEquipment.EquipmentType.clothes);
             key = string.Format("clothes_{0}_{1}_{2}_{3}_{4}", ViewModel.Clothes.Value, ViewModel.MoveType.Value, ViewModel.WeaponType.Value, ViewModel.Action.Value, avatarAction.clothes.index);
             imgClothes.sprite = ImageAssetBundleManager.GetClothes(key);
-            imgClothes.transform.SetSiblingIndex (avatarAction.clothes.sibling);
-            //imgClothes.SetNativeSize ();
+            //Head
             if (imgHead.gameObject.activeSelf && avatarAction.head.index == 0)
             {
                 imgHead.gameObject.SetActive(false);
@@ -116,20 +116,27 @@ namespace App.View{
             {
                 imgHead.gameObject.SetActive(true);
             }
+            if (imgHead.gameObject.activeSelf)
+            {
+                imgHead.sprite = ImageAssetBundleManager.GetAvatarHead(ViewModel.Head.Value);
+                imgHat.sprite = ImageAssetBundleManager.GetAvatarHat(ViewModel.Hat.Value);
+                imgHead.sortingOrder = avatarAction.head.sibling;
+                imgHat.sortingOrder = avatarAction.hat.sibling;
+            }
+
             //Weapon
-            //MEquipment weapon = EquipmentCacher.Instance.GetEquipment(ViewModel.Weapon.Value, MEquipment.EquipmentType.weapon);
             key = string.Format("weapon_{0}_{1}_{2}_{3}_{4}", ViewModel.Weapon.Value, ViewModel.MoveType.Value, ViewModel.WeaponType.Value, ViewModel.Action.Value, avatarAction.body.index);
             imgWeapon.sprite = ImageAssetBundleManager.GetWeapon(key);
-            if (avatarAction.weapon.sibling >= 0)
-            {
-                imgWeapon.transform.SetSiblingIndex(avatarAction.weapon.sibling);
-            }
-            //imgWeapon.SetNativeSize ();
 
             imgBody.transform.localPosition = avatarAction.body.position;
             imgClothes.transform.localPosition = avatarAction.clothes.position;
             imgHead.transform.localPosition = avatarAction.head.position;
             imgWeapon.transform.localPosition = avatarAction.weapon.position;
+
+            imgBody.sortingOrder = avatarAction.body.sibling;
+            imgClothes.sortingOrder = avatarAction.clothes.sibling;
+            imgHead.sortingOrder = avatarAction.head.sibling;
+            imgWeapon.sortingOrder = avatarAction.weapon.sibling;
         }
         #endregion
 

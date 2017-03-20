@@ -13,6 +13,8 @@ namespace App.View.Character{
         [SerializeField]private App.View.Character.VRawFace faceIcon;
         [SerializeField]private GameObject[] stars;
         [SerializeField]private Text level;
+        [SerializeField]private GameObject selectIcon;
+        [SerializeField]private bool clickDisabled = false;
         #region VM处理
         public VMCharacter ViewModel { get { return (VMCharacter)BindingContext; } }
         protected override void OnBindingContextChanged(VMBase oldViewModel, VMBase newViewModel)
@@ -23,8 +25,8 @@ namespace App.View.Character{
             VMCharacter oldVm = oldViewModel as VMCharacter;
             if (oldVm != null)
             {
-                ViewModel.Level.OnValueChanged -= LevelChanged;
-                ViewModel.Star.OnValueChanged -= StarChanged;
+                oldVm.Level.OnValueChanged -= LevelChanged;
+                oldVm.Star.OnValueChanged -= StarChanged;
             }
             if (ViewModel!=null)
             {
@@ -68,7 +70,20 @@ namespace App.View.Character{
         }
         #endregion
         public void ClickChild(){
-            (this.Controller as CCharacterListDialog).ShowCharacter(ViewModel.CharacterId.Value);
+            if (clickDisabled)
+            {
+                return;
+            }
+            this.Controller.SendMessage("ClickCharacterIcon", this);
+            //(this.Controller as CCharacterListDialog).ShowCharacter(ViewModel.CharacterId.Value);
+        }
+        public bool isSelected{
+            get{ 
+                return selectIcon.activeSelf;
+            }
+            set{ 
+                selectIcon.SetActive(value);
+            }
         }
         /*public IEnumerator LoadFaceIcon(int characterId)
         {

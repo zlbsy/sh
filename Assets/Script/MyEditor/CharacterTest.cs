@@ -4,6 +4,10 @@ using App.Model;
 using App.Service;
 using App.View;
 using App.Model.Avatar;
+using System.Collections.Generic;
+using App.Model.Scriptable;
+using App.Util;
+using App.Util.Cacher;
 
 namespace MyEditor
 {
@@ -12,8 +16,127 @@ namespace MyEditor
         [SerializeField]GameObject characterPrefab;
         [SerializeField]Canvas layer;
         // Use this for initialization
-        void Start()
+        IEnumerator Start()
         {
+            Caching.CleanCache();
+            SEditorMaster sMaster = new SEditorMaster();
+            MVersion versions = new MVersion();
+            List<IEnumerator> list = new List<IEnumerator>();
+            list.Add(sMaster.Download(PromptMessageAsset.Url, versions.prompt_message, (AssetBundle assetbundle)=>{
+                PromptMessageAsset.assetbundle = assetbundle;
+            }));
+            list.Add(sMaster.Download(LanguageAsset.WORD_URL, versions.word, (AssetBundle assetbundle)=>{
+                LanguageAsset.assetbundle = assetbundle;
+                Language.Reset(LanguageAsset.Data.words);
+                LanguageAsset.Clear();
+            }));
+            list.Add(sMaster.Download(LanguageAsset.CHARACTER_WORD_URL, versions.characterword, (AssetBundle assetbundle)=>{
+                LanguageAsset.assetbundle = assetbundle;
+                Language.ResetCharacterWord(LanguageAsset.Data.words);
+                LanguageAsset.Clear();
+            }));
+            list.Add(sMaster.Download(WorldAsset.Url, versions.world, (AssetBundle assetbundle)=>{
+                WorldAsset.assetbundle = assetbundle;
+                Global.worlds = WorldAsset.Data.worlds;
+            }));
+            list.Add(sMaster.Download(ConstantAsset.Url, versions.constant, (AssetBundle assetbundle)=>{
+                ConstantAsset.assetbundle = assetbundle;
+                Global.Constant = ConstantAsset.Data.constant;
+            }));
+            list.Add(sMaster.Download(NpcAsset.Url, versions.world, (AssetBundle assetbundle)=>{
+                NpcAsset.assetbundle = assetbundle;
+                NpcCacher.Instance.Reset(NpcAsset.Data.npcs);
+                NpcAsset.Clear();
+            }));
+            list.Add(sMaster.Download(NpcEquipmentAsset.Url, versions.world, (AssetBundle assetbundle)=>{
+                NpcEquipmentAsset.assetbundle = assetbundle;
+                NpcEquipmentCacher.Instance.Reset(NpcEquipmentAsset.Data.npc_equipments);
+                NpcEquipmentAsset.Clear();
+            }));
+            list.Add(sMaster.Download(HorseAsset.Url, versions.horse, (AssetBundle assetbundle)=>{
+                HorseAsset.assetbundle = assetbundle;
+                EquipmentCacher.Instance.ResetHorse(HorseAsset.Data.equipments);
+                HorseAsset.Clear();
+            }));
+            list.Add(sMaster.Download(WeaponAsset.Url, versions.weapon, (AssetBundle assetbundle)=>{
+                WeaponAsset.assetbundle = assetbundle;
+                EquipmentCacher.Instance.ResetWeapon(WeaponAsset.Data.equipments);
+                WeaponAsset.Clear();
+            }));
+            list.Add(sMaster.Download(ClothesAsset.Url, versions.clothes, (AssetBundle assetbundle)=>{
+                ClothesAsset.assetbundle = assetbundle;
+                EquipmentCacher.Instance.ResetClothes(ClothesAsset.Data.equipments);
+                ClothesAsset.Clear();
+            }));
+            list.Add(sMaster.Download(AreaAsset.Url, versions.area, (AssetBundle assetbundle)=>{
+                AreaAsset.assetbundle = assetbundle;
+                AreaCacher.Instance.Reset(AreaAsset.Data.areas);
+                AreaAsset.Clear();
+            }));
+            list.Add(sMaster.Download(ItemAsset.Url, versions.item, (AssetBundle assetbundle)=>{
+                ItemAsset.assetbundle = assetbundle;
+                ItemCacher.Instance.Reset(ItemAsset.Data.items);
+                ItemAsset.Clear();
+            }));
+            list.Add(sMaster.Download(BattlefieldAsset.Url, versions.stage, (AssetBundle assetbundle)=>{
+                BattlefieldAsset.assetbundle = assetbundle;
+                BattlefieldCacher.Instance.Reset(BattlefieldAsset.Data.battlefields);
+                BattlefieldAsset.Clear();
+            }));
+            list.Add(sMaster.Download(BuildingAsset.Url, versions.building, (AssetBundle assetbundle)=>{
+                BuildingAsset.assetbundle = assetbundle;
+                BuildingCacher.Instance.Reset(BuildingAsset.Data.buildings);
+                BuildingAsset.Clear();
+            }));
+            list.Add(sMaster.Download(BaseMapAsset.Url, versions.top_map, (AssetBundle assetbundle)=>{
+                BaseMapAsset.assetbundle = assetbundle;
+                BaseMapCacher.Instance.Reset(BaseMapAsset.Data.baseMaps);
+                BaseMapAsset.Clear();
+            }));
+            list.Add(sMaster.Download(CharacterAsset.Url, versions.character, (AssetBundle assetbundle)=>{
+                CharacterAsset.assetbundle = assetbundle;
+                CharacterCacher.Instance.Reset(CharacterAsset.Data.characters);
+                CharacterAsset.Clear();
+            }));
+            list.Add(sMaster.Download(TileAsset.Url, versions.tile, (AssetBundle assetbundle)=>{
+                TileAsset.assetbundle = assetbundle;
+                TileCacher.Instance.Reset(TileAsset.Data.tiles);
+                TileAsset.Clear();
+            }));
+            list.Add(sMaster.Download(App.Model.Avatar.AvatarAsset.Url, versions.tile, (AssetBundle assetbundle)=>{
+                App.Model.Avatar.AvatarAsset.assetbundle = assetbundle;
+            }));
+            list.Add(sMaster.Download(ImageAssetBundleManager.avatarUrl, versions.avatar, (AssetBundle assetbundle)=>{
+                ImageAssetBundleManager.avatar = assetbundle;
+            }, false));
+            list.Add(sMaster.Download(ImageAssetBundleManager.horseUrl, versions.horse_img, (AssetBundle assetbundle)=>{
+                ImageAssetBundleManager.horse = assetbundle;
+            }, false));
+            list.Add(sMaster.Download(ImageAssetBundleManager.hatUrl, versions.hat, (AssetBundle assetbundle)=>{
+                ImageAssetBundleManager.hat = assetbundle;
+            }, false));
+            list.Add(sMaster.Download(ImageAssetBundleManager.mapUrl, versions.map, (AssetBundle assetbundle)=>{
+                ImageAssetBundleManager.map = assetbundle;
+            }, false));
+            list.Add(sMaster.Download(ImageAssetBundleManager.clothesUrl, versions.clothes_img, (AssetBundle assetbundle)=>{
+                ImageAssetBundleManager.clothes = assetbundle;
+            }, false));
+            list.Add(sMaster.Download(ImageAssetBundleManager.weaponUrl, versions.weapon_img, (AssetBundle assetbundle)=>{
+                ImageAssetBundleManager.weapon = assetbundle;
+            }, false));
+            list.Add(sMaster.Download(ImageAssetBundleManager.equipmentIconUrl, versions.equipmenticon_img, (AssetBundle assetbundle)=>{
+                ImageAssetBundleManager.equipmentIcon = assetbundle;
+            }, false));
+            list.Add(sMaster.Download(ImageAssetBundleManager.itemIconUrl, versions.item_img, (AssetBundle assetbundle)=>{
+                ImageAssetBundleManager.itemIcon = assetbundle;
+            }, false));
+            Debug.Log("Start");
+            for (int i = 0; i < list.Count; i++)
+            {
+                Debug.Log(i+"/"+list.Count);
+                yield return this.StartCoroutine(list[i]);
+            }
+            Debug.Log("Start Over");
         }
 	
         // Update is called once per frame
@@ -31,7 +154,7 @@ namespace MyEditor
             {
                 GameObject obj = GameObject.Instantiate(characterPrefab);
                 obj.transform.parent = layer.transform;
-                obj.transform.localPosition = new Vector3(100f, 100f, 0f);
+                //obj.transform.localPosition = new Vector3(100f, 100f, 0f);
                 obj.SetActive(true);
                 //obj.GetComponent<RectTransform> ().localScale = new Vector3(2f,2f,1f);
                 model = new MCharacter();
@@ -47,6 +170,7 @@ namespace MyEditor
                 view = obj.GetComponent<VCharacter>();
                 view.BindingContext = model.ViewModel;
                 model.Action = ActionType.stand;
+                characterPrefab.SetActive(false);
             }
             if (GUI.Button(new Rect(50, 100, 50, 30), "Stand"))
             {

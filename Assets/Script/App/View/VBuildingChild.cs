@@ -22,8 +22,8 @@ namespace App.View{
             VMBuilding oldVm = oldViewModel as VMBuilding;
             if (oldVm != null)
             {
-                ViewModel.Name.OnValueChanged -= NameChanged;
-                ViewModel.TileId.OnValueChanged -= TileIdChanged;
+                oldVm.Name.OnValueChanged -= NameChanged;
+                oldVm.TileId.OnValueChanged -= TileIdChanged;
             }
             if (ViewModel!=null)
             {

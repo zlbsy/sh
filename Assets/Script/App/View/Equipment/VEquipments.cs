@@ -23,9 +23,9 @@ namespace App.View.Equipment{
             VMCharacter oldVm = oldViewModel as VMCharacter;
             if (oldVm != null)
             {
-                ViewModel.Weapon.OnValueChanged -= WeaponChanged;
-                ViewModel.Clothes.OnValueChanged -= ClothesChanged;
-                ViewModel.Horse.OnValueChanged -= HorseChanged;
+                oldVm.Weapon.OnValueChanged -= WeaponChanged;
+                oldVm.Clothes.OnValueChanged -= ClothesChanged;
+                oldVm.Horse.OnValueChanged -= HorseChanged;
             }
             if (ViewModel!=null)
             {

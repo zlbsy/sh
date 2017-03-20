@@ -36,8 +36,8 @@ namespace App.Util.Cacher{
             {
                 mCharacter.WeaponType = mBattleNpc.weapon_type;
             }*/
-            mCharacter.X = mBattleNpc.x;
-            mCharacter.Y = mBattleNpc.y;
+            mCharacter.CoordinateX = mBattleNpc.x;
+            mCharacter.CoordinateY = mBattleNpc.y;
 
             return mCharacter;
         }

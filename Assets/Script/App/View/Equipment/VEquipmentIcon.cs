@@ -23,8 +23,8 @@ namespace App.View.Equipment{
             VMEquipment oldVm = oldViewModel as VMEquipment;
             if (oldVm != null)
             {
-                ViewModel.EquipmentId.OnValueChanged -= LevelChanged;
-                //ViewModel.EquipmentType.OnValueChanged -= StarChanged;
+                oldVm.EquipmentId.OnValueChanged -= LevelChanged;
+                //oldVm.EquipmentType.OnValueChanged -= StarChanged;
             }
             if (ViewModel!=null)
             {

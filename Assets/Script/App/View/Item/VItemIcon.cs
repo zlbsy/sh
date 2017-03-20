@@ -23,13 +23,11 @@ namespace App.View.Item{
             VMItem oldVm = oldViewModel as VMItem;
             if (oldVm != null)
             {
-                ViewModel.Cnt.OnValueChanged -= CntChanged;
-                //ViewModel.EquipmentType.OnValueChanged -= StarChanged;
+                oldVm.Cnt.OnValueChanged -= CntChanged;
             }
             if (ViewModel!=null)
             {
                 ViewModel.Cnt.OnValueChanged += CntChanged;
-                //ViewModel.EquipmentType.OnValueChanged += StarChanged;
             }
         }
         private void CntChanged(int oldvalue, int newvalue)

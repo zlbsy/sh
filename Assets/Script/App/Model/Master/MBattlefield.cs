@@ -8,6 +8,7 @@ namespace App.Model.Master{
         }
         public string name;
         public MBattleNpc[] enemys;
+        public MBattleOwn[] owns;
         public int[][] own_positions;
         public int map_id;
         public List<string> script;

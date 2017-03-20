@@ -36,12 +36,7 @@ namespace App.Controller{
                     mGacha = new MGacha();
                     mGacha.GachaId = gacha.id;
                 }
-                GameObject obj = Instantiate(childItem);
-                obj.transform.SetParent(content);
-                obj.transform.localScale = Vector3.one;
-                VGachaChild vGachaChild = obj.GetComponent<VGachaChild>();
-                vGachaChild.BindingContext = mGacha.ViewModel;
-                vGachaChild.UpdateView();
+                ScrollViewSetChild(content, childItem, mGacha);
             }
 		}
 

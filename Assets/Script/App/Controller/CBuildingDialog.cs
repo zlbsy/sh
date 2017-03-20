@@ -22,13 +22,9 @@ namespace App.Controller{
             List<MBuilding> mBuildings = new List<MBuilding>();
             foreach(App.Model.Master.MBuilding build in builds){
                 MBuilding mBuilding = new MBuilding();
-                GameObject obj = Instantiate(childItem);
-                obj.transform.SetParent(content);
-                obj.transform.localScale = Vector3.one;
-                VBuildingChild vBuildintChild = obj.GetComponent<VBuildingChild>();
-                vBuildintChild.BindingContext = mBuilding.ViewModel;
-                mBuilding.Id = build.id;
                 mBuildings.Add(mBuilding);
+                ScrollViewSetChild(content, childItem, mBuilding);
+                mBuilding.Id = build.id;
             }
             BuildingCacher.Instance.SetBuildings(mBuildings);
             closeEvent = () =>

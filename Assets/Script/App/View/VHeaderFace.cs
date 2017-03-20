@@ -23,8 +23,8 @@ namespace App.View{
             VMUser oldVm = oldViewModel as VMUser;
             if (oldVm != null)
             {
-                ViewModel.Face.OnValueChanged -= FaceChanged;
-                ViewModel.Level.OnValueChanged -= LevelChanged;
+                oldVm.Face.OnValueChanged -= FaceChanged;
+                oldVm.Level.OnValueChanged -= LevelChanged;
             }
             if (ViewModel!=null)
             {

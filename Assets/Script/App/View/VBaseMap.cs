@@ -37,9 +37,9 @@ namespace App.View{
             VMBaseMap oldVm = oldViewModel as VMBaseMap;
             if (oldVm != null)
             {
-                ViewModel.MapId.OnValueChanged -= MapIdChanged;
-                ViewModel.Tiles.OnValueChanged -= TilesChanged;
-                ViewModel.Characters.OnValueChanged -= CharactersChanged;
+                oldVm.MapId.OnValueChanged -= MapIdChanged;
+                oldVm.Tiles.OnValueChanged -= TilesChanged;
+                oldVm.Characters.OnValueChanged -= CharactersChanged;
             }
             if (ViewModel!=null)
             {
@@ -59,23 +59,21 @@ namespace App.View{
         }
         private void CharactersChanged(App.Model.MCharacter[] oldvalue, App.Model.MCharacter[] newvalue)
         {
-            Debug.LogError("CharactersChanged");
+            if (newvalue == null || newvalue.Length == 0)
+            {
+                return;
+            }
             foreach (App.Model.MCharacter mCharacter in newvalue)
             {
                 VCharacter vCharacter = vCharacters.Find(_=>_.ViewModel.Id.Value == mCharacter.Id);
                 if (vCharacter == null)
                 {
                     //新建武将
-                    GameObject obj = GameObject.Instantiate(characterPrefab);
-                    obj.transform.SetParent(characterLayer.transform);
+                    GameObject obj = this.Controller.ScrollViewSetChild(characterLayer.transform, characterPrefab, mCharacter);
                     int i = mCharacter.CoordinateY * mapWidth + mCharacter.CoordinateX;
                     VTile vTile = tileUnits[i];
                     obj.transform.eulerAngles = new Vector3(-30f, 0f, 0f);
                     obj.transform.localPosition = vTile.transform.localPosition;
-                    obj.SetActive(true);
-                    VCharacter view = obj.GetComponent<VCharacter>();
-                    view.BindingContext = mCharacter.ViewModel;
-                    view.UpdateView();
                 }
                 else
                 {
@@ -97,6 +95,7 @@ namespace App.View{
         }
         public override void UpdateView(){
             ResetAll();
+            CharactersChanged(null, ViewModel.Characters.Value);
         }
         public void ResetAll(App.Model.Master.MBaseMap baseMapMaster = null){
             if (baseMapMaster == null)

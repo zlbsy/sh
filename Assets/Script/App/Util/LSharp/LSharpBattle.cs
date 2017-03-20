@@ -12,7 +12,7 @@ namespace App.Util.LSharp{
         public void Start(string[] arguments){
             Debug.LogError("LSharpBattle Start");
             int battleId = int.Parse(arguments[0]);
-            Request req = Request.Create("", battleId);
+            Request req = Request.Create("battleId", battleId);
             App.Util.SceneManager.CurrentScene.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.ReadyBattleDialog, req));
             //LSharpScript.Instance.Analysis();
         }

@@ -16,5 +16,25 @@ namespace App.Controller{
         public GameObject GetObject(GameObject obj){
             return Instantiate(obj) as GameObject;
         }
+        public void ScrollViewSets(Transform parentContent, GameObject content, List<App.Model.MBase> models){
+            foreach(App.Model.MBase model in models){
+                ScrollViewSetChild(parentContent, content, model);
+            }
+        }
+        public void ScrollViewSets(Transform parentContent, GameObject content, App.Model.MBase[] models){
+            foreach(App.Model.MBase model in models){
+                ScrollViewSetChild(parentContent, content, model);
+            }
+        }
+        public GameObject ScrollViewSetChild(Transform parentContent, GameObject content, App.Model.MBase model){
+            GameObject obj = Instantiate(content);
+            obj.transform.SetParent(parentContent);
+            obj.SetActive(true);
+            obj.transform.localScale = Vector3.one;
+            App.View.VBase view = obj.GetComponent<App.View.VBase>();
+            view.BindingContext = model.VM;
+            view.UpdateView();
+            return obj;
+        }
 	}
 }

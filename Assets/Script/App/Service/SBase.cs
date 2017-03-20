@@ -12,7 +12,10 @@ namespace App.Service{
             var www = WWW.LoadFromCacheOrDownload(url, ver);
             while (!www.isDone)
             {
-                App.Controller.CLoadingDialog.UpdatePlusProgress(www.progress);
+                if (App.Util.Global.SceneManager != null && App.Util.Global.SceneManager.CurrentDialog != null)
+                {
+                    App.Controller.CLoadingDialog.UpdatePlusProgress(www.progress);
+                }
                 if(!string.IsNullOrEmpty(www.error))
                 {
                     Debug.Log(url);

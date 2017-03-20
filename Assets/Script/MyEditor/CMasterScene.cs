@@ -14,15 +14,21 @@ using UnityEditor;
 
 namespace App.Controller{
     public class CMasterScene : CScene {
-        Dictionary<string, IEnumerator> apis = new Dictionary<string, IEnumerator>();
-        Dictionary<string, IEnumerator> assets = new Dictionary<string, IEnumerator>();
-        Dictionary<string, IEnumerator> scenarios = new Dictionary<string, IEnumerator>();
+        Dictionary<string, IEnumerator> apis;
+        Dictionary<string, IEnumerator> assets;
+        Dictionary<string, IEnumerator> scenarios;
         private string type = "";
         private int page = 0;
         private string[] apiKeys;
         private string[] assetsKeys;
+        private string[] scenarioKeys;
         public override IEnumerator OnLoad( Request req ) 
 		{  
+            type = "";
+            apis = new Dictionary<string, IEnumerator>();
+            assets = new Dictionary<string, IEnumerator>();
+            scenarios = new Dictionary<string, IEnumerator>();
+            page = 0;
 			yield return 0;
         }
         #if UNITY_EDITOR
@@ -55,6 +61,8 @@ namespace App.Controller{
                     assets.Add("Prompt", CreateScriptableObjectPromptAssetRun());
                     assets.Add("Language", CreateScriptableObjectLanguageAssetRun());
                     assetsKeys = assets.Keys.ToArray();
+
+                    scenarioKeys = scenarios.Keys.ToArray();
                 }
                 return;
             }
@@ -154,7 +162,7 @@ namespace App.Controller{
         }
         IEnumerator CreateScriptableObjectMasterWordRun()
         {
-            var asset = ScriptableObject.CreateInstance<App.Model.Scriptable.WordAsset>();
+            var asset = ScriptableObject.CreateInstance<App.Model.Scriptable.LanguageAsset>();
 
             SEditorMaster sMaster = new SEditorMaster();
             yield return StartCoroutine (sMaster.RequestAll("word"));

@@ -24,10 +24,10 @@ namespace App.View.Top{
             VMUser oldVm = oldViewModel as VMUser;
             if (oldVm != null)
             {
-                ViewModel.Gold.OnValueChanged -= GoldChanged;
-                ViewModel.Silver.OnValueChanged -= SilverChanged;
-                //ViewModel.Ap.OnValueChanged -= ApChanged;
-                //ViewModel.Level.OnValueChanged -= ApChanged;
+                oldVm.Gold.OnValueChanged -= GoldChanged;
+                oldVm.Silver.OnValueChanged -= SilverChanged;
+                //oldVm.Ap.OnValueChanged -= ApChanged;
+                //oldVm.Level.OnValueChanged -= ApChanged;
             }
             if (ViewModel!=null)
             {
