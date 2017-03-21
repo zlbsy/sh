@@ -28,7 +28,6 @@ namespace App.Controller{
             battlefieldId = request.Get<int>("battlefieldId");
             characterIds = request.Get<List<int>>("characterIds");
             owns = System.Array.FindAll(App.Util.Global.SUser.self.characters, _=>characterIds.IndexOf(_.Id) >= 0);
-            BattleManager.Init(this);
             yield return this.StartCoroutine(base.OnLoad(request));
         }
         protected override void InitMap(){
@@ -59,6 +58,7 @@ namespace App.Controller{
             vBaseMap.UpdateView();
             vBaseMap.transform.parent.localScale = Vector3.one;
             vBaseMap.MoveToCenter();
+            BattleManager.Init(this);
             App.Util.LSharp.LSharpScript.Instance.Analysis(battlefieldMaster.script);
         }
 
