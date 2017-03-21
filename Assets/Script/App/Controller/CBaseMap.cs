@@ -37,5 +37,11 @@ namespace App.Controller{
         /// <param name="tile">地图块儿</param>
         public virtual void OnClickTile(App.Model.MTile tile){
         }
+        public VBaseMap GetVBaseMap(){
+            return vBaseMap;
+        }
+        public MBaseMap GetMBaseMap(){
+            return mBaseMap;
+        }
 	}
 }

@@ -16,11 +16,13 @@ namespace App.View{
         [SerializeField]public TextMesh tileName;
         private int index = 0;
         private VBaseMap vBaseMap;
-        #region VM处理
-
-        #endregion
         void Start(){
             tileName.GetComponent<MeshRenderer>().sortingOrder = 5;
+        }
+        public int Index{
+            get{ 
+                return index;
+            }
         }
         public void SetData(int index, int tileId, int subId = 0){
             this.index = index;
@@ -65,6 +67,9 @@ namespace App.View{
             }
             this.Controller.SendMessage("OnClickTile", this.index);
         }
-
+        public void SetColor(Color color){
+            tileSprite.color = color;
+            buildingSprite.color = color;
+        }
     }
 }

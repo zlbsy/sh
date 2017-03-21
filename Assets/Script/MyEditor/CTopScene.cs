@@ -57,7 +57,8 @@ namespace App.Controller{
             vBaseMap.mapWidth = width;
             vBaseMap.mapHeight = height;
             vBaseMap.tileUnits = tiles.ToArray();
-            savePrefab(vBaseMap.gameObject, vBaseMap.gameObject.name);
+
+            //savePrefab(vBaseMap.gameObject, vBaseMap.gameObject.name);
         }
         void savePrefab(GameObject gameobj, string name) {
             //prefabの保存フォルダパス

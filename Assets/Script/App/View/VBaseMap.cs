@@ -133,6 +133,14 @@ namespace App.View{
             mousePosition.x = int.MinValue;
             dragPosition.x = int.MinValue;
         }
+        public void SetTilesColor(List<VTile> tiles, Color color){
+            foreach (VTile tile in tiles)
+            {
+                tile.SetColor(color);
+            }
+            //VTile vTile = System.Array.Find(tileUnits, _=>_.Index == index);
+            //vTile.SetColor(Color.red);
+        }
         public bool IsDraging{
             get{ 
                 return _isDraging;
