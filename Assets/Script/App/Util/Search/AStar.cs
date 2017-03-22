@@ -18,8 +18,13 @@ namespace App.Util.Search{
             vBaseMap = view;
             baseMapMaster = BaseMapCacher.Instance.Get(mBaseMap.MapId);
         }
-        public List<VTile> Search(VCharacter vCharacter){
-            Vector2 start = new Vector2(vCharacter.ViewModel.CoordinateX.Value, vCharacter.ViewModel.CoordinateY.Value);
+        /*public List<VTile> Search(MCharacter mCharacter, int toTileIndex){
+            //Vector2 start = new Vector2(vCharacter.ViewModel.CoordinateX.Value, vCharacter.ViewModel.CoordinateY.Value);
+
+            return null;
+        }*/
+        public List<VTile> Search(VTile startTile, VTile endTile){
+            //Vector2 start = new Vector2(vCharacter.ViewModel.CoordinateX.Value, vCharacter.ViewModel.CoordinateY.Value);
 
             return null;
         }

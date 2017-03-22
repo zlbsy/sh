@@ -41,17 +41,22 @@ namespace App.Util.Battle{
             }
             if (cBattlefield.tilesManager.IsMovingTile(index))
             {
-                
+                Vector2 vec = new Vector2(mCharacter.CoordinateX, mCharacter.CoordinateY);
+                VTile startTile = cBattlefield.tilesManager.GetTile(vec);
+                VTile endTile = cBattlefield.tilesManager.GetTile(index);
+                List<VTile> tiles = cBattlefield.aStar.Search(startTile, endTile);
+
             }
             else
             {
-                
+                 
             }
 
         }
         public MCharacter GetCharacter(int index){
             Vector2 coordinate = baseMapMaster.GetCoordinateFromIndex(index);
             MCharacter mCharacter = System.Array.Find(mBaseMap.Characters, _=>_.CoordinateX == coordinate.x && _.CoordinateY == coordinate.y);
+            return mCharacter;
         }
     }
 }
