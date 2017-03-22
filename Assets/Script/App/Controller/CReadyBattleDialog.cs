@@ -73,6 +73,10 @@ namespace App.Controller{
         public void BattleStart(){
             List<int> characterIds = new List<int>();
             VCharacterIcon[] icons = selectCharacterContent.GetComponentsInChildren<VCharacterIcon>();
+            if (icons.Length == 0)
+            {
+                return;
+            }
             foreach (VCharacterIcon icon in icons)
             {
                 characterIds.Add(icon.ViewModel.CharacterId.Value);

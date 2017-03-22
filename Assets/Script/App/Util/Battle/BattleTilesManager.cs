@@ -9,71 +9,45 @@ using App.View;
 
 namespace App.Util.Battle{
     public class BattleTilesManager{
-        private static CBattlefield cBattlefield;
-        private static App.Model.Master.MBaseMap topMapMaster;
-        public static void Init(CBattlefield controller, App.Model.Master.MBaseMap mBaseMap){
+        private CBattlefield cBattlefield;
+        private MBaseMap mBaseMap;
+        private VBaseMap vBaseMap;
+        private App.Model.Master.MBaseMap baseMapMaster;
+        private List<VTile> movingTiles;
+        public BattleTilesManager(CBattlefield controller, MBaseMap model, VBaseMap view){
             cBattlefield = controller;
-            topMapMaster = mBaseMap;
+            mBaseMap = model;
+            vBaseMap = view;
+            baseMapMaster = BaseMapCacher.Instance.Get(mBaseMap.MapId);
         }
-        public static void ShowCharacterMovingArea(VCharacter vCharacter, int index, Vector2 coordinate){
-            List<Vector2> coordinates = new List<Vector2>();
-            if (coordinate.y > 0)
-            {
-                if (coordinate.y % 2 == 0)
-                {
-                    if (coordinate.x > 0)
-                    {
-                        coordinates.Add(new Vector2(coordinate.x - 1, coordinate.y - 1));
-                    }
-                    coordinates.Add(new Vector2(coordinate.x, coordinate.y - 1));
-                }
-                else
-                {
-                    coordinates.Add(new Vector2(coordinate.x, coordinate.y - 1));
-                    if (coordinate.x + 1 < topMapMaster.width)
-                    {
-                        coordinates.Add(new Vector2(coordinate.x + 1, coordinate.y - 1));
-                    }
-                }
-            }
-            if (coordinate.x + 1 < topMapMaster.width)
-            {
-                coordinates.Add(new Vector2(coordinate.x + 1, coordinate.y));
-            }
-            if (coordinate.y + 1 < topMapMaster.height)
-            {
-                if (coordinate.y % 2 == 0)
-                {
-                    coordinates.Add(new Vector2(coordinate.x, coordinate.y + 1));
-                    if (coordinate.x > 0)
-                    {
-                        coordinates.Add(new Vector2(coordinate.x - 1, coordinate.y + 1));
-                    }
-                }
-                else
-                {
-                    if (coordinate.x + 1 < topMapMaster.width)
-                    {
-                        coordinates.Add(new Vector2(coordinate.x + 1, coordinate.y + 1));
-                    }
-                    coordinates.Add(new Vector2(coordinate.x, coordinate.y + 1));
-                }
-            }
-            if (coordinate.x > 0)
-            {
-                coordinates.Add(new Vector2(coordinate.x - 1, coordinate.y));
-            }
+        public void ShowCharacterMovingArea(MCharacter mCharacter){
+            movingTiles = cBattlefield.breadthFirst.Search(mCharacter);
+            vBaseMap.SetTilesColor(movingTiles, Color.blue);
+            cBattlefield.battleMode = CBattlefield.BattleMode.show_move_tiles;
+        }
+        /*public List<VTile> GetNeighboringTiles(Vector2 coordinate){
+            List<Vector2> coordinates = cBattlefield.tileMapManager.GetNeighboringCoordinates(coordinate);
             List<VTile> tiles = new List<VTile>();
-            VBaseMap vBaseMap = cBattlefield.GetVBaseMap();
             foreach(Vector2 vec in coordinates){
                 int i = (int)vec.y * vBaseMap.mapWidth + (int)vec.x;
                 VTile tile = vBaseMap.tileUnits[i];
                 tiles.Add(tile);
             }
-            vBaseMap.SetTilesColor(tiles, Color.red);
+            return tiles;
+        }*/
+        public VTile GetTile(int index){
+            Vector2 coordinate = baseMapMaster.GetCoordinateFromIndex(index);
+            return GetTile(coordinate);
         }
-        public static void Destory(){
-            
+        public VTile GetTile(Vector2 coordinate){
+            int i = (int)coordinate.y * vBaseMap.mapWidth + (int)coordinate.x;
+            return vBaseMap.tileUnits[i];
+        }
+        public bool IsMovingTile(int index){
+            return IsMovingTile(GetTile(index));
+        }
+        public bool IsMovingTile(VTile vTile){
+            return movingTiles.Exists(_=>_.Index == vTile.Index);
         }
     }
 }

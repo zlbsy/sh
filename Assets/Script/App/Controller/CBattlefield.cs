@@ -21,8 +21,9 @@ namespace App.Controller{
             show_move_tiles,
 
         }
-        private BattleMode _battleMode;
         public BattleMode battleMode{ get; set;}
+        public BattleManager manager{ get; set;}
+        public BattleTilesManager tilesManager{ get; set;}
         public override IEnumerator OnLoad( Request request ) 
         {  
             battlefieldId = request.Get<int>("battlefieldId");
@@ -58,7 +59,7 @@ namespace App.Controller{
             vBaseMap.UpdateView();
             vBaseMap.transform.parent.localScale = Vector3.one;
             vBaseMap.MoveToCenter();
-            BattleManager.Init(this);
+            base.InitMap();
             App.Util.LSharp.LSharpScript.Instance.Analysis(battlefieldMaster.script);
         }
 
@@ -66,13 +67,12 @@ namespace App.Controller{
             switch (battleMode)
             {
                 case BattleMode.none:
-                    BattleManager.ClickNodeMode(index);
+                    manager.ClickNoneNode(index);
+                    break;
+                case BattleMode.show_move_tiles:
+                    manager.ClickMovingNode(index);
                     break;
             }
-            if (battleMode == BattleMode.none)
-            {
-            }
-            //vBaseMap.SetTilesColor(index);
             return;
             App.Model.Master.MBaseMap topMapMaster = BaseMapCacher.Instance.Get(mBaseMap.MapId);
             Vector2 coordinate = topMapMaster.GetCoordinateFromIndex(index);
@@ -87,8 +87,10 @@ namespace App.Controller{
         public override void OnClickTile(App.Model.MTile tile){
             
         }
-        public void OnDestroy(){
-            BattleManager.Destory();
+        protected override void InitManager(){
+            base.InitManager();
+            manager = new BattleManager(this, mBaseMap, vBaseMap);
+            tilesManager = new BattleTilesManager(this, mBaseMap, vBaseMap);
         }
 	}
 }

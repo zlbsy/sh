@@ -14,8 +14,14 @@ namespace App.View{
         [SerializeField]public SpriteRenderer buildingSprite;
         [SerializeField]public SpriteRenderer lineSprite;
         [SerializeField]public TextMesh tileName;
+        [HideInInspector]public int movingPower;
+        [HideInInspector]public bool isChecked;
         private int index = 0;
         private VBaseMap vBaseMap;
+        public void SearchInit(){
+            movingPower = 0;
+            isChecked = false;
+        }
         void Start(){
             tileName.GetComponent<MeshRenderer>().sortingOrder = 5;
         }

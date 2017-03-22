@@ -9,24 +9,49 @@ using App.View;
 
 namespace App.Util.Battle{
     public class BattleManager{
-        private static CBattlefield cBattlefield;
-        private static App.Model.Master.MBaseMap topMapMaster;
-        public static void Init(CBattlefield controller){
+        private CBattlefield cBattlefield;
+        private MBaseMap mBaseMap;
+        private VBaseMap vBaseMap;
+        private App.Model.Master.MBaseMap baseMapMaster;
+        public BattleManager(CBattlefield controller, MBaseMap model, VBaseMap view){
             cBattlefield = controller;
-            topMapMaster = BaseMapCacher.Instance.Get(cBattlefield.GetMBaseMap().MapId);
-            BattleTilesManager.Init(cBattlefield, topMapMaster);
+            mBaseMap = model;
+            vBaseMap = view;
+            baseMapMaster = BaseMapCacher.Instance.Get(mBaseMap.MapId);
         }
-        public static void ClickNodeMode(int index){
-            Vector2 coordinate = topMapMaster.GetCoordinateFromIndex(index);
+        public void ClickNoneNode(int index){
+            MCharacter mCharacter = GetCharacter(index);
+            if (mCharacter != null)
+            {
+                cBattlefield.tilesManager.ShowCharacterMovingArea(mCharacter);
+            }
+            /*
             List<VCharacter> vCharacters = cBattlefield.GetVBaseMap().Characters;
             VCharacter vCharacter = cBattlefield.GetVBaseMap().Characters.Find(_=>_.ViewModel.CoordinateX.Value == coordinate.x && _.ViewModel.CoordinateY.Value == coordinate.y);
             if (vCharacter != null)
             {
-                BattleTilesManager.ShowCharacterMovingArea(vCharacter, index, coordinate);
-            }
+                cBattlefield.tilesManager.ShowCharacterMovingArea(vCharacter, index, coordinate);
+            }*/
         }
-        public static void Destory(){
-            
+        public void ClickMovingNode(int index){
+            MCharacter mCharacter = GetCharacter(index);
+            if (mCharacter != null)
+            {
+                return;
+            }
+            if (cBattlefield.tilesManager.IsMovingTile(index))
+            {
+                
+            }
+            else
+            {
+                
+            }
+
+        }
+        public MCharacter GetCharacter(int index){
+            Vector2 coordinate = baseMapMaster.GetCoordinateFromIndex(index);
+            MCharacter mCharacter = System.Array.Find(mBaseMap.Characters, _=>_.CoordinateX == coordinate.x && _.CoordinateY == coordinate.y);
         }
     }
 }
