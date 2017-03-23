@@ -29,5 +29,6 @@ namespace App.ViewModel
         public VMProperty<float> Y = new VMProperty<float>();
         public VMProperty<int> CoordinateX = new VMProperty<int>();
         public VMProperty<int> CoordinateY = new VMProperty<int>();
+        public VMProperty<Direction> Direction = new VMProperty<Direction>();
 	}
 }

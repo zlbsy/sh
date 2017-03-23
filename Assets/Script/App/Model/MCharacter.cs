@@ -25,6 +25,10 @@ namespace App.Model{
         block,
         hert,
 	}
+    public enum Direction{
+        left,
+        right
+    }
 	public class MCharacter : MBase {
 		public MCharacter(){
 			viewModel = new VMCharacter ();
@@ -112,6 +116,14 @@ namespace App.Model{
             }
             get{ 
                 return this.ViewModel.Y.Value;
+            }
+        }
+        public Direction Direction{
+            set{
+                this.ViewModel.Direction.Value = value;
+            }
+            get{ 
+                return this.ViewModel.Direction.Value;
             }
         }
         public int Hp{

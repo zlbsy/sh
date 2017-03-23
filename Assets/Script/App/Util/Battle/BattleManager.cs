@@ -6,10 +6,12 @@ using App.Model;
 using App.Controller;
 using App.Util.Cacher;
 using App.View;
+using Holoville.HOTween;
 
 namespace App.Util.Battle{
     public class BattleManager{
         private CBattlefield cBattlefield;
+        private MCharacter mCharacter;
         private MBaseMap mBaseMap;
         private VBaseMap vBaseMap;
         private App.Model.Master.MBaseMap baseMapMaster;
@@ -23,15 +25,9 @@ namespace App.Util.Battle{
             MCharacter mCharacter = GetCharacter(index);
             if (mCharacter != null)
             {
+                this.mCharacter = mCharacter;
                 cBattlefield.tilesManager.ShowCharacterMovingArea(mCharacter);
             }
-            /*
-            List<VCharacter> vCharacters = cBattlefield.GetVBaseMap().Characters;
-            VCharacter vCharacter = cBattlefield.GetVBaseMap().Characters.Find(_=>_.ViewModel.CoordinateX.Value == coordinate.x && _.ViewModel.CoordinateY.Value == coordinate.y);
-            if (vCharacter != null)
-            {
-                cBattlefield.tilesManager.ShowCharacterMovingArea(vCharacter, index, coordinate);
-            }*/
         }
         public void ClickMovingNode(int index){
             MCharacter mCharacter = GetCharacter(index);
@@ -41,15 +37,45 @@ namespace App.Util.Battle{
             }
             if (cBattlefield.tilesManager.IsMovingTile(index))
             {
-                Vector2 vec = new Vector2(mCharacter.CoordinateX, mCharacter.CoordinateY);
-                VTile startTile = cBattlefield.tilesManager.GetTile(vec);
-                VTile endTile = cBattlefield.tilesManager.GetTile(index);
-                List<VTile> tiles = cBattlefield.aStar.Search(startTile, endTile);
+                Vector2 vec = new Vector2(this.mCharacter.CoordinateX, this.mCharacter.CoordinateY);
+                VTile startTile = cBattlefield.mapSearch.GetTile(vec);
+                VTile endTile = cBattlefield.mapSearch.GetTile(index);
 
+                Holoville.HOTween.Core.TweenDelegate.TweenCallback moveComplete = () =>
+                    {
+                        this.mCharacter.Action = ActionType.stand;
+                        cBattlefield.tilesManager.ClearMovingTiles();
+                        cBattlefield.battleMode = CBattlefield.BattleMode.move_end;
+                    };
+                
+                List<VTile> tiles = cBattlefield.aStar.Search(startTile, endTile);
+                if (tiles.Count > 0)
+                {
+                    this.mCharacter.Action = ActionType.move;
+                    cBattlefield.battleMode = CBattlefield.BattleMode.moving;
+                    Sequence sequence = new Sequence();
+                    int length = 0;
+                    foreach (VTile tile in tiles)
+                    {
+                        TweenParms tweenParms = new TweenParms().Prop("X", tile.transform.localPosition.x, false).Prop("Y", tile.transform.localPosition.y, false).Ease(EaseType.Linear);
+                        if (tile.Index == endTile.Index)
+                        {
+                            tweenParms.OnComplete(moveComplete);
+                        }
+                        sequence.Append(HOTween.To(this.mCharacter, 0.5f, tweenParms));
+                    }
+                    sequence.Play();
+                }
+                else
+                {
+                    moveComplete();
+                }
             }
             else
             {
-                 
+                this.mCharacter = null;
+                cBattlefield.tilesManager.ClearMovingTiles();
+                cBattlefield.battleMode = CBattlefield.BattleMode.none;
             }
 
         }

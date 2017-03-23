@@ -14,7 +14,7 @@ namespace App.Controller{
     public class CBaseMap : CScene {
         [SerializeField]protected VBaseMap vBaseMap;
         protected MBaseMap mBaseMap;
-        public App.Util.Search.TileMap tileMapManager{ get; set;}
+        public App.Util.Search.TileMap mapSearch{ get; set;}
         public App.Util.Search.AStar aStar{ get; set;}
         public App.Util.Search.BreadthFirst breadthFirst{ get; set;}
         public override IEnumerator OnLoad( Request request ) 
@@ -23,7 +23,7 @@ namespace App.Controller{
             yield break;
         }
         protected virtual void InitManager(){
-            tileMapManager = new App.Util.Search.TileMap(mBaseMap, vBaseMap);
+            mapSearch = new App.Util.Search.TileMap(mBaseMap, vBaseMap);
             aStar = new App.Util.Search.AStar(this, mBaseMap, vBaseMap);
             breadthFirst = new App.Util.Search.BreadthFirst(this, mBaseMap, vBaseMap);
         }

@@ -19,6 +19,8 @@ namespace App.Controller{
         {
             none,
             show_move_tiles,
+            moving,
+            move_end
 
         }
         public BattleMode battleMode{ get; set;}

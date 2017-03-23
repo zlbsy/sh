@@ -74,6 +74,9 @@ namespace App.View{
                     VTile vTile = tileUnits[i];
                     obj.transform.eulerAngles = new Vector3(-30f, 0f, 0f);
                     obj.transform.localPosition = vTile.transform.localPosition;
+                    mCharacter.X = obj.transform.localPosition.x;
+                    mCharacter.Y = obj.transform.localPosition.y;
+
                 }
                 else
                 {
@@ -115,7 +118,7 @@ namespace App.View{
                 obj.gameObject.SetActive (true);
                 App.Model.MTile building = System.Array.Find(ViewModel.Tiles.Value, _=>_.x == widthCount && _.y == heightCount);
                 //if(building != null)Debug.LogError(widthCount + ","+heightCount + ", " + building.Master);
-                obj.SetData(heightCount * baseMapMaster.width + widthCount, tile.id, building != null ? building.Master.id : 0);
+                obj.SetData(heightCount * baseMapMaster.width + widthCount, widthCount, heightCount, tile.id, building != null ? building.Master.id : 0);
                 widthCount++;
                 if (widthCount >= baseMapMaster.width)
                 {

@@ -25,29 +25,22 @@ namespace App.Util.Battle{
             vBaseMap.SetTilesColor(movingTiles, Color.blue);
             cBattlefield.battleMode = CBattlefield.BattleMode.show_move_tiles;
         }
-        /*public List<VTile> GetNeighboringTiles(Vector2 coordinate){
-            List<Vector2> coordinates = cBattlefield.tileMapManager.GetNeighboringCoordinates(coordinate);
-            List<VTile> tiles = new List<VTile>();
-            foreach(Vector2 vec in coordinates){
-                int i = (int)vec.y * vBaseMap.mapWidth + (int)vec.x;
-                VTile tile = vBaseMap.tileUnits[i];
-                tiles.Add(tile);
-            }
-            return tiles;
-        }*/
-        public VTile GetTile(int index){
-            Vector2 coordinate = baseMapMaster.GetCoordinateFromIndex(index);
-            return GetTile(coordinate);
-        }
-        public VTile GetTile(Vector2 coordinate){
-            int i = (int)coordinate.y * vBaseMap.mapWidth + (int)coordinate.x;
-            return vBaseMap.tileUnits[i];
+        public void ShowCharacterAttackArea(MCharacter mCharacter){
+            movingTiles = cBattlefield.breadthFirst.Search(mCharacter);
+            vBaseMap.SetTilesColor(movingTiles, Color.blue);
+            //cBattlefield.battleMode = CBattlefield.BattleMode.show_move_tiles;
         }
         public bool IsMovingTile(int index){
-            return IsMovingTile(GetTile(index));
+            return IsMovingTile(cBattlefield.mapSearch.GetTile(index));
         }
         public bool IsMovingTile(VTile vTile){
             return movingTiles.Exists(_=>_.Index == vTile.Index);
+        }
+        public void ClearMovingTiles(){
+            foreach (VTile tile in movingTiles)
+            {
+                vBaseMap.SetTilesColor(movingTiles, Color.white);
+            }
         }
     }
 }

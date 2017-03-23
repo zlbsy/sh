@@ -14,24 +14,33 @@ namespace App.View{
         [SerializeField]public SpriteRenderer buildingSprite;
         [SerializeField]public SpriteRenderer lineSprite;
         [SerializeField]public TextMesh tileName;
-        [HideInInspector]public int movingPower;
-        [HideInInspector]public bool isChecked;
-        private int index = 0;
+
+        public int MovingPower{ get; set;}
+        public bool IsChecked{ get; set;}
+        public int Index{ get; set;}
+        public int CoordinateX{ get; set;}
+        public int CoordinateY{ get; set;}
+        public int G{ get; set;}
+        public int H{ get; set;}
+        public int F{ get; set;}
+        public int NodeIndex{ get; set;}
+        public bool IsOpen{ get; set;}
+        public VTile ParentNode{ get; set;}
+
         private VBaseMap vBaseMap;
         public void SearchInit(){
-            movingPower = 0;
-            isChecked = false;
+            MovingPower = 0;
+            IsChecked = false;
+            IsOpen = false;
+            ParentNode = null;
         }
         void Start(){
             tileName.GetComponent<MeshRenderer>().sortingOrder = 5;
         }
-        public int Index{
-            get{ 
-                return index;
-            }
-        }
-        public void SetData(int index, int tileId, int subId = 0){
-            this.index = index;
+        public void SetData(int index, int cx, int cy, int tileId, int subId = 0){
+            this.Index = index;
+            this.CoordinateX = cx;
+            this.CoordinateY = cy;
             tileSprite.sprite = App.Model.Master.MTile.GetIcon(tileId);
             tileName.gameObject.SetActive(false);
             if (lineSprite.sprite == null)
@@ -71,7 +80,7 @@ namespace App.View{
             {
                 yield break;
             }
-            this.Controller.SendMessage("OnClickTile", this.index);
+            this.Controller.SendMessage("OnClickTile", this.Index);
         }
         public void SetColor(Color color){
             tileSprite.color = color;

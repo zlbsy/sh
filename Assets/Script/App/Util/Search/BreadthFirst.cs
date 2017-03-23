@@ -31,32 +31,32 @@ namespace App.Util.Search{
             }
             int i = mCharacter.CoordinateY * vBaseMap.mapWidth + mCharacter.CoordinateX;
             VTile tile = vBaseMap.tileUnits[i];
-            tile.movingPower = movePower;
+            tile.MovingPower = movePower;
             LoopSearch(tile);
             //Vector2 start = new Vector2(vCharacter.ViewModel.CoordinateX.Value, vCharacter.ViewModel.CoordinateY.Value);
 
             return tiles;
         }
         private void LoopSearch(VTile vTile){
-            if (vTile.movingPower <= 0)
+            if (vTile.MovingPower <= 0)
             {
                 return;
             }
-            if (!vTile.isChecked)
+            if (!vTile.IsChecked)
             {
-                vTile.isChecked = true;
+                vTile.IsChecked = true;
                 tiles.Add(vTile);
             }
-            List<Vector2> coordinates = cBaseMap.tileMapManager.GetNeighboringCoordinates(baseMapMaster.GetCoordinateFromIndex(vTile.Index));
+            List<Vector2> coordinates = cBaseMap.mapSearch.GetNeighboringCoordinates(baseMapMaster.GetCoordinateFromIndex(vTile.Index));
             foreach (Vector2 vec in coordinates)
             {
                 VTile tile = vBaseMap.tileUnits[(int)vec.y * vBaseMap.mapWidth + (int)vec.x];
-                if (tile.isChecked && tile.movingPower >= vTile.movingPower)
+                if (tile.IsChecked && tile.MovingPower >= vTile.MovingPower)
                 {
                     continue;
                 }
                 int cost = 1;
-                tile.movingPower = vTile.movingPower - cost;
+                tile.MovingPower = vTile.MovingPower - cost;
 
                 LoopSearch(tile);
             }

@@ -17,6 +17,7 @@ namespace App.View{
         [SerializeField]SpriteRenderer imgHead;
         [SerializeField]SpriteRenderer imgHat;
         [SerializeField]SpriteRenderer imgWeapon;
+        [SerializeField]RectTransform content;
         private int animationIndex = 0;
         private Animator _animator;
         private Animator animator{
@@ -44,6 +45,11 @@ namespace App.View{
                 oldVm.Clothes.OnValueChanged -= ClothesChanged;
                 oldVm.Weapon.OnValueChanged -= WeaponChanged;
                 oldVm.Action.OnValueChanged -= ActionChanged;
+                oldVm.CoordinateX.OnValueChanged -= CoordinateXChanged;
+                oldVm.CoordinateY.OnValueChanged -= CoordinateYChanged;
+                oldVm.X.OnValueChanged -= XChanged;
+                oldVm.Y.OnValueChanged -= YChanged;
+                oldVm.Direction.OnValueChanged -= DirectionChanged;
             }
             if (ViewModel!=null)
             {
@@ -53,7 +59,68 @@ namespace App.View{
                 ViewModel.Clothes.OnValueChanged += ClothesChanged;
                 ViewModel.Weapon.OnValueChanged += WeaponChanged;
                 ViewModel.Action.OnValueChanged += ActionChanged;
+                ViewModel.CoordinateX.OnValueChanged += CoordinateXChanged;
+                ViewModel.CoordinateY.OnValueChanged += CoordinateYChanged;
+                ViewModel.X.OnValueChanged += XChanged;
+                ViewModel.Y.OnValueChanged += YChanged;
+                ViewModel.Direction.OnValueChanged += DirectionChanged;
             }
+        }
+        private App.Controller.CBaseMap cBaseMap{
+            get{
+                return this.Controller as App.Controller.CBaseMap;
+            }
+        }
+        private void DirectionChanged(App.Model.Direction oldvalue, App.Model.Direction newvalue)
+        {
+            content.localScale = new Vector3(newvalue == App.Model.Direction.left ? 1 : -1, 1, 1);
+        }
+        private void XChanged(float oldvalue, float newvalue)
+        {
+            if (cBaseMap == null)
+            {
+                return;
+            }
+            this.transform.localPosition = new Vector3(newvalue, this.transform.localPosition.y, 0f);
+            if (newvalue > oldvalue)
+            {
+                ViewModel.Direction.Value = App.Model.Direction.right;
+            }
+            else if (newvalue < oldvalue)
+            {
+                ViewModel.Direction.Value = App.Model.Direction.left;
+            }
+        }
+        private void YChanged(float oldvalue, float newvalue)
+        {
+            if (cBaseMap == null)
+            {
+                return;
+            }
+            this.transform.localPosition = new Vector3(this.transform.localPosition.x, newvalue, 0f);
+        }
+        private void CoordinateXChanged(int oldvalue, int newvalue)
+        {
+            if (cBaseMap == null)
+            {
+                return;
+            }
+            VBaseMap vBaseMap = cBaseMap.GetVBaseMap();
+            int i = ViewModel.CoordinateY.Value * vBaseMap.mapWidth + newvalue;
+            VTile vTile = vBaseMap.tileUnits[i];
+            ViewModel.X.Value = vTile.transform.localPosition.x;
+        }
+        private void CoordinateYChanged(int oldvalue, int newvalue)
+        {
+            if (cBaseMap == null)
+            {
+                return;
+            }
+            VBaseMap vBaseMap = cBaseMap.GetVBaseMap();
+            int i = ViewModel.CoordinateY.Value * vBaseMap.mapWidth + newvalue;
+            VTile vTile = vBaseMap.tileUnits[i];
+            //this.transform.localPosition = vTile.transform.localPosition;
+            ViewModel.Y.Value = vTile.transform.localPosition.y;
         }
         private void ActionChanged(App.Model.ActionType oldvalue, App.Model.ActionType newvalue)
         {
