@@ -29,6 +29,7 @@ namespace App.Controller{
         private bool _isClose;
         private Vector2 _savePosition;
         private static int dialogIndex = 0;
+        protected Canvas canvas;
         protected System.Action closeEvent;
         public override IEnumerator Start()
         {
@@ -78,7 +79,7 @@ namespace App.Controller{
                 }
                 canvasGroup.alpha = 0;
             }
-            Canvas canvas = this.GetComponent<Canvas>();
+            canvas = this.GetComponent<Canvas>();
             if (canvas != null)
             {
                 canvas.sortingOrder = ++App.Util.Global.DialogSortOrder;
@@ -123,7 +124,10 @@ namespace App.Controller{
                 return;
             }
             _isClose = true;
-            App.Util.Global.DialogSortOrder--;
+            if (canvas != null)
+            {
+                App.Util.Global.DialogSortOrder--;
+            }
             if (background != null)
             {
                 background.transform.SetAsLastSibling();

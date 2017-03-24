@@ -20,12 +20,22 @@ namespace App.Controller{
         /// 覆盖CDialog的Delete，以便重复利用
         /// </summary>
         public override void Delete(){
-            Holoville.HOTween.HOTween.To(background, 0.1f, new Holoville.HOTween.TweenParms().Prop("color", new Color(0,0,0,0)).OnComplete(()=>{
+            if (background != null)
+            {
+                Holoville.HOTween.HOTween.To(background, 0.1f, new Holoville.HOTween.TweenParms().Prop("color", new Color(0,0,0,0)).OnComplete(()=>{
+                    this.gameObject.SetActive(false);
+                    if(closeEvent != null){
+                        closeEvent();
+                    }
+                }));
+            }
+            else
+            {
                 this.gameObject.SetActive(false);
                 if(closeEvent != null){
                     closeEvent();
                 }
-            }));
+            }
         }
 	}
 }

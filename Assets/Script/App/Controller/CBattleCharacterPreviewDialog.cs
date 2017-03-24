@@ -12,7 +12,7 @@ using App.View.Character;
 
 
 namespace App.Controller{
-    public class CBattleCharacterPreviewDialog : CDialog {
+    public class CBattleCharacterPreviewDialog : CSingleDialog {
         [SerializeField]private VCharacter vCharacter;
         [SerializeField]private VCharacterIcon icon;
         public override IEnumerator OnLoad( Request request ) 

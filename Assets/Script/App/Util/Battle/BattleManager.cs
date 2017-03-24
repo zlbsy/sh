@@ -76,6 +76,7 @@ namespace App.Util.Battle{
             {
                 this.mCharacter = null;
                 cBattlefield.tilesManager.ClearMovingTiles();
+                cBattlefield.HideBattleCharacterPreviewDialog();
                 cBattlefield.battleMode = CBattlefield.BattleMode.none;
             }
 

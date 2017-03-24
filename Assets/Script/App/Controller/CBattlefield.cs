@@ -99,6 +99,9 @@ namespace App.Controller{
             battleCharacterPreview.gameObject.SetActive(true);
             this.StartCoroutine(battleCharacterPreview.OnLoad(null));
         }
+        public void HideBattleCharacterPreviewDialog(){
+            battleCharacterPreview.Close();
+        }
         protected override void InitManager(){
             base.InitManager();
             manager = new BattleManager(this, mBaseMap, vBaseMap);
