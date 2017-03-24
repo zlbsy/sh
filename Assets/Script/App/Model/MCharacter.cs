@@ -29,6 +29,11 @@ namespace App.Model{
         left,
         right
     }
+    public enum Belong{
+        self,
+        friend,
+        enemy
+    }
 	public class MCharacter : MBase {
 		public MCharacter(){
 			viewModel = new VMCharacter ();
@@ -156,6 +161,14 @@ namespace App.Model{
             }
             get{ 
                 return this.ViewModel.Star.Value;
+            }
+        }
+        public Belong Belong{
+            set{
+                this.ViewModel.Belong.Value = value;
+            }
+            get{ 
+                return this.ViewModel.Belong.Value;
             }
         }
 		public ActionType Action{

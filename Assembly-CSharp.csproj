@@ -51,6 +51,7 @@
      <Compile Include="Assets\Script\App\Controller\CArea.cs" />
      <Compile Include="Assets\Script\App\Controller\CBase.cs" />
      <Compile Include="Assets\Script\App\Controller\CBaseMap.cs" />
+     <Compile Include="Assets\Script\App\Controller\CBattleCharacterPreviewDialog.cs" />
      <Compile Include="Assets\Script\App\Controller\CBattlefield.cs" />
      <Compile Include="Assets\Script\App\Controller\CBuildingDialog.cs" />
      <Compile Include="Assets\Script\App\Controller\CCharacterDetailDialog.cs" />

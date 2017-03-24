@@ -14,6 +14,7 @@ namespace App.Controller{
     public class CBattlefield : CBaseMap {
         [SerializeField]Text title;
         [SerializeField]VBottomMenu operatingMenu;
+        [SerializeField]CBattleCharacterPreviewDialog battleCharacterPreview;
         private int battlefieldId;
         //private MCharacter[] owns;
         List<int> characterIds;
@@ -30,6 +31,7 @@ namespace App.Controller{
         public BattleTilesManager tilesManager{ get; set;}
         public override IEnumerator OnLoad( Request request ) 
         {  
+            battleCharacterPreview.gameObject.SetActive(false);
             battlefieldId = request.Get<int>("battlefieldId");
             characterIds = request.Get<List<int>>("characterIds");
             //owns = System.Array.FindAll(App.Util.Global.SUser.self.characters, _=>characterIds.IndexOf(_.Id) >= 0);
@@ -45,6 +47,7 @@ namespace App.Controller{
             for (int i = 0; i < characterIds.Count; i++)
             {
                 MCharacter mCharacter = System.Array.Find(App.Util.Global.SUser.self.characters, _=>_.Id==characterIds[i]);
+                mCharacter.Belong = Belong.self;
                 App.Model.Master.MBattleOwn mBattleOwn = battlefieldMaster.owns[i];
                 mCharacter.CoordinateX = mBattleOwn.x;
                 mCharacter.CoordinateY = mBattleOwn.y;
@@ -52,6 +55,7 @@ namespace App.Controller{
             }
             foreach(App.Model.Master.MBattleNpc battleNpc in battlefieldMaster.enemys){
                 MCharacter mCharacter = NpcCacher.Instance.GetFromBattleNpc(battleNpc);
+                mCharacter.Belong = Belong.enemy;
                 characters.Add(mCharacter);
             }
             //MCharacter[] characters = new MCharacter[owns.Length + enemys.Count];
@@ -90,6 +94,10 @@ namespace App.Controller{
         }
         public void OpenOperatingMenu(){
             operatingMenu.Open();
+        }
+        public void OpenBattleCharacterPreviewDialog(){
+            battleCharacterPreview.gameObject.SetActive(true);
+            this.StartCoroutine(battleCharacterPreview.OnLoad(null));
         }
         protected override void InitManager(){
             base.InitManager();

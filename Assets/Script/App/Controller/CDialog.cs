@@ -14,13 +14,15 @@ namespace App.Controller{
         Middle,//从中间扩大
         Down,//从下面上升
         None,//无
-        Fade//逐渐显示
+        Fade,//逐渐显示
+        Up,//从上面下降
     }
     /// <summary>
     /// 新窗口
     /// </summary>
     public class CDialog : CBase {
         [SerializeField]OpenType opentype;
+        [SerializeField]bool noBackground;
         Transform panel;
         protected UnityEngine.UI.Image background;
         [HideInInspector]public int index;
@@ -39,15 +41,21 @@ namespace App.Controller{
         public virtual void OnEnable(){
             if (panel == null){
                 panel = this.transform.FindChild("Panel");
-                GameObject backgroundObj = App.Util.Global.SceneManager.LoadPrefab("DialogBackground");
-                backgroundObj.transform.SetParent(this.transform);
-                RectTransform rect = backgroundObj.GetComponent<RectTransform>();
-                rect.offsetMin = new Vector2(0f, 0f);
-                rect.offsetMax = new Vector2(0f, 0f);
-                background = backgroundObj.GetComponent<UnityEngine.UI.Image>();
+                if (!noBackground)
+                {
+                    GameObject backgroundObj = App.Util.Global.SceneManager.LoadPrefab("DialogBackground");
+                    backgroundObj.transform.SetParent(this.transform);
+                    RectTransform rect = backgroundObj.GetComponent<RectTransform>();
+                    rect.offsetMin = new Vector2(0f, 0f);
+                    rect.offsetMax = new Vector2(0f, 0f);
+                    background = backgroundObj.GetComponent<UnityEngine.UI.Image>();
+                }
             }
-            background.transform.SetAsFirstSibling();
-            background.color = new Color(0, 0, 0, 0);
+            if (background != null)
+            {
+                background.transform.SetAsFirstSibling();
+                background.color = new Color(0, 0, 0, 0);
+            }
             if (opentype == OpenType.Middle)
             {
                 panel.localScale = new Vector3(panel.localScale.x, 0, panel.localScale.z);
@@ -56,6 +64,11 @@ namespace App.Controller{
                 RectTransform trans = panel as RectTransform;
                 _savePosition = trans.anchoredPosition;
                 trans.anchoredPosition = new Vector2(trans.anchoredPosition.x, trans.sizeDelta.y * -0.5f);
+            }else if (opentype == OpenType.Up)
+            {
+                RectTransform trans = panel as RectTransform;
+                _savePosition = trans.anchoredPosition;
+                trans.anchoredPosition = new Vector2(trans.anchoredPosition.x, trans.sizeDelta.y * 0.5f);
             }else if (opentype == OpenType.Fade)
             {
                 CanvasGroup canvasGroup = panel.gameObject.GetComponent<CanvasGroup>();
@@ -65,7 +78,11 @@ namespace App.Controller{
                 }
                 canvasGroup.alpha = 0;
             }
-            this.GetComponent<Canvas>().sortingOrder = ++App.Util.Global.DialogSortOrder;
+            Canvas canvas = this.GetComponent<Canvas>();
+            if (canvas != null)
+            {
+                canvas.sortingOrder = ++App.Util.Global.DialogSortOrder;
+            }
         }
         /// <summary>
         /// 设置新窗口唯一标示索引
@@ -83,11 +100,14 @@ namespace App.Controller{
             {
                 closeEvent = null;
             }
-            HOTween.To(background, 0.1f, new TweenParms().Prop("color", new Color(0,0,0,0.6f)));
+            if (background != null)
+            {
+                HOTween.To(background, 0.1f, new TweenParms().Prop("color", new Color(0,0,0,0.6f)));
+            }
             if (opentype == OpenType.Middle)
             {
                 HOTween.To(panel, 0.3f, new TweenParms().Prop("localScale", new Vector3(1f, 1f, 1f)));
-            }else if (opentype == OpenType.Down)
+            }else if (opentype == OpenType.Down || opentype == OpenType.Up)
             {
                 HOTween.To(panel as RectTransform, 0.3f, new TweenParms().Prop("anchoredPosition", _savePosition));
             }else if (opentype == OpenType.Fade)
@@ -104,7 +124,10 @@ namespace App.Controller{
             }
             _isClose = true;
             App.Util.Global.DialogSortOrder--;
-            background.transform.SetAsLastSibling();
+            if (background != null)
+            {
+                background.transform.SetAsLastSibling();
+            }
             if (opentype == OpenType.Middle)
             {
                 HOTween.To(panel, 0.2f, new TweenParms().Prop("localScale", new Vector3(1f, 0, 1f)).OnComplete(Delete));
@@ -113,6 +136,11 @@ namespace App.Controller{
             {
                 RectTransform trans = panel as RectTransform;
                 HOTween.To(panel as RectTransform, 0.3f, new TweenParms().Prop("anchoredPosition", new Vector2(trans.anchoredPosition.x, trans.sizeDelta.y * -0.5f)).OnComplete(Delete));
+            }
+            else if (opentype == OpenType.Up)
+            {
+                RectTransform trans = panel as RectTransform;
+                HOTween.To(panel as RectTransform, 0.3f, new TweenParms().Prop("anchoredPosition", new Vector2(trans.anchoredPosition.x, trans.sizeDelta.y * 0.5f)).OnComplete(Delete));
             }
             else if (opentype == OpenType.Fade)
             {
@@ -124,12 +152,25 @@ namespace App.Controller{
             }
         }
         public virtual void Delete(){
-            HOTween.To(background, 0.1f, new TweenParms().Prop("color", new Color(0,0,0,0)).OnComplete(()=>{
+            if (background != null)
+            {
+                HOTween.To(background, 0.1f, new TweenParms().Prop("color", new Color(0, 0, 0, 0)).OnComplete(() =>
+                        {
+                            App.Util.Global.SceneManager.DestoryDialog(this);
+                            if (closeEvent != null)
+                            {
+                                closeEvent();
+                            }
+                        }));
+            }
+            else
+            {
                 App.Util.Global.SceneManager.DestoryDialog(this);
-                if(closeEvent != null){
+                if (closeEvent != null)
+                {
                     closeEvent();
                 }
-            }));
+            }
         }
 	}
 }

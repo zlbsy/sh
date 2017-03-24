@@ -124,8 +124,8 @@ namespace App.View{
         }
         private void ActionChanged(App.Model.ActionType oldvalue, App.Model.ActionType newvalue)
         {
-            animationIndex = 0;
             animator.Play(newvalue.ToString());
+            animationIndex = 0;
             UpdateView();
             /*if (newvalue == App.Model.ActionType.stand || newvalue == App.Model.ActionType.block)
             {
