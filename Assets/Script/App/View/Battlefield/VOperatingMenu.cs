@@ -9,12 +9,10 @@ using App.Util;
 using App.Controller;
 using App.View.Common;
 
-namespace App.View.Top{
-    public class VStrengthenMenu : VBottomMenu{
+namespace App.View.Battlefield{
+    public class VOperatingMenu : VBottomMenu{
         public void OpenBuildingDialog(){
-            (this.Controller as CTop).CloseMenu(()=>{
-                StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.BuildingDialog));
-            });
+            
         }
         public override void Open()
         {
@@ -26,11 +24,6 @@ namespace App.View.Top{
                     complete();
                 }
             }));
-        }
-        public void ClickLevelUp(){
-            /*CTalkDialog.ToShow(2,"这是一个测试，测试对话。这是一个测试，测试对话。这是一个测试，测试对话。",true, ()=>{
-                CTalkDialog.ToShow(1,"这是一个测试，测试对话。这是一个测试，测试对话。这是一个测试，测试对话。", false);
-            });*/
         }
 	}
 }

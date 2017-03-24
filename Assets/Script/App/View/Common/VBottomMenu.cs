@@ -7,9 +7,10 @@ using App.ViewModel;
 using Holoville.HOTween;
 using App.Util;
 using App.Controller;
+using App.View.Common;
 
-namespace App.View{
-    public class VTopMenu : VBase{
+namespace App.View.Common{
+    public class VBottomMenu : VBase{
         public virtual void Open(){
         }
         public virtual void Close(System.Action complete){

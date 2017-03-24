@@ -7,9 +7,10 @@ using App.ViewModel;
 using Holoville.HOTween;
 using App.Controller;
 using App.Util;
+using App.View.Common;
 
 namespace App.View.Top{
-    public class VTopFooterMenu : VTopMenu{
+    public class VTopFooterMenu : VBottomMenu{
         [SerializeField]private Transform mainButton;
         [SerializeField]private RectTransform mainMenu;
         public void OpenMenu(){

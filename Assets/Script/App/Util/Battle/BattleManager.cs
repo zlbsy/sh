@@ -46,6 +46,7 @@ namespace App.Util.Battle{
                         this.mCharacter.Action = ActionType.stand;
                         cBattlefield.tilesManager.ClearMovingTiles();
                         cBattlefield.battleMode = CBattlefield.BattleMode.move_end;
+                        cBattlefield.OpenOperatingMenu();
                     };
                 
                 List<VTile> tiles = cBattlefield.aStar.Search(startTile, endTile);
@@ -54,7 +55,6 @@ namespace App.Util.Battle{
                     this.mCharacter.Action = ActionType.move;
                     cBattlefield.battleMode = CBattlefield.BattleMode.moving;
                     Sequence sequence = new Sequence();
-                    int length = 0;
                     foreach (VTile tile in tiles)
                     {
                         TweenParms tweenParms = new TweenParms().Prop("X", tile.transform.localPosition.x, false).Prop("Y", tile.transform.localPosition.y, false).Ease(EaseType.Linear);

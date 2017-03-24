@@ -7,13 +7,15 @@ using App.View;
 using App.Util.Cacher;
 using UnityEngine.UI;
 using App.Util.Battle;
+using App.View.Common;
 
 
 namespace App.Controller{
     public class CBattlefield : CBaseMap {
         [SerializeField]Text title;
+        [SerializeField]VBottomMenu operatingMenu;
         private int battlefieldId;
-        private MCharacter[] owns;
+        //private MCharacter[] owns;
         List<int> characterIds;
         public enum BattleMode
         {
@@ -30,7 +32,7 @@ namespace App.Controller{
         {  
             battlefieldId = request.Get<int>("battlefieldId");
             characterIds = request.Get<List<int>>("characterIds");
-            owns = System.Array.FindAll(App.Util.Global.SUser.self.characters, _=>characterIds.IndexOf(_.Id) >= 0);
+            //owns = System.Array.FindAll(App.Util.Global.SUser.self.characters, _=>characterIds.IndexOf(_.Id) >= 0);
             yield return this.StartCoroutine(base.OnLoad(request));
         }
         protected override void InitMap(){
@@ -75,7 +77,7 @@ namespace App.Controller{
                     manager.ClickMovingNode(index);
                     break;
             }
-            return;
+            /*return;
             App.Model.Master.MBaseMap topMapMaster = BaseMapCacher.Instance.Get(mBaseMap.MapId);
             Vector2 coordinate = topMapMaster.GetCoordinateFromIndex(index);
             List<VCharacter> vCharacters = vBaseMap.Characters;
@@ -84,10 +86,10 @@ namespace App.Controller{
             if (vCharacter != null)
             {
                 base.OnClickTile(index);
-            }
+            }*/
         }
-        public override void OnClickTile(App.Model.MTile tile){
-            
+        public void OpenOperatingMenu(){
+            operatingMenu.Open();
         }
         protected override void InitManager(){
             base.InitManager();

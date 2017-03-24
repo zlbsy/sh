@@ -171,7 +171,6 @@ namespace App.Util.Search{
             init();
             this.endNode = endTile;
             bool isOver = false;
-            bool firstCheck = true;
             VTile thisPoint = startTile;
             while (!isOver)
             {

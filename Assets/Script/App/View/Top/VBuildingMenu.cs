@@ -7,9 +7,10 @@ using App.ViewModel;
 using Holoville.HOTween;
 using App.Util;
 using App.Controller;
+using App.View.Common;
 
 namespace App.View.Top{
-    public class VBuildingMenu : VTopMenu{
+    public class VBuildingMenu : VBottomMenu{
         public int currentIndex;
         public void OpenBuildingDialog(){
             (this.Controller as CTop).CloseMenu(()=>{

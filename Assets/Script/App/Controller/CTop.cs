@@ -9,6 +9,7 @@ using App.Util.Cacher;
 using Holoville.HOTween;
 using App.View.Top;
 using App.Util;
+using App.View.Common;
 
 
 namespace App.Controller{
@@ -19,7 +20,7 @@ namespace App.Controller{
         [SerializeField]GameObject menuBackground;
         [SerializeField]VHeaderFace headerFace;
         [SerializeField]VHeaderTop headerTop;
-        private VTopMenu currentMenu;
+        private VBottomMenu currentMenu;
         private MTopMap mTopMap;
         public override IEnumerator OnLoad( Request request ) 
 		{  
@@ -61,7 +62,7 @@ namespace App.Controller{
                 OpenMenu(strengthenMenu);
             }
         }
-        public void OpenMenu(VTopMenu menu){
+        public void OpenMenu(VBottomMenu menu){
             currentMenu = menu;
             currentMenu.gameObject.SetActive(true);
             vTopMap.Camera3DEnable = false;
