@@ -17,6 +17,7 @@ namespace App.Controller{
         [SerializeField]private VCharacterIcon icon;
         public override IEnumerator OnLoad( Request request ) 
         {  
+            MCharacter mCharacter = request.Get<MCharacter>("character");
             //int characterId = request.Get<int>("character_id");
             yield return StartCoroutine(base.OnLoad(request));
 		}

@@ -95,9 +95,10 @@ namespace App.Controller{
         public void OpenOperatingMenu(){
             operatingMenu.Open();
         }
-        public void OpenBattleCharacterPreviewDialog(){
+        public void OpenBattleCharacterPreviewDialog(MCharacter mCharacter){
             battleCharacterPreview.gameObject.SetActive(true);
-            this.StartCoroutine(battleCharacterPreview.OnLoad(null));
+            Request req = Request.Create("character", mCharacter);
+            this.StartCoroutine(battleCharacterPreview.OnLoad(req));
         }
         public void HideBattleCharacterPreviewDialog(){
             battleCharacterPreview.Close();

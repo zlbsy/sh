@@ -27,7 +27,7 @@ namespace App.Util.Battle{
             {
                 this.mCharacter = mCharacter;
                 cBattlefield.tilesManager.ShowCharacterMovingArea(mCharacter);
-                cBattlefield.OpenBattleCharacterPreviewDialog();
+                cBattlefield.OpenBattleCharacterPreviewDialog(this.mCharacter);
             }
         }
         public void ClickMovingNode(int index){
