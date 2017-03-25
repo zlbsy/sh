@@ -108,6 +108,7 @@ namespace App.View{
             VBaseMap vBaseMap = cBaseMap.GetVBaseMap();
             int i = ViewModel.CoordinateY.Value * vBaseMap.mapWidth + newvalue;
             VTile vTile = vBaseMap.tileUnits[i];
+            Debug.LogError("vTile = " + vTile.gameObject.name + ","+vTile.transform.localPosition.x);
             ViewModel.X.Value = vTile.transform.localPosition.x;
         }
         private void CoordinateYChanged(int oldvalue, int newvalue)
@@ -125,8 +126,8 @@ namespace App.View{
         private void ActionChanged(App.Model.ActionType oldvalue, App.Model.ActionType newvalue)
         {
             animator.Play(newvalue.ToString());
-            animationIndex = 0;
-            UpdateView();
+            //animationIndex = 0;
+            //UpdateView();
             /*if (newvalue == App.Model.ActionType.stand || newvalue == App.Model.ActionType.block)
             {
                 UpdateView();
@@ -218,6 +219,8 @@ namespace App.View{
 
         }
         public void ChangeAction(App.Model.ActionType type){
+            animator.Stop();
+            animationIndex = 0;
             ViewModel.Action.Value = type;
         }
         public void ChangeAnimationIdex(int index){

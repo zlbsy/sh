@@ -15,6 +15,7 @@ namespace App.Util.Battle{
         private MBaseMap mBaseMap;
         private VBaseMap vBaseMap;
         private App.Model.Master.MBaseMap baseMapMaster;
+        private System.Action returnAction;
         public BattleManager(CBattlefield controller, MBaseMap model, VBaseMap view){
             cBattlefield = controller;
             mBaseMap = model;
@@ -28,7 +29,25 @@ namespace App.Util.Battle{
                 this.mCharacter = mCharacter;
                 cBattlefield.tilesManager.ShowCharacterMovingArea(mCharacter);
                 cBattlefield.OpenBattleCharacterPreviewDialog(this.mCharacter);
+                int cx = mCharacter.CoordinateX;
+                int cy = mCharacter.CoordinateY;
+                Direction direction = mCharacter.Direction;
+                returnAction = () =>
+                    {
+                        this.mCharacter.CoordinateY = cy;
+                        this.mCharacter.CoordinateX = cx;
+                        this.mCharacter.Direction = direction;
+                };
             }
+        }
+        public void ClickPhysicalAttackNode(int index){
+            MCharacter mCharacter = GetCharacter(index);
+            if (mCharacter == null)
+            {
+                CharacterReturnNone();
+                return;
+            }
+            this.mCharacter.Action = ActionType.attack;
         }
         public void ClickMovingNode(int index){
             MCharacter mCharacter = GetCharacter(index);
@@ -36,7 +55,7 @@ namespace App.Util.Battle{
             {
                 return;
             }
-            if (cBattlefield.tilesManager.IsMovingTile(index))
+            if (cBattlefield.tilesManager.IsInCurrentTiles(index))
             {
                 Vector2 vec = new Vector2(this.mCharacter.CoordinateX, this.mCharacter.CoordinateY);
                 VTile startTile = cBattlefield.mapSearch.GetTile(vec);
@@ -45,8 +64,11 @@ namespace App.Util.Battle{
                 Holoville.HOTween.Core.TweenDelegate.TweenCallback moveComplete = () =>
                     {
                         this.mCharacter.Action = ActionType.stand;
-                        cBattlefield.tilesManager.ClearMovingTiles();
+                        cBattlefield.tilesManager.ClearCurrentTiles();
                         cBattlefield.battleMode = CBattlefield.BattleMode.move_end;
+                        this.mCharacter.CoordinateY = endTile.CoordinateY;
+                        this.mCharacter.CoordinateX = endTile.CoordinateX;
+                        cBattlefield.tilesManager.ShowCharacterAttackArea(this.mCharacter);
                         cBattlefield.OpenOperatingMenu();
                     };
                 
@@ -74,10 +96,7 @@ namespace App.Util.Battle{
             }
             else
             {
-                this.mCharacter = null;
-                cBattlefield.tilesManager.ClearMovingTiles();
-                cBattlefield.HideBattleCharacterPreviewDialog();
-                cBattlefield.battleMode = CBattlefield.BattleMode.none;
+                CharacterReturnNone();
             }
 
         }
@@ -85,6 +104,13 @@ namespace App.Util.Battle{
             Vector2 coordinate = baseMapMaster.GetCoordinateFromIndex(index);
             MCharacter mCharacter = System.Array.Find(mBaseMap.Characters, _=>_.CoordinateX == coordinate.x && _.CoordinateY == coordinate.y);
             return mCharacter;
+        }
+        public void CharacterReturnNone(){
+            returnAction();
+            this.mCharacter = null;
+            cBattlefield.tilesManager.ClearCurrentTiles();
+            cBattlefield.HideBattleCharacterPreviewDialog();
+            cBattlefield.battleMode = CBattlefield.BattleMode.none;
         }
     }
 }

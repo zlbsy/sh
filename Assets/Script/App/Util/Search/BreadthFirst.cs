@@ -19,33 +19,34 @@ namespace App.Util.Search{
             vBaseMap = view;
             baseMapMaster = BaseMapCacher.Instance.Get(mBaseMap.MapId);
         }
-        public List<VTile> Search(MCharacter mCharacter){
+        public List<VTile> Search(MCharacter mCharacter, int movePower = 0){
             SearchInit();
             tiles = new List<VTile>();
-            App.Model.Master.MCharacter characterMaster = mCharacter.Master;
-            int movePower = characterMaster.moving_power;
-            Debug.LogError("movePower = " + movePower);
             if (movePower == 0)
             {
-                movePower = 3;
+                App.Model.Master.MCharacter characterMaster = mCharacter.Master;
+                movePower = characterMaster.moving_power;
+                Debug.LogError("movePower = " + movePower);
+                if (movePower == 0)
+                {
+                    movePower = 2;
+                }
             }
             int i = mCharacter.CoordinateY * vBaseMap.mapWidth + mCharacter.CoordinateX;
             VTile tile = vBaseMap.tileUnits[i];
             tile.MovingPower = movePower;
             LoopSearch(tile);
-            //Vector2 start = new Vector2(vCharacter.ViewModel.CoordinateX.Value, vCharacter.ViewModel.CoordinateY.Value);
-
             return tiles;
         }
         private void LoopSearch(VTile vTile){
-            if (vTile.MovingPower <= 0)
-            {
-                return;
-            }
             if (!vTile.IsChecked)
             {
                 vTile.IsChecked = true;
                 tiles.Add(vTile);
+            }
+            if (vTile.MovingPower <= 0)
+            {
+                return;
             }
             List<Vector2> coordinates = cBaseMap.mapSearch.GetNeighboringCoordinates(baseMapMaster.GetCoordinateFromIndex(vTile.Index));
             foreach (Vector2 vec in coordinates)

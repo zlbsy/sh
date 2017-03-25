@@ -13,7 +13,7 @@ namespace App.Util.Battle{
         private MBaseMap mBaseMap;
         private VBaseMap vBaseMap;
         private App.Model.Master.MBaseMap baseMapMaster;
-        private List<VTile> movingTiles;
+        private List<VTile> currentTiles;
         public BattleTilesManager(CBattlefield controller, MBaseMap model, VBaseMap view){
             cBattlefield = controller;
             mBaseMap = model;
@@ -21,25 +21,26 @@ namespace App.Util.Battle{
             baseMapMaster = BaseMapCacher.Instance.Get(mBaseMap.MapId);
         }
         public void ShowCharacterMovingArea(MCharacter mCharacter){
-            movingTiles = cBattlefield.breadthFirst.Search(mCharacter);
-            vBaseMap.SetTilesColor(movingTiles, Color.blue);
+            currentTiles = cBattlefield.breadthFirst.Search(mCharacter);
+            vBaseMap.SetTilesColor(currentTiles, Color.blue);
             cBattlefield.battleMode = CBattlefield.BattleMode.show_move_tiles;
         }
         public void ShowCharacterAttackArea(MCharacter mCharacter){
-            movingTiles = cBattlefield.breadthFirst.Search(mCharacter);
-            vBaseMap.SetTilesColor(movingTiles, Color.blue);
+            currentTiles = cBattlefield.breadthFirst.Search(mCharacter, 1);
+            currentTiles = currentTiles.FindAll(_=>_.CoordinateX != mCharacter.CoordinateX || _.CoordinateY != mCharacter.CoordinateY);
+            vBaseMap.SetTilesColor(currentTiles, Color.red);
             //cBattlefield.battleMode = CBattlefield.BattleMode.show_move_tiles;
         }
-        public bool IsMovingTile(int index){
-            return IsMovingTile(cBattlefield.mapSearch.GetTile(index));
+        public bool IsInCurrentTiles(int index){
+            return IsInCurrentTiles(cBattlefield.mapSearch.GetTile(index));
         }
-        public bool IsMovingTile(VTile vTile){
-            return movingTiles.Exists(_=>_.Index == vTile.Index);
+        public bool IsInCurrentTiles(VTile vTile){
+            return currentTiles.Exists(_=>_.Index == vTile.Index);
         }
-        public void ClearMovingTiles(){
-            foreach (VTile tile in movingTiles)
+        public void ClearCurrentTiles(){
+            foreach (VTile tile in currentTiles)
             {
-                vBaseMap.SetTilesColor(movingTiles, Color.white);
+                vBaseMap.SetTilesColor(currentTiles, Color.white);
             }
         }
     }

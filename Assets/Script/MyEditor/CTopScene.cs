@@ -46,7 +46,7 @@ namespace App.Controller{
                     GameObject obj = GameObject.Instantiate (tileUnit.gameObject);
                     obj.name = "Tile_"+(i + 1)+"_"+(j + 1);
                     obj.transform.parent = vBaseMap.transform;
-                    obj.transform.localPosition = new Vector3(j * 0.69f + (i % 2) * 0.345f, -i * 0.6f, 0f);
+                    obj.transform.localPosition = new Vector3(j * 0.69f + (i % 2) * 0.345f, -i * 0.617f, 0f);
                     VTile vTile = obj.GetComponent<VTile>();
                     vTile.tileSprite.sprite = null;
                     vTile.buildingSprite.sprite = null;

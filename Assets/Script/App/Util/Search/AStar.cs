@@ -48,7 +48,7 @@ namespace App.Util.Search{
             {
                 return;
             }
-            int g = centerNode.G + 10;
+            int g = centerNode.G + 1;
             if (neighboringNode.IsOpen && neighboringNode.G < g)
             {
                 return;
@@ -60,10 +60,10 @@ namespace App.Util.Search{
             SetToOpen(neighboringNode, !neighboringNode.IsOpen);
         }
         private void CalculationGHF(VTile node){
-            int dx = Mathf.Abs(node.CoordinateX - endNode.CoordinateX);
-            int dy = Mathf.Abs(node.CoordinateY - endNode.CoordinateY);
-            node.H =  10 * (dx+dy);
+            node.H =  cBaseMap.mapSearch.GetDistance(node, endNode);
             node.F = node.G + node.H;
+            //node.tileName.text = node.G + "," + node.H + "," + node.F;
+            //node.tileName.gameObject.SetActive(true);
         }
         /// <summary>
         /// 加入开放列表
@@ -169,6 +169,7 @@ namespace App.Util.Search{
                 return path;
             }
             init();
+            open.Add(null);
             this.endNode = endTile;
             bool isOver = false;
             VTile thisPoint = startTile;

@@ -9,19 +9,24 @@ using App.Util.Cacher;
 using System.Linq;
 using App.View.Equipment;
 using App.View.Character;
+using App.View.Battlefield;
 
 
 namespace App.Controller{
     public class CBattleCharacterPreviewDialog : CSingleDialog {
-        [SerializeField]private VCharacter vCharacter;
+        [SerializeField]private VBattleCharacterPreview vBattleCharacterPreview;
         [SerializeField]private VCharacterIcon icon;
         public override IEnumerator OnLoad( Request request ) 
         {  
             MCharacter mCharacter = request.Get<MCharacter>("character");
-            icon.BindingContext = mCharacter.ViewModel;
-            icon.UpdateView();
-            //int characterId = request.Get<int>("character_id");
+            VMInit(mCharacter);
             yield return StartCoroutine(base.OnLoad(request));
 		}
+        private void VMInit(MCharacter mCharacter){
+            icon.BindingContext = mCharacter.ViewModel;
+            icon.UpdateView();
+            vBattleCharacterPreview.BindingContext = mCharacter.ViewModel;
+            vBattleCharacterPreview.UpdateView();
+        }
 	}
 }

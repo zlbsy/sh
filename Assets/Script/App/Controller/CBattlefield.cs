@@ -80,17 +80,10 @@ namespace App.Controller{
                 case BattleMode.show_move_tiles:
                     manager.ClickMovingNode(index);
                     break;
+                case BattleMode.move_end:
+                    manager.ClickPhysicalAttackNode(index);
+                    break;
             }
-            /*return;
-            App.Model.Master.MBaseMap topMapMaster = BaseMapCacher.Instance.Get(mBaseMap.MapId);
-            Vector2 coordinate = topMapMaster.GetCoordinateFromIndex(index);
-            List<VCharacter> vCharacters = vBaseMap.Characters;
-            VCharacter vCharacter = vBaseMap.Characters.Find(_=>_.ViewModel.CoordinateX.Value == coordinate.x && _.ViewModel.CoordinateY.Value == coordinate.y);
-            Debug.LogError("OnClickTile vCharacter="+vCharacter);
-            if (vCharacter != null)
-            {
-                base.OnClickTile(index);
-            }*/
         }
         public void OpenOperatingMenu(){
             operatingMenu.Open();
