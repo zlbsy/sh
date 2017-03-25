@@ -18,6 +18,8 @@ namespace App.Controller{
         public override IEnumerator OnLoad( Request request ) 
         {  
             MCharacter mCharacter = request.Get<MCharacter>("character");
+            icon.BindingContext = mCharacter.ViewModel;
+            icon.UpdateView();
             //int characterId = request.Get<int>("character_id");
             yield return StartCoroutine(base.OnLoad(request));
 		}
