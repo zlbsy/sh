@@ -15,15 +15,16 @@ namespace App.Controller{
         [SerializeField]Text title;
         [SerializeField]VBottomMenu operatingMenu;
         [SerializeField]CBattleCharacterPreviewDialog battleCharacterPreview;
+        [SerializeField]GameObject attackTween;
         private int battlefieldId;
-        //private MCharacter[] owns;
         List<int> characterIds;
         public enum BattleMode
         {
             none,
             show_move_tiles,
             moving,
-            move_end
+            move_end,
+            attacking
 
         }
         public BattleMode battleMode{ get; set;}
@@ -34,8 +35,12 @@ namespace App.Controller{
             battleCharacterPreview.gameObject.SetActive(false);
             battlefieldId = request.Get<int>("battlefieldId");
             characterIds = request.Get<List<int>>("characterIds");
-            //owns = System.Array.FindAll(App.Util.Global.SUser.self.characters, _=>characterIds.IndexOf(_.Id) >= 0);
             yield return this.StartCoroutine(base.OnLoad(request));
+        }
+        public GameObject CreateAttackTween(){
+            GameObject obj = GameObject.Instantiate(attackTween);
+            obj.SetActive(true);
+            return obj;
         }
         protected override void InitMap(){
             App.Model.Master.MBattlefield battlefieldMaster = App.Util.Cacher.BattlefieldCacher.Instance.Get(battlefieldId);
@@ -58,10 +63,6 @@ namespace App.Controller{
                 mCharacter.Belong = Belong.enemy;
                 characters.Add(mCharacter);
             }
-            //MCharacter[] characters = new MCharacter[owns.Length + enemys.Count];
-
-            //owns.CopyTo(characters, 0);
-            //enemys.CopyTo(characters, owns.Length);
             mBaseMap.Characters = characters.ToArray();
             vBaseMap.BindingContext = mBaseMap.ViewModel;
             vBaseMap.UpdateView();
@@ -88,6 +89,9 @@ namespace App.Controller{
         public void OpenOperatingMenu(){
             operatingMenu.Open();
         }
+        public void CloseOperatingMenu(){
+            operatingMenu.Close(null);
+        }
         public void OpenBattleCharacterPreviewDialog(MCharacter mCharacter){
             battleCharacterPreview.gameObject.SetActive(true);
             Request req = Request.Create("character", mCharacter);
@@ -100,6 +104,12 @@ namespace App.Controller{
             base.InitManager();
             manager = new BattleManager(this, mBaseMap, vBaseMap);
             tilesManager = new BattleTilesManager(this, mBaseMap, vBaseMap);
+        }
+        public void AttackToHert(MCharacter mCharacter){
+            mCharacter.Target.Action = App.Model.ActionType.hert;
+        }
+        public void OpenSkillList(){
+            
         }
 	}
 }

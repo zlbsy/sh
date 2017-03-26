@@ -47,7 +47,19 @@ namespace App.Util.Battle{
                 CharacterReturnNone();
                 return;
             }
+            if (mCharacter.Belong == this.mCharacter.Belong)
+            {
+                CAlertDialog.Show("不能打自己人");
+                return;
+            }
+            this.mCharacter.Target = mCharacter;
             this.mCharacter.Action = ActionType.attack;
+
+            cBattlefield.tilesManager.ClearCurrentTiles();
+            cBattlefield.CloseOperatingMenu();
+            cBattlefield.HideBattleCharacterPreviewDialog();
+            cBattlefield.battleMode = CBattlefield.BattleMode.attacking;
+
         }
         public void ClickMovingNode(int index){
             MCharacter mCharacter = GetCharacter(index);
@@ -109,6 +121,7 @@ namespace App.Util.Battle{
             returnAction();
             this.mCharacter = null;
             cBattlefield.tilesManager.ClearCurrentTiles();
+            cBattlefield.CloseOperatingMenu();
             cBattlefield.HideBattleCharacterPreviewDialog();
             cBattlefield.battleMode = CBattlefield.BattleMode.none;
         }

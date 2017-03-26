@@ -12,6 +12,7 @@ namespace App.ViewModel
         public VMProperty<int> UserId = new VMProperty<int>();
         public VMProperty<int> CharacterId = new VMProperty<int>();
         public VMProperty<int> Hp = new VMProperty<int>();
+        public VMProperty<int> HpMax = new VMProperty<int>();
         public VMProperty<int> Mp = new VMProperty<int>();
         public VMProperty<string> Name = new VMProperty<string>();
         public VMProperty<string> Nickname = new VMProperty<string>();
@@ -31,5 +32,6 @@ namespace App.ViewModel
         public VMProperty<int> CoordinateY = new VMProperty<int>();
         public VMProperty<Direction> Direction = new VMProperty<Direction>();
         public VMProperty<Belong> Belong = new VMProperty<Belong>();
+        public VMProperty<MCharacter> Target = new VMProperty<MCharacter>();
 	}
 }

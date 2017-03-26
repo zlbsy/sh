@@ -139,6 +139,14 @@ namespace App.Model{
                 return this.ViewModel.Hp.Value;
             }
         }
+        public int HpMax{
+            set{
+                this.ViewModel.HpMax.Value = value;
+            }
+            get{ 
+                return this.ViewModel.HpMax.Value;
+            }
+        }
 		public int Mp{
 			set{
                 this.ViewModel.Mp.Value = value;
@@ -226,6 +234,14 @@ namespace App.Model{
 			get{ 
 				return this.ViewModel.Hat.Value;
 			}
-		}
+        }
+        public MCharacter Target{
+            set{ 
+                this.ViewModel.Target.Value = value;
+            }
+            get{ 
+                return this.ViewModel.Target.Value;
+            }
+        }
 	}
 }

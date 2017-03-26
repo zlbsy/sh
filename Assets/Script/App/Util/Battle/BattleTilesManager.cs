@@ -14,6 +14,7 @@ namespace App.Util.Battle{
         private VBaseMap vBaseMap;
         private App.Model.Master.MBaseMap baseMapMaster;
         private List<VTile> currentTiles;
+        private List<GameObject> attackIcons = new List<GameObject>();
         public BattleTilesManager(CBattlefield controller, MBaseMap model, VBaseMap view){
             cBattlefield = controller;
             mBaseMap = model;
@@ -29,6 +30,18 @@ namespace App.Util.Battle{
             currentTiles = cBattlefield.breadthFirst.Search(mCharacter, 1);
             currentTiles = currentTiles.FindAll(_=>_.CoordinateX != mCharacter.CoordinateX || _.CoordinateY != mCharacter.CoordinateY);
             vBaseMap.SetTilesColor(currentTiles, Color.red);
+            foreach(VTile tile in currentTiles){
+                MCharacter character = cBattlefield.manager.GetCharacter(tile.Index);
+                if (character == null || character.Belong == mCharacter.Belong)
+                {
+                    continue;
+                }
+                GameObject attackTween = cBattlefield.CreateAttackTween();
+                attackTween.transform.SetParent(tile.transform);
+                attackTween.transform.localPosition = Vector3.zero;
+                attackTween.transform.localScale = Vector3.one;
+                attackIcons.Add(attackTween);
+            }
             //cBattlefield.battleMode = CBattlefield.BattleMode.show_move_tiles;
         }
         public bool IsInCurrentTiles(int index){
@@ -41,6 +54,10 @@ namespace App.Util.Battle{
             foreach (VTile tile in currentTiles)
             {
                 vBaseMap.SetTilesColor(currentTiles, Color.white);
+            }
+            foreach (GameObject obj in attackIcons)
+            {
+                GameObject.Destroy(obj);
             }
         }
     }

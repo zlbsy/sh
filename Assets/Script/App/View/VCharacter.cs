@@ -18,6 +18,7 @@ namespace App.View{
         [SerializeField]SpriteRenderer imgHat;
         [SerializeField]SpriteRenderer imgWeapon;
         [SerializeField]RectTransform content;
+        [SerializeField]Transform hpTransform;
         private int animationIndex = 0;
         private Animator _animator;
         private Animator animator{
@@ -50,6 +51,7 @@ namespace App.View{
                 oldVm.X.OnValueChanged -= XChanged;
                 oldVm.Y.OnValueChanged -= YChanged;
                 oldVm.Direction.OnValueChanged -= DirectionChanged;
+                oldVm.Hp.OnValueChanged -= HpChanged;
             }
             if (ViewModel!=null)
             {
@@ -64,12 +66,19 @@ namespace App.View{
                 ViewModel.X.OnValueChanged += XChanged;
                 ViewModel.Y.OnValueChanged += YChanged;
                 ViewModel.Direction.OnValueChanged += DirectionChanged;
+                ViewModel.Hp.OnValueChanged += HpChanged;
             }
         }
         private App.Controller.CBaseMap cBaseMap{
             get{
                 return this.Controller as App.Controller.CBaseMap;
             }
+        }
+        private void HpChanged(int oldvalue, int newvalue)
+        {
+            float hpValue = newvalue * 1f / ViewModel.HpMax.Value;
+            hpTransform.localPosition = new Vector3(0f, hpValue, 0f);
+            hpTransform.localScale = new Vector3(1f, hpValue, 1f);
         }
         private void DirectionChanged(App.Model.Direction oldvalue, App.Model.Direction newvalue)
         {
@@ -108,7 +117,6 @@ namespace App.View{
             VBaseMap vBaseMap = cBaseMap.GetVBaseMap();
             int i = ViewModel.CoordinateY.Value * vBaseMap.mapWidth + newvalue;
             VTile vTile = vBaseMap.tileUnits[i];
-            Debug.LogError("vTile = " + vTile.gameObject.name + ","+vTile.transform.localPosition.x);
             ViewModel.X.Value = vTile.transform.localPosition.x;
         }
         private void CoordinateYChanged(int oldvalue, int newvalue)
@@ -125,9 +133,10 @@ namespace App.View{
         }
         private void ActionChanged(App.Model.ActionType oldvalue, App.Model.ActionType newvalue)
         {
+            Debug.LogError(ViewModel.Id.Value + ","+ViewModel.Name.Value + " : " + newvalue.ToString());
             animator.Play(newvalue.ToString());
-            //animationIndex = 0;
-            //UpdateView();
+            animationIndex = 0;
+            UpdateView();
             /*if (newvalue == App.Model.ActionType.stand || newvalue == App.Model.ActionType.block)
             {
                 UpdateView();
@@ -156,7 +165,7 @@ namespace App.View{
             UpdateView();
         }
         public override void UpdateView(){
-            //Debug.Log(ViewModel.MoveType.Value+", " + ViewModel.WeaponType.Value + ", " + ViewModel.Action.Value + ", " + animationIndex);
+            Debug.Log(ViewModel.MoveType.Value+", " + ViewModel.WeaponType.Value + ", " + ViewModel.Action.Value + ", " + animationIndex);
             AvatarAction avatarAction = AvatarAsset.Data.GetAvatarAction(ViewModel.MoveType.Value, ViewModel.WeaponType.Value, ViewModel.Action.Value, animationIndex);
             string key;
             //Horse
@@ -208,18 +217,15 @@ namespace App.View{
         }
         #endregion
 
-
-        // Use this for initialization
-        void Start () {
-
-        }
-
-        // Update is called once per frame
-        void Update () {
-
+        public void AttackToHert(){
+            if (ViewModel.Target.Value == null || !(this.Controller is App.Controller.CBattlefield))
+            {
+                return;
+            }
+            this.Controller.SendMessage("AttackToHert", ViewModel.Target.Value);
+            //ViewModel.Target.Value.Action = App.Model.ActionType.hert;
         }
         public void ChangeAction(App.Model.ActionType type){
-            animator.Stop();
             animationIndex = 0;
             ViewModel.Action.Value = type;
         }
@@ -227,6 +233,9 @@ namespace App.View{
             animationIndex = index;
             UpdateView ();
         }
+        /// <summary>
+        /// Empties the action.
+        /// </summary>
         public void EmptyAction(){
         }
     }
