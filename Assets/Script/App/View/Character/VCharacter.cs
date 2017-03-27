@@ -34,6 +34,7 @@ namespace App.View.Character{
         }
         void Start(){
             num.GetComponent<MeshRenderer>().sortingOrder = imgHorse.sortingOrder + 10;
+            num.gameObject.SetActive(false);
         }
         #region VM处理
         public VMCharacter ViewModel { get { return (VMCharacter)BindingContext; } }
