@@ -14,7 +14,7 @@ using App.View.Character;
 namespace App.Controller{
     public class CCharacterDetailDialog : CDialog {
         [SerializeField]private App.View.Character.VCharacterDetail characterDetail;
-        [SerializeField]private VCharacter vCharacter;
+        [SerializeField]private App.View.Character.VCharacter vCharacter;
         [SerializeField]private VCharacterStatus vCharacterStatus;
         [SerializeField]private VEquipments vEquipment;
         [SerializeField]private VCharacterSkill vCharacterSkill;

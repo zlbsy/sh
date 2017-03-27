@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using App.Model.Scriptable;
 using App.Util;
 using App.Util.Cacher;
+using App.View.Character;
 
 namespace MyEditor
 {

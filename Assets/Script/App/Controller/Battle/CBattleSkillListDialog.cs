@@ -10,7 +10,7 @@ using System.Linq;
 using App.View.Equipment;
 
 
-namespace App.Controller{
+namespace App.Controller.Battle{
     public class CBattleSkillListDialog : CDialog {
         [SerializeField]private Transform content;
         [SerializeField]private GameObject childItem;

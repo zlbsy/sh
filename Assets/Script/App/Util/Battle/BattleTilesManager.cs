@@ -6,6 +6,7 @@ using App.Model;
 using App.Controller;
 using App.Util.Cacher;
 using App.View;
+using App.Controller.Battle;
 
 namespace App.Util.Battle{
     public class BattleTilesManager{

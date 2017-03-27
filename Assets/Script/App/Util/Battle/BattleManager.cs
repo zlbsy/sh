@@ -7,6 +7,7 @@ using App.Controller;
 using App.Util.Cacher;
 using App.View;
 using Holoville.HOTween;
+using App.Controller.Battle;
 
 namespace App.Util.Battle{
     public class BattleManager{

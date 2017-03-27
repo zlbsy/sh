@@ -12,7 +12,7 @@ using App.View.Character;
 using App.View.Battlefield;
 
 
-namespace App.Controller{
+namespace App.Controller.Battle{
     public class CBattleCharacterPreviewDialog : CSingleDialog {
         [SerializeField]private VBattleCharacterPreview vBattleCharacterPreview;
         [SerializeField]private VCharacterIcon icon;

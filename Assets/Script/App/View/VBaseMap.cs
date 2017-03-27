@@ -8,6 +8,7 @@ using App.Model.Avatar;
 using App.Util.Cacher;
 using Holoville.HOTween;
 using System.Linq;
+using App.View.Character;
 
 namespace App.View{
     public class VBaseMap : VBase {
@@ -70,6 +71,7 @@ namespace App.View{
                 {
                     //新建武将
                     GameObject obj = this.Controller.ScrollViewSetChild(characterLayer.transform, characterPrefab, mCharacter);
+                    obj.name = obj.name + Random.Range(1,100);
                     int i = mCharacter.CoordinateY * mapWidth + mCharacter.CoordinateX;
                     VTile vTile = tileUnits[i];
                     obj.transform.eulerAngles = new Vector3(-30f, 0f, 0f);

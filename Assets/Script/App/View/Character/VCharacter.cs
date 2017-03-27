@@ -7,9 +7,10 @@ using App.Util;
 using App.Model.Avatar;
 using App.Model.Master;
 using App.Util.Cacher;
+using App.Util.Battle;
 
-namespace App.View{
-    public class VCharacter : VBase {
+namespace App.View.Character{
+    public partial class VCharacter : VBase {
 
         [SerializeField]SpriteRenderer imgHorse;
         [SerializeField]SpriteRenderer imgBody;
@@ -19,6 +20,7 @@ namespace App.View{
         [SerializeField]SpriteRenderer imgWeapon;
         [SerializeField]RectTransform content;
         [SerializeField]Transform hpTransform;
+        [SerializeField]TextMesh num;
         private int animationIndex = 0;
         private Animator _animator;
         private Animator animator{
@@ -29,6 +31,9 @@ namespace App.View{
                 }
                 return _animator;
             }
+        }
+        void Start(){
+            num.GetComponent<MeshRenderer>().sortingOrder = imgHorse.sortingOrder + 10;
         }
         #region VM处理
         public VMCharacter ViewModel { get { return (VMCharacter)BindingContext; } }
@@ -218,11 +223,11 @@ namespace App.View{
         #endregion
 
         public void AttackToHert(){
-            if (ViewModel.Target.Value == null || !(this.Controller is App.Controller.CBattlefield))
+            if (ViewModel.Target.Value == null)
             {
                 return;
             }
-            this.Controller.SendMessage("AttackToHert", ViewModel.Target.Value);
+            this.Controller.SendMessage("OnDamage", this, SendMessageOptions.DontRequireReceiver);
             //ViewModel.Target.Value.Action = App.Model.ActionType.hert;
         }
         public void ChangeAction(App.Model.ActionType type){

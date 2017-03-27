@@ -10,8 +10,8 @@ using App.Util.Battle;
 using App.View.Common;
 
 
-namespace App.Controller{
-    public class CBattlefield : CBaseMap {
+namespace App.Controller.Battle{
+    public partial class CBattlefield : CBaseMap {
         [SerializeField]Text title;
         [SerializeField]VBottomMenu operatingMenu;
         [SerializeField]CBattleCharacterPreviewDialog battleCharacterPreview;
@@ -104,9 +104,6 @@ namespace App.Controller{
             base.InitManager();
             manager = new BattleManager(this, mBaseMap, vBaseMap);
             tilesManager = new BattleTilesManager(this, mBaseMap, vBaseMap);
-        }
-        public void AttackToHert(MCharacter mCharacter){
-            mCharacter.Target.Action = App.Model.ActionType.hert;
         }
         public void OpenSkillList(){
             

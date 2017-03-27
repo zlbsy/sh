@@ -9,6 +9,7 @@ using App.Util.Cacher;
 using Holoville.HOTween;
 using App.View.Top;
 using System.Linq;
+using App.View.Character;
 
 
 namespace App.Controller{

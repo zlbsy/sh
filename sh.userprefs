@@ -1,8 +1,16 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Script/App/Util/Search/AStar.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Script/App/Controller/CBattlefieldEvent.cs">
     <Files>
-      <File FileName="Assets/Script/App/Util/Search/AStar.cs" Line="137" Column="32" />
+      <File FileName="Assets/Script/App/View/Character/VCharacter.cs" Line="13" Column="11" />
+      <File FileName="Assets/Script/App/Controller/CCharacterDetailDialog.cs" Line="17" Column="54" />
+      <File FileName="Assets/Script/App/View/VBaseMap.cs" Line="30" Column="29" />
+      <File FileName="Assets/Script/MyEditor/CharacterTest.cs" Line="171" Column="48" />
+      <File FileName="Assets/Script/App/Controller/CStage.cs" Line="39" Column="24" />
+      <File FileName="Assets/Script/App/Controller/CBattlefield.cs" Line="14" Column="31" />
+      <File FileName="Assets/Script/App/Util/Battle/BattleManager.cs" Line="19" Column="1" />
+      <File FileName="Assets/Script/App/Util/Battle/BattleTilesManager.cs" Line="18" Column="1" />
+      <File FileName="Assets/Script/App/Controller/CBattlefieldEvent.cs" Line="10" Column="45" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
