@@ -54,5 +54,9 @@ namespace App.Controller{
         }
         public virtual void OnDestroy(){
         }
+        public App.View.Character.VCharacter GetCharacterView(MCharacter mCharacter){
+            App.View.Character.VCharacter vCharacter = this.vBaseMap.Characters.Find(_=>_.ViewModel.CharacterId.Value == mCharacter.CharacterId && _.ViewModel.Belong.Value == mCharacter.Belong);
+            return vCharacter;
+        }
 	}
 }

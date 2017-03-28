@@ -168,6 +168,8 @@ namespace MyEditor
                 model.Head = 1;
                 model.Hat = 1;
                 //model.body = 1;
+                model.HpMax = 100;
+                model.Hp = 100;
                 view = obj.GetComponent<VCharacter>();
                 view.BindingContext = model.ViewModel;
                 model.Action = ActionType.stand;
@@ -249,22 +251,12 @@ namespace MyEditor
                 }
             }
 
-            if (GUI.Button(new Rect(100, 260, 100, 30), "HttpTest"))
+            if (GUI.Button(new Rect(100, 260, 100, 30), "Damage"))
             {
-                StartCoroutine(httpTest());
+                App.Model.Battle.MDamageParam arg = new App.Model.Battle.MDamageParam(-20);
+                view.SendMessage(App.Controller.Battle.CharacterEvent.OnDamage.ToString(), arg);
             }
         }
 
-        IEnumerator httpTest()
-        {
-            SBattlefield battleS = new SBattlefield();
-            yield return StartCoroutine(battleS.Request(this));
-            //MBattlefield battlefield = battleS.battlefield;
-            /*MCharacter[] enemys = battlefield.enemys;
-            foreach (MCharacter chara in enemys)
-            {
-                //Debug.Log("chara=" + chara.id + "," + chara.name);
-            }*/
-        }
     }
 }

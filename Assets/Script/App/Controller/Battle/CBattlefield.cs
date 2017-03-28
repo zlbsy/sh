@@ -8,6 +8,7 @@ using App.Util.Cacher;
 using UnityEngine.UI;
 using App.Util.Battle;
 using App.View.Common;
+using App.View.Character;
 
 
 namespace App.Controller.Battle{
@@ -18,6 +19,7 @@ namespace App.Controller.Battle{
         [SerializeField]GameObject attackTween;
         private int battlefieldId;
         List<int> characterIds;
+        private List<VCharacter> dynamicCharacters = new List<VCharacter>();
         public enum BattleMode
         {
             none,
@@ -82,7 +84,7 @@ namespace App.Controller.Battle{
                     manager.ClickMovingNode(index);
                     break;
                 case BattleMode.move_end:
-                    manager.ClickPhysicalAttackNode(index);
+                    manager.ClickAttackNode(index);
                     break;
             }
         }
@@ -107,6 +109,25 @@ namespace App.Controller.Battle{
         }
         public void OpenSkillList(){
             
+        }
+        public void AddDynamicCharacter(MCharacter mCharacter){
+            AddDynamicCharacter(GetCharacterView(mCharacter));
+        }
+        public void RemoveDynamicCharacter(MCharacter mCharacter){
+            RemoveDynamicCharacter(GetCharacterView(mCharacter));
+        }
+        public void AddDynamicCharacter(VCharacter vCharacter){
+            if (dynamicCharacters.Contains(vCharacter))
+            {
+                return;
+            }
+            dynamicCharacters.Add(vCharacter);
+        }
+        public void RemoveDynamicCharacter(VCharacter vCharacter){
+            dynamicCharacters.Remove(vCharacter);
+        }
+        public bool HasDynamicCharacter(){
+            return dynamicCharacters.Count > 0;   
         }
 	}
 }

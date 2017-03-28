@@ -21,6 +21,8 @@ namespace App.View.Character{
         [SerializeField]RectTransform content;
         [SerializeField]Transform hpTransform;
         [SerializeField]TextMesh num;
+        private static Shader shaderGray;
+        private static Shader shaderDefault;
         private int animationIndex = 0;
         private Animator _animator;
         private Animator animator{
@@ -33,8 +35,24 @@ namespace App.View.Character{
             }
         }
         void Start(){
+            shaderGray = Shader.Find("Sprites/Gray");
+            shaderDefault = Shader.Find("Sprites/Default");
             num.GetComponent<MeshRenderer>().sortingOrder = imgHorse.sortingOrder + 10;
             num.gameObject.SetActive(false);
+        }
+        public bool Gray{
+            set{ 
+                Shader shader = value ? shaderGray : shaderDefault;
+                imgClothes.material.shader = shader;
+                imgBody.material.shader = shader;
+                imgHorse.material.shader = shader;
+                imgHead.material.shader = shader;
+                imgHat.material.shader = shader;
+                imgWeapon.material.shader = shader;
+            }
+            get{ 
+                return imgClothes.material.shader.Equals(shaderGray);
+            }
         }
         #region VM处理
         public VMCharacter ViewModel { get { return (VMCharacter)BindingContext; } }
@@ -83,7 +101,7 @@ namespace App.View.Character{
         private void HpChanged(int oldvalue, int newvalue)
         {
             float hpValue = newvalue * 1f / ViewModel.HpMax.Value;
-            hpTransform.localPosition = new Vector3(0f, hpValue, 0f);
+            hpTransform.localPosition = new Vector3(0f, 1f - hpValue, 0f);
             hpTransform.localScale = new Vector3(1f, hpValue, 1f);
         }
         private void DirectionChanged(App.Model.Direction oldvalue, App.Model.Direction newvalue)
@@ -143,10 +161,10 @@ namespace App.View.Character{
             animator.Play(newvalue.ToString());
             animationIndex = 0;
             UpdateView();
-            /*if (newvalue == App.Model.ActionType.stand || newvalue == App.Model.ActionType.block)
+            if (newvalue == App.Model.ActionType.stand)
             {
-                UpdateView();
-            }*/
+                this.Controller.SendMessage("RemoveDynamicCharacter", this, SendMessageOptions.DontRequireReceiver);
+            }
         }
         private void HeadChanged(int oldvalue, int newvalue)
         {
@@ -229,7 +247,6 @@ namespace App.View.Character{
                 return;
             }
             this.Controller.SendMessage("OnDamage", this, SendMessageOptions.DontRequireReceiver);
-            //ViewModel.Target.Value.Action = App.Model.ActionType.hert;
         }
         public void ChangeAction(App.Model.ActionType type){
             animationIndex = 0;

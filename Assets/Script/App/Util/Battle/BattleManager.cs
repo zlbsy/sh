@@ -25,7 +25,7 @@ namespace App.Util.Battle{
         }
         public void ClickNoneNode(int index){
             MCharacter mCharacter = GetCharacter(index);
-            if (mCharacter != null)
+            if (mCharacter != null && !cBattlefield.GetCharacterView(mCharacter).Gray)
             {
                 this.mCharacter = mCharacter;
                 cBattlefield.tilesManager.ShowCharacterMovingArea(mCharacter);
@@ -41,7 +41,7 @@ namespace App.Util.Battle{
                 };
             }
         }
-        public void ClickPhysicalAttackNode(int index){
+        public void ClickAttackNode(int index){
             MCharacter mCharacter = GetCharacter(index);
             if (mCharacter == null)
             {
@@ -55,12 +55,21 @@ namespace App.Util.Battle{
             }
             this.mCharacter.Target = mCharacter;
             this.mCharacter.Action = ActionType.attack;
-
+            cBattlefield.AddDynamicCharacter(this.mCharacter);
             cBattlefield.tilesManager.ClearCurrentTiles();
             cBattlefield.CloseOperatingMenu();
             cBattlefield.HideBattleCharacterPreviewDialog();
             cBattlefield.battleMode = CBattlefield.BattleMode.attacking;
-
+            cBattlefield.StartCoroutine(PhysicalAttackComplete());
+        }
+        public IEnumerator PhysicalAttackComplete(){
+            while (cBattlefield.HasDynamicCharacter())
+            {
+                yield return new WaitForEndOfFrame();
+            }
+            App.View.Character.VCharacter character = cBattlefield.GetCharacterView(this.mCharacter);
+            character.Gray = true;
+            cBattlefield.battleMode = CBattlefield.BattleMode.none;
         }
         public void ClickMovingNode(int index){
             MCharacter mCharacter = GetCharacter(index);
