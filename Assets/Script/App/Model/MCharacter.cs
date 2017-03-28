@@ -235,6 +235,14 @@ namespace App.Model{
 				return this.ViewModel.Hat.Value;
 			}
         }
+        public MSkill[] Skills{
+            set{ 
+                this.ViewModel.Skills.Value = value;
+            }
+            get{ 
+                return this.ViewModel.Skills.Value;
+            }
+        }
         public MCharacter Target{
             set{ 
                 this.ViewModel.Target.Value = value;

@@ -54,19 +54,18 @@ namespace App.Util.Battle{
                 return;
             }
             this.mCharacter.Target = mCharacter;
+            mCharacter.Target = this.mCharacter;
             this.mCharacter.Action = ActionType.attack;
             cBattlefield.AddDynamicCharacter(this.mCharacter);
             cBattlefield.tilesManager.ClearCurrentTiles();
             cBattlefield.CloseOperatingMenu();
             cBattlefield.HideBattleCharacterPreviewDialog();
             cBattlefield.battleMode = CBattlefield.BattleMode.attacking;
-            cBattlefield.StartCoroutine(PhysicalAttackComplete());
+            cBattlefield.ActionEndHandler += OnAttackComplete;
+            cBattlefield.WaitActionEnd();
         }
-        public IEnumerator PhysicalAttackComplete(){
-            while (cBattlefield.HasDynamicCharacter())
-            {
-                yield return new WaitForEndOfFrame();
-            }
+        public void OnAttackComplete(){
+            cBattlefield.ActionEndHandler -= OnAttackComplete;
             App.View.Character.VCharacter character = cBattlefield.GetCharacterView(this.mCharacter);
             character.Gray = true;
             cBattlefield.battleMode = CBattlefield.BattleMode.none;

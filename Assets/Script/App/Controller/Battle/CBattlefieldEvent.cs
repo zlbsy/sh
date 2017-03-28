@@ -1,5 +1,7 @@
 using App.Model;
 using App.View.Character;
+using System;
+using System.Collections;
 
 
 namespace App.Controller.Battle{
@@ -7,6 +9,24 @@ namespace App.Controller.Battle{
         OnDamage,
     }
     public partial class CBattlefield{
+        public delegate void EventHandler();
+        public event EventHandler ActionEndHandler;
+        public void ActionEnd(){
+            if (ActionEndHandler != null)
+            {
+                ActionEndHandler();
+            }
+        }
+        public void WaitActionEnd(){
+            this.StartCoroutine(WaitActionEndCoroutine());
+        }
+        public IEnumerator WaitActionEndCoroutine(){
+            while (HasDynamicCharacter())
+            {
+                yield return new UnityEngine.WaitForEndOfFrame();
+            }
+            ActionEnd();
+        }
         public void OnDamage(VCharacter vCharacter){
             MCharacter targetModel = vCharacter.ViewModel.Target.Value;
             VCharacter target = this.GetCharacterView(targetModel);

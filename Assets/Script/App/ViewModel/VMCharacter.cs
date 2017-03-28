@@ -32,6 +32,7 @@ namespace App.ViewModel
         public VMProperty<int> CoordinateY = new VMProperty<int>();
         public VMProperty<Direction> Direction = new VMProperty<Direction>();
         public VMProperty<Belong> Belong = new VMProperty<Belong>();
+        public VMProperty<MSkill[]> Skills = new VMProperty<MSkill[]>();
         public VMProperty<MCharacter> Target = new VMProperty<MCharacter>();
 	}
 }
