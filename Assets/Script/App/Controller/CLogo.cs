@@ -101,6 +101,11 @@ namespace App.Controller{
                 ItemCacher.Instance.Reset(ItemAsset.Data.items);
                 ItemAsset.Clear();
             }));
+            list.Add(sUser.Download(SkillAsset.Url, versions.skill, (AssetBundle assetbundle)=>{
+                SkillAsset.assetbundle = assetbundle;
+                SkillCacher.Instance.Reset(SkillAsset.Data.skills);
+                SkillAsset.Clear();
+            }));
             list.Add(sUser.Download(BattlefieldAsset.Url, versions.stage, (AssetBundle assetbundle)=>{
                 BattlefieldAsset.assetbundle = assetbundle;
                 BattlefieldCacher.Instance.Reset(BattlefieldAsset.Data.battlefields);
@@ -147,11 +152,14 @@ namespace App.Controller{
             list.Add(sUser.Download(ImageAssetBundleManager.weaponUrl, versions.weapon_img, (AssetBundle assetbundle)=>{
                 ImageAssetBundleManager.weapon = assetbundle;
             }, false));
-            list.Add(sUser.Download(ImageAssetBundleManager.equipmentIconUrl, versions.equipmenticon_img, (AssetBundle assetbundle)=>{
+            list.Add(sUser.Download(ImageAssetBundleManager.equipmentIconUrl, versions.equipmenticon_icon, (AssetBundle assetbundle)=>{
                 ImageAssetBundleManager.equipmentIcon = assetbundle;
             }, false));
-            list.Add(sUser.Download(ImageAssetBundleManager.itemIconUrl, versions.item_img, (AssetBundle assetbundle)=>{
+            list.Add(sUser.Download(ImageAssetBundleManager.itemIconUrl, versions.item_icon, (AssetBundle assetbundle)=>{
                 ImageAssetBundleManager.itemIcon = assetbundle;
+            }, false));
+            list.Add(sUser.Download(ImageAssetBundleManager.skillIconUrl, versions.skill_icon, (AssetBundle assetbundle)=>{
+                ImageAssetBundleManager.skillIcon = assetbundle;
             }, false));
 
             list.Add(sUser.RequestGet());

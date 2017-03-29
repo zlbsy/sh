@@ -18,14 +18,16 @@ namespace App.Model{
         public int area;
         public int stage;
         public int item;
+        public int skill;
         public int hat;
         public int map;
         public int horse_img;
         public int clothes_img;
         public int weapon_img;
-        public int equipmenticon_img;
+        public int equipmenticon_icon;
         public int gacha;
-        public int item_img;
+        public int item_icon;
+        public int skill_icon;
         public int horse;
         public int clothes;
         public int weapon;

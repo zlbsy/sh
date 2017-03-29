@@ -34,6 +34,9 @@ namespace App.Util{
         private static AssetBundle _gachaIcon = null;
         public static string gachaIconUrl{ get{ return HttpClient.assetBandleURL + "gachaimage.unity3d";} }
         public static AssetBundle gachaIcon{ set{ _gachaIcon = value; } }
+        private static AssetBundle _skillIcon = null;
+        public static string skillIconUrl{ get{ return HttpClient.assetBandleURL + "skilliconimage.unity3d";} }
+        public static AssetBundle skillIcon{ set{ _skillIcon = value; } }
 
 		public static Sprite GetAvatarBody(string name){
 			return GetAvatarSprite(name);
@@ -67,6 +70,9 @@ namespace App.Util{
         }
         public static Sprite GetGachaIcon(int id){
             return _gachaIcon.LoadAsset<Sprite>("gacha_"+id);
+        }
+        public static Sprite GetSkillIcon(int id){
+            return _skillIcon.LoadAsset<Sprite>("skill_"+id);
         }
 	}
 }

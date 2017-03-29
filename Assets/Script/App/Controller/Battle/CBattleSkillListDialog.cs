@@ -17,26 +17,10 @@ namespace App.Controller.Battle{
         public override IEnumerator OnLoad( Request request ) 
 		{  
             yield return StartCoroutine(base.OnLoad(request));
-            if (Global.SUser.self.equipments == null)
-            {
-                SEquipment sEquipment = new SEquipment();
-                yield return StartCoroutine(sEquipment.RequestList());
-                Global.SUser.self.equipments = sEquipment.equipments;
-            }
-            int id = request.Get<int>("id");
-            App.Model.Master.MEquipment.EquipmentType equipmentType = request.Get<App.Model.Master.MEquipment.EquipmentType>("equipmentType");
-            App.Model.MEquipment[] equipments = System.Array.FindAll(Global.SUser.self.equipments, 
-                _=>_.EquipmentType == equipmentType && _.character_id == 0);
-            foreach(App.Model.MEquipment equipment in equipments){
-                if (equipment.Id == id)
-                {
-                    continue;
-                }
-                ScrollViewSetChild(content, childItem, equipment);
-            }
-			yield return 0;
+            MCharacter mCharacter = request.Get<MCharacter>("character");
+            ScrollViewSets(content, childItem, mCharacter.Skills);
         }
-        public void EquipmentIconClick(int equipmentId){
+        public void SkillIconClick(int skillId){
             
         }
 	}

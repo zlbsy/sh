@@ -125,10 +125,10 @@ namespace MyEditor
             list.Add(sMaster.Download(ImageAssetBundleManager.weaponUrl, versions.weapon_img, (AssetBundle assetbundle)=>{
                 ImageAssetBundleManager.weapon = assetbundle;
             }, false));
-            list.Add(sMaster.Download(ImageAssetBundleManager.equipmentIconUrl, versions.equipmenticon_img, (AssetBundle assetbundle)=>{
+            list.Add(sMaster.Download(ImageAssetBundleManager.equipmentIconUrl, versions.equipmenticon_icon, (AssetBundle assetbundle)=>{
                 ImageAssetBundleManager.equipmentIcon = assetbundle;
             }, false));
-            list.Add(sMaster.Download(ImageAssetBundleManager.itemIconUrl, versions.item_img, (AssetBundle assetbundle)=>{
+            list.Add(sMaster.Download(ImageAssetBundleManager.itemIconUrl, versions.item_icon, (AssetBundle assetbundle)=>{
                 ImageAssetBundleManager.itemIcon = assetbundle;
             }, false));
             Debug.Log("Start");

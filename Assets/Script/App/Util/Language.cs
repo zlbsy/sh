@@ -21,6 +21,10 @@ namespace App.Util{
         }
         public static string Get(string key){
             string val;
+            if (string.IsNullOrEmpty(key))
+            {
+                return string.Empty;
+            }
             if (dictionaryDatas.TryGetValue (key, out val))
             {
                 return val;

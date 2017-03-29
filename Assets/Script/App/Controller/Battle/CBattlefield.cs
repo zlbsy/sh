@@ -9,6 +9,7 @@ using UnityEngine.UI;
 using App.Util.Battle;
 using App.View.Common;
 using App.View.Character;
+using App.Util;
 
 
 namespace App.Controller.Battle{
@@ -108,7 +109,8 @@ namespace App.Controller.Battle{
             tilesManager = new BattleTilesManager(this, mBaseMap, vBaseMap);
         }
         public void OpenSkillList(){
-            
+            Request req = Request.Create("character", this.manager.CurrentCharacter);
+            this.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.BattleSkillListDialog, req));
         }
         public void AddDynamicCharacter(MCharacter mCharacter){
             AddDynamicCharacter(GetCharacterView(mCharacter));

@@ -25,6 +25,7 @@ namespace App.Util{
             GachaDialog,
             GachaResultDialog,
             ReadyBattleDialog,
+            BattleSkillListDialog,
         }
         public static App.Controller.CScene CurrentScene;
         public static App.Controller.Request CurrentSceneRequest;

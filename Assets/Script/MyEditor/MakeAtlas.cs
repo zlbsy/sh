@@ -113,6 +113,11 @@ namespace MyEditor
         {
             BuildImageAssetBundle("itemicon");
         }
+        [MenuItem("SH/Build Assetbundle/Image/SkillIcon")]
+        static private void BuildAssetBundleImageSkillIcon()
+        {
+            BuildImageAssetBundle("skillicon");
+        }
         [MenuItem("SH/Build Assetbundle/Image/All")]
         static private void BuildAssetBundleImageAll()
         {

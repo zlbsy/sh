@@ -23,6 +23,11 @@ namespace App.Util.Battle{
             vBaseMap = view;
             baseMapMaster = BaseMapCacher.Instance.Get(mBaseMap.MapId);
         }
+        public MCharacter CurrentCharacter{
+            get{ 
+                return this.mCharacter;
+            }
+        }
         public void ClickNoneNode(int index){
             MCharacter mCharacter = GetCharacter(index);
             if (mCharacter != null && !cBattlefield.GetCharacterView(mCharacter).Gray)
