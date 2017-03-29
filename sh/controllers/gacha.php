@@ -7,13 +7,8 @@ class Gacha extends MY_Controller {
 	}
 	public function freelog()
 	{
-		$user_id = $this->args["user_id"];
-		if(is_null($user_id)){
-			$user = $this->getSessionData("user");
-			$user_id = $user["id"];
-		}
 		$gacha_model = new Gacha_model();
-		$logs = $gacha_model->get_free_logs($user_id);
+		$logs = $gacha_model->get_free_logs();
 		if($logs){
 			$this->out(array("gachas"=>$logs));
 		}else{
@@ -26,9 +21,14 @@ class Gacha extends MY_Controller {
 		$user_id = $user["id"];
 		$gacha_id = $this->args["gacha_id"];
 		$cnt = $this->args["cnt"];
-		$contents = $this->gacha_model->slot($this->args);
+		$gacha_model = new Gacha_model();
+		$contents = $gacha_model->slot($this->args);
+		$logs = $gacha_model->get_free_logs($gacha_id);
+		$gacha = $logs[0];
+		$user_model = new User_model();
+		$user = $user_model->get();
 		if($contents){
-			$this->out(array("contents"=>$contents));
+			$this->out(array("contents"=>$contents, "gacha"=>$gacha, "user"=>$user));
 		}else{
 			$this->error("Gacha->slot error");
 		}

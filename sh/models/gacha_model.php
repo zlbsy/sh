@@ -1,23 +1,25 @@
 <?php 
+class PriceType{
+	const gold = "gold";
+	const silver = "silver";
+}
 class Gacha_model extends MY_Model
 {
 	function __construct(){
 		parent::__construct();
 	}
-	function log($text){
-		$fp = fopen('/var/www/d/test/test.txt','a+');
-		fwrite( $fp, $text."\n" );
-		fclose( $fp );
-	}
-	function get_free_logs(){
+	function get_free_logs($gacha_id = null){
 		$gachas = $this->get_gacha_masters(null, date("Y-m-d H:i:s",time()));
 		$user = $this->getSessionData("user");
 		$freelogs = array();
 		foreach ($gachas as $key => $gacha) {
 			$freelog = array();
+			if(!is_null($gacha_id) && $gacha["id"] != $gacha_id){
+				continue;
+			}
 			$log = $this->get_free_log($user["id"],$gacha["id"]);
 			$free_cnt = 0;
-			$last_log_time = null;
+			$last_log_time = TIME_INIT;
 			if(!empty($log)){
 				foreach ($log as $logchild) {
 					if($logchild["register_time"] > DAY_START){
@@ -39,16 +41,16 @@ class Gacha_model extends MY_Model
 		$where = array();
 		$where[] = "`user_id`={$user_id}";
 		$where[] = "`gacha_id`={$gacha_id}";
-		$where[] = "`register_time`>".strtotime("-2 day");
+		$where[] = "`register_time`>'".date("Y-m-d H:i:s", strtotime("-2 day"))."'";
 		$order_by = "id desc";
-		$result = $this->user_db->select($select, $table, $where);
+		$result = $this->user_db->select($select, $table, $where, $order_by);
 		return $result;
 	}
 	function set_gacha_free_log($user_id, $gacha_id){
 		$values = array();
 		$values["user_id"] = $user_id;
 		$values["gacha_id"] = $gacha_id;
-		$values["register_time"] = date("Y-m-d H:i:s",time());
+		$values["register_time"] = "'".date("Y-m-d H:i:s",time())."'";
 		$table = $this->user_db->gacha_free_log;
 		$res = $this->user_db->insert($values, $table);
 		return $res;
@@ -59,11 +61,12 @@ class Gacha_model extends MY_Model
 			$this->error("can not gacha");
 		}
 		$gacha = $gachas[0];
+		$gachaPrice = $this->get_gacha_price($args["gacha_id"], $args["price_id"]);
 		$user = $this->getSessionData("user");
-		$this->log("can gacha");
 		$gold = 0;
 		$silver = 0;
-		if(isset($args["buy_type"]) && $args["buy_type"] == "free"){
+		$free_gacha = (isset($args["free_gacha"]) && $args["free_gacha"] == 1);
+		if($free_gacha){
 			$limit = $gacha["free_count"];
 			$log = $this->get_free_log($user["id"], $gacha["id"]);
 			if(!empty($log)){
@@ -74,11 +77,11 @@ class Gacha_model extends MY_Model
 					}
 				}
 				if($free_cnt >= $limit){
-					return null;
+					$this->error("can not free gacha");
 				}
 				$last_log = $log[0];
 				if($last_log["register_time"] > date("Y-m-d H:i:s",strtotime("-".$gacha["free_time"]." minute"))){
-					return null;
+					$this->error("can not free gacha");
 				}
 			}
 		}else{
@@ -86,38 +89,38 @@ class Gacha_model extends MY_Model
 			if($cnt == 10){
 				$cnt = 9;
 			}
-			$gold = $gacha["Gold"] * $cnt;
-			$silver = $gacha["Silver"] * $cnt;
+			$price_type = $gachaPrice["price_type"];
+			if($price_type == PriceType::gold){
+				$gold = $gachaPrice["price"];
+			}else if($price_type == PriceType::silver){
+				$silver = $gachaPrice["price"];
+			}
 			if($user["Gold"] < $gold || $user["Silver"] < $silver){
-				$this->error("no money " . $user["Gold"] . " < " . $gold . ", " . $user["Silver"] . " < " . $silver);
+				$this->error("no money");
 			}
 		}
 	
 		$gacha_childs = $this->get_gacha_childs($gacha["id"]);
 		$slot_list = array();
 		$i = 0;
-		$this->log("gacha_childs=".count($gacha_childs));
 		while(count($slot_list) < $args["cnt"]){
 			$probability_sum = 0;
 			foreach($gacha_childs as $val){
 				$probability_sum += $val["probability"];
 			}
 			$rand_index = rand(0,$probability_sum - 1);
-			$this->log("rand_index=".$rand_index.", probability_sum=".$probability_sum);
 			$probability_sum = 0;
 			foreach($gacha_childs as $val){
 				$probability_sum += $val["probability"];
-				$this->log($rand_index . "<" . $probability_sum);
 				if($rand_index <= $probability_sum){
 					$slot_list[] = $val;
 					break;
 				}
 			}
-			$this->log("slot_list_count=". count($slot_list));
 		}
 		$this->user_db->trans_begin();
 		//购买记录(消费)
-		if(isset($args["buy_type"]) && $args["buy_type"] == "free"){
+		if($free_gacha){
 			$setlog = $this->set_gacha_free_log($user["id"], $gacha["id"]);
 		}else{
 			$setlog = $this->set_gacha_buy_log($user["id"], $gacha["id"], $gold, $silver);
@@ -126,13 +129,17 @@ class Gacha_model extends MY_Model
 		    $this->user_db->trans_rollback();
 			$this->error("set log error");
 		}
-		$this->log("set_gacha_log");
+		$user_model = new User_model();
+		$change = $user_model->update_money();
+		if(!$change){
+		    $this->user_db->trans_rollback();
+			$this->error("update money error");
+		}
 		//奖品
 		$item_model = new Item_model();
 		$equipment_model = new Equipment_model();
-		for($i=0;!$error && $i<count($slot_list);$i++){
+		for($i=0;$i<count($slot_list);$i++){
 			$gacha_child = $slot_list[$i];
-			$this->log("i=".$i.", ".$gacha_child["type"]);
 			switch($gacha_child["type"]){
 				case "item":
 					$gacha_get = $item_model->set_item($user["id"], $gacha_child["child_id"]);
@@ -148,7 +155,6 @@ class Gacha_model extends MY_Model
 				$this->error("get present error");
 			}
 		}
-		$this->log("gacha get over");
 		$this->user_db->trans_commit();
 		$contents = array();
 		foreach ($slot_list as $slot) {
@@ -175,6 +181,13 @@ class Gacha_model extends MY_Model
 		$where = array();
 		$where[] = "gacha_id={$gacha_id}";
 		$result = $this->master_db->select($select, $table, $where);
+		return $result;
+	}
+	function get_gacha_price($gacha_id, $price_id){
+		$select = "id, child_id, price_type, price, cnt, free_time, free_count";
+		$table = $this->master_db->gacha_price;
+		$where = array("id = {$gacha_id}", "child_id = {$price_id}");
+		$result = $this->master_db->select($select, $table, $where, null, null, Database_Result::TYPE_ROW);
 		return $result;
 	}
 	function set_gacha_buy_log($user_id, $gacha_id, $gold, $silver){

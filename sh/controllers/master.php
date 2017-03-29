@@ -62,6 +62,22 @@ class Master extends MY_Controller {
 			$master_gacha = $master_model->get_master_gachas();
 			$result["gachas"]=$master_gacha;
 		}
+		if($args["word"]){
+			$master_word = $master_model->get_master_words();
+			$result["words"]=$master_word;
+		}
+		if($args["npc"]){
+			$master_npc = $master_model->get_master_npcs();
+			$result["npcs"]=$master_npc;
+		}
+		if($args["npc_equipment"]){
+			$master_npc_equipment = $master_model->get_master_npc_equipments();
+			$result["npc_equipments"]=$master_npc_equipment;
+		}
+		if($args["battlefield"]){
+			$master_battlefield = $master_model->get_master_battlefields();
+			$result["battlefields"]=$master_battlefield;
+		}
 		
 		return $result;
 	}

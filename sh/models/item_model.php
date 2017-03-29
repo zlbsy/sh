@@ -23,16 +23,16 @@ class Item_model extends MY_Model
 		$item = $this->get_item($user_id, $item_id);
 		if($item == null){
 			$values = array();
-			$values["user_id"] = $user_id;
-			$values["item_id"] = $item_id;
-			$values["cnt"] = $cnt;
-			$values["register_time"] = "'".date("Y-m-d H:i:s",time())."'";
+			$values[] = "user_id={$user_id}";
+			$values[] = "item_id={$item_id}";
+			$values[] = "cnt={$cnt}";
+			$values[] = "register_time='".date("Y-m-d H:i:s",time())."'";
 			return $this->user_db->insert($values, $this->user_db->item);
 		}else{
 			$values = array();
-			$values["cnt"] = $item['cnt'] +  $cnt;
+			$values[] = "cnt=".($item['cnt'] + $cnt);
 			$where = array();
-			$where["id"] = $item['id'];
+			$where[] = "id={$item['id']}";
 			return $this->user_db->update($values, $this->user_db->item, $where);
 		}
 	}
@@ -40,8 +40,8 @@ class Item_model extends MY_Model
 		$select = 'id, item_id, cnt';
 		$table = $this->user_db->item;
 		$where = array();
-		$where["user_id"] = $user_id;
-		$where["item_id"] = $item_id;
+		$where[] = "user_id={$user_id}";
+		$where[] = "item_id={$item_id}";
 		$result = $this->user_db->select($select, $table, $where, null, null, Database_Result::TYPE_ROW);
 		return $result;
 	}

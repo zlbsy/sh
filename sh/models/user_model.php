@@ -62,10 +62,10 @@ class User_model extends MY_Model
 	}
 	function get($id, $is_all = false){
 		$user = $this->getSessionData("user");
-		$is_self = ($id == $user["id"]);
+		$is_self = (isset($id) && $id == $user["id"]);
 		$select = $is_self ? $this->_select_clums : $this->_select_other_clums;
 		$table = $this->user_db->player;
-		$where = array("id={$id}");
+		$where = array("id={$user["id"]}");
 		$result = $this->user_db->select($select, $table, $where, null, null, Database_Result::TYPE_ROW);
 		if(is_null($result)){
 			return null;

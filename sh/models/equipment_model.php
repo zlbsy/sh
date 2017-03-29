@@ -5,12 +5,12 @@ class Equipment_model extends MY_Model
 		parent::__construct();
 	}
 	function set_equipment($user_id, $equipment_id, $equipment_type){
-		$item = $this->get_item($user_id, $item_id);
-		$this->user_db->set('user_id', $user_id);
-		$this->user_db->set('equipment_id', $equipment_id);
-		$this->user_db->set('equipment_type', $equipment_type);
-		$this->user_db->set('register_time', date("Y-m-d H:i:s",time()));
-		return $res;
+		$values = array();
+		$values["user_id"] = "{$user_id}";
+		$values["equipment_id"] = "{$equipment_id}";
+		$values["equipment_type"] = "'{$equipment_type}'";
+		$values["register_time"] = "'".date("Y-m-d H:i:s",time())."'";
+		return $this->user_db->insert($values, $this->user_db->equipment);
 	}
 	
 	function get_list($user_id, $chara_id = null){

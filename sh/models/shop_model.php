@@ -35,10 +35,11 @@ class Shop_model extends MY_Model
 			$this->error("set building error");
 		}
 		//存款更新
+		$user_model = new User_model();
 		if($price_type == "gold"){
-			$up_result = $this->user_model->update_gold();
+			$up_result = $user_model->update_gold();
 		}else if($price_type == "silver"){
-			$up_result = $this->user_model->update_silver();
+			$up_result = $user_model->update_silver();
 		}
 		if(!$up_result){
 			$this->user_db->trans_rollback();

@@ -3,7 +3,6 @@ class MY_Controller {
 	var $args;
 	var $needAuth = false;
 	function __construct() {
-		date_default_timezone_set('PRC');
 		($this->args = $_POST) || ($this->args = $_GET);
 		if($this->args["ssid"]){
 			session_id($this->args["ssid"]);

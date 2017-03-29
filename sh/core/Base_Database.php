@@ -63,8 +63,11 @@ class Base_Database {
 	}
 	public function update($values, $table, $where){
 		$sql = "UPDATE " . $table;
-		$sql .= " (".implode(", ", $values).") ";
+		$sql .= " SET ".implode(", ", $values)." ";
 		$sql .= " WHERE " . implode(" AND ", $where);
+		if(isset($_GET["debug"])){
+			echo $sql;
+		}
 		$result = mysql_query($sql, $this->connect);
 		return $result;
 	}
@@ -83,6 +86,9 @@ class Base_Database {
 		$sql .= " (".implode(", ", $child_names).") ";
 		$sql .= " VALUES ";
 		$sql .= " (".implode(", ", $child_values).") ";
+		if(isset($_GET["debug"])){
+			echo $sql;
+		}
 		$result = mysql_query($sql, $this->connect);
 		return $result;
 	}

@@ -38,6 +38,6 @@ class User extends MY_Controller {
 			$user_model = new User_model();
 			$user["TopMap"] = $user_model->get_top_map($user["id"]);
 		}
-		$this->out($user);
+		$this->out(array("user"=>$user));
 	}
 }
