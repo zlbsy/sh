@@ -30,7 +30,7 @@ namespace App.Controller.Battle{
         public void OnDamage(VCharacter vCharacter){
             MCharacter targetModel = vCharacter.ViewModel.Target.Value;
             VCharacter target = this.GetCharacterView(targetModel);
-            this.AddDynamicCharacter(target);
+            //this.AddDynamicCharacter(target);
             App.Model.Battle.MDamageParam arg = new App.Model.Battle.MDamageParam(-20);
             target.SendMessage(CharacterEvent.OnDamage.ToString(), arg);
         }

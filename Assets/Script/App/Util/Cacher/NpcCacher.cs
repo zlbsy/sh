@@ -36,6 +36,7 @@ namespace App.Util.Cacher{
             {
                 mCharacter.WeaponType = mBattleNpc.weapon_type;
             }*/
+            mCharacter.Skills = App.Service.HttpClient.Deserialize<App.Model.MSkill[]>(mBattleNpc.skills);
             mCharacter.CoordinateX = mBattleNpc.x;
             mCharacter.CoordinateY = mBattleNpc.y;
 

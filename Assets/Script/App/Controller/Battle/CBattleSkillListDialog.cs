@@ -25,7 +25,7 @@ namespace App.Controller.Battle{
         }
         public void SkillIconClick(int skillId){
             mCharacter.CurrentSkill = System.Array.Find(mCharacter.Skills, _=>_.SkillId == skillId);
-
+            this.Close();
         }
         public void ShowPreview(int skillId){
             int index = System.Array.FindIndex(mCharacter.Skills, _=>_.SkillId == skillId);

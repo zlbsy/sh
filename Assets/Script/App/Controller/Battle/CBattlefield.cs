@@ -40,11 +40,6 @@ namespace App.Controller.Battle{
             characterIds = request.Get<List<int>>("characterIds");
             yield return this.StartCoroutine(base.OnLoad(request));
         }
-        public GameObject CreateAttackTween(){
-            GameObject obj = GameObject.Instantiate(attackTween);
-            obj.SetActive(true);
-            return obj;
-        }
         protected override void InitMap(){
             App.Model.Master.MBattlefield battlefieldMaster = App.Util.Cacher.BattlefieldCacher.Instance.Get(battlefieldId);
             title.text = App.Util.Language.Get(battlefieldMaster.name);
@@ -56,14 +51,17 @@ namespace App.Controller.Battle{
             {
                 MCharacter mCharacter = System.Array.Find(App.Util.Global.SUser.self.characters, _=>_.Id==characterIds[i]);
                 mCharacter.Belong = Belong.self;
+                //己方出战坐标
                 App.Model.Master.MBattleOwn mBattleOwn = battlefieldMaster.owns[i];
                 mCharacter.CoordinateX = mBattleOwn.x;
                 mCharacter.CoordinateY = mBattleOwn.y;
+                CharacterInit(mCharacter);
                 characters.Add(mCharacter);
             }
             foreach(App.Model.Master.MBattleNpc battleNpc in battlefieldMaster.enemys){
                 MCharacter mCharacter = NpcCacher.Instance.GetFromBattleNpc(battleNpc);
                 mCharacter.Belong = Belong.enemy;
+                CharacterInit(mCharacter);
                 characters.Add(mCharacter);
             }
             mBaseMap.Characters = characters.ToArray();
@@ -74,7 +72,17 @@ namespace App.Controller.Battle{
             base.InitMap();
             App.Util.LSharp.LSharpScript.Instance.Analysis(battlefieldMaster.script);
         }
-
+        /// <summary>
+        /// 武将初始化
+        /// </summary>
+        /// <param name="mCharacter">M character.</param>
+        private void CharacterInit(MCharacter mCharacter){
+            mCharacter.HpMax = mCharacter.Hp = 200;
+            if (mCharacter.CurrentSkill == null)
+            {
+                mCharacter.CurrentSkill = System.Array.Find(mCharacter.Skills, _=>System.Array.IndexOf(_.Master.weapon_types, mCharacter.WeaponType) >= 0);
+            }
+        }
         public override void OnClickTile(int index){
             switch (battleMode)
             {
@@ -89,35 +97,70 @@ namespace App.Controller.Battle{
                     break;
             }
         }
+        protected override void InitManager(){
+            base.InitManager();
+            manager = new BattleManager(this, mBaseMap, vBaseMap);
+            tilesManager = new BattleTilesManager(this, mBaseMap, vBaseMap);
+        }
+        /// <summary>
+        /// 返回一个动态的攻击图标
+        /// </summary>
+        /// <returns>The attack tween.</returns>
+        public GameObject CreateAttackTween(){
+            GameObject obj = GameObject.Instantiate(attackTween);
+            obj.SetActive(true);
+            return obj;
+        }
+        #region 操作菜单
         public void OpenOperatingMenu(){
             operatingMenu.Open();
         }
         public void CloseOperatingMenu(){
             operatingMenu.Close(null);
         }
+        #endregion
+
+        #region 武将状态
+        /// <summary>
+        /// 武将状态显示
+        /// </summary>
+        /// <param name="mCharacter">M character.</param>
         public void OpenBattleCharacterPreviewDialog(MCharacter mCharacter){
             battleCharacterPreview.gameObject.SetActive(true);
             Request req = Request.Create("character", mCharacter);
             this.StartCoroutine(battleCharacterPreview.OnLoad(req));
         }
+        /// <summary>
+        /// 武将状态隐藏
+        /// </summary>
         public void HideBattleCharacterPreviewDialog(){
             battleCharacterPreview.Close();
         }
-        protected override void InitManager(){
-            base.InitManager();
-            manager = new BattleManager(this, mBaseMap, vBaseMap);
-            tilesManager = new BattleTilesManager(this, mBaseMap, vBaseMap);
-        }
+        #endregion
+        /// <summary>
+        /// 选择技能
+        /// </summary>
         public void OpenSkillList(){
-            Request req = Request.Create("character", this.manager.CurrentCharacter);
+            System.Action closeEvent = () =>
+            {
+                    tilesManager.ClearCurrentTiles();
+                    tilesManager.ShowCharacterAttackArea(manager.CurrentCharacter);
+            };
+            Request req = Request.Create("character", this.manager.CurrentCharacter, "closeEvent", closeEvent);
             this.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.BattleSkillListDialog, req));
         }
+        #region 行动中武将
+        /// <summary>
+        /// 行动中武将挂起
+        /// </summary>
+        /// <param name="mCharacter">M character.</param>
         public void AddDynamicCharacter(MCharacter mCharacter){
             AddDynamicCharacter(GetCharacterView(mCharacter));
         }
-        public void RemoveDynamicCharacter(MCharacter mCharacter){
-            RemoveDynamicCharacter(GetCharacterView(mCharacter));
-        }
+        /// <summary>
+        /// 行动中武将挂起
+        /// </summary>
+        /// <param name="vCharacter">V character.</param>
         public void AddDynamicCharacter(VCharacter vCharacter){
             if (dynamicCharacters.Contains(vCharacter))
             {
@@ -125,11 +168,31 @@ namespace App.Controller.Battle{
             }
             dynamicCharacters.Add(vCharacter);
         }
+        /// <summary>
+        /// 行动中武将移除
+        /// </summary>
+        /// <param name="mCharacter">M character.</param>
+        public void RemoveDynamicCharacter(MCharacter mCharacter){
+            RemoveDynamicCharacter(GetCharacterView(mCharacter));
+        }
+        /// <summary>
+        /// 行动中武将移除
+        /// </summary>
+        /// <param name="vCharacter">V character.</param>
         public void RemoveDynamicCharacter(VCharacter vCharacter){
             dynamicCharacters.Remove(vCharacter);
+            if (!HasDynamicCharacter())
+            {
+                this.ActionEnd();
+            }
         }
+        /// <summary>
+        /// 是否存在行动中武将
+        /// </summary>
+        /// <returns><c>true</c> if this instance has dynamic character; otherwise, <c>false</c>.</returns>
         public bool HasDynamicCharacter(){
             return dynamicCharacters.Count > 0;   
         }
+        #endregion
 	}
 }

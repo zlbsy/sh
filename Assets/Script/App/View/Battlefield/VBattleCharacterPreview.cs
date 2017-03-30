@@ -12,6 +12,7 @@ namespace App.View.Battlefield{
     public class VBattleCharacterPreview : VBase {
         [SerializeField]private Text txtName;
         [SerializeField]private Text txtNickname;
+        [SerializeField]private Text skillname;
         #region VM处理
         public VMCharacter ViewModel { get { return (VMCharacter)BindingContext; } }
         protected override void OnBindingContextChanged(VMBase oldViewModel, VMBase newViewModel)
@@ -23,12 +24,12 @@ namespace App.View.Battlefield{
             if (oldVm != null)
             {
                 oldVm.CharacterId.OnValueChanged -= CharacterIdChanged;
-                //oldVm.Star.OnValueChanged -= StarChanged;
+                oldVm.CurrentSkill.OnValueChanged -= CurrentSkillChanged;
             }
             if (ViewModel!=null)
             {
                 ViewModel.CharacterId.OnValueChanged += CharacterIdChanged;
-                //ViewModel.Star.OnValueChanged += StarChanged;
+                ViewModel.CurrentSkill.OnValueChanged += CurrentSkillChanged;
             }
         }
         private void CharacterIdChanged(int oldvalue, int newvalue)
@@ -36,9 +37,9 @@ namespace App.View.Battlefield{
             txtName.text = Language.GetCharacterWord(ViewModel.Name.Value);
             txtNickname.text = Language.GetCharacterWord(ViewModel.Nickname.Value);
         }
-        private void StarChanged(int oldvalue, int newvalue)
+        private void CurrentSkillChanged(App.Model.MSkill oldvalue, App.Model.MSkill newvalue)
         {
-            
+            skillname.text = Language.Get(ViewModel.CurrentSkill.Value.Master.name);
         }
         public override void UpdateView()
         {

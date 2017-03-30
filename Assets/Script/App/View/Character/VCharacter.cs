@@ -163,8 +163,20 @@ namespace App.View.Character{
             UpdateView();
             if (newvalue == App.Model.ActionType.stand)
             {
-                this.Controller.SendMessage("RemoveDynamicCharacter", this, SendMessageOptions.DontRequireReceiver);
+                this.StartCoroutine(RemoveDynamicCharacter());
             }
+            else
+            {
+                this.Controller.SendMessage("AddDynamicCharacter", this, SendMessageOptions.DontRequireReceiver);
+            }
+        }
+        private IEnumerator RemoveDynamicCharacter(){
+            while (this.num.gameObject.activeSelf)
+            {
+                yield return new WaitForEndOfFrame();
+            }
+            yield return new WaitForEndOfFrame();
+            this.Controller.SendMessage("RemoveDynamicCharacter", this, SendMessageOptions.DontRequireReceiver);
         }
         private void HeadChanged(int oldvalue, int newvalue)
         {

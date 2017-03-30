@@ -13,5 +13,8 @@ namespace App.Model.Master{
         public string name;//
         public SkillType type;//
         public int price;
+        public WeaponType[] weapon_types;
+        public int[] distance;
+        public int power;
 	}
 }

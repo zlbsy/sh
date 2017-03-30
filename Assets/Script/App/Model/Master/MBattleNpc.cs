@@ -23,5 +23,6 @@ namespace App.Model.Master{
         public int star;
 		public int x;
 		public int y;
+        public string skills;
 	}
 }

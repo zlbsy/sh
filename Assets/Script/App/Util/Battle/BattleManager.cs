@@ -17,6 +17,7 @@ namespace App.Util.Battle{
         private VBaseMap vBaseMap;
         private App.Model.Master.MBaseMap baseMapMaster;
         private System.Action returnAction;
+        private List<MCharacter> attackCharacterList = new List<MCharacter>();
         public BattleManager(CBattlefield controller, MBaseMap model, VBaseMap view){
             cBattlefield = controller;
             mBaseMap = model;
@@ -60,22 +61,38 @@ namespace App.Util.Battle{
             }
             this.mCharacter.Target = mCharacter;
             mCharacter.Target = this.mCharacter;
-            this.mCharacter.Action = ActionType.attack;
-            cBattlefield.AddDynamicCharacter(this.mCharacter);
+
+            attackCharacterList.Add(this.mCharacter);
+            attackCharacterList.Add(this.mCharacter);
+            attackCharacterList.Add(mCharacter);
+
             cBattlefield.tilesManager.ClearCurrentTiles();
             cBattlefield.CloseOperatingMenu();
             cBattlefield.HideBattleCharacterPreviewDialog();
             cBattlefield.battleMode = CBattlefield.BattleMode.attacking;
             cBattlefield.ActionEndHandler += OnAttackComplete;
-            cBattlefield.WaitActionEnd();
+            OnAttackComplete();
         }
         public void OnAttackComplete(){
+            if (attackCharacterList.Count > 0)
+            {
+                MCharacter currentCharacter = attackCharacterList[0];
+                currentCharacter.Direction = (currentCharacter.X > currentCharacter.Target.X ? Direction.left : Direction.right);
+                currentCharacter.Action = ActionType.attack;
+                attackCharacterList.RemoveAt(0);
+                return;
+            }
             cBattlefield.ActionEndHandler -= OnAttackComplete;
             App.View.Character.VCharacter character = cBattlefield.GetCharacterView(this.mCharacter);
             character.Gray = true;
             cBattlefield.battleMode = CBattlefield.BattleMode.none;
         }
         public void ClickMovingNode(int index){
+            if (this.mCharacter.Belong != Belong.self)
+            {
+                CharacterReturnNone();
+                return;
+            }
             MCharacter mCharacter = GetCharacter(index);
             if (mCharacter != null)
             {

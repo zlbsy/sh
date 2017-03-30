@@ -24,12 +24,15 @@ namespace App.Util.Battle{
         }
         public void ShowCharacterMovingArea(MCharacter mCharacter){
             currentTiles = cBattlefield.breadthFirst.Search(mCharacter);
-            vBaseMap.SetTilesColor(currentTiles, Color.blue);
+            vBaseMap.SetTilesColor(currentTiles, mCharacter.Belong == Belong.self ? Color.blue : Color.green);
             cBattlefield.battleMode = CBattlefield.BattleMode.show_move_tiles;
         }
         public void ShowCharacterAttackArea(MCharacter mCharacter){
-            currentTiles = cBattlefield.breadthFirst.Search(mCharacter, 1);
-            currentTiles = currentTiles.FindAll(_=>_.CoordinateX != mCharacter.CoordinateX || _.CoordinateY != mCharacter.CoordinateY);
+            int[] distance = mCharacter.CurrentSkill.Master.distance;
+            currentTiles = cBattlefield.breadthFirst.Search(mCharacter, distance[1]);
+            VTile characterTile = currentTiles.Find(_=>_.CoordinateX == mCharacter.CoordinateX && _.CoordinateY == mCharacter.CoordinateY);
+            currentTiles = currentTiles.FindAll(_=>cBattlefield.mapSearch.GetDistance(_, characterTile) >= distance[0]);
+            //currentTiles.Remove(characterTile);
             vBaseMap.SetTilesColor(currentTiles, Color.red);
             foreach(VTile tile in currentTiles){
                 MCharacter character = cBattlefield.manager.GetCharacter(tile.Index);
