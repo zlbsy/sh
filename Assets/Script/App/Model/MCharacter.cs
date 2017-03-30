@@ -10,6 +10,7 @@ namespace App.Model{
 		infantry,//步兵
 		cavalry,//骑兵
     }
+    [System.Serializable]
 	public enum WeaponType{
 		shortKnife,//短刀
 		longKnife,//长刀
@@ -17,6 +18,7 @@ namespace App.Model{
 		gun,//枪
 		shortAx,//短斧
 		longAx,//长斧
+        pick,//长枪
 	}
 	public enum ActionType{
 		stand,
