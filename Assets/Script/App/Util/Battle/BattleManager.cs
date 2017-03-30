@@ -31,18 +31,20 @@ namespace App.Util.Battle{
         }
         public void ClickNoneNode(int index){
             MCharacter mCharacter = GetCharacter(index);
-            if (mCharacter != null && !cBattlefield.GetCharacterView(mCharacter).Gray)
+            if (mCharacter != null)
             {
                 this.mCharacter = mCharacter;
                 cBattlefield.tilesManager.ShowCharacterMovingArea(mCharacter);
                 cBattlefield.OpenBattleCharacterPreviewDialog(this.mCharacter);
                 int cx = mCharacter.CoordinateX;
                 int cy = mCharacter.CoordinateY;
+                float x = mCharacter.X;
                 Direction direction = mCharacter.Direction;
                 returnAction = () =>
                     {
                         this.mCharacter.CoordinateY = cy;
                         this.mCharacter.CoordinateX = cx;
+                        this.mCharacter.X = x;
                         this.mCharacter.Direction = direction;
                 };
             }
@@ -88,7 +90,7 @@ namespace App.Util.Battle{
             cBattlefield.battleMode = CBattlefield.BattleMode.none;
         }
         public void ClickMovingNode(int index){
-            if (this.mCharacter.Belong != Belong.self)
+            if (this.mCharacter.Belong != Belong.self || cBattlefield.GetCharacterView(this.mCharacter).Gray)
             {
                 CharacterReturnNone();
                 return;

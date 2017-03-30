@@ -11,7 +11,6 @@ using App.Controller;
 namespace App.View.Battlefield{
     public class VBattleCharacterPreview : VBase {
         [SerializeField]private Text txtName;
-        [SerializeField]private Text txtNickname;
         [SerializeField]private Text skillname;
         #region VM处理
         public VMCharacter ViewModel { get { return (VMCharacter)BindingContext; } }
@@ -35,7 +34,6 @@ namespace App.View.Battlefield{
         private void CharacterIdChanged(int oldvalue, int newvalue)
         {
             txtName.text = Language.GetCharacterWord(ViewModel.Name.Value);
-            txtNickname.text = Language.GetCharacterWord(ViewModel.Nickname.Value);
         }
         private void CurrentSkillChanged(App.Model.MSkill oldvalue, App.Model.MSkill newvalue)
         {
