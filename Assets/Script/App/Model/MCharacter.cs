@@ -66,6 +66,7 @@ namespace App.Model{
                 return this.ViewModel.Id.Value;
             }
         }
+        public MSkill CurrentSkill;
         public int UserId{
             set{
                 this.ViewModel.UserId.Value = value;
