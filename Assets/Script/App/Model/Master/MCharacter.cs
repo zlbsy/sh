@@ -11,7 +11,9 @@ namespace App.Model.Master{
         public string name;
         public string nickname;
 		public int hp;//
-		public int mp;//
+        public int mp;//
+        public int head;//
+        public int hat;//
 
         //废除属性
         public int force;//武力
@@ -51,9 +53,9 @@ namespace App.Model.Master{
 耐力
 
 物攻 = 力量*2+技巧
-法攻 = 技巧+谋略
+法攻 = 谋略
 物防 = 力量+技巧
-法防 = 谋略
+法防 = 技巧+谋略
 
 物理攻击
 命中/躲闪 = 技巧+速度*2

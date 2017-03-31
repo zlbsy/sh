@@ -7,8 +7,14 @@ using App.Util.Cacher;
 
 namespace App.Model{
 	public enum MoveType{
-		infantry,//步兵
-		cavalry,//骑兵
+        /// <summary>
+        /// 步兵
+        /// </summary>
+		infantry,
+        /// <summary>
+        /// 骑兵
+        /// </summary>
+		cavalry,
     }
     [System.Serializable]
 	public enum WeaponType{
@@ -29,7 +35,11 @@ namespace App.Model{
 	}
     public enum Direction{
         left,
-        right
+        right,
+        leftUp,
+        leftDown,
+        rightUp,
+        rightDown
     }
     public enum Belong{
         self,
@@ -87,6 +97,8 @@ namespace App.Model{
                 App.Model.Master.MCharacter master = CharacterCacher.Instance.Get(value);
                 this.ViewModel.Name.Value = master.name;
                 this.ViewModel.Nickname.Value = master.nickname;
+                this.ViewModel.Head.Value = master.head;
+                this.ViewModel.Hat.Value = master.hat;
                 this.ViewModel.CharacterId.Value = value;
             }
             get{ 
@@ -259,6 +271,14 @@ namespace App.Model{
             }
             get{ 
                 return this.ViewModel.Target.Value;
+            }
+        }
+        public MCharacterAbility Ability{
+            set{ 
+                this.ViewModel.Ability.Value = value;
+            }
+            get{ 
+                return this.ViewModel.Ability.Value;
             }
         }
 	}

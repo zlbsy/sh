@@ -7,6 +7,9 @@ using App.Util.Cacher;
 using UnityEngine;
 
 namespace App.Util.Search{
+    /// <summary>
+    /// A星搜索
+    /// </summary>
     public class AStar{
         private CBaseMap cBaseMap;
         private MBaseMap mBaseMap;

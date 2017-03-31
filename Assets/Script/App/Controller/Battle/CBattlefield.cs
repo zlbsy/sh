@@ -33,6 +33,7 @@ namespace App.Controller.Battle{
         public BattleMode battleMode{ get; set;}
         public BattleManager manager{ get; set;}
         public BattleTilesManager tilesManager{ get; set;}
+        public BattleCharactersManager charactersManager{ get; set;}
         public override IEnumerator OnLoad( Request request ) 
         {  
             battleCharacterPreview.gameObject.SetActive(false);
@@ -101,6 +102,7 @@ namespace App.Controller.Battle{
             base.InitManager();
             manager = new BattleManager(this, mBaseMap, vBaseMap);
             tilesManager = new BattleTilesManager(this, mBaseMap, vBaseMap);
+            charactersManager = new BattleCharactersManager(this, mBaseMap, vBaseMap);
         }
         /// <summary>
         /// 返回一个动态的攻击图标

@@ -9,6 +9,9 @@ using App.View;
 using App.Controller.Battle;
 
 namespace App.Util.Battle{
+    /// <summary>
+    /// 战场地图块操作相关
+    /// </summary>
     public class BattleTilesManager{
         private CBattlefield cBattlefield;
         private MBaseMap mBaseMap;

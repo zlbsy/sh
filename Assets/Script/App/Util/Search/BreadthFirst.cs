@@ -7,6 +7,9 @@ using App.Util.Cacher;
 using App.Controller;
 
 namespace App.Util.Search{
+    /// <summary>
+    /// 广度优先搜索
+    /// </summary>
     public class BreadthFirst{
         private CBaseMap cBaseMap;
         private MBaseMap mBaseMap;

@@ -4,6 +4,18 @@ using App.ViewModel;
 
 
 namespace App.Model{
+    [System.Serializable]
+    public enum SkillType{
+        attack,//攻击类
+        heal,//回复类
+        ability,//能力增强类
+    }
+    [System.Serializable]
+    public enum RadiusType{
+        point,//点攻击
+        range,//面攻击
+        direction,//穿透攻击
+    }
 	public class MSkill : MBase {
         public MSkill(){
             viewModel = new VMSkill ();
@@ -35,7 +47,7 @@ namespace App.Model{
         }
         public App.Model.Master.MSkill Master{
             get{ 
-                return App.Util.Cacher.SkillCacher.Instance.Get(this.SkillId);
+                return App.Util.Cacher.SkillCacher.Instance.Get(this.SkillId, this.Level);
             }
         }
 	}

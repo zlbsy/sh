@@ -10,6 +10,9 @@ using Holoville.HOTween;
 using App.Controller.Battle;
 
 namespace App.Util.Battle{
+    /// <summary>
+    /// 战场总操作相关
+    /// </summary>
     public class BattleManager{
         private CBattlefield cBattlefield;
         private MCharacter mCharacter;

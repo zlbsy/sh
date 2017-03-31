@@ -2,6 +2,7 @@ using App.Model;
 using App.View.Character;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 
 
 namespace App.Controller.Battle{
@@ -30,17 +31,12 @@ namespace App.Controller.Battle{
         public void OnDamage(VCharacter vCharacter){
             MCharacter targetModel = vCharacter.ViewModel.Target.Value;
             VCharacter target = this.GetCharacterView(targetModel);
-            //this.AddDynamicCharacter(target);
-            App.Model.Battle.MDamageParam arg = new App.Model.Battle.MDamageParam(-20);
-            target.SendMessage(CharacterEvent.OnDamage.ToString(), arg);
+            List<VCharacter> characters = this.charactersManager.GetDamageCharacters(vCharacter, target, vCharacter.ViewModel.CurrentSkill.Value.Master);
+            foreach (VCharacter child in characters)
+            {
+                App.Model.Battle.MDamageParam arg = new App.Model.Battle.MDamageParam(-20);
+                child.SendMessage(CharacterEvent.OnDamage.ToString(), arg);
+            }
         }
-        /*
-        #region Event处理
-        public void SendEvent(CharacterEvent et, VCharacter target, object arg = null){
-
-            target.SendMessage(et.ToString(), arg);
-        }
-        #endregion
-        */
     }
 }

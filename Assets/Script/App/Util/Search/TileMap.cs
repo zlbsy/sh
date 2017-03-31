@@ -8,6 +8,9 @@ using App.Util.Cacher;
 using App.View;
 
 namespace App.Util.Search{
+    /// <summary>
+    /// 地图块儿搜索相关
+    /// </summary>
     public class TileMap{
         private VBaseMap vBaseMap;
         private MBaseMap mBaseMap;
@@ -22,8 +25,53 @@ namespace App.Util.Search{
             return GetTile(coordinate);
         }
         public VTile GetTile(Vector2 coordinate){
-            int i = (int)coordinate.y * vBaseMap.mapWidth + (int)coordinate.x;
+            return GetTile((int)coordinate.x, (int)coordinate.y);
+        }
+        public VTile GetTile(int x, int y){
+            int i = y * vBaseMap.mapWidth + x;
             return vBaseMap.tileUnits[i];
+        }
+        public VTile GetTile(VTile tile, Direction direction){
+            VTile resultTile = null;
+            switch (direction)
+            {
+                case Direction.left:
+                    resultTile = GetTile(tile.CoordinateX - 1, tile.CoordinateY);
+                    break;
+                case Direction.right:
+                    resultTile = GetTile(tile.CoordinateX + 1, tile.CoordinateY);
+                    break;
+                case Direction.leftUp:
+                    resultTile = GetTile(tile.CoordinateX - ((tile.CoordinateY + 1) % 2), tile.CoordinateY - 1);
+                    break;
+                case Direction.leftDown:
+                    resultTile = GetTile(tile.CoordinateX - ((tile.CoordinateY + 1) % 2), tile.CoordinateY + 1);
+                    break;
+                case Direction.rightUp:
+                    resultTile = GetTile(tile.CoordinateX + (tile.CoordinateY % 2), tile.CoordinateY - 1);
+                    break;
+                case Direction.rightDown:
+                    resultTile = GetTile(tile.CoordinateX + (tile.CoordinateY % 2), tile.CoordinateY + 1);
+                    break;
+            }
+            return resultTile;
+        }
+        public Direction GetDirection(VTile tile, VTile target){
+            return GetDirection(tile.CoordinateX, tile.CoordinateY, target.CoordinateX, target.CoordinateY);
+        }
+        public Direction GetDirection(int x, int y, int cx, int cy){
+            if (cy == y)
+            {
+                return cx > x ? Direction.right : Direction.left;
+            }
+            else if (cy > y)
+            {
+                return cx < x + (y % 2) ? Direction.leftDown : Direction.rightDown;
+            }
+            else
+            {
+                return cx < x + (y % 2) ? Direction.leftUp : Direction.rightUp;
+            }
         }
         public int GetDistance(VTile tile1, VTile tile2){
             if (tile2.CoordinateY == tile1.CoordinateY)
@@ -54,53 +102,53 @@ namespace App.Util.Search{
         public List<Vector2> GetNeighboringCoordinates(Vector2 coordinate){
             return GetNeighboringCoordinates((int)coordinate.x, (int)coordinate.y);
         }
-        public List<Vector2> GetNeighboringCoordinates(int coordinateX, int coordinateY){
+        public List<Vector2> GetNeighboringCoordinates(int x, int y){
             List<Vector2> coordinates = new List<Vector2>();
-            if (coordinateY > 0)
+            if (y > 0)
             {
-                if (coordinateY % 2 == 0)
+                if (y % 2 == 0)
                 {
-                    if (coordinateX > 0)
+                    if (x > 0)
                     {
-                        coordinates.Add(new Vector2(coordinateX - 1, coordinateY - 1));
+                        coordinates.Add(new Vector2(x - 1, y - 1));
                     }
-                    coordinates.Add(new Vector2(coordinateX, coordinateY - 1));
+                    coordinates.Add(new Vector2(x, y - 1));
                 }
                 else
                 {
-                    coordinates.Add(new Vector2(coordinateX, coordinateY - 1));
-                    if (coordinateX + 1 < baseMapMaster.width)
+                    coordinates.Add(new Vector2(x, y - 1));
+                    if (x + 1 < baseMapMaster.width)
                     {
-                        coordinates.Add(new Vector2(coordinateX + 1, coordinateY - 1));
+                        coordinates.Add(new Vector2(x + 1, y - 1));
                     }
                 }
             }
-            if (coordinateX + 1 < baseMapMaster.width)
+            if (x + 1 < baseMapMaster.width)
             {
-                coordinates.Add(new Vector2(coordinateX + 1, coordinateY));
+                coordinates.Add(new Vector2(x + 1, y));
             }
-            if (coordinateY + 1 < baseMapMaster.height)
+            if (y + 1 < baseMapMaster.height)
             {
-                if (coordinateY % 2 == 0)
+                if (y % 2 == 0)
                 {
-                    coordinates.Add(new Vector2(coordinateX, coordinateY + 1));
-                    if (coordinateX > 0)
+                    coordinates.Add(new Vector2(x, y + 1));
+                    if (x > 0)
                     {
-                        coordinates.Add(new Vector2(coordinateX - 1, coordinateY + 1));
+                        coordinates.Add(new Vector2(x - 1, y + 1));
                     }
                 }
                 else
                 {
-                    if (coordinateX + 1 < baseMapMaster.width)
+                    if (x + 1 < baseMapMaster.width)
                     {
-                        coordinates.Add(new Vector2(coordinateX + 1, coordinateY + 1));
+                        coordinates.Add(new Vector2(x + 1, y + 1));
                     }
-                    coordinates.Add(new Vector2(coordinateX, coordinateY + 1));
+                    coordinates.Add(new Vector2(x, y + 1));
                 }
             }
-            if (coordinateX > 0)
+            if (x > 0)
             {
-                coordinates.Add(new Vector2(coordinateX - 1, coordinateY));
+                coordinates.Add(new Vector2(x - 1, y));
             }
             return coordinates;
         }
