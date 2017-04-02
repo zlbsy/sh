@@ -18,14 +18,47 @@ namespace App.Model{
     }
     [System.Serializable]
 	public enum WeaponType{
-		shortKnife,//短刀
-		longKnife,//长刀
-		sword,//剑
-		gun,//枪
-		shortAx,//短斧
-		longAx,//长斧
-        pick,//长枪
-	}
+        /// <summary>
+        /// 短刀
+        /// </summary>
+        knife,
+        /// <summary>
+        /// 大刀
+        /// </summary>
+		longKnife,
+        /// <summary>
+        /// 短斧
+        /// </summary>
+		ax,
+        /// <summary>
+        /// 长斧
+        /// </summary>
+		longAx,
+        /// <summary>
+        /// 长枪
+        /// </summary>
+        pike,
+        /// <summary>
+        /// 剑
+        /// </summary>
+        sword,
+        /// <summary>
+        /// 弓箭
+        /// </summary>
+        archery,
+        /// <summary>
+        /// 棍棒
+        /// </summary>
+        sticks,
+        /// <summary>
+        /// 拳脚
+        /// </summary>
+        fist,
+        /// <summary>
+        /// 双手
+        /// </summary>
+        dualWield,
+    }
 	public enum ActionType{
 		stand,
 		move,
@@ -62,7 +95,60 @@ namespace App.Model{
             return mCharacter;
         }
 		public VMCharacter ViewModel { get { return (VMCharacter)viewModel; } }
-		
+		/// <summary>
+        /// 枪剑类兵器
+        /// </summary>
+        /// <value><c>true</c> if this instance is pike; otherwise, <c>false</c>.</value>
+        public bool IsPike{
+            get{ 
+                return this.WeaponType == WeaponType.pike || this.WeaponType == WeaponType.sword;
+            }
+        }
+       /// <summary>
+       /// 斧类兵器
+       /// </summary>
+       /// <value><c>true</c> if this instance is ax; otherwise, <c>false</c>.</value>
+        public bool IsAx{
+            get{ 
+                return this.WeaponType == WeaponType.ax || this.WeaponType == WeaponType.longAx;
+            }
+        }
+        /// <summary>
+        /// 刀类兵器
+        /// </summary>
+        /// <value><c>true</c> if this instance is knife; otherwise, <c>false</c>.</value>
+        public bool IsKnife{
+            get{ 
+                return this.WeaponType == WeaponType.longKnife || this.WeaponType == WeaponType.knife;
+            }
+        }
+        /// <summary>
+        /// 长兵器
+        /// </summary>
+        /// <value><c>true</c> if this instance is long weapon; otherwise, <c>false</c>.</value>
+        public bool IsLongWeapon{
+            get{ 
+                return this.WeaponType == WeaponType.longKnife || this.WeaponType == WeaponType.longAx || this.WeaponType == WeaponType.pike || this.WeaponType == WeaponType.sticks;
+            }
+        }
+        /// <summary>
+        /// 短兵器
+        /// </summary>
+        /// <value><c>true</c> if this instance is short weapon; otherwise, <c>false</c>.</value>
+        public bool IsShortWeapon{
+            get{ 
+                return this.WeaponType == WeaponType.knife || this.WeaponType == WeaponType.ax || this.WeaponType == WeaponType.sword || this.WeaponType == WeaponType.fist;
+            }
+        }
+        /// <summary>
+        /// 远程类兵器
+        /// </summary>
+        /// <value><c>true</c> if this instance is archery; otherwise, <c>false</c>.</value>
+        public bool IsArcheryWeapon{
+            get{ 
+                return this.WeaponType == WeaponType.archery;
+            }
+        }
         public App.Model.Master.MCharacter Master{
             get{ 
                 return CharacterCacher.Instance.Get(CharacterId);

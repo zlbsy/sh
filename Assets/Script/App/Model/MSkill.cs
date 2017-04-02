@@ -6,7 +6,8 @@ using App.ViewModel;
 namespace App.Model{
     [System.Serializable]
     public enum SkillType{
-        attack,//攻击类
+        attack,//物理攻击类
+        magic,//法术攻击类
         heal,//回复类
         ability,//能力增强类
     }

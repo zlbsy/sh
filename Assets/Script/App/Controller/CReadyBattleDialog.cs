@@ -46,6 +46,11 @@ namespace App.Controller{
             ScrollViewSets(characterContent, characterIcon, App.Util.Global.SUser.self.characters);
         }
         public void ClickCharacterIcon(VCharacterIcon vCharacterIcon){
+            if (!vCharacterIcon.isSelected && selectCharacterContent.childCount >= selectShadowContent.childCount)
+            {
+                CAlertDialog.Show("人数满了");
+                return;
+            }
             ToSelectCharacter(vCharacterIcon.ViewModel.CharacterId.Value, !vCharacterIcon.isSelected);
             vCharacterIcon.isSelected = !vCharacterIcon.isSelected;
         }

@@ -13,7 +13,7 @@ namespace App.Model.Avatar{
 		public AvatarAction GetAvatarAction(WeaponType weaponType, ActionType actionType, int index){
 			Arms arms = null;
 			switch(weaponType){
-			case WeaponType.shortKnife:
+			case WeaponType.knife:
 				arms = shortKnife;
 				break;
 			case WeaponType.longKnife:

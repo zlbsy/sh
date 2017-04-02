@@ -71,10 +71,10 @@ namespace App.Model{
             }
             this.HpMax = master.hp + this.Endurance + hp;
             this.MpMax = master.mp + this.Knowledge + mp;
-            this.PhysicalAttack = (this.Power * 2 + this.Knowledge) * (mCharacter.MoveType == MoveType.cavalry ? this.Riding : this.Walker) * 0.01f;
-            this.MagicAttack = this.Trick;
+            this.PhysicalAttack = Mathf.FloorToInt((this.Power * 2 + this.Knowledge) * (mCharacter.MoveType == MoveType.cavalry ? this.Riding : this.Walker) * 0.01f);
+            this.MagicAttack = Mathf.FloorToInt((this.Trick * 2 + this.Knowledge) * (mCharacter.MoveType == MoveType.cavalry ? this.Riding : this.Walker) * 0.01f);
             this.PhysicalDefense = this.Power + this.Knowledge;
-            this.MagicDefense = this.Knowledge + this.Trick;
+            this.MagicDefense = this.Trick + this.Knowledge;
         }
         /// <summary>
         /// 物攻 = (力量*2+技巧)*(骑术|步战)/100
@@ -88,7 +88,7 @@ namespace App.Model{
             }
         }
         /// <summary>
-        /// 法攻 = 谋略
+        /// 法攻 = (谋略*2+技巧)*(骑术|步战)/100
         /// </summary>
         public int MagicAttack{
             set{
@@ -110,7 +110,7 @@ namespace App.Model{
             }
         }
         /// <summary>
-        /// 法防 = 技巧+谋略
+        /// 法防 = 谋略+技巧
         /// </summary>
         public int MagicDefense{
             set{
