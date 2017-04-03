@@ -154,6 +154,20 @@ namespace App.Model{
                 return CharacterCacher.Instance.Get(CharacterId);
             }
         }
+        public void StatusInit(){
+            if (this.CurrentSkill == null)
+            {
+                this.CurrentSkill = System.Array.Find(this.Skills, _=>System.Array.IndexOf(_.Master.weapon_types, this.WeaponType) >= 0);
+            }
+            if (this.Ability == null)
+            {
+                this.Ability = MCharacterAbility.Create(this);
+            }
+            else
+            {
+                this.Ability.Update(this);
+            }
+        }
         public int Id{
             set{
                 this.ViewModel.Id.Value = value;

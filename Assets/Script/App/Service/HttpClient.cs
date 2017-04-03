@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using App.Util;
 
 namespace App.Service{
 	public class HttpClient {
@@ -22,6 +23,12 @@ namespace App.Service{
             string url = string.Format("{0}sh.php?class={1}&method={2}", docmain, paths[0], paths[1]);
             Debug.Log("url : " + url);
             isWaiting = true;
+            bool showConnecting = false;
+            if (App.Util.Global.SceneManager != null && !Global.SceneManager.DialogIsShow(SceneManager.Prefabs.ConnectingDialog) && !Global.SceneManager.DialogIsShow(SceneManager.Prefabs.LoadingDialog))
+            {
+                showConnecting = true;
+                App.Controller.CConnectingDialog.ToShow();
+            }
             if (!string.IsNullOrEmpty(App.Util.Global.ssid))
             {
                 if (form == null)
@@ -33,6 +40,10 @@ namespace App.Service{
             }
             using (WWW www = (form == null ? new WWW(url) : new WWW (url, form))) {
                 yield return www;
+                if (showConnecting)
+                {
+                    App.Controller.CConnectingDialog.ToClose();
+                }
 				if (!string.IsNullOrEmpty (www.error)) {
                     Debug.LogError("www Error:" + www.error + "\n" + path);
 					yield break;

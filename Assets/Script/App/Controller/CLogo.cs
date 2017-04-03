@@ -31,7 +31,6 @@ namespace App.Controller{
         {  
             yield return StartCoroutine (App.Util.Global.SUser.RequestLogin("aaa", "bbb"));
             CConnectingDialog.ToClose();
-            Debug.Log("App.Util.Global.SUser.user="+App.Util.Global.SUser.self);
             if (App.Util.Global.SUser.self == null)
             {
                 yield break;
@@ -53,11 +52,11 @@ namespace App.Controller{
                 Language.Reset(LanguageAsset.Data.words);
                 LanguageAsset.Clear();
             }));
-            list.Add(sUser.Download(LanguageAsset.CHARACTER_WORD_URL, versions.characterword, (AssetBundle assetbundle)=>{
+            /*list.Add(sUser.Download(LanguageAsset.CHARACTER_WORD_URL, versions.characterword, (AssetBundle assetbundle)=>{
                 LanguageAsset.assetbundle = assetbundle;
                 Language.ResetCharacterWord(LanguageAsset.Data.words);
                 LanguageAsset.Clear();
-            }));
+            }));*/
             list.Add(sUser.Download(WorldAsset.Url, versions.world, (AssetBundle assetbundle)=>{
                 WorldAsset.assetbundle = assetbundle;
                 Global.worlds = WorldAsset.Data.worlds;

@@ -53,7 +53,7 @@ namespace App.Controller{
             characterTalk.text = string.Empty;
             face.CharacterId = characterId;
             App.Model.Master.MCharacter mCharacter = CharacterCacher.Instance.Get(characterId);
-            characterName.text = Language.GetCharacterWord(mCharacter.name);
+            characterName.text = mCharacter.name;
             StartCoroutine(UpdateMessage());
             yield return StartCoroutine(base.OnLoad(request));
         }

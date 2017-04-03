@@ -33,7 +33,7 @@ namespace App.View.Battlefield{
         }
         private void CharacterIdChanged(int oldvalue, int newvalue)
         {
-            txtName.text = Language.GetCharacterWord(ViewModel.Name.Value);
+            txtName.text = ViewModel.Name.Value;
         }
         private void CurrentSkillChanged(App.Model.MSkill oldvalue, App.Model.MSkill newvalue)
         {

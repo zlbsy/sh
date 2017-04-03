@@ -15,13 +15,6 @@ namespace App.Model.Master{
         public int head;//
         public int hat;//
 
-        //废除属性
-        public int force;//武力
-        public int intelligence;//智力
-        public int command;//统率
-        public int agility;//敏捷
-        public int luck;//运气
-
         public int qualification;//资质
         public int power;//力量
         public int knowledge;//技巧

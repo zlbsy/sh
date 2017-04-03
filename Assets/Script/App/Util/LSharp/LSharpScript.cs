@@ -21,6 +21,14 @@ namespace App.Util.LSharp{
             subClasses.Add("Character", LSharpCharacter.Instance);
             subClasses.Add("Talk", LSharpTalk.Instance);
             subClasses.Add("Battle", LSharpBattle.Instance);
+            subClasses.Add("Var", LSharpVarlable.Instance);
+            if (LSharpVarlable.Instance.VarList.Count == 0)
+            {
+                Dictionary<string, int> progress = Global.SUser.self.progress;
+                foreach(string k in progress.Keys){
+                    LSharpVarlable.SetVarlable(k, progress[k].ToString());
+                }
+            }
         }
         public void ToList(List<string> datas){
             lineList = new List<string>(datas);

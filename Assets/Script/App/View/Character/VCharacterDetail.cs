@@ -35,8 +35,8 @@ namespace App.View.Character{
         }
         private void CharacterIdChanged(int oldvalue, int newvalue)
         {
-            txtName.text = Language.GetCharacterWord(ViewModel.Name.Value);
-            txtNickname.text = Language.GetCharacterWord(ViewModel.Nickname.Value);
+            txtName.text = ViewModel.Name.Value;
+            txtNickname.text = ViewModel.Nickname.Value;
             faceIcon.CharacterId = ViewModel.CharacterId.Value;
         }
         private void StarChanged(int oldvalue, int newvalue)

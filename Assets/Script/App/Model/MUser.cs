@@ -14,6 +14,14 @@ namespace App.Model{
         public MCharacter[] characters;
         public MEquipment[] equipments;
         public MItem[] items;
+        public Dictionary<string, int> progress;
+        public int GetValue(string key){
+            if (!progress.ContainsKey(key))
+            {
+                return 0;
+            }
+            return progress[key];
+        }
         public string Nickname{
             get{ 
                 return this.ViewModel.Nickname.Value;

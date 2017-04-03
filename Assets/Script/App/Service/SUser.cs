@@ -44,5 +44,27 @@ namespace App.Service{
         {
             yield return App.Util.SceneManager.CurrentScene.StartCoroutine(RequestGet( this.self.id ));
         }
+        public IEnumerator RequestProgress(string key, int value, System.Action callback = null)
+        {
+            var url = "user/progress";
+            WWWForm form = new WWWForm();
+            form.AddField("user_id", this.self.id);
+            form.AddField("k", key);
+            form.AddField("v", value);
+            HttpClient client = new HttpClient();
+            yield return App.Util.SceneManager.CurrentScene.StartCoroutine(client.Send( url, form));
+            if (this.self.progress.ContainsKey(key))
+            {
+                this.self.progress[key] = value;
+            }
+            else
+            {
+                this.self.progress.Add(key, value);
+            }
+            if (callback != null)
+            {
+                callback();
+            }
+        }
 	}
 }

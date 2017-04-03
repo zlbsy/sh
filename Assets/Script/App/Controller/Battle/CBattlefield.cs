@@ -34,6 +34,7 @@ namespace App.Controller.Battle{
         public BattleManager manager{ get; set;}
         public BattleTilesManager tilesManager{ get; set;}
         public BattleCharactersManager charactersManager{ get; set;}
+        public BattleCalculateManager calculateManager{ get; set;}
         public override IEnumerator OnLoad( Request request ) 
         {  
             battleCharacterPreview.gameObject.SetActive(false);
@@ -78,11 +79,7 @@ namespace App.Controller.Battle{
         /// </summary>
         /// <param name="mCharacter">M character.</param>
         private void CharacterInit(MCharacter mCharacter){
-            mCharacter.HpMax = mCharacter.Hp = 200;
-            if (mCharacter.CurrentSkill == null)
-            {
-                mCharacter.CurrentSkill = System.Array.Find(mCharacter.Skills, _=>System.Array.IndexOf(_.Master.weapon_types, mCharacter.WeaponType) >= 0);
-            }
+            mCharacter.StatusInit();
         }
         public override void OnClickTile(int index){
             switch (battleMode)
@@ -103,6 +100,7 @@ namespace App.Controller.Battle{
             manager = new BattleManager(this, mBaseMap, vBaseMap);
             tilesManager = new BattleTilesManager(this, mBaseMap, vBaseMap);
             charactersManager = new BattleCharactersManager(this, mBaseMap, vBaseMap);
+            calculateManager = new BattleCalculateManager(this, mBaseMap, vBaseMap);
         }
         /// <summary>
         /// 返回一个动态的攻击图标

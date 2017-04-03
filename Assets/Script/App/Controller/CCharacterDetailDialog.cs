@@ -31,6 +31,7 @@ namespace App.Controller{
                 Global.SUser.self.equipments = sEquipment.equipments;
             }
             character = System.Array.Find(Global.SUser.self.characters, _=>_.CharacterId == characterId);
+            character.StatusInit();
             characterDetail.BindingContext = character.ViewModel;
             characterDetail.UpdateView();
             vCharacter.BindingContext = character.ViewModel;

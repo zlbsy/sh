@@ -29,12 +29,13 @@ namespace App.Controller.Battle{
             ActionEnd();
         }
         public void OnDamage(VCharacter vCharacter){
+            MCharacter mCharacter = this.GetCharacterModel(vCharacter);
             MCharacter targetModel = vCharacter.ViewModel.Target.Value;
             VCharacter target = this.GetCharacterView(targetModel);
             List<VCharacter> characters = this.charactersManager.GetDamageCharacters(vCharacter, target, vCharacter.ViewModel.CurrentSkill.Value.Master);
             foreach (VCharacter child in characters)
             {
-                App.Model.Battle.MDamageParam arg = new App.Model.Battle.MDamageParam(-20);
+                App.Model.Battle.MDamageParam arg = new App.Model.Battle.MDamageParam(-this.calculateManager.Hert(mCharacter, this.GetCharacterModel(child)));
                 child.SendMessage(CharacterEvent.OnDamage.ToString(), arg);
             }
         }

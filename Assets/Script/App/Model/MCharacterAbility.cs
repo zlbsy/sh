@@ -69,15 +69,15 @@ namespace App.Model{
                 this.HiddenWeapons += skillMaster.hidden_weapons;
                 this.DualWield += skillMaster.dual_wield;
             }
-            this.HpMax = master.hp + this.Endurance + hp;
-            this.MpMax = master.mp + this.Knowledge + mp;
-            this.PhysicalAttack = Mathf.FloorToInt((this.Power * 2 + this.Knowledge) * (mCharacter.MoveType == MoveType.cavalry ? this.Riding : this.Walker) * 0.01f);
-            this.MagicAttack = Mathf.FloorToInt((this.Trick * 2 + this.Knowledge) * (mCharacter.MoveType == MoveType.cavalry ? this.Riding : this.Walker) * 0.01f);
-            this.PhysicalDefense = this.Power + this.Knowledge;
-            this.MagicDefense = this.Trick + this.Knowledge;
+            this.HpMax = mCharacter.Level * 2 + master.hp + this.Endurance + hp;
+            this.MpMax = mCharacter.Level + master.mp + this.Knowledge + mp;
+            this.PhysicalAttack = Mathf.FloorToInt(mCharacter.Level + (this.Power * 2 + this.Knowledge) * (mCharacter.MoveType == MoveType.cavalry ? this.Riding : this.Walker) * 0.01f);
+            this.MagicAttack = Mathf.FloorToInt(mCharacter.Level + (this.Trick * 2 + this.Knowledge) * (mCharacter.MoveType == MoveType.cavalry ? this.Riding : this.Walker) * 0.01f);
+            this.PhysicalDefense = mCharacter.Level + this.Power + this.Knowledge;
+            this.MagicDefense = mCharacter.Level + this.Trick + this.Knowledge;
         }
         /// <summary>
-        /// 物攻 = (力量*2+技巧)*(骑术|步战)/100
+        /// 物攻 = Lv + (力量*2+技巧)*(骑术|步战)/100
         /// </summary>
         public int PhysicalAttack{
             set{
@@ -88,7 +88,7 @@ namespace App.Model{
             }
         }
         /// <summary>
-        /// 法攻 = (谋略*2+技巧)*(骑术|步战)/100
+        /// 法攻 = Lv + (谋略*2+技巧)*(骑术|步战)/100
         /// </summary>
         public int MagicAttack{
             set{
@@ -99,7 +99,7 @@ namespace App.Model{
             }
         }
         /// <summary>
-        /// 物防 = 力量+技巧
+        /// 物防 = Lv + 力量+技巧
         /// </summary>
         public int PhysicalDefense{
             set{
@@ -110,7 +110,7 @@ namespace App.Model{
             }
         }
         /// <summary>
-        /// 法防 = 谋略+技巧
+        /// 法防 = Lv + 谋略+技巧
         /// </summary>
         public int MagicDefense{
             set{

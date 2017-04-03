@@ -58,5 +58,9 @@ namespace App.Controller{
             App.View.Character.VCharacter vCharacter = this.vBaseMap.Characters.Find(_=>_.ViewModel.CharacterId.Value == mCharacter.CharacterId && _.ViewModel.Belong.Value == mCharacter.Belong);
             return vCharacter;
         }
+        public MCharacter GetCharacterModel(App.View.Character.VCharacter vCharacter){
+            MCharacter mCharacter = System.Array.Find(mBaseMap.Characters, _=>_.CharacterId == vCharacter.ViewModel.CharacterId.Value && _.Belong == vCharacter.ViewModel.Belong.Value);
+            return mCharacter;
+        }
 	}
 }

@@ -19,8 +19,20 @@ namespace App.Util.LSharp{
             LSharpVarlable.SetVarlable(arguments[0], arguments[1]);
             LSharpScript.Instance.Analysis();
         }
+        public void SetProgress(string[] arguments){
+            Global.SUser.RequestProgress(arguments[0], int.Parse(arguments[1]), ()=>{
+                this.Set(arguments);
+            });
+        }
         public static void SetVarlable(string key, string value){
-            LSharpVarlable.Instance.VarList.Add(key, value);
+            if (LSharpVarlable.Instance.VarList.ContainsKey(key))
+            {
+                LSharpVarlable.Instance.VarList[key] = value;
+            }
+            else
+            {
+                LSharpVarlable.Instance.VarList.Add(key, value);
+            }
         }
         public static string GetVarlable(string str){
             int sIndex = str.IndexOf("@");

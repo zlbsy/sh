@@ -42,34 +42,35 @@ namespace App.View.Character{
         public override void UpdateView()
         {
             Global.ClearChild(statusContent.gameObject);
+            App.Model.MCharacterAbility ability = ViewModel.Ability.Value;
             Dictionary<string, string> statusList = new Dictionary<string, string>();
             statusList.Add("资质","99");
-            statusList.Add("力量","99");
-            statusList.Add("技巧","99");
-            statusList.Add("谋略","99");
-            statusList.Add("速度","99");
-            statusList.Add("耐力","99");
-            statusList.Add("HP","99");
-            statusList.Add("MP","99");
-            statusList.Add("物攻","99");
-            statusList.Add("法攻","99");
-            statusList.Add("物防","99");
-            statusList.Add("法防","99");
+            statusList.Add("力量",ability.Power.ToString());
+            statusList.Add("技巧",ability.Knowledge.ToString());
+            statusList.Add("谋略",ability.Trick.ToString());
+            statusList.Add("速度",ability.Speed.ToString());
+            statusList.Add("耐力",ability.Endurance.ToString());
+            statusList.Add("HP",ability.HpMax.ToString());
+            statusList.Add("MP",ability.MpMax.ToString());
+            statusList.Add("物攻",ability.PhysicalAttack.ToString());
+            statusList.Add("法攻",ability.MagicAttack.ToString());
+            statusList.Add("物防",ability.PhysicalDefense.ToString());
+            statusList.Add("法防",ability.MagicDefense.ToString());
 
-            statusList.Add("轻功","99");
-            statusList.Add("骑术","99");
-            statusList.Add("步战","99");
-            statusList.Add("长枪","99");
-            statusList.Add("短剑","99");
-            statusList.Add("大刀","99");
-            statusList.Add("短刀","99");
-            statusList.Add("长斧","99");
-            statusList.Add("短斧","99");
-            statusList.Add("棍棒","99");
-            statusList.Add("拳脚","99");
-            statusList.Add("箭术","99");
-            statusList.Add("暗器","99");
-            statusList.Add("双手","99");
+            statusList.Add("轻功",ability.MovingPower.ToString());
+            statusList.Add("骑术",ability.Riding.ToString());
+            statusList.Add("步战",ability.Walker.ToString());
+            statusList.Add("长枪",ability.Pike.ToString());
+            statusList.Add("短剑",ability.Sword.ToString());
+            statusList.Add("大刀",ability.LongKnife.ToString());
+            statusList.Add("短刀",ability.Knife.ToString());
+            statusList.Add("长斧",ability.LongAx.ToString());
+            statusList.Add("短斧",ability.Ax.ToString());
+            statusList.Add("棍棒",ability.Sticks.ToString());
+            statusList.Add("拳脚",ability.Fist.ToString());
+            statusList.Add("箭术",ability.Archery.ToString());
+            statusList.Add("暗器",ability.HiddenWeapons.ToString());
+            statusList.Add("双手",ability.DualWield.ToString());
             foreach (string key in statusList.Keys)
             {
                 GameObject obj = Instantiate(statusChild);

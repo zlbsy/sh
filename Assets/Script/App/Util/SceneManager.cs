@@ -64,13 +64,22 @@ namespace App.Util{
             GameObject prefab = Resources.Load(string.Format("Prefabs/{0}", prefabName)) as GameObject;
             return CurrentScene.GetObject( prefab );
         }
-        public bool DialogIsShow(App.Controller.CDialog checkDialog = null)
+        public bool DialogIsShow()
+        {
+            foreach(App.Controller.CDialog dialog in Dialogs){
+                if(dialog.gameObject.activeSelf){
+                    return true;
+                }
+            }
+            return false;
+        }
+        public bool DialogIsShow(Prefabs prefab)
         {
             foreach(App.Controller.CDialog dialog in Dialogs){
                 if(!dialog.gameObject.activeSelf){
                     continue;
                 }
-                if (checkDialog == null || checkDialog.index == dialog.index)
+                if (dialog.name == (prefab.ToString() + "(Clone)"))
                 {
                     return true;
                 }
