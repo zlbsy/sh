@@ -16,9 +16,11 @@ namespace App.Controller{
     public class CStage : CBaseMap {
         [SerializeField]Text title;
         private App.Model.Master.MArea area;
+        public Request saveRequest{ get;set;}
         public override IEnumerator OnLoad( Request request ) 
         {  
             area = request.Get<App.Model.Master.MArea>("area");
+            this.saveRequest = request;
             title.text = App.Util.Language.Get(area.Master.name);
             yield return this.StartCoroutine(base.OnLoad(request));
         }
@@ -45,7 +47,8 @@ namespace App.Controller{
             }
         }
         public void GotoArea(){
-            App.Util.SceneManager.LoadScene( App.Util.SceneManager.Scenes.Area.ToString() );
+            Request req = Request.Create("worldId", saveRequest.Get<int>("worldId"), "nameKey", saveRequest.Get<string>("nameKey"));
+            App.Util.SceneManager.LoadScene( App.Util.SceneManager.Scenes.Area.ToString(), req );
         }
         public void addCharacter(int npcId, ActionType action, string direction, int x, int y){
             MCharacter mCharacter = NpcCacher.Instance.GetFromNpc(npcId);

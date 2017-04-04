@@ -18,6 +18,7 @@ namespace App.Controller.Battle{
         [SerializeField]VBottomMenu operatingMenu;
         [SerializeField]CBattleCharacterPreviewDialog battleCharacterPreview;
         [SerializeField]GameObject attackTween;
+        [SerializeField]VBottomMenu battleMenu;
         private int battlefieldId;
         List<int> characterIds;
         private List<VCharacter> dynamicCharacters = new List<VCharacter>();
@@ -35,16 +36,21 @@ namespace App.Controller.Battle{
         public BattleTilesManager tilesManager{ get; set;}
         public BattleCharactersManager charactersManager{ get; set;}
         public BattleCalculateManager calculateManager{ get; set;}
+        private App.Util.SceneManager.Scenes fromScene;
+        private Request fromRequest;
         public override IEnumerator OnLoad( Request request ) 
         {  
             battleCharacterPreview.gameObject.SetActive(false);
             battlefieldId = request.Get<int>("battlefieldId");
             characterIds = request.Get<List<int>>("characterIds");
+
+            fromScene = request.Get<App.Util.SceneManager.Scenes>("fromScene");
+            fromRequest = request.Get<Request>("fromRequest");
             yield return this.StartCoroutine(base.OnLoad(request));
         }
         protected override void InitMap(){
             App.Model.Master.MBattlefield battlefieldMaster = App.Util.Cacher.BattlefieldCacher.Instance.Get(battlefieldId);
-            title.text = App.Util.Language.Get(battlefieldMaster.name);
+            title.text = battlefieldMaster.name;
             mBaseMap = new MBaseMap();
             mBaseMap.MapId = battlefieldMaster.map_id;
             mBaseMap.Tiles = battlefieldMaster.tiles.Clone() as App.Model.MTile[];
@@ -114,9 +120,11 @@ namespace App.Controller.Battle{
         #region 操作菜单
         public void OpenOperatingMenu(){
             operatingMenu.Open();
+            battleMenu.Close(null);
         }
         public void CloseOperatingMenu(){
             operatingMenu.Close(null);
+            battleMenu.Open();
         }
         #endregion
 
@@ -148,6 +156,16 @@ namespace App.Controller.Battle{
             };
             Request req = Request.Create("character", this.manager.CurrentCharacter, "closeEvent", closeEvent);
             this.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.BattleSkillListDialog, req));
+        }
+        public void OpenBattleMenu(){
+            Request req = Request.Create("title", title.text, "bout", "5/20");
+            this.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.BattleMenuDialog, req));
+        }
+        public void CtrlEnd(){
+            CConfirmDialog.Show("结束本回合操作吗？",()=>{});
+        }
+        public void BattleEnd(){
+            App.Util.SceneManager.LoadScene( this.fromScene.ToString(), this.fromRequest );
         }
         #region 行动中武将
         /// <summary>

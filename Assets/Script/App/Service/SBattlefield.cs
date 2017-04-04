@@ -6,23 +6,21 @@ using App.Model;
 
 namespace App.Service{
 	public class SBattlefield : SBase {
-		public MBattlefield battlefield;
+        public MBattleChild[] battlelist;
 		public SBattlefield(){
 			
 		}
-		public class ResponseBattle
+		public class ResponseBattleList
 		{
-			public int id;
-			public string id2;
-			public MBattlefield battlefield;
-		}
-		public IEnumerator Request(MonoBehaviour obj)
-		{
-			var url = "battlefield.php";
-			//HttpClient<ResponseBattle> client = new HttpClient<ResponseBattle>();
-			HttpClient client = new HttpClient();
-			yield return obj.StartCoroutine(client.Send( url));
-			battlefield = client.Deserialize<ResponseBattle>().battlefield;
-		}
+            public MBattleChild[] battlelist;
+        }
+        public IEnumerator RequestBattlelist()
+        {
+            var url = "battle/battle_list";
+            HttpClient client = new HttpClient();
+            yield return App.Util.SceneManager.CurrentScene.StartCoroutine(client.Send( url ));
+            ResponseBattleList response = client.Deserialize<ResponseBattleList>();
+            battlelist = response.battlelist;
+        }
 	}
 }

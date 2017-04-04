@@ -23,7 +23,7 @@ namespace App.Controller{
         {  
             int battleId = request.Get<int>("battleId");
             battleFieldMaster = BattlefieldCacher.Instance.Get(battleId);
-            title.text = App.Util.Language.Get(battleFieldMaster.name);
+            title.text = battleFieldMaster.name;
             SelectCharacterContentInit();
             yield return this.StartCoroutine(base.OnLoad(request));
             if (App.Util.Global.SUser.self.characters == null)
@@ -87,6 +87,16 @@ namespace App.Controller{
                 characterIds.Add(icon.ViewModel.CharacterId.Value);
             }
             Request req = Request.Create("battlefieldId", battleFieldMaster.id, "characterIds", characterIds);
+            if (App.Util.SceneManager.CurrentScene is CStage)
+            {
+                req.Set("fromScene", App.Util.SceneManager.Scenes.Stage);
+                req.Set("fromRequest", (App.Util.SceneManager.CurrentScene as CStage).saveRequest);
+            }
+            else if (App.Util.SceneManager.CurrentScene is CTop)
+            {
+                req.Set("fromScene", App.Util.SceneManager.Scenes.Top);
+                req.Set("fromRequest", null);
+            }
             App.Util.SceneManager.LoadScene( App.Util.SceneManager.Scenes.Battlefield.ToString(), req);
         }
 	}

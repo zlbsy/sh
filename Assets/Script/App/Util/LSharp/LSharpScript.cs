@@ -22,7 +22,7 @@ namespace App.Util.LSharp{
             subClasses.Add("Talk", LSharpTalk.Instance);
             subClasses.Add("Battle", LSharpBattle.Instance);
             subClasses.Add("Var", LSharpVarlable.Instance);
-            if (LSharpVarlable.Instance.VarList.Count == 0)
+            if (LSharpVarlable.Instance.VarList.Count == 0 && Global.SUser.self.progress != null)
             {
                 Dictionary<string, int> progress = Global.SUser.self.progress;
                 foreach(string k in progress.Keys){

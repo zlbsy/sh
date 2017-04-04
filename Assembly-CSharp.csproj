@@ -48,6 +48,8 @@
   <ItemGroup>
      <Compile Include="Assets\HOTween\_Demo\HOTweenDemoBrain.cs" />
      <Compile Include="Assets\Script\App\Controller\Battle\CBattleCharacterPreviewDialog.cs" />
+     <Compile Include="Assets\Script\App\Controller\Battle\CBattleListDialog.cs" />
+     <Compile Include="Assets\Script\App\Controller\Battle\CBattleMenuDialog.cs" />
      <Compile Include="Assets\Script\App\Controller\Battle\CBattleSkillListDialog.cs" />
      <Compile Include="Assets\Script\App\Controller\Battle\CBattlefield.cs" />
      <Compile Include="Assets\Script\App\Controller\Battle\CBattlefieldEvent.cs" />
@@ -58,6 +60,7 @@
      <Compile Include="Assets\Script\App\Controller\CBuildingDialog.cs" />
      <Compile Include="Assets\Script\App\Controller\CCharacterDetailDialog.cs" />
      <Compile Include="Assets\Script\App\Controller\CCharacterListDialog.cs" />
+     <Compile Include="Assets\Script\App\Controller\CConfirmDialog.cs" />
      <Compile Include="Assets\Script\App\Controller\CConnectingDialog.cs" />
      <Compile Include="Assets\Script\App\Controller\CDialog.cs" />
      <Compile Include="Assets\Script\App\Controller\CEquipmentListDialog.cs" />
@@ -82,6 +85,7 @@
      <Compile Include="Assets\Script\App\Model\Battle\MDamageParam.cs" />
      <Compile Include="Assets\Script\App\Model\MBase.cs" />
      <Compile Include="Assets\Script\App\Model\MBaseMap.cs" />
+     <Compile Include="Assets\Script\App\Model\MBattleChild.cs" />
      <Compile Include="Assets\Script\App\Model\MBattlefield.cs" />
      <Compile Include="Assets\Script\App\Model\MBuilding.cs" />
      <Compile Include="Assets\Script\App\Model\MCharacter.cs" />
@@ -189,6 +193,7 @@
      <Compile Include="Assets\Script\App\Util\Search\TileMap.cs" />
      <Compile Include="Assets\Script\App\Util\SingleClass.cs" />
      <Compile Include="Assets\Script\App\View\Battlefield\VBattleCharacterPreview.cs" />
+     <Compile Include="Assets\Script\App\View\Battlefield\VBattleListChild.cs" />
      <Compile Include="Assets\Script\App\View\Battlefield\VBattleSkillIcon.cs" />
      <Compile Include="Assets\Script\App\View\Battlefield\VOperatingMenu.cs" />
      <Compile Include="Assets\Script\App\View\Character\VCharacter.cs" />
@@ -227,6 +232,7 @@
      <Compile Include="Assets\Script\App\View\VWorldMap.cs" />
      <Compile Include="Assets\Script\App\ViewModel\VMBase.cs" />
      <Compile Include="Assets\Script\App\ViewModel\VMBaseMap.cs" />
+     <Compile Include="Assets\Script\App\ViewModel\VMBattleChild.cs" />
      <Compile Include="Assets\Script\App\ViewModel\VMBattlefield.cs" />
      <Compile Include="Assets\Script\App\ViewModel\VMBuilding.cs" />
      <Compile Include="Assets\Script\App\ViewModel\VMCharacter.cs" />

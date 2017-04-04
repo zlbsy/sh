@@ -17,6 +17,7 @@ namespace App.Util{
             LoadingDialog,
             ConnectingDialog,
             AlertDialog,
+            ConfirmDialog,
             CharacterListDialog,
             ItemListDialog,
             CharacterDetailDialog,
@@ -26,6 +27,8 @@ namespace App.Util{
             GachaResultDialog,
             ReadyBattleDialog,
             BattleSkillListDialog,
+            BattleListDialog,
+            BattleMenuDialog,
         }
         public static App.Controller.CScene CurrentScene;
         public static App.Controller.Request CurrentSceneRequest;

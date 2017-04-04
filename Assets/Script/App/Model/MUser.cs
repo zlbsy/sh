@@ -13,6 +13,7 @@ namespace App.Model{
         public string password;
         public MCharacter[] characters;
         public MEquipment[] equipments;
+        public MBattleChild[] battlelist;
         public MItem[] items;
         public Dictionary<string, int> progress;
         public int GetValue(string key){

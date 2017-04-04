@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace App.Model.Master{
     [System.Serializable]
-	public class MBattleNpc : MBase {
+    public class MBattleNpc : MBase {
+        public int boss;
 		public int level;
 		/// <summary>
 		/// NpcEquipmentCacher id

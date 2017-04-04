@@ -90,7 +90,7 @@ namespace App.Controller{
             App.Util.SceneManager.LoadScene( App.Util.SceneManager.Scenes.World.ToString() );
         }
         public void OpenBattleList(){
-            App.Util.SceneManager.LoadScene( App.Util.SceneManager.Scenes.World.ToString() );
+            this.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.BattleListDialog));
         }
         public void OpenCharacterList(){
             this.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.CharacterListDialog));

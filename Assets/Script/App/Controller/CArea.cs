@@ -14,10 +14,11 @@ namespace App.Controller{
     public class CArea : CBaseMap {
         [SerializeField]Text title;
         private int worldId;
+        private string nameKey;
         public override IEnumerator OnLoad( Request request ) 
         {  
             worldId = request.Get<int>("worldId");
-            string nameKey = request.Get<string>("nameKey");
+            nameKey = request.Get<string>("nameKey");
             title.text = App.Util.Language.Get(nameKey);
             yield return this.StartCoroutine(base.OnLoad(request));
         }
@@ -34,7 +35,7 @@ namespace App.Controller{
             App.Model.Master.MArea area = tile as App.Model.Master.MArea;
             if (area != null)
             {
-                Request req = Request.Create("area", area);
+                Request req = Request.Create("area", area, "worldId", worldId, "nameKey", nameKey);
                 App.Util.SceneManager.LoadScene( App.Util.SceneManager.Scenes.Stage.ToString(), req );
             }
         }
