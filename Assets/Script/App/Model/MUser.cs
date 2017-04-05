@@ -4,6 +4,10 @@ using App.ViewModel;
 
 
 namespace App.Model{
+    public class StoryProgress{
+        public string k;
+        public int v;
+    }
 	public class MUser : MBase {
         public MUser(){
             viewModel = new VMUser ();
@@ -15,13 +19,21 @@ namespace App.Model{
         public MEquipment[] equipments;
         public MBattleChild[] battlelist;
         public MItem[] items;
-        public Dictionary<string, int> progress;
+        public StoryProgress[] progress{
+            set{ 
+                Progress.Clear();
+                foreach(StoryProgress story in value){
+                    Progress.Add(story.k, story.v);
+                }
+            }
+        }
+        public Dictionary<string, int> Progress = new Dictionary<string, int>();
         public int GetValue(string key){
-            if (!progress.ContainsKey(key))
+            if (!Progress.ContainsKey(key))
             {
                 return 0;
             }
-            return progress[key];
+            return Progress[key];
         }
         public string Nickname{
             get{ 
@@ -139,7 +151,7 @@ namespace App.Model{
             if(user.LastApDate != this.LastApDate){
                 this.LastApDate = user.LastApDate;
             }
-            UnityEngine.Debug.LogError("user.TopMap = " + user.TopMap);
+            //UnityEngine.Debug.LogError("user.TopMap = " + user.TopMap);
             if(user.TopMap != null){
                 this.TopMap = user.TopMap;
             }

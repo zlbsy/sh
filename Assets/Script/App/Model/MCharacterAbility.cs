@@ -38,8 +38,8 @@ namespace App.Model{
             this.Archery = master.archery;
             this.HiddenWeapons = master.hidden_weapons;
             this.DualWield = master.dual_wield;
-            int hp = 0;
-            int mp = 0;
+            int hp = 100;
+            int mp = 10;
             foreach (App.Model.MSkill skill in skills)
             {
                 App.Model.Master.MSkill skillMaster = skill.Master;
@@ -334,10 +334,10 @@ namespace App.Model{
         /// </summary>
         public int HpMax{
             set{
-                this.ViewModel.Hp.Value = value;
+                this.ViewModel.HpMax.Value = value;
             }
             get{ 
-                return this.ViewModel.Hp.Value;
+                return this.ViewModel.HpMax.Value;
             }
         }
         /// <summary>
@@ -345,10 +345,10 @@ namespace App.Model{
         /// </summary>
         public int MpMax{
             set{
-                this.ViewModel.Hp.Value = value;
+                this.ViewModel.MpMax.Value = value;
             }
             get{ 
-                return this.ViewModel.Hp.Value;
+                return this.ViewModel.MpMax.Value;
             }
         }
 	}

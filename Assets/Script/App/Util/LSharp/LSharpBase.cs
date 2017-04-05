@@ -24,9 +24,9 @@ namespace App.Util.LSharp{
             int start = value.IndexOf("(");
             int end = value.IndexOf(")");
             methodName = value.Substring(methodStart + 1, start - methodStart - 1).Trim();
-            Debug.LogError("methodName="+methodName);
+            //Debug.LogError("methodName="+methodName);
             methodName = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(methodName);
-            Debug.LogError("methodName ToTitleCase ="+methodName);
+            //Debug.LogError("methodName ToTitleCase ="+methodName);
             arguments = value.Substring(start + 1, end - start - 1).Split(',');
         }
         public virtual void Analysis(string value){

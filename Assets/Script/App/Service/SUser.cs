@@ -53,13 +53,14 @@ namespace App.Service{
             form.AddField("v", value);
             HttpClient client = new HttpClient();
             yield return App.Util.SceneManager.CurrentScene.StartCoroutine(client.Send( url, form));
-            if (this.self.progress.ContainsKey(key))
+            App.Util.LSharp.LSharpVarlable.SetVarlable(key, value.ToString());
+            if (this.self.Progress.ContainsKey(key))
             {
-                this.self.progress[key] = value;
+                this.self.Progress[key] = value;
             }
             else
             {
-                this.self.progress.Add(key, value);
+                this.self.Progress.Add(key, value);
             }
             if (callback != null)
             {

@@ -72,6 +72,12 @@ namespace App.Controller.Battle{
                 CharacterInit(mCharacter);
                 characters.Add(mCharacter);
             }
+            foreach(App.Model.Master.MBattleNpc battleNpc in battlefieldMaster.friends){
+                MCharacter mCharacter = NpcCacher.Instance.GetFromBattleNpc(battleNpc);
+                mCharacter.Belong = Belong.friend;
+                CharacterInit(mCharacter);
+                characters.Add(mCharacter);
+            }
             mBaseMap.Characters = characters.ToArray();
             vBaseMap.BindingContext = mBaseMap.ViewModel;
             vBaseMap.UpdateView();

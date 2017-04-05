@@ -65,12 +65,12 @@ namespace App.Util.Battle{
                 while (radius-- > 0)
                 {
                     tile = cBattlefield.mapSearch.GetTile(targetTile, direction);
-                    MCharacter mCharacter = cBattlefield.manager.GetCharacter(tile.Index);
-                    if (mCharacter == null)
+                    VCharacter child = cBattlefield.manager.GetCharacter(tile.Index, characters);
+                    if (child == null)
                     {
                         break;
                     }
-                    result.Add(cBattlefield.GetCharacterView(mCharacter));
+                    result.Add(child);
                     targetTile = tile;
                 }
             }

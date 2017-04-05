@@ -22,9 +22,9 @@ namespace App.Util.LSharp{
             subClasses.Add("Talk", LSharpTalk.Instance);
             subClasses.Add("Battle", LSharpBattle.Instance);
             subClasses.Add("Var", LSharpVarlable.Instance);
-            if (LSharpVarlable.Instance.VarList.Count == 0 && Global.SUser.self.progress != null)
+            if (LSharpVarlable.Instance.VarList.Count == 0 && Global.SUser.self.Progress != null)
             {
-                Dictionary<string, int> progress = Global.SUser.self.progress;
+                Dictionary<string, int> progress = Global.SUser.self.Progress;
                 foreach(string k in progress.Keys){
                     LSharpVarlable.SetVarlable(k, progress[k].ToString());
                 }
@@ -71,7 +71,6 @@ namespace App.Util.LSharp{
         }
         public override void Analysis(){
             string lineValue = "";
-            Debug.LogError("lineList="+lineList);
             if (lineList.Count == 0)
             {
                 dataList.RemoveAt(0);

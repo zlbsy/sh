@@ -21,8 +21,11 @@ namespace App.View.Character{
         [SerializeField]RectTransform content;
         [SerializeField]Transform hpTransform;
         [SerializeField]TextMesh num;
+        [SerializeField]MeshRenderer meshRenderer;
         private static Shader shaderGray;
         private static Shader shaderDefault;
+        private static Dictionary<App.Model.Belong, Material> hpMaterials;
+        private bool init = false;
         private int animationIndex = 0;
         private Animator _animator;
         private Animator animator{
@@ -34,11 +37,27 @@ namespace App.View.Character{
                 return _animator;
             }
         }
-        void Start(){
-            shaderGray = Shader.Find("Sprites/Gray");
-            shaderDefault = Shader.Find("Sprites/Default");
+        private void Init(){
+            if (init)
+            {
+                return;
+            }
+            init = true;
+            if (shaderDefault == null)
+            {
+                shaderGray = Shader.Find("Sprites/Gray");
+                shaderDefault = Shader.Find("Sprites/Default");
+            }
+            if (hpMaterials == null)
+            {
+                hpMaterials = new Dictionary<App.Model.Belong, Material>();
+                hpMaterials.Add(App.Model.Belong.self, Resources.Load("Material/SelfHp") as Material);
+                hpMaterials.Add(App.Model.Belong.friend, Resources.Load("Material/FriendHp") as Material);
+                hpMaterials.Add(App.Model.Belong.enemy, Resources.Load("Material/EnemyHp") as Material);
+            }
             num.GetComponent<MeshRenderer>().sortingOrder = imgHorse.sortingOrder + 10;
             num.gameObject.SetActive(false);
+            BelongChanged(ViewModel.Belong.Value, ViewModel.Belong.Value);
         }
         public bool Gray{
             set{ 
@@ -100,7 +119,7 @@ namespace App.View.Character{
         }
         private void HpChanged(int oldvalue, int newvalue)
         {
-            float hpValue = newvalue * 1f / ViewModel.HpMax.Value;
+            float hpValue = newvalue * 1f / ViewModel.Ability.Value.HpMax;
             hpTransform.localPosition = new Vector3(0f, 1f - hpValue, 0f);
             hpTransform.localScale = new Vector3(1f, hpValue, 1f);
         }
@@ -157,7 +176,7 @@ namespace App.View.Character{
         }
         private void ActionChanged(App.Model.ActionType oldvalue, App.Model.ActionType newvalue)
         {
-            Debug.LogError(ViewModel.Id.Value + ","+ViewModel.Name.Value + " : " + newvalue.ToString());
+            //Debug.LogError(ViewModel.Id.Value + ","+ViewModel.Name.Value + " : " + newvalue.ToString());
             animator.Play(newvalue.ToString());
             animationIndex = 0;
             UpdateView();
@@ -183,6 +202,10 @@ namespace App.View.Character{
             //imgHead.sprite = ImageAssetBundleManager.GetAvatarHead(newvalue);
             UpdateView();
         }
+        private void BelongChanged(App.Model.Belong oldvalue, App.Model.Belong newvalue)
+        {
+            meshRenderer.material = hpMaterials[newvalue];
+        }
         private void HatChanged(int oldvalue, int newvalue)
         {
             //imgHat.sprite = ImageAssetBundleManager.GetAvatarHat(newvalue);
@@ -201,6 +224,7 @@ namespace App.View.Character{
             UpdateView();
         }
         public override void UpdateView(){
+            this.Init();
             Debug.Log(ViewModel.MoveType.Value+", " + ViewModel.WeaponType.Value + ", " + ViewModel.Action.Value + ", " + animationIndex);
             AvatarAction avatarAction = AvatarAsset.Data.GetAvatarAction(ViewModel.MoveType.Value, ViewModel.WeaponType.Value, ViewModel.Action.Value, animationIndex);
             string key;

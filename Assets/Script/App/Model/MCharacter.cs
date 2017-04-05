@@ -167,6 +167,8 @@ namespace App.Model{
             {
                 this.Ability.Update(this);
             }
+            this.Hp = this.Ability.HpMax;
+            this.Mp = this.Ability.MpMax;
         }
         public int Id{
             set{
@@ -259,14 +261,6 @@ namespace App.Model{
             }
             get{ 
                 return this.ViewModel.Hp.Value;
-            }
-        }
-        public int HpMax{
-            set{
-                this.ViewModel.HpMax.Value = value;
-            }
-            get{ 
-                return this.ViewModel.HpMax.Value;
             }
         }
 		public int Mp{

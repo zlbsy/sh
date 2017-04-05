@@ -13,9 +13,7 @@ namespace App.ViewModel
         public VMProperty<int> MagicAttack = new VMProperty<int>();
         public VMProperty<int> PhysicalDefense = new VMProperty<int>();
         public VMProperty<int> MagicDefense = new VMProperty<int>();
-        public VMProperty<int> Hp = new VMProperty<int>();
         public VMProperty<int> HpMax = new VMProperty<int>();
-        public VMProperty<int> Mp = new VMProperty<int>();
         public VMProperty<int> MpMax = new VMProperty<int>();
         public VMProperty<int> Power = new VMProperty<int>();
         public VMProperty<int> Knowledge = new VMProperty<int>();

@@ -59,7 +59,7 @@ namespace App.Util.Battle{
                 CharacterReturnNone();
                 return;
             }
-            if (mCharacter.Belong == this.mCharacter.Belong)
+            if (cBattlefield.charactersManager.IsSameBelong(mCharacter.Belong, this.mCharacter.Belong))
             {
                 CAlertDialog.Show("不能打自己人");
                 return;
@@ -123,6 +123,7 @@ namespace App.Util.Battle{
                 List<VTile> tiles = cBattlefield.aStar.Search(startTile, endTile);
                 if (tiles.Count > 0)
                 {
+                    cBattlefield.tilesManager.ClearCurrentTiles();
                     this.mCharacter.Action = ActionType.move;
                     cBattlefield.battleMode = CBattlefield.BattleMode.moving;
                     Sequence sequence = new Sequence();
@@ -148,10 +149,15 @@ namespace App.Util.Battle{
             }
 
         }
-        public MCharacter GetCharacter(int index){
+        public MCharacter GetCharacter(int index, MCharacter[] characters = null){
             Vector2 coordinate = baseMapMaster.GetCoordinateFromIndex(index);
-            MCharacter mCharacter = System.Array.Find(mBaseMap.Characters, _=>_.CoordinateX == coordinate.x && _.CoordinateY == coordinate.y);
+            MCharacter mCharacter = System.Array.Find(characters == null ? mBaseMap.Characters : characters, _=>_.CoordinateX == coordinate.x && _.CoordinateY == coordinate.y);
             return mCharacter;
+        }
+        public App.View.Character.VCharacter GetCharacter(int index, List<App.View.Character.VCharacter> characters){
+            Vector2 coordinate = baseMapMaster.GetCoordinateFromIndex(index);
+            App.View.Character.VCharacter vCharacter = characters.Find(_=>_.ViewModel.CoordinateX.Value == coordinate.x && _.ViewModel.CoordinateY.Value == coordinate.y);
+            return vCharacter;
         }
         public void CharacterReturnNone(){
             returnAction();

@@ -78,7 +78,9 @@ namespace App.Util.Battle{
                 //近身步兵克制远程类
                 result *= 1.2f;
             }
-            return result > 1 ? (int)result : 1;
+            result = result > 1 ? result : 1;
+            result = result > targetCharacter.Hp ? targetCharacter.Hp : result;
+            return (int)result;
         }
     }
 }

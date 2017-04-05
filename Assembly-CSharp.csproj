@@ -195,6 +195,7 @@
      <Compile Include="Assets\Script\App\View\Battlefield\VBattleCharacterPreview.cs" />
      <Compile Include="Assets\Script\App\View\Battlefield\VBattleListChild.cs" />
      <Compile Include="Assets\Script\App\View\Battlefield\VBattleSkillIcon.cs" />
+     <Compile Include="Assets\Script\App\View\Battlefield\VBout.cs" />
      <Compile Include="Assets\Script\App\View\Battlefield\VOperatingMenu.cs" />
      <Compile Include="Assets\Script\App\View\Character\VCharacter.cs" />
      <Compile Include="Assets\Script\App\View\Character\VCharacterBattlefieldEvent.cs" />

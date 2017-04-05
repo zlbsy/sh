@@ -39,7 +39,7 @@ namespace App.Util.Battle{
             vBaseMap.SetTilesColor(currentTiles, Color.red);
             foreach(VTile tile in currentTiles){
                 MCharacter character = cBattlefield.manager.GetCharacter(tile.Index);
-                if (character == null || character.Belong == mCharacter.Belong)
+                if (character == null || cBattlefield.charactersManager.IsSameBelong(character.Belong, mCharacter.Belong))
                 {
                     continue;
                 }

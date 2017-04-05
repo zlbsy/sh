@@ -13,7 +13,6 @@ namespace App.ViewModel
         public VMProperty<MSkill> CurrentSkill = new VMProperty<MSkill>();
         public VMProperty<int> CharacterId = new VMProperty<int>();
         public VMProperty<int> Hp = new VMProperty<int>();
-        public VMProperty<int> HpMax = new VMProperty<int>();
         public VMProperty<int> Mp = new VMProperty<int>();
         public VMProperty<string> Name = new VMProperty<string>();
         public VMProperty<string> Nickname = new VMProperty<string>();

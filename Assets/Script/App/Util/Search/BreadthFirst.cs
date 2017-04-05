@@ -29,9 +29,9 @@ namespace App.Util.Search{
             {
                 App.Model.Master.MCharacter characterMaster = mCharacter.Master;
                 movePower = characterMaster.moving_power;
-                Debug.LogError("movePower = " + movePower);
                 if (movePower == 0)
                 {
+                    Debug.LogError("movePower = " + movePower);
                     movePower = 2;
                 }
             }

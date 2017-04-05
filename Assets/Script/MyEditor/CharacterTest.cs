@@ -168,8 +168,7 @@ namespace MyEditor
                 model.Head = 1;
                 model.Hat = 1;
                 //model.body = 1;
-                model.HpMax = 100;
-                model.Hp = 100;
+                model.StatusInit();
                 view = obj.GetComponent<VCharacter>();
                 view.BindingContext = model.ViewModel;
                 model.Action = ActionType.stand;
