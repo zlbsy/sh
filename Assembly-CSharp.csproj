@@ -53,6 +53,7 @@
      <Compile Include="Assets\Script\App\Controller\Battle\CBattleSkillListDialog.cs" />
      <Compile Include="Assets\Script\App\Controller\Battle\CBattlefield.cs" />
      <Compile Include="Assets\Script\App\Controller\Battle\CBattlefieldEvent.cs" />
+     <Compile Include="Assets\Script\App\Controller\Battle\CBoutWaveDialog.cs" />
      <Compile Include="Assets\Script\App\Controller\CAlertDialog.cs" />
      <Compile Include="Assets\Script\App\Controller\CArea.cs" />
      <Compile Include="Assets\Script\App\Controller\CBase.cs" />
@@ -155,6 +156,7 @@
      <Compile Include="Assets\Script\App\Service\SShop.cs" />
      <Compile Include="Assets\Script\App\Service\SUser.cs" />
      <Compile Include="Assets\Script\App\UGUI\UGImage.cs" />
+     <Compile Include="Assets\Script\App\UGUI\UGText.cs" />
      <Compile Include="Assets\Script\App\Util\Battle\BattleCalculateManager.cs" />
      <Compile Include="Assets\Script\App\Util\Battle\BattleCharactersManager.cs" />
      <Compile Include="Assets\Script\App\Util\Battle\BattleManager.cs" />

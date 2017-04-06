@@ -29,6 +29,7 @@ namespace App.Util{
             BattleSkillListDialog,
             BattleListDialog,
             BattleMenuDialog,
+            BoutWaveDialog,
         }
         public static App.Controller.CScene CurrentScene;
         public static App.Controller.Request CurrentSceneRequest;

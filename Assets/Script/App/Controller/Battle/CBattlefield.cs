@@ -38,6 +38,7 @@ namespace App.Controller.Battle{
         public BattleCalculateManager calculateManager{ get; set;}
         private App.Util.SceneManager.Scenes fromScene;
         private Request fromRequest;
+        private int boutCount = 0;
         public override IEnumerator OnLoad( Request request ) 
         {  
             battleCharacterPreview.gameObject.SetActive(false);
@@ -84,7 +85,16 @@ namespace App.Controller.Battle{
             vBaseMap.transform.parent.localScale = Vector3.one;
             vBaseMap.MoveToCenter();
             base.InitMap();
+            battlefieldMaster.script.Add("Battle.boutwave(self);");
             App.Util.LSharp.LSharpScript.Instance.Analysis(battlefieldMaster.script);
+        }
+        public void BoutWave(Belong belong){
+            if (belong == Belong.self)
+            {
+                boutCount++;
+            }
+            Request req = Request.Create("belong", belong, "bout", boutCount, "maxBout", 20);
+            this.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.BoutWaveDialog, req));
         }
         /// <summary>
         /// 武将初始化
