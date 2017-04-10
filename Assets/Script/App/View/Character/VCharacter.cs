@@ -59,7 +59,7 @@ namespace App.View.Character{
             num.gameObject.SetActive(false);
             BelongChanged(ViewModel.Belong.Value, ViewModel.Belong.Value);
         }
-        public bool Gray{
+        private bool Gray{
             set{ 
                 Shader shader = value ? shaderGray : shaderDefault;
                 imgClothes.material.shader = shader;
@@ -95,6 +95,7 @@ namespace App.View.Character{
                 oldVm.Y.OnValueChanged -= YChanged;
                 oldVm.Direction.OnValueChanged -= DirectionChanged;
                 oldVm.Hp.OnValueChanged -= HpChanged;
+                oldVm.ActionOver.OnValueChanged -= ActionEndChanged;
             }
             if (ViewModel!=null)
             {
@@ -110,12 +111,17 @@ namespace App.View.Character{
                 ViewModel.Y.OnValueChanged += YChanged;
                 ViewModel.Direction.OnValueChanged += DirectionChanged;
                 ViewModel.Hp.OnValueChanged += HpChanged;
+                ViewModel.ActionOver.OnValueChanged += ActionEndChanged;
             }
         }
         private App.Controller.CBaseMap cBaseMap{
             get{
                 return this.Controller as App.Controller.CBaseMap;
             }
+        }
+        private void ActionEndChanged(bool oldvalue, bool newvalue)
+        {
+            Gray = newvalue;
         }
         private void HpChanged(int oldvalue, int newvalue)
         {

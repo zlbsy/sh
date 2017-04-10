@@ -33,7 +33,7 @@ namespace App.Util.Battle{
             }
         }
         public void ClickNoneNode(int index){
-            MCharacter mCharacter = GetCharacter(index);
+            MCharacter mCharacter = cBattlefield.charactersManager.GetCharacter(index);
             if (mCharacter != null)
             {
                 this.mCharacter = mCharacter;
@@ -43,6 +43,11 @@ namespace App.Util.Battle{
                 int cy = mCharacter.CoordinateY;
                 float x = mCharacter.X;
                 Direction direction = mCharacter.Direction;
+                if (mCharacter.Belong == Belong.self)
+                {
+                    cBattlefield.OpenOperatingMenu();
+                    cBattlefield.tilesManager.ShowCharacterAttackArea(this.mCharacter);
+                }
                 returnAction = () =>
                     {
                         this.mCharacter.CoordinateY = cy;
@@ -53,7 +58,7 @@ namespace App.Util.Battle{
             }
         }
         public void ClickAttackNode(int index){
-            MCharacter mCharacter = GetCharacter(index);
+            MCharacter mCharacter = cBattlefield.charactersManager.GetCharacter(index);
             if (mCharacter == null)
             {
                 CharacterReturnNone();
@@ -88,22 +93,50 @@ namespace App.Util.Battle{
                 return;
             }
             cBattlefield.ActionEndHandler -= OnAttackComplete;
-            App.View.Character.VCharacter character = cBattlefield.GetCharacterView(this.mCharacter);
-            character.Gray = true;
+            ActionOver();
+        }
+        public void ActionOver(){
+            this.mCharacter.ActionOver = true;
+            cBattlefield.tilesManager.ClearCurrentTiles();
+            cBattlefield.CloseOperatingMenu();
+            cBattlefield.HideBattleCharacterPreviewDialog();
             cBattlefield.battleMode = CBattlefield.BattleMode.none;
+            if (!System.Array.Exists(mBaseMap.Characters, _ => _.Belong == this.mCharacter.Belong && !_.ActionOver))
+            {
+                ChangeBelong(this.mCharacter.Belong);
+            }
+        }
+        public void ChangeBelong(Belong belong){
+            if (belong == Belong.self)
+            {
+                if (System.Array.Exists(mBaseMap.Characters, _ => _.Belong == Belong.friend && !_.ActionOver))
+                {
+                    cBattlefield.BoutWave(Belong.friend);
+                }
+                else
+                {
+                    cBattlefield.BoutWave(Belong.enemy);
+                }
+            }else if (belong == Belong.friend)
+            {
+                cBattlefield.BoutWave(Belong.enemy);
+            }else if (belong == Belong.enemy)
+            {
+                cBattlefield.BoutWave(Belong.self);
+            }
         }
         public void ClickMovingNode(int index){
-            if (this.mCharacter.Belong != Belong.self || cBattlefield.GetCharacterView(this.mCharacter).Gray)
+            if (this.mCharacter.Belong != Belong.self || this.mCharacter.ActionOver)
             {
                 CharacterReturnNone();
                 return;
             }
-            MCharacter mCharacter = GetCharacter(index);
+            MCharacter mCharacter = cBattlefield.charactersManager.GetCharacter(index);
             if (mCharacter != null)
             {
                 return;
             }
-            if (cBattlefield.tilesManager.IsInCurrentTiles(index))
+            if (cBattlefield.tilesManager.IsInMovingCurrentTiles(index))
             {
                 Vector2 vec = new Vector2(this.mCharacter.CoordinateX, this.mCharacter.CoordinateY);
                 VTile startTile = cBattlefield.mapSearch.GetTile(vec);
@@ -123,6 +156,7 @@ namespace App.Util.Battle{
                 List<VTile> tiles = cBattlefield.aStar.Search(startTile, endTile);
                 if (tiles.Count > 0)
                 {
+                    cBattlefield.CloseOperatingMenu();
                     cBattlefield.tilesManager.ClearCurrentTiles();
                     this.mCharacter.Action = ActionType.move;
                     cBattlefield.battleMode = CBattlefield.BattleMode.moving;
@@ -148,16 +182,6 @@ namespace App.Util.Battle{
                 CharacterReturnNone();
             }
 
-        }
-        public MCharacter GetCharacter(int index, MCharacter[] characters = null){
-            Vector2 coordinate = baseMapMaster.GetCoordinateFromIndex(index);
-            MCharacter mCharacter = System.Array.Find(characters == null ? mBaseMap.Characters : characters, _=>_.CoordinateX == coordinate.x && _.CoordinateY == coordinate.y);
-            return mCharacter;
-        }
-        public App.View.Character.VCharacter GetCharacter(int index, List<App.View.Character.VCharacter> characters){
-            Vector2 coordinate = baseMapMaster.GetCoordinateFromIndex(index);
-            App.View.Character.VCharacter vCharacter = characters.Find(_=>_.ViewModel.CoordinateX.Value == coordinate.x && _.ViewModel.CoordinateY.Value == coordinate.y);
-            return vCharacter;
         }
         public void CharacterReturnNone(){
             returnAction();

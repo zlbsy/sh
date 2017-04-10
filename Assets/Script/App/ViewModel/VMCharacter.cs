@@ -35,5 +35,6 @@ namespace App.ViewModel
         public VMProperty<MSkill[]> Skills = new VMProperty<MSkill[]>();
         public VMProperty<MCharacter> Target = new VMProperty<MCharacter>();
         public VMProperty<MCharacterAbility> Ability = new VMProperty<MCharacterAbility>();
+        public VMProperty<bool> ActionOver = new VMProperty<bool>();
 	}
 }

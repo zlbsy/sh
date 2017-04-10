@@ -17,12 +17,12 @@ namespace App.Util.Battle{
         private CBattlefield cBattlefield;
         private MBaseMap mBaseMap;
         private VBaseMap vBaseMap;
-        //private App.Model.Master.MBaseMap baseMapMaster;
+        private App.Model.Master.MBaseMap baseMapMaster;
         public BattleCharactersManager(CBattlefield controller, MBaseMap model, VBaseMap view){
             cBattlefield = controller;
             mBaseMap = model;
             vBaseMap = view;
-            //baseMapMaster = BaseMapCacher.Instance.Get(mBaseMap.MapId);
+            baseMapMaster = BaseMapCacher.Instance.Get(mBaseMap.MapId);
         }
         public List<VCharacter> GetDamageCharacters(VCharacter vCharacter, VCharacter targetView, App.Model.Master.MSkill skill){
             List<VCharacter> result = new List<VCharacter>(){ targetView };
@@ -65,7 +65,7 @@ namespace App.Util.Battle{
                 while (radius-- > 0)
                 {
                     tile = cBattlefield.mapSearch.GetTile(targetTile, direction);
-                    VCharacter child = cBattlefield.manager.GetCharacter(tile.Index, characters);
+                    VCharacter child = GetCharacter(tile.Index, characters);
                     if (child == null)
                     {
                         break;
@@ -82,6 +82,25 @@ namespace App.Util.Battle{
                 return belong2 == Belong.enemy;
             }
             return belong2 == Belong.self || belong2 == Belong.friend;
+        }
+        public void ActionRestore(){
+            foreach (MCharacter character in this.mBaseMap.Characters)
+            {
+                if (character.ActionOver)
+                {
+                    character.ActionOver = false;
+                }
+            }
+        }
+        public MCharacter GetCharacter(int index, MCharacter[] characters = null){
+            Vector2 coordinate = baseMapMaster.GetCoordinateFromIndex(index);
+            MCharacter mCharacter = System.Array.Find(characters == null ? mBaseMap.Characters : characters, _=>_.CoordinateX == coordinate.x && _.CoordinateY == coordinate.y);
+            return mCharacter;
+        }
+        public App.View.Character.VCharacter GetCharacter(int index, List<App.View.Character.VCharacter> characters){
+            Vector2 coordinate = baseMapMaster.GetCoordinateFromIndex(index);
+            App.View.Character.VCharacter vCharacter = characters.Find(_=>_.ViewModel.CoordinateX.Value == coordinate.x && _.ViewModel.CoordinateY.Value == coordinate.y);
+            return vCharacter;
         }
     }
 }

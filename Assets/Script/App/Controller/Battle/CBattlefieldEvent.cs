@@ -12,7 +12,7 @@ namespace App.Controller.Battle{
     public partial class CBattlefield{
         public delegate void EventHandler();
         public event EventHandler ActionEndHandler;
-        public void ActionEnd(){
+        private void ActionEnd(){
             if (ActionEndHandler != null)
             {
                 ActionEndHandler();

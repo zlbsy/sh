@@ -17,7 +17,8 @@ namespace App.Util.Battle{
         private MBaseMap mBaseMap;
         private VBaseMap vBaseMap;
         private App.Model.Master.MBaseMap baseMapMaster;
-        private List<VTile> currentTiles;
+        private List<VTile> currentMovingTiles;
+        private List<VTile> currentAttackTiles;
         private List<GameObject> attackIcons = new List<GameObject>();
         public BattleTilesManager(CBattlefield controller, MBaseMap model, VBaseMap view){
             cBattlefield = controller;
@@ -26,41 +27,44 @@ namespace App.Util.Battle{
             baseMapMaster = BaseMapCacher.Instance.Get(mBaseMap.MapId);
         }
         public void ShowCharacterMovingArea(MCharacter mCharacter){
-            currentTiles = cBattlefield.breadthFirst.Search(mCharacter);
-            vBaseMap.SetTilesColor(currentTiles, mCharacter.Belong == Belong.self ? Color.blue : Color.green);
+            currentMovingTiles = cBattlefield.breadthFirst.Search(mCharacter);
+            vBaseMap.SetTilesColor(currentMovingTiles, mCharacter.Belong == Belong.self ? Color.blue : Color.green);
             cBattlefield.battleMode = CBattlefield.BattleMode.show_move_tiles;
         }
         public void ShowCharacterAttackArea(MCharacter mCharacter){
             int[] distance = mCharacter.CurrentSkill.Master.distance;
-            currentTiles = cBattlefield.breadthFirst.Search(mCharacter, distance[1]);
-            VTile characterTile = currentTiles.Find(_=>_.CoordinateX == mCharacter.CoordinateX && _.CoordinateY == mCharacter.CoordinateY);
-            currentTiles = currentTiles.FindAll(_=>cBattlefield.mapSearch.GetDistance(_, characterTile) >= distance[0]);
-            //currentTiles.Remove(characterTile);
-            vBaseMap.SetTilesColor(currentTiles, Color.red);
-            foreach(VTile tile in currentTiles){
-                MCharacter character = cBattlefield.manager.GetCharacter(tile.Index);
+            currentAttackTiles = cBattlefield.breadthFirst.Search(mCharacter, distance[1]);
+            VTile characterTile = currentAttackTiles.Find(_=>_.CoordinateX == mCharacter.CoordinateX && _.CoordinateY == mCharacter.CoordinateY);
+            currentAttackTiles = currentAttackTiles.FindAll(_=>cBattlefield.mapSearch.GetDistance(_, characterTile) >= distance[0]);
+            vBaseMap.SetTilesColor(currentAttackTiles, Color.red);
+            ShowCharacterAttackTween(mCharacter, currentAttackTiles);
+        }
+        public void ShowCharacterAttackTween(MCharacter mCharacter, List<VTile> tiles){
+            foreach(VTile tile in tiles){
+                if (tile.IsAttackTween)
+                {
+                    continue;
+                }
+                MCharacter character = cBattlefield.charactersManager.GetCharacter(tile.Index);
                 if (character == null || cBattlefield.charactersManager.IsSameBelong(character.Belong, mCharacter.Belong))
                 {
                     continue;
                 }
                 GameObject attackTween = cBattlefield.CreateAttackTween();
-                attackTween.transform.SetParent(tile.transform);
-                attackTween.transform.localPosition = Vector3.zero;
-                attackTween.transform.localScale = Vector3.one;
+                tile.SetAttackTween(attackTween);
                 attackIcons.Add(attackTween);
             }
-            //cBattlefield.battleMode = CBattlefield.BattleMode.show_move_tiles;
         }
-        public bool IsInCurrentTiles(int index){
-            return IsInCurrentTiles(cBattlefield.mapSearch.GetTile(index));
+        public bool IsInMovingCurrentTiles(int index){
+            return IsInMovingCurrentTiles(cBattlefield.mapSearch.GetTile(index));
         }
-        public bool IsInCurrentTiles(VTile vTile){
-            return currentTiles.Exists(_=>_.Index == vTile.Index);
+        public bool IsInMovingCurrentTiles(VTile vTile){
+            return currentMovingTiles.Exists(_=>_.Index == vTile.Index);
         }
         public void ClearCurrentTiles(){
-            foreach (VTile tile in currentTiles)
+            foreach (VTile tile in currentMovingTiles)
             {
-                vBaseMap.SetTilesColor(currentTiles, Color.white);
+                vBaseMap.SetTilesColor(currentMovingTiles, Color.white);
             }
             foreach (GameObject obj in attackIcons)
             {

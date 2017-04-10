@@ -207,6 +207,14 @@ namespace App.Model{
                 return this.ViewModel.CharacterId.Value;
             }
         }
+        public bool ActionOver{
+            set{
+                this.ViewModel.ActionOver.Value = value;
+            }
+            get{ 
+                return this.ViewModel.ActionOver.Value;
+            }
+        }
         public int Horse{
             set{
                 this.ViewModel.Horse.Value = value;

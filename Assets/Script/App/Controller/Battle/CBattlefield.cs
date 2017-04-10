@@ -31,11 +31,13 @@ namespace App.Controller.Battle{
             attacking
 
         }
+        private Belong currentBelong;
         public BattleMode battleMode{ get; set;}
         public BattleManager manager{ get; set;}
         public BattleTilesManager tilesManager{ get; set;}
         public BattleCharactersManager charactersManager{ get; set;}
         public BattleCalculateManager calculateManager{ get; set;}
+        public CharacterAI ai{ get; set;}
         private App.Util.SceneManager.Scenes fromScene;
         private Request fromRequest;
         private int boutCount = 0;
@@ -89,11 +91,21 @@ namespace App.Controller.Battle{
             App.Util.LSharp.LSharpScript.Instance.Analysis(battlefieldMaster.script);
         }
         public void BoutWave(Belong belong){
+            currentBelong = belong;
             if (belong == Belong.self)
             {
                 boutCount++;
             }
-            Request req = Request.Create("belong", belong, "bout", boutCount, "maxBout", 20);
+            charactersManager.ActionRestore();
+            System.Action closeEvent = null;
+            if (belong != Belong.self)
+            {
+                closeEvent = () =>
+                    {
+                        ai.Execute(belong);
+                    };
+            }
+            Request req = Request.Create("belong", belong, "bout", boutCount, "maxBout", 20, "closeEvent", closeEvent);
             this.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.BoutWaveDialog, req));
         }
         /// <summary>
@@ -104,6 +116,10 @@ namespace App.Controller.Battle{
             mCharacter.StatusInit();
         }
         public override void OnClickTile(int index){
+            if (currentBelong != Belong.self)
+            {
+                return;
+            }
             switch (battleMode)
             {
                 case BattleMode.none:
@@ -123,6 +139,7 @@ namespace App.Controller.Battle{
             tilesManager = new BattleTilesManager(this, mBaseMap, vBaseMap);
             charactersManager = new BattleCharactersManager(this, mBaseMap, vBaseMap);
             calculateManager = new BattleCalculateManager(this, mBaseMap, vBaseMap);
+            ai = new CharacterAI(this, mBaseMap, vBaseMap);
         }
         /// <summary>
         /// 返回一个动态的攻击图标
@@ -140,7 +157,10 @@ namespace App.Controller.Battle{
         }
         public void CloseOperatingMenu(){
             operatingMenu.Close(null);
-            battleMenu.Open();
+            if (manager.CurrentCharacter == null)
+            {
+                battleMenu.Open();
+            }
         }
         #endregion
 
@@ -162,6 +182,12 @@ namespace App.Controller.Battle{
         }
         #endregion
         /// <summary>
+        /// 待命
+        /// </summary>
+        public void AwaitOrders(){
+            manager.ActionOver();
+        }
+        /// <summary>
         /// 选择技能
         /// </summary>
         public void OpenSkillList(){
@@ -177,9 +203,15 @@ namespace App.Controller.Battle{
             Request req = Request.Create("title", title.text, "bout", "5/20");
             this.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.BattleMenuDialog, req));
         }
+        /// <summary>
+        /// 结束回合
+        /// </summary>
         public void CtrlEnd(){
-            CConfirmDialog.Show("结束本回合操作吗？",()=>{});
+            CConfirmDialog.Show("结束本回合操作吗？",()=>{manager.ChangeBelong(Belong.self);});
         }
+        /// <summary>
+        /// 结束战斗
+        /// </summary>
         public void BattleEnd(){
             App.Util.SceneManager.LoadScene( this.fromScene.ToString(), this.fromRequest );
         }

@@ -27,6 +27,7 @@ namespace App.View{
         public bool IsOpen{ get; set;}
         public VTile ParentNode{ get; set;}
 
+        private GameObject attackTween;
         private VBaseMap vBaseMap;
         public void SearchInit(){
             MovingPower = 0;
@@ -85,6 +86,17 @@ namespace App.View{
         public void SetColor(Color color){
             tileSprite.color = color;
             buildingSprite.color = color;
+        }
+        public void SetAttackTween(GameObject attackTween){
+            attackTween.transform.SetParent(this.transform);
+            attackTween.transform.localPosition = Vector3.zero;
+            attackTween.transform.localScale = Vector3.one;
+            this.attackTween = attackTween;
+        }
+        public bool IsAttackTween{
+            get{ 
+                return attackTween != null;
+            }
         }
     }
 }

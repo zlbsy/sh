@@ -161,6 +161,7 @@
      <Compile Include="Assets\Script\App\Util\Battle\BattleCharactersManager.cs" />
      <Compile Include="Assets\Script\App\Util\Battle\BattleManager.cs" />
      <Compile Include="Assets\Script\App\Util\Battle\BattleTilesManager.cs" />
+     <Compile Include="Assets\Script\App\Util\Battle\CharacterAI.cs" />
      <Compile Include="Assets\Script\App\Util\BuyManager.cs" />
      <Compile Include="Assets\Script\App\Util\Cacher\AreaCacher.cs" />
      <Compile Include="Assets\Script\App\Util\Cacher\BaseMapCacher.cs" />
