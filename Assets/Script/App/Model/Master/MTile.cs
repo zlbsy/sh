@@ -23,5 +23,8 @@ namespace App.Model.Master{
         public static Sprite GetIcon(int id){
             return App.Util.ImageAssetBundleManager.GetMapTile(string.Format("tile_{0}", id));
         }
+        public static Sprite GetIcon(string key){
+            return App.Util.ImageAssetBundleManager.GetMapTile(string.Format("tile_{0}", key));
+        }
 	}
 }

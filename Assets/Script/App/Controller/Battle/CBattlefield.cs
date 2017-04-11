@@ -194,6 +194,9 @@ namespace App.Controller.Battle{
             System.Action closeEvent = () =>
             {
                     tilesManager.ClearCurrentTiles();
+                    if(this.battleMode == BattleMode.show_move_tiles){
+                        tilesManager.ShowCharacterMovingArea(manager.CurrentCharacter);
+                    }
                     tilesManager.ShowCharacterAttackArea(manager.CurrentCharacter);
             };
             Request req = Request.Create("character", this.manager.CurrentCharacter, "closeEvent", closeEvent);

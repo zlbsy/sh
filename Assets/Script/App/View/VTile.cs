@@ -13,6 +13,8 @@ namespace App.View{
         [SerializeField]public SpriteRenderer tileSprite;
         [SerializeField]public SpriteRenderer buildingSprite;
         [SerializeField]public SpriteRenderer lineSprite;
+        [SerializeField]public SpriteRenderer movingSprite;
+        [SerializeField]public SpriteRenderer attackSprite;
         [SerializeField]public TextMesh tileName;
 
         public int MovingPower{ get; set;}
@@ -36,6 +38,7 @@ namespace App.View{
             ParentNode = null;
         }
         void Start(){
+            lineSprite.sprite = App.Model.Master.MTile.GetIcon(0);
             tileName.GetComponent<MeshRenderer>().sortingOrder = 5;
         }
         public void SetData(int index, int cx, int cy, int tileId, int subId = 0){
@@ -44,10 +47,6 @@ namespace App.View{
             this.CoordinateY = cy;
             tileSprite.sprite = App.Model.Master.MTile.GetIcon(tileId);
             tileName.gameObject.SetActive(false);
-            if (lineSprite.sprite == null)
-            {
-                lineSprite.sprite = App.Model.Master.MTile.GetIcon(0);
-            }
             if (subId > 0)
             {
                 buildingSprite.gameObject.SetActive(true);
@@ -82,6 +81,20 @@ namespace App.View{
                 yield break;
             }
             this.Controller.SendMessage("OnClickTile", this.Index);
+        }
+        public void ShowMoving(App.Model.Belong belong){
+            this.movingSprite.gameObject.SetActive(true);
+            this.movingSprite.sprite = App.Model.Master.MTile.GetIcon(string.Format("moving_{0}", belong.ToString()));
+        }
+        public void ShowAttack(){
+            this.attackSprite.gameObject.SetActive(true);
+            this.attackSprite.sprite = App.Model.Master.MTile.GetIcon("attack");
+        }
+        public void HideMoving(){
+            this.movingSprite.gameObject.SetActive(false);
+        }
+        public void HideAttack(){
+            this.attackSprite.gameObject.SetActive(false);
         }
         public void SetColor(Color color){
             tileSprite.color = color;

@@ -38,7 +38,8 @@ namespace App.Util.Battle{
             {
                 this.mCharacter = mCharacter;
                 cBattlefield.tilesManager.ShowCharacterMovingArea(mCharacter);
-                cBattlefield.OpenBattleCharacterPreviewDialog(this.mCharacter);
+                cBattlefield.tilesManager.ShowCharacterAttackArea(mCharacter);
+                cBattlefield.OpenBattleCharacterPreviewDialog(mCharacter);
                 int cx = mCharacter.CoordinateX;
                 int cy = mCharacter.CoordinateY;
                 float x = mCharacter.X;
@@ -46,7 +47,6 @@ namespace App.Util.Battle{
                 if (mCharacter.Belong == Belong.self)
                 {
                     cBattlefield.OpenOperatingMenu();
-                    cBattlefield.tilesManager.ShowCharacterAttackArea(this.mCharacter);
                 }
                 returnAction = () =>
                     {
@@ -59,7 +59,7 @@ namespace App.Util.Battle{
         }
         public void ClickAttackNode(int index){
             MCharacter mCharacter = cBattlefield.charactersManager.GetCharacter(index);
-            if (mCharacter == null)
+            if (mCharacter == null || !cBattlefield.charactersManager.IsInAttackDistance(mCharacter, this.mCharacter))
             {
                 CharacterReturnNone();
                 return;
@@ -72,9 +72,13 @@ namespace App.Util.Battle{
             this.mCharacter.Target = mCharacter;
             mCharacter.Target = this.mCharacter;
 
-            attackCharacterList.Add(this.mCharacter);
-            attackCharacterList.Add(this.mCharacter);
-            attackCharacterList.Add(mCharacter);
+            if (false && cBattlefield.charactersManager.IsInAttackDistance(this.mCharacter, mCharacter))
+            {
+                //先手攻击
+                SetAttackCharacterList(mCharacter, this.mCharacter);
+            }else{
+                SetAttackCharacterList(this.mCharacter, mCharacter);
+            }
 
             cBattlefield.tilesManager.ClearCurrentTiles();
             cBattlefield.CloseOperatingMenu();
@@ -82,6 +86,20 @@ namespace App.Util.Battle{
             cBattlefield.battleMode = CBattlefield.BattleMode.attacking;
             cBattlefield.ActionEndHandler += OnAttackComplete;
             OnAttackComplete();
+        }
+        private void SetAttackCharacterList(MCharacter attackCharacter, MCharacter targetCharacter){
+            int attackCount = cBattlefield.calculateManager.AttackCount(attackCharacter, targetCharacter);
+            while(attackCount-- > 0){
+                attackCharacterList.Add(attackCharacter);
+            }
+            if (cBattlefield.calculateManager.CanCounterAttack(attackCharacter, targetCharacter))
+            {
+                attackCount = cBattlefield.calculateManager.CounterAttackCount(attackCharacter, targetCharacter);
+                while (attackCount-- > 0)
+                {
+                    attackCharacterList.Add(targetCharacter);
+                }
+            }
         }
         public void OnAttackComplete(){
             if (attackCharacterList.Count > 0)
@@ -134,6 +152,10 @@ namespace App.Util.Battle{
             MCharacter mCharacter = cBattlefield.charactersManager.GetCharacter(index);
             if (mCharacter != null)
             {
+                if (!cBattlefield.charactersManager.IsSameBelong(this.mCharacter.Belong, mCharacter.Belong))
+                {
+                    ClickAttackNode(index);
+                }
                 return;
             }
             if (cBattlefield.tilesManager.IsInMovingCurrentTiles(index))

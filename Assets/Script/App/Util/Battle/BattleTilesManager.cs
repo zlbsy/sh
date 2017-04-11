@@ -28,7 +28,7 @@ namespace App.Util.Battle{
         }
         public void ShowCharacterMovingArea(MCharacter mCharacter){
             currentMovingTiles = cBattlefield.breadthFirst.Search(mCharacter);
-            vBaseMap.SetTilesColor(currentMovingTiles, mCharacter.Belong == Belong.self ? Color.blue : Color.green);
+            vBaseMap.ShowMovingTiles(currentMovingTiles, mCharacter.Belong);
             cBattlefield.battleMode = CBattlefield.BattleMode.show_move_tiles;
         }
         public void ShowCharacterAttackArea(MCharacter mCharacter){
@@ -36,8 +36,11 @@ namespace App.Util.Battle{
             currentAttackTiles = cBattlefield.breadthFirst.Search(mCharacter, distance[1]);
             VTile characterTile = currentAttackTiles.Find(_=>_.CoordinateX == mCharacter.CoordinateX && _.CoordinateY == mCharacter.CoordinateY);
             currentAttackTiles = currentAttackTiles.FindAll(_=>cBattlefield.mapSearch.GetDistance(_, characterTile) >= distance[0]);
-            vBaseMap.SetTilesColor(currentAttackTiles, Color.red);
-            ShowCharacterAttackTween(mCharacter, currentAttackTiles);
+            vBaseMap.ShowAttackTiles(currentAttackTiles);
+            if (mCharacter.Belong == Belong.self && !mCharacter.ActionOver)
+            {
+                ShowCharacterAttackTween(mCharacter, currentAttackTiles);
+            }
         }
         public void ShowCharacterAttackTween(MCharacter mCharacter, List<VTile> tiles){
             foreach(VTile tile in tiles){
@@ -62,9 +65,15 @@ namespace App.Util.Battle{
             return currentMovingTiles.Exists(_=>_.Index == vTile.Index);
         }
         public void ClearCurrentTiles(){
-            foreach (VTile tile in currentMovingTiles)
+            if (currentMovingTiles != null)
             {
-                vBaseMap.SetTilesColor(currentMovingTiles, Color.white);
+                vBaseMap.HideMovingTiles(currentMovingTiles);
+                currentMovingTiles.Clear();
+            }
+            if (currentAttackTiles != null)
+            {
+                vBaseMap.HideAttackTiles(currentAttackTiles);
+                currentAttackTiles.Clear();
             }
             foreach (GameObject obj in attackIcons)
             {

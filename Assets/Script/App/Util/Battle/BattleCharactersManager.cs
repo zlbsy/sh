@@ -24,6 +24,26 @@ namespace App.Util.Battle{
             vBaseMap = view;
             baseMapMaster = BaseMapCacher.Instance.Get(mBaseMap.MapId);
         }
+        /// <summary>
+        /// 是否在攻击范围内
+        /// </summary>
+        /// <returns><c>true</c> if this instance is in attack distance the specified checkCharacter distanceCharacter;
+        /// otherwise, <c>false</c>.</returns>
+        /// <param name="checkCharacter">Check character.</param>
+        /// <param name="distanceCharacter">Distance character.</param>
+        public bool IsInAttackDistance(MCharacter checkCharacter, MCharacter distanceCharacter){
+            MSkill targetSkill = distanceCharacter.CurrentSkill;
+            App.Model.Master.MSkill targetSkillMaster = targetSkill.Master;
+            int distance = cBattlefield.mapSearch.GetDistance(checkCharacter.CoordinateX, checkCharacter.CoordinateY, distanceCharacter.CoordinateX, distanceCharacter.CoordinateY);
+            return distance >= targetSkillMaster.distance[0] && distance <= targetSkillMaster.distance[1];
+        }
+        /// <summary>
+        /// 获取攻击到的所有敌人
+        /// </summary>
+        /// <returns>The damage characters.</returns>
+        /// <param name="vCharacter">攻击方</param>
+        /// <param name="targetView">攻击目标</param>
+        /// <param name="skill">Skill.</param>
         public List<VCharacter> GetDamageCharacters(VCharacter vCharacter, VCharacter targetView, App.Model.Master.MSkill skill){
             List<VCharacter> result = new List<VCharacter>(){ targetView };
             if (skill.radius_type == RadiusType.point)

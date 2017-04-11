@@ -74,7 +74,8 @@ namespace App.Util.Search{
             }
         }
         public int GetDistance(VTile tile1, VTile tile2){
-            if (tile2.CoordinateY == tile1.CoordinateY)
+            return GetDistance(tile1.CoordinateX, tile1.CoordinateY, tile2.CoordinateX, tile2.CoordinateY);
+            /*if (tile2.CoordinateY == tile1.CoordinateY)
             {
                 return Mathf.Abs(tile2.CoordinateX - tile1.CoordinateX);
             }
@@ -97,7 +98,31 @@ namespace App.Util.Search{
                 }
                 y += directionY;
             }while (tile2.CoordinateY != y);
-            return Mathf.Abs(tile2.CoordinateX - x) + distance;
+            return Mathf.Abs(tile2.CoordinateX - x) + distance;*/
+        }
+        public int GetDistance(int x, int y, int cx, int cy){
+            if (cy == y)
+            {
+                return Mathf.Abs(cx - x);
+            }
+            int distance = 0;
+            int directionY = cy > y ? 1 : -1;
+            do{
+                distance += 1;
+                if(cx != x){
+                    if(y % 2 == 0){
+                        if(cx < x){
+                            x -= 1;
+                        }
+                    }else{
+                        if(cx > x){
+                            x += 1;
+                        }
+                    }
+                }
+                y += directionY;
+            }while (cy != y);
+            return Mathf.Abs(cx - x) + distance;
         }
         public List<Vector2> GetNeighboringCoordinates(Vector2 coordinate){
             return GetNeighboringCoordinates((int)coordinate.x, (int)coordinate.y);

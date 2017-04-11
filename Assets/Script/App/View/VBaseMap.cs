@@ -138,13 +138,35 @@ namespace App.View{
             mousePosition.x = int.MinValue;
             dragPosition.x = int.MinValue;
         }
-        public void SetTilesColor(List<VTile> tiles, Color color){
+        private void SetTilesColor(List<VTile> tiles, Color color){
             foreach (VTile tile in tiles)
             {
                 tile.SetColor(color);
             }
-            //VTile vTile = System.Array.Find(tileUnits, _=>_.Index == index);
-            //vTile.SetColor(Color.red);
+        }
+        public void ShowMovingTiles(List<VTile> tiles, App.Model.Belong belong){
+            foreach (VTile tile in tiles)
+            {
+                tile.ShowMoving(belong);
+            }
+        }
+        public void ShowAttackTiles(List<VTile> tiles){
+            foreach (VTile tile in tiles)
+            {
+                tile.ShowAttack();
+            }
+        }
+        public void HideMovingTiles(List<VTile> tiles){
+            foreach (VTile tile in tiles)
+            {
+                tile.HideMoving();
+            }
+        }
+        public void HideAttackTiles(List<VTile> tiles){
+            foreach (VTile tile in tiles)
+            {
+                tile.HideAttack();
+            }
         }
         public bool IsDraging{
             get{ 

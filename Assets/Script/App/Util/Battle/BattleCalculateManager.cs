@@ -23,14 +23,68 @@ namespace App.Util.Battle{
             vBaseMap = view;
         }
         /// <summary>
+        /// 是否可反击
+        /// </summary>
+        /// <param name="attackCharacter">Attack character.</param>
+        /// <param name="targetCharacter">Target character.</param>
+        public bool CanCounterAttack(MCharacter attackCharacter, MCharacter targetCharacter){
+            if (!cBattlefield.charactersManager.IsInAttackDistance(attackCharacter, targetCharacter))
+            {
+                //不在攻击范围内
+                return false;
+            }
+            if (attackCharacter.MoveType == MoveType.infantry && targetCharacter.MoveType == MoveType.cavalry)
+            {
+                //步兵攻击骑兵不受反击
+                return false;
+            }
+            return true;
+        }
+        /// <summary>
+        /// 获取反击次数
+        /// </summary>
+        /// <param name="attackCharacter">Attack character.</param>
+        /// <param name="targetCharacter">Target character.</param>
+        public int CounterAttackCount(MCharacter attackCharacter, MCharacter targetCharacter){
+            int attackCount = 1;
+            if (attackCharacter.WeaponType == WeaponType.dualWield)
+            {
+                //双手兵器或者相关的技能可双击
+                attackCount = 2;
+            }
+            //TODO::技能双击
+            //MSkill skill = attackCharacter.CurrentSkill;
+            //App.Model.Master.MSkill skillMaster = skill.Master;
+            return attackCount;
+        }
+        /// <summary>
+        /// 获取攻击次数
+        /// </summary>
+        /// <param name="attackCharacter">Attack character.</param>
+        /// <param name="targetCharacter">Target character.</param>
+        public int AttackCount(MCharacter attackCharacter, MCharacter targetCharacter){
+            int attackCount = 1;
+            if (attackCharacter.WeaponType == WeaponType.dualWield)
+            {
+                //双手兵器或者相关的技能可双击
+                attackCount = 2;
+            }
+            //TODO::技能双击
+            //MSkill skill = attackCharacter.CurrentSkill;
+            //App.Model.Master.MSkill skillMaster = skill.Master;
+            return attackCount;
+        }
+        /// <summary>
         /// 攻击伤害=攻击力-防御力
         /// </summary>
         /// <param name="attackCharacter">Attack character.</param>
         /// <param name="targetCharacter">Target character.</param>
+
         public int Hert(MCharacter attackCharacter, MCharacter targetCharacter){
             MSkill skill = attackCharacter.CurrentSkill;
             App.Model.Master.MSkill skillMaster = skill.Master;
             float attack = skillMaster.type == SkillType.attack ? attackCharacter.Ability.PhysicalAttack : attackCharacter.Ability.MagicAttack;
+            attack *= skill.Master.power;
             if (attackCharacter.IsPike && targetCharacter.IsKnife)
             {
                 //枪剑类克制刀类
