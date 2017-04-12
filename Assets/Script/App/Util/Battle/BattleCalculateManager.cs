@@ -27,8 +27,8 @@ namespace App.Util.Battle{
         /// </summary>
         /// <param name="attackCharacter">Attack character.</param>
         /// <param name="targetCharacter">Target character.</param>
-        public bool CanCounterAttack(MCharacter attackCharacter, MCharacter targetCharacter){
-            if (!cBattlefield.charactersManager.IsInAttackDistance(attackCharacter, targetCharacter))
+        public bool CanCounterAttack(MCharacter attackCharacter, MCharacter targetCharacter, int CoordinateX, int CoordinateY, int targetX, int targetY){
+            if (!cBattlefield.charactersManager.IsInAttackDistance(CoordinateX, CoordinateY, targetX, targetY, targetCharacter))
             {
                 //不在攻击范围内
                 return false;

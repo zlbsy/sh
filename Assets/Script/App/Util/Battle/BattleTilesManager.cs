@@ -20,6 +20,7 @@ namespace App.Util.Battle{
         private List<VTile> currentMovingTiles;
         private List<VTile> currentAttackTiles;
         private List<GameObject> attackIcons = new List<GameObject>();
+        public List<VTile> CurrentMovingTiles{get{ return currentAttackTiles;}}
         public BattleTilesManager(CBattlefield controller, MBaseMap model, VBaseMap view){
             cBattlefield = controller;
             mBaseMap = model;
@@ -27,7 +28,7 @@ namespace App.Util.Battle{
             baseMapMaster = BaseMapCacher.Instance.Get(mBaseMap.MapId);
         }
         public void ShowCharacterMovingArea(MCharacter mCharacter){
-            currentMovingTiles = cBattlefield.breadthFirst.Search(mCharacter);
+            currentMovingTiles = cBattlefield.breadthFirst.Search(mCharacter, 0, true);
             vBaseMap.ShowMovingTiles(currentMovingTiles, mCharacter.Belong);
             cBattlefield.battleMode = CBattlefield.BattleMode.show_move_tiles;
         }

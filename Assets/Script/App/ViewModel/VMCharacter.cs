@@ -23,6 +23,7 @@ namespace App.ViewModel
         public VMProperty<int> Horse = new VMProperty<int>();
         public VMProperty<int> Weapon = new VMProperty<int>();
         public VMProperty<int> Clothes = new VMProperty<int>();
+        public VMProperty<Mission> Mission = new VMProperty<Mission>();
 		public VMProperty<WeaponType> WeaponType = new VMProperty<WeaponType>();
 		public VMProperty<MoveType> MoveType = new VMProperty<MoveType>();
         public VMProperty<ActionType> Action = new VMProperty<ActionType>();

@@ -11,6 +11,7 @@ namespace App.Util.Search{
     /// 广度优先搜索
     /// </summary>
     public class BreadthFirst{
+        private App.Controller.Battle.CBattlefield cBattlefield;
         private CBaseMap cBaseMap;
         private MBaseMap mBaseMap;
         private VBaseMap vBaseMap;
@@ -20,10 +21,14 @@ namespace App.Util.Search{
             cBaseMap = controller;
             mBaseMap = model;
             vBaseMap = view;
+            if (cBaseMap is App.Controller.Battle.CBattlefield)
+            {
+                cBattlefield = cBaseMap as App.Controller.Battle.CBattlefield;
+            }
             baseMapMaster = BaseMapCacher.Instance.Get(mBaseMap.MapId);
         }
-        public List<VTile> Search(MCharacter mCharacter, int movePower = 0){
-            SearchInit();
+        public List<VTile> Search(MCharacter mCharacter, int movePower = 0, bool obstacleEnable = false){
+            SearchInit(mCharacter, obstacleEnable);
             tiles = new List<VTile>();
             if (movePower == 0)
             {
@@ -32,7 +37,7 @@ namespace App.Util.Search{
                 if (movePower == 0)
                 {
                     Debug.LogError("movePower = " + movePower);
-                    movePower = 2;
+                    movePower = 4;
                 }
             }
             int i = mCharacter.CoordinateY * vBaseMap.mapWidth + mCharacter.CoordinateX;
@@ -42,12 +47,15 @@ namespace App.Util.Search{
             return tiles;
         }
         private void LoopSearch(VTile vTile){
+            if(!vTile.IsRoad){
+                return;
+            }
             if (!vTile.IsChecked)
             {
                 vTile.IsChecked = true;
                 tiles.Add(vTile);
             }
-            if (vTile.MovingPower <= 0)
+            if (vTile.MovingPower <= 0 || vTile.IsAllCost)
             {
                 return;
             }
@@ -61,14 +69,37 @@ namespace App.Util.Search{
                 }
                 int cost = 1;
                 tile.MovingPower = vTile.MovingPower - cost;
-
                 LoopSearch(tile);
             }
         }
-        private void SearchInit(){
+        private void SearchInit(MCharacter mCharacter, bool obstacleEnable = false){
             foreach (VTile tile in vBaseMap.tileUnits)
             {
                 tile.SearchInit();
+            }
+            if (cBattlefield == null || !obstacleEnable)
+            {
+                return;
+            }
+            foreach (MCharacter character in mBaseMap.Characters)
+            {
+                if (cBattlefield.charactersManager.IsSameCharacter(mCharacter, character))
+                {
+                    continue;
+                }
+                VTile tile = cBattlefield.mapSearch.GetTile(character.CoordinateX, character.CoordinateY);
+                if (cBattlefield.charactersManager.IsSameBelong(mCharacter.Belong, character.Belong))
+                {
+                    continue;
+                }
+                tile.IsRoad = false;
+
+                List<Vector2> coordinates = cBattlefield.mapSearch.GetNeighboringCoordinates(baseMapMaster.GetCoordinateFromIndex(tile.Index));
+                foreach (Vector2 vec in coordinates)
+                {
+                    VTile childTile = vBaseMap.tileUnits[(int)vec.y * vBaseMap.mapWidth + (int)vec.x];
+                    childTile.IsAllCost = true;
+                }
             }
         }
     }

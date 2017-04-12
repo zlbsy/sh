@@ -57,19 +57,19 @@ namespace App.View.Battlefield{
             App.Model.SkillType type = ViewModel.CurrentSkill.Value.Master.type;
             if (type == App.Model.SkillType.attack)
             {
-                attack.text = string.Format("物攻 {0}", ViewModel.Ability.Value.PhysicalAttack);
+                attack.text = string.Format("{0} {1}", Language.Get("physical_attack"), ViewModel.Ability.Value.PhysicalAttack);
             }
             else if (type == App.Model.SkillType.magic)
             {
-                attack.text = string.Format("法攻 {0}", ViewModel.Ability.Value.MagicAttack);
+                attack.text = string.Format("{0} {1}", Language.Get("magic_attack"), ViewModel.Ability.Value.MagicAttack);
             }
             else if (type == App.Model.SkillType.heal)
             {
-                attack.text = string.Format("回复 {0}", ViewModel.Ability.Value.MagicAttack);
+                attack.text = string.Format("{0} {1}", Language.Get("heal"), ViewModel.Ability.Value.MagicAttack);
             }
-            physicalDefense.text = string.Format("物防 {0}", ViewModel.Ability.Value.PhysicalDefense);
-            magicDefense.text = string.Format("法防 {0}", ViewModel.Ability.Value.MagicDefense);
-            movePower.text = string.Format("移动 {0}", ViewModel.Ability.Value.MovingPower);
+            physicalDefense.text = string.Format("{0} {1}", Language.Get("physical_defense"), ViewModel.Ability.Value.PhysicalDefense);
+            magicDefense.text = string.Format("{0} {1}", Language.Get("magic_defense"), ViewModel.Ability.Value.MagicDefense);
+            movePower.text = string.Format("{0} {1}", Language.Get("moving_power"), ViewModel.Ability.Value.MovingPower);
         }
         private void CurrentSkillChanged(App.Model.MSkill oldvalue, App.Model.MSkill newvalue)
         {

@@ -79,6 +79,20 @@ namespace App.Model{
         friend,
         enemy
     }
+    public enum Mission{
+        /// <summary>
+        /// 主动出击
+        /// </summary>
+        initiative,
+        /// <summary>
+        /// 被动出击
+        /// </summary>
+        passive,
+        /// <summary>
+        /// 原地防守
+        /// </summary>
+        defensive
+    }
 	public class MCharacter : MBase {
 		public MCharacter(){
 			viewModel = new VMCharacter ();
@@ -176,6 +190,14 @@ namespace App.Model{
             }
             get{ 
                 return this.ViewModel.Id.Value;
+            }
+        }
+        public Mission Mission{
+            set{
+                this.ViewModel.Mission.Value = value;
+            }
+            get{ 
+                return this.ViewModel.Mission.Value;
             }
         }
         public MSkill CurrentSkill{

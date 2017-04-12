@@ -92,7 +92,7 @@ namespace App.Util.Battle{
             while(attackCount-- > 0){
                 attackCharacterList.Add(attackCharacter);
             }
-            if (cBattlefield.calculateManager.CanCounterAttack(attackCharacter, targetCharacter))
+            if (cBattlefield.calculateManager.CanCounterAttack(attackCharacter, targetCharacter, attackCharacter.CoordinateX, attackCharacter.CoordinateY, targetCharacter.CoordinateX, targetCharacter.CoordinateY))
             {
                 attackCount = cBattlefield.calculateManager.CounterAttackCount(attackCharacter, targetCharacter);
                 while (attackCount-- > 0)
@@ -160,8 +160,8 @@ namespace App.Util.Battle{
             }
             if (cBattlefield.tilesManager.IsInMovingCurrentTiles(index))
             {
-                Vector2 vec = new Vector2(this.mCharacter.CoordinateX, this.mCharacter.CoordinateY);
-                VTile startTile = cBattlefield.mapSearch.GetTile(vec);
+                //Vector2 vec = new Vector2(this.mCharacter.CoordinateX, this.mCharacter.CoordinateY);
+                VTile startTile = cBattlefield.mapSearch.GetTile(this.mCharacter.CoordinateX, this.mCharacter.CoordinateY);
                 VTile endTile = cBattlefield.mapSearch.GetTile(index);
 
                 Holoville.HOTween.Core.TweenDelegate.TweenCallback moveComplete = () =>

@@ -27,14 +27,16 @@ namespace App.Util.Battle{
         /// <summary>
         /// 是否在攻击范围内
         /// </summary>
-        /// <returns><c>true</c> if this instance is in attack distance the specified checkCharacter distanceCharacter;
-        /// otherwise, <c>false</c>.</returns>
-        /// <param name="checkCharacter">Check character.</param>
-        /// <param name="distanceCharacter">Distance character.</param>
         public bool IsInAttackDistance(MCharacter checkCharacter, MCharacter distanceCharacter){
+            return IsInAttackDistance(checkCharacter.CoordinateX, checkCharacter.CoordinateY, distanceCharacter.CoordinateX, distanceCharacter.CoordinateY, distanceCharacter);
+        }
+        /// <summary>
+        /// 是否在攻击范围内
+        /// </summary>
+        public bool IsInAttackDistance(int CoordinateX, int CoordinateY, int targetX, int targetY, MCharacter distanceCharacter){
             MSkill targetSkill = distanceCharacter.CurrentSkill;
             App.Model.Master.MSkill targetSkillMaster = targetSkill.Master;
-            int distance = cBattlefield.mapSearch.GetDistance(checkCharacter.CoordinateX, checkCharacter.CoordinateY, distanceCharacter.CoordinateX, distanceCharacter.CoordinateY);
+            int distance = cBattlefield.mapSearch.GetDistance(CoordinateX, CoordinateY, targetX, targetY);
             return distance >= targetSkillMaster.distance[0] && distance <= targetSkillMaster.distance[1];
         }
         /// <summary>
@@ -95,6 +97,9 @@ namespace App.Util.Battle{
                 }
             }
             return result;
+        }
+        public bool IsSameCharacter(MCharacter character1, MCharacter character2){
+            return character1.Belong == character2.Belong && character1.Id == character2.Id;
         }
         public bool IsSameBelong(Belong belong1, Belong belong2){
             if (belong1 == Belong.enemy)

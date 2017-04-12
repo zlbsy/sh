@@ -28,6 +28,8 @@ namespace App.View{
         public int NodeIndex{ get; set;}
         public bool IsOpen{ get; set;}
         public VTile ParentNode{ get; set;}
+        public bool IsRoad{ get; set;}
+        public bool IsAllCost{ get; set;}
 
         private GameObject attackTween;
         private VBaseMap vBaseMap;
@@ -35,6 +37,8 @@ namespace App.View{
             MovingPower = 0;
             IsChecked = false;
             IsOpen = false;
+            IsRoad = true;
+            IsAllCost = false;
             ParentNode = null;
         }
         void Start(){
