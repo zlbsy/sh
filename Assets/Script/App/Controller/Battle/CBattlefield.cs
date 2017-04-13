@@ -31,7 +31,7 @@ namespace App.Controller.Battle{
             attacking
 
         }
-        private Belong currentBelong;
+        public Belong currentBelong{ get; set;}
         public BattleMode battleMode{ get; set;}
         public BattleManager manager{ get; set;}
         public BattleTilesManager tilesManager{ get; set;}

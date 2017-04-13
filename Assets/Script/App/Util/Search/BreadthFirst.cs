@@ -98,6 +98,10 @@ namespace App.Util.Search{
                 foreach (Vector2 vec in coordinates)
                 {
                     VTile childTile = vBaseMap.tileUnits[(int)vec.y * vBaseMap.mapWidth + (int)vec.x];
+                    if (childTile.CoordinateX == mCharacter.CoordinateX && childTile.CoordinateY == mCharacter.CoordinateY)
+                    {
+                        continue;
+                    }
                     childTile.IsAllCost = true;
                 }
             }

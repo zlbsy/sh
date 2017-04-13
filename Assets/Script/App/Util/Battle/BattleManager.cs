@@ -56,6 +56,7 @@ namespace App.Util.Battle{
                         this.mCharacter.Direction = direction;
                 };
             }
+            Debug.LogError("this.mCharacter = " + this.mCharacter + ", mCharacter = " + mCharacter);
         }
         public void ClickAttackNode(int index){
             MCharacter mCharacter = cBattlefield.charactersManager.GetCharacter(index);
@@ -88,6 +89,8 @@ namespace App.Util.Battle{
             OnAttackComplete();
         }
         private void SetAttackCharacterList(MCharacter attackCharacter, MCharacter targetCharacter){
+            Debug.LogError("attackCharacter="+attackCharacter.Belong+", "+attackCharacter.Id);
+            Debug.LogError("targetCharacter="+targetCharacter.Belong+", "+targetCharacter.Id);
             int attackCount = cBattlefield.calculateManager.AttackCount(attackCharacter, targetCharacter);
             while(attackCount-- > 0){
                 attackCharacterList.Add(attackCharacter);
@@ -100,6 +103,7 @@ namespace App.Util.Battle{
                     attackCharacterList.Add(targetCharacter);
                 }
             }
+            Debug.LogError("attackCharacterList.Count="+attackCharacterList.Count);
         }
         public void OnAttackComplete(){
             if (attackCharacterList.Count > 0)
@@ -144,7 +148,7 @@ namespace App.Util.Battle{
             }
         }
         public void ClickMovingNode(int index){
-            if (this.mCharacter.Belong != Belong.self || this.mCharacter.ActionOver)
+            if (this.mCharacter.Belong != cBattlefield.currentBelong || this.mCharacter.ActionOver)
             {
                 CharacterReturnNone();
                 return;
@@ -158,6 +162,7 @@ namespace App.Util.Battle{
                 }
                 return;
             }
+            Debug.LogError("ClickMovingNode="+index+", " + cBattlefield.tilesManager.IsInMovingCurrentTiles(index));
             if (cBattlefield.tilesManager.IsInMovingCurrentTiles(index))
             {
                 //Vector2 vec = new Vector2(this.mCharacter.CoordinateX, this.mCharacter.CoordinateY);
@@ -208,6 +213,7 @@ namespace App.Util.Battle{
         public void CharacterReturnNone(){
             returnAction();
             this.mCharacter = null;
+            Debug.LogError("this.mCharacter = null;");
             cBattlefield.tilesManager.ClearCurrentTiles();
             cBattlefield.CloseOperatingMenu();
             cBattlefield.HideBattleCharacterPreviewDialog();

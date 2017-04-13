@@ -28,6 +28,8 @@ namespace App.Util.Battle{
         /// 是否在攻击范围内
         /// </summary>
         public bool IsInAttackDistance(MCharacter checkCharacter, MCharacter distanceCharacter){
+            Debug.LogError("checkCharacter = " + checkCharacter);
+            Debug.LogError("distanceCharacter = " + distanceCharacter);
             return IsInAttackDistance(checkCharacter.CoordinateX, checkCharacter.CoordinateY, distanceCharacter.CoordinateX, distanceCharacter.CoordinateY, distanceCharacter);
         }
         /// <summary>
