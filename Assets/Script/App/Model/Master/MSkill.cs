@@ -14,6 +14,9 @@ namespace App.Model.Master{
         public WeaponType[] weapon_types;
         public int[] distance;
         public int strength;
+        /// <summary>
+        /// 半径种类
+        /// </summary>
         public RadiusType radius_type;
         public int radius;
 

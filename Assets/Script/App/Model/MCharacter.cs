@@ -6,18 +6,18 @@ using App.Util.Cacher;
 
 
 namespace App.Model{
-	public enum MoveType{
+    public enum MoveType{
         /// <summary>
         /// 步兵
         /// </summary>
-		infantry,
+        infantry,
         /// <summary>
         /// 骑兵
         /// </summary>
-		cavalry,
+        cavalry,
     }
     [System.Serializable]
-	public enum WeaponType{
+    public enum WeaponType{
         /// <summary>
         /// 短刀
         /// </summary>
@@ -25,15 +25,15 @@ namespace App.Model{
         /// <summary>
         /// 大刀
         /// </summary>
-		longKnife,
+        longKnife,
         /// <summary>
         /// 短斧
         /// </summary>
-		ax,
+        ax,
         /// <summary>
         /// 长斧
         /// </summary>
-		longAx,
+        longAx,
         /// <summary>
         /// 长枪
         /// </summary>
@@ -59,13 +59,13 @@ namespace App.Model{
         /// </summary>
         dualWield,
     }
-	public enum ActionType{
-		stand,
-		move,
-		attack,
+    public enum ActionType{
+        stand,
+        move,
+        attack,
         block,
         hert,
-	}
+    }
     public enum Direction{
         left,
         right,
@@ -93,9 +93,9 @@ namespace App.Model{
         /// </summary>
         defensive
     }
-	public class MCharacter : MBase {
-		public MCharacter(){
-			viewModel = new VMCharacter ();
+    public class MCharacter : MBase {
+        public MCharacter(){
+            viewModel = new VMCharacter ();
         }
         public static MCharacter Create(App.Model.Master.MNpc npc){
             MCharacter mCharacter = new MCharacter();
@@ -108,8 +108,8 @@ namespace App.Model{
             mCharacter.WeaponType = (WeaponType)System.Enum.Parse(typeof(WeaponType), npc.weapon_type, true);
             return mCharacter;
         }
-		public VMCharacter ViewModel { get { return (VMCharacter)viewModel; } }
-		/// <summary>
+        public VMCharacter ViewModel { get { return (VMCharacter)viewModel; } }
+        /// <summary>
         /// 枪剑类兵器
         /// </summary>
         /// <value><c>true</c> if this instance is pike; otherwise, <c>false</c>.</value>
@@ -118,10 +118,10 @@ namespace App.Model{
                 return this.WeaponType == WeaponType.pike || this.WeaponType == WeaponType.sword;
             }
         }
-       /// <summary>
-       /// 斧类兵器
-       /// </summary>
-       /// <value><c>true</c> if this instance is ax; otherwise, <c>false</c>.</value>
+        /// <summary>
+        /// 斧类兵器
+        /// </summary>
+        /// <value><c>true</c> if this instance is ax; otherwise, <c>false</c>.</value>
         public bool IsAx{
             get{ 
                 return this.WeaponType == WeaponType.ax || this.WeaponType == WeaponType.longAx;
@@ -293,13 +293,13 @@ namespace App.Model{
                 return this.ViewModel.Hp.Value;
             }
         }
-		public int Mp{
-			set{
+        public int Mp{
+            set{
                 this.ViewModel.Mp.Value = value;
-			}
-			get{ 
+            }
+            get{ 
                 return this.ViewModel.Mp.Value;
-			}
+            }
         }
         public int Level{
             set{
@@ -325,61 +325,61 @@ namespace App.Model{
                 return this.ViewModel.Belong.Value;
             }
         }
-		public ActionType Action{
-			set{
-				this.ViewModel.Action.Value = value;
-			}
-			get{ 
-				return this.ViewModel.Action.Value;
-			}
-		}
-		public WeaponType WeaponType{
-			set{
-				this.ViewModel.WeaponType.Value = value;
-			}
-			get{ 
-				return this.ViewModel.WeaponType.Value;
-			}
-		}
-		public int Clothes{
-			set{ 
-				this.ViewModel.Clothes.Value = value;
-			}
-			get{ 
-				return this.ViewModel.Clothes.Value;
-			}
-		}
-		public int Weapon{
-			set{ 
-				this.ViewModel.Weapon.Value = value;
-			}
-			get{ 
-				return this.ViewModel.Weapon.Value;
-			}
-		}
+        public ActionType Action{
+            set{
+                this.ViewModel.Action.Value = value;
+            }
+            get{ 
+                return this.ViewModel.Action.Value;
+            }
+        }
+        public WeaponType WeaponType{
+            set{
+                this.ViewModel.WeaponType.Value = value;
+            }
+            get{ 
+                return this.ViewModel.WeaponType.Value;
+            }
+        }
+        public int Clothes{
+            set{ 
+                this.ViewModel.Clothes.Value = value;
+            }
+            get{ 
+                return this.ViewModel.Clothes.Value;
+            }
+        }
+        public int Weapon{
+            set{ 
+                this.ViewModel.Weapon.Value = value;
+            }
+            get{ 
+                return this.ViewModel.Weapon.Value;
+            }
+        }
         public MoveType MoveType{
-			set{ 
-				this.ViewModel.MoveType.Value = value;
-			}
-			get{ 
-				return this.ViewModel.MoveType.Value;
-			}
-		}
-		public int Head{
-			set{ 
-				this.ViewModel.Head.Value = value;
-			}
-			get{ 
-				return this.ViewModel.Head.Value;
-			}
-		}
-		public int Hat{
-			set{ 
-				this.ViewModel.Hat.Value = value;
-			}
-			get{ 
-				return this.ViewModel.Hat.Value;
-			}
+            set{ 
+                this.ViewModel.MoveType.Value = value;
+            }
+            get{ 
+                return this.ViewModel.MoveType.Value;
+            }
+        }
+        public int Head{
+            set{ 
+                this.ViewModel.Head.Value = value;
+            }
+            get{ 
+                return this.ViewModel.Head.Value;
+            }
+        }
+        public int Hat{
+            set{ 
+                this.ViewModel.Hat.Value = value;
+            }
+            get{ 
+                return this.ViewModel.Hat.Value;
+            }
         }
         public MSkill[] Skills{
             set{ 
@@ -405,5 +405,5 @@ namespace App.Model{
                 return this.ViewModel.Ability.Value;
             }
         }
-	}
+    }
 }

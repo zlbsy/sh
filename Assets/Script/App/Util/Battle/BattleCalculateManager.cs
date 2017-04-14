@@ -80,9 +80,17 @@ namespace App.Util.Battle{
         /// <param name="attackCharacter">Attack character.</param>
         /// <param name="targetCharacter">Target character.</param>
 
-        public int Hert(MCharacter attackCharacter, MCharacter targetCharacter){
+        public int Hert(MCharacter attackCharacter, MCharacter targetCharacter, VTile tile = null, VTile targetTile = null){
             MSkill skill = attackCharacter.CurrentSkill;
             App.Model.Master.MSkill skillMaster = skill.Master;
+            if (tile == null)
+            {
+                tile = cBattlefield.mapSearch.GetTile(attackCharacter.CoordinateX, attackCharacter.CoordinateY);
+            }
+            if (targetTile == null)
+            {
+                targetTile = cBattlefield.mapSearch.GetTile(targetCharacter.CoordinateX, targetCharacter.CoordinateY);
+            }
             float attack = skillMaster.type == SkillType.attack ? attackCharacter.Ability.PhysicalAttack : attackCharacter.Ability.MagicAttack;
             attack *= skill.Master.power;
             if (attackCharacter.IsPike && targetCharacter.IsKnife)

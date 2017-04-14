@@ -186,9 +186,19 @@ namespace App.View.Character{
             animator.Play(newvalue.ToString());
             animationIndex = 0;
             UpdateView();
-            if (newvalue == App.Model.ActionType.stand)
+            if (newvalue == App.Model.ActionType.stand || newvalue == App.Model.ActionType.move)
             {
-                this.StartCoroutine(RemoveDynamicCharacter());
+                if (ViewModel.Hp.Value == 0)
+                {
+                    Holoville.HOTween.HOTween.To(this.transform, 1f, new Holoville.HOTween.TweenParms().Prop("localPosition", this.transform.localPosition).OnComplete(()=>{
+                        this.gameObject.SetActive(false);
+                        App.Util.SceneManager.CurrentScene.StartCoroutine(RemoveDynamicCharacter());
+                    }));
+                }
+                else
+                {
+                    this.StartCoroutine(RemoveDynamicCharacter());
+                }
             }
             else
             {
@@ -196,7 +206,7 @@ namespace App.View.Character{
             }
         }
         private IEnumerator RemoveDynamicCharacter(){
-            while (this.num.gameObject.activeSelf)
+            while (this.gameObject.activeSelf && this.num.gameObject.activeSelf)
             {
                 yield return new WaitForEndOfFrame();
             }

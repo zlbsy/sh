@@ -68,6 +68,10 @@ namespace App.Controller.Battle{
                 mCharacter.CoordinateY = mBattleOwn.y;
                 CharacterInit(mCharacter);
                 characters.Add(mCharacter);
+                if (i == 0)
+                {
+                    mCharacter.Hp = 1;
+                }
             }
             foreach(App.Model.Master.MBattleNpc battleNpc in battlefieldMaster.enemys){
                 MCharacter mCharacter = NpcCacher.Instance.GetFromBattleNpc(battleNpc);
@@ -87,6 +91,7 @@ namespace App.Controller.Battle{
             vBaseMap.transform.parent.localScale = Vector3.one;
             vBaseMap.MoveToCenter();
             base.InitMap();
+            characters.ForEach(character=>character.Action = ActionType.move);
             battlefieldMaster.script.Add("Battle.boutwave(self);");
             App.Util.LSharp.LSharpScript.Instance.Analysis(battlefieldMaster.script);
         }
@@ -101,9 +106,13 @@ namespace App.Controller.Battle{
             if (belong != Belong.self)
             {
                 closeEvent = () =>
-                    {
-                        ai.Execute(belong);
-                    };
+                {
+                    ai.Execute(belong);
+                };
+            }
+            else
+            {
+                closeEvent = CloseOperatingMenu;
             }
             Request req = Request.Create("belong", belong, "bout", boutCount, "maxBout", 20, "closeEvent", closeEvent);
             this.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.BoutWaveDialog, req));
@@ -250,6 +259,7 @@ namespace App.Controller.Battle{
         /// <param name="vCharacter">V character.</param>
         public void RemoveDynamicCharacter(VCharacter vCharacter){
             dynamicCharacters.Remove(vCharacter);
+            //Debug.LogError("RemoveDynamicCharacter : "+vCharacter.ViewModel.Id.Value + ","+vCharacter.ViewModel.Name.Value + ", "+dynamicCharacters.Count);
             if (!HasDynamicCharacter())
             {
                 this.ActionEnd();

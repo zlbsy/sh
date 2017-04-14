@@ -29,7 +29,6 @@ namespace App.Util.Battle{
         }
         public void ShowCharacterMovingArea(MCharacter mCharacter){
             currentMovingTiles = cBattlefield.breadthFirst.Search(mCharacter, 0, true);
-            Debug.LogError("currentMovingTiles="+currentMovingTiles.Count);
             vBaseMap.ShowMovingTiles(currentMovingTiles, mCharacter.Belong);
             cBattlefield.battleMode = CBattlefield.BattleMode.show_move_tiles;
         }
@@ -81,7 +80,6 @@ namespace App.Util.Battle{
             {
                 GameObject.Destroy(obj);
             }
-            Debug.LogError("ClearCurrentTiles "+currentMovingTiles.Count);
         }
     }
 }

@@ -73,7 +73,7 @@ namespace App.View.Battlefield{
         }
         private void CurrentSkillChanged(App.Model.MSkill oldvalue, App.Model.MSkill newvalue)
         {
-            skillname.text = newvalue.Master.name;
+            skillname.text = Language.Get(newvalue.Master.name);
         }
         public override void UpdateView()
         {

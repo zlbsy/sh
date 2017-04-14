@@ -33,9 +33,10 @@ namespace App.Controller.Battle{
             MCharacter targetModel = vCharacter.ViewModel.Target.Value;
             VCharacter target = this.GetCharacterView(targetModel);
             List<VCharacter> characters = this.charactersManager.GetDamageCharacters(vCharacter, target, vCharacter.ViewModel.CurrentSkill.Value.Master);
+            App.View.VTile tile = mapSearch.GetTile(mCharacter.CoordinateX, mCharacter.CoordinateY);
             foreach (VCharacter child in characters)
             {
-                App.Model.Battle.MDamageParam arg = new App.Model.Battle.MDamageParam(-this.calculateManager.Hert(mCharacter, this.GetCharacterModel(child)));
+                App.Model.Battle.MDamageParam arg = new App.Model.Battle.MDamageParam(-this.calculateManager.Hert(mCharacter, this.GetCharacterModel(child), tile));
                 child.SendMessage(CharacterEvent.OnDamage.ToString(), arg);
             }
         }

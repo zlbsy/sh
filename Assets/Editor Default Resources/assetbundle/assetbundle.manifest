@@ -1,7 +1,7 @@
 ManifestFileVersion: 0
-CRC: 2467057502
+CRC: 3998105387
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
-      Name: battlefieldasset.unity3d
+      Name: wordasset.unity3d
       Dependencies: {}

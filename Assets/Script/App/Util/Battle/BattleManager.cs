@@ -42,6 +42,7 @@ namespace App.Util.Battle{
                 cBattlefield.OpenBattleCharacterPreviewDialog(mCharacter);
                 int cx = mCharacter.CoordinateX;
                 int cy = mCharacter.CoordinateY;
+                ActionType action = mCharacter.Action;
                 float x = mCharacter.X;
                 Direction direction = mCharacter.Direction;
                 if (mCharacter.Belong == Belong.self)
@@ -54,9 +55,10 @@ namespace App.Util.Battle{
                         this.mCharacter.CoordinateX = cx;
                         this.mCharacter.X = x;
                         this.mCharacter.Direction = direction;
+                        this.mCharacter.Action = action;
                 };
             }
-            Debug.LogError("this.mCharacter = " + this.mCharacter + ", mCharacter = " + mCharacter);
+            //Debug.LogError("this.mCharacter = " + this.mCharacter + ", mCharacter = " + mCharacter);
         }
         public void ClickAttackNode(int index){
             MCharacter mCharacter = cBattlefield.charactersManager.GetCharacter(index);
@@ -89,8 +91,8 @@ namespace App.Util.Battle{
             OnAttackComplete();
         }
         private void SetAttackCharacterList(MCharacter attackCharacter, MCharacter targetCharacter){
-            Debug.LogError("attackCharacter="+attackCharacter.Belong+", "+attackCharacter.Id);
-            Debug.LogError("targetCharacter="+targetCharacter.Belong+", "+targetCharacter.Id);
+            //Debug.LogError("attackCharacter="+attackCharacter.Belong+", "+attackCharacter.Id);
+            //Debug.LogError("targetCharacter="+targetCharacter.Belong+", "+targetCharacter.Id);
             int attackCount = cBattlefield.calculateManager.AttackCount(attackCharacter, targetCharacter);
             while(attackCount-- > 0){
                 attackCharacterList.Add(attackCharacter);
@@ -103,16 +105,33 @@ namespace App.Util.Battle{
                     attackCharacterList.Add(targetCharacter);
                 }
             }
-            Debug.LogError("attackCharacterList.Count="+attackCharacterList.Count);
+            //Debug.LogError("attackCharacterList.Count="+attackCharacterList.Count);
         }
         public void OnAttackComplete(){
             if (attackCharacterList.Count > 0)
             {
                 MCharacter currentCharacter = attackCharacterList[0];
-                currentCharacter.Direction = (currentCharacter.X > currentCharacter.Target.X ? Direction.left : Direction.right);
-                currentCharacter.Action = ActionType.attack;
                 attackCharacterList.RemoveAt(0);
-                return;
+                if (currentCharacter.Hp > 0)
+                {
+                    currentCharacter.Direction = (currentCharacter.X > currentCharacter.Target.X ? Direction.left : Direction.right);
+                    currentCharacter.Action = ActionType.attack;
+                    return;
+                }
+                attackCharacterList.Clear();
+                bool continueAttack = false;
+                //TODO::是否引导攻击
+                if (continueAttack)
+                {
+                    MCharacter mCharacter = null;
+                    if (mCharacter != null)
+                    {
+                        cBattlefield.ActionEndHandler -= OnAttackComplete;
+                        VTile tile = cBattlefield.mapSearch.GetTile(mCharacter.CoordinateX, mCharacter.CoordinateY);
+                        ClickAttackNode(tile.Index);
+                        return;
+                    }
+                }
             }
             cBattlefield.ActionEndHandler -= OnAttackComplete;
             ActionOver();
@@ -123,9 +142,15 @@ namespace App.Util.Battle{
             cBattlefield.CloseOperatingMenu();
             cBattlefield.HideBattleCharacterPreviewDialog();
             cBattlefield.battleMode = CBattlefield.BattleMode.none;
-            if (!System.Array.Exists(mBaseMap.Characters, _ => _.Belong == this.mCharacter.Belong && !_.ActionOver))
+            Belong belong = this.mCharacter.Belong;
+            this.mCharacter = null;
+            if (!System.Array.Exists(mBaseMap.Characters, _ => _.Belong == belong && !_.ActionOver))
             {
-                ChangeBelong(this.mCharacter.Belong);
+                ChangeBelong(belong);
+            }
+            else
+            {
+                cBattlefield.CloseOperatingMenu();
             }
         }
         public void ChangeBelong(Belong belong){
@@ -162,7 +187,7 @@ namespace App.Util.Battle{
                 }
                 return;
             }
-            Debug.LogError("ClickMovingNode="+index+", " + cBattlefield.tilesManager.IsInMovingCurrentTiles(index));
+            //Debug.LogError("ClickMovingNode="+index+", " + cBattlefield.tilesManager.IsInMovingCurrentTiles(index));
             if (cBattlefield.tilesManager.IsInMovingCurrentTiles(index))
             {
                 //Vector2 vec = new Vector2(this.mCharacter.CoordinateX, this.mCharacter.CoordinateY);

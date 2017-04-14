@@ -116,6 +116,7 @@ namespace App.Util.Battle{
                 if (character.ActionOver)
                 {
                     character.ActionOver = false;
+                    character.Action = ActionType.move;
                 }
             }
         }
