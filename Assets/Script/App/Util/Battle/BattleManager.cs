@@ -67,20 +67,31 @@ namespace App.Util.Battle{
                 CharacterReturnNone();
                 return;
             }
-            if (cBattlefield.charactersManager.IsSameBelong(mCharacter.Belong, this.mCharacter.Belong))
+            bool sameBelong = cBattlefield.charactersManager.IsSameBelong(mCharacter.Belong, this.mCharacter.Belong);
+            bool useToEnemy = this.mCharacter.CurrentSkill.UseToEnemy;
+            if (useToEnemy ^ sameBelong)
             {
                 CAlertDialog.Show("不能打自己人");
                 return;
             }
             this.mCharacter.Target = mCharacter;
             mCharacter.Target = this.mCharacter;
-
-            if (false && cBattlefield.charactersManager.IsInAttackDistance(this.mCharacter, mCharacter))
+            //attackCharacterList.Clear();
+            if (useToEnemy)
             {
-                //先手攻击
-                SetAttackCharacterList(mCharacter, this.mCharacter);
-            }else{
-                SetAttackCharacterList(this.mCharacter, mCharacter);
+                if (false && cBattlefield.charactersManager.IsInAttackDistance(this.mCharacter, mCharacter))
+                {
+                    //先手攻击
+                    SetAttackCharacterList(mCharacter, this.mCharacter, true);
+                }
+                else
+                {
+                    SetAttackCharacterList(this.mCharacter, mCharacter, true);
+                }
+            }
+            else
+            {
+                SetAttackCharacterList(this.mCharacter, mCharacter, false);
             }
 
             cBattlefield.tilesManager.ClearCurrentTiles();
@@ -90,14 +101,14 @@ namespace App.Util.Battle{
             cBattlefield.ActionEndHandler += OnAttackComplete;
             OnAttackComplete();
         }
-        private void SetAttackCharacterList(MCharacter attackCharacter, MCharacter targetCharacter){
+        private void SetAttackCharacterList(MCharacter attackCharacter, MCharacter targetCharacter, bool canCounter){
             //Debug.LogError("attackCharacter="+attackCharacter.Belong+", "+attackCharacter.Id);
             //Debug.LogError("targetCharacter="+targetCharacter.Belong+", "+targetCharacter.Id);
             int attackCount = cBattlefield.calculateManager.AttackCount(attackCharacter, targetCharacter);
             while(attackCount-- > 0){
                 attackCharacterList.Add(attackCharacter);
             }
-            if (cBattlefield.calculateManager.CanCounterAttack(attackCharacter, targetCharacter, attackCharacter.CoordinateX, attackCharacter.CoordinateY, targetCharacter.CoordinateX, targetCharacter.CoordinateY))
+            if (canCounter && cBattlefield.calculateManager.CanCounterAttack(attackCharacter, targetCharacter, attackCharacter.CoordinateX, attackCharacter.CoordinateY, targetCharacter.CoordinateX, targetCharacter.CoordinateY))
             {
                 attackCount = cBattlefield.calculateManager.CounterAttackCount(attackCharacter, targetCharacter);
                 while (attackCount-- > 0)

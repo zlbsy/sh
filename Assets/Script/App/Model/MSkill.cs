@@ -51,5 +51,16 @@ namespace App.Model{
                 return App.Util.Cacher.SkillCacher.Instance.Get(this.SkillId, this.Level);
             }
         }
+        public bool UseToEnemy{
+            get{ 
+                App.Model.Master.MSkill master = Master;
+                if (master.type == SkillType.attack || master.type == SkillType.magic)
+                {
+                    return true;
+                }
+                //TODO::降低敌军状态等法术
+                return false;
+            }
+        }
 	}
 }
