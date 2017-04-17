@@ -28,7 +28,7 @@ namespace App.Controller.Battle{
             show_move_tiles,
             moving,
             move_end,
-            attacking
+            actioning
 
         }
         public Belong currentBelong{ get; set;}
@@ -138,7 +138,7 @@ namespace App.Controller.Battle{
                     manager.ClickMovingNode(index);
                     break;
                 case BattleMode.move_end:
-                    manager.ClickAttackNode(index);
+                    manager.ClickSkillNode(index);
                     break;
             }
         }
@@ -206,7 +206,7 @@ namespace App.Controller.Battle{
                     if(this.battleMode == BattleMode.show_move_tiles){
                         tilesManager.ShowCharacterMovingArea(manager.CurrentCharacter);
                     }
-                    tilesManager.ShowCharacterAttackArea(manager.CurrentCharacter);
+                    tilesManager.ShowCharacterSkillArea(manager.CurrentCharacter);
             };
             Request req = Request.Create("character", this.manager.CurrentCharacter, "closeEvent", closeEvent);
             this.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.BattleSkillListDialog, req));
@@ -244,6 +244,7 @@ namespace App.Controller.Battle{
             {
                 return;
             }
+            //Debug.LogError("行动中武将 " + vCharacter.ViewModel.Action.Value + ","+vCharacter.ViewModel.Name.Value);
             dynamicCharacters.Add(vCharacter);
         }
         /// <summary>

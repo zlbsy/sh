@@ -28,7 +28,7 @@ namespace App.Util.Battle{
         /// <param name="attackCharacter">Attack character.</param>
         /// <param name="targetCharacter">Target character.</param>
         public bool CanCounterAttack(MCharacter attackCharacter, MCharacter targetCharacter, int CoordinateX, int CoordinateY, int targetX, int targetY){
-            if (!cBattlefield.charactersManager.IsInAttackDistance(CoordinateX, CoordinateY, targetX, targetY, targetCharacter))
+            if (!cBattlefield.charactersManager.IsInSkillDistance(CoordinateX, CoordinateY, targetX, targetY, targetCharacter))
             {
                 //不在攻击范围内
                 return false;
@@ -47,7 +47,7 @@ namespace App.Util.Battle{
         /// <param name="targetCharacter">Target character.</param>
         public int CounterAttackCount(MCharacter attackCharacter, MCharacter targetCharacter){
             int attackCount = 1;
-            if (attackCharacter.WeaponType == WeaponType.dualWield)
+            if (targetCharacter.WeaponType == WeaponType.dualWield)
             {
                 //双手兵器或者相关的技能可双击
                 attackCount = 2;
@@ -58,28 +58,37 @@ namespace App.Util.Battle{
             return attackCount;
         }
         /// <summary>
-        /// 获取攻击次数
+        /// 获取主动次数
         /// </summary>
         /// <param name="attackCharacter">Attack character.</param>
         /// <param name="targetCharacter">Target character.</param>
-        public int AttackCount(MCharacter attackCharacter, MCharacter targetCharacter){
-            int attackCount = 1;
-            if (attackCharacter.WeaponType == WeaponType.dualWield)
+        public int SkillCount(MCharacter currentCharacter, MCharacter targetCharacter){
+            int count = 1;
+            if (currentCharacter.WeaponType == WeaponType.dualWield)
             {
                 //双手兵器或者相关的技能可双击
-                attackCount = 2;
+                count = 2;
             }
             //TODO::技能双击
             //MSkill skill = attackCharacter.CurrentSkill;
             //App.Model.Master.MSkill skillMaster = skill.Master;
-            return attackCount;
+            return count;
+        }
+        /// <summary>
+        /// 恢复量=
+        /// </summary>
+        /// <param name="attackCharacter">Attack character.</param>
+        /// <param name="targetCharacter">Target character.</param>
+        public int Heal(MCharacter attackCharacter, MCharacter targetCharacter, VTile tile = null, VTile targetTile = null){
+            MSkill skill = attackCharacter.CurrentSkill;
+            App.Model.Master.MSkill skillMaster = skill.Master;
+            return 1 + attackCharacter.Level + attackCharacter.Ability.MagicAttack * skillMaster.strength;
         }
         /// <summary>
         /// 攻击伤害=攻击力-防御力
         /// </summary>
         /// <param name="attackCharacter">Attack character.</param>
         /// <param name="targetCharacter">Target character.</param>
-
         public int Hert(MCharacter attackCharacter, MCharacter targetCharacter, VTile tile = null, VTile targetTile = null){
             MSkill skill = attackCharacter.CurrentSkill;
             App.Model.Master.MSkill skillMaster = skill.Master;

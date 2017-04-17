@@ -20,7 +20,7 @@ namespace App.Util.Battle{
         private VBaseMap vBaseMap;
         private App.Model.Master.MBaseMap baseMapMaster;
         private System.Action returnAction;
-        private List<MCharacter> attackCharacterList = new List<MCharacter>();
+        private List<MCharacter> actionCharacterList = new List<MCharacter>();
         public BattleManager(CBattlefield controller, MBaseMap model, VBaseMap view){
             cBattlefield = controller;
             mBaseMap = model;
@@ -38,7 +38,7 @@ namespace App.Util.Battle{
             {
                 this.mCharacter = mCharacter;
                 cBattlefield.tilesManager.ShowCharacterMovingArea(mCharacter);
-                cBattlefield.tilesManager.ShowCharacterAttackArea(mCharacter);
+                cBattlefield.tilesManager.ShowCharacterSkillArea(mCharacter);
                 cBattlefield.OpenBattleCharacterPreviewDialog(mCharacter);
                 int cx = mCharacter.CoordinateX;
                 int cy = mCharacter.CoordinateY;
@@ -60,18 +60,18 @@ namespace App.Util.Battle{
             }
             //Debug.LogError("this.mCharacter = " + this.mCharacter + ", mCharacter = " + mCharacter);
         }
-        public void ClickAttackNode(int index){
+        public void ClickSkillNode(int index){
             MCharacter mCharacter = cBattlefield.charactersManager.GetCharacter(index);
-            if (mCharacter == null || !cBattlefield.charactersManager.IsInAttackDistance(mCharacter, this.mCharacter))
+            if (mCharacter == null || !cBattlefield.charactersManager.IsInSkillDistance(mCharacter, this.mCharacter))
             {
                 CharacterReturnNone();
                 return;
             }
             bool sameBelong = cBattlefield.charactersManager.IsSameBelong(mCharacter.Belong, this.mCharacter.Belong);
             bool useToEnemy = this.mCharacter.CurrentSkill.UseToEnemy;
-            if (useToEnemy ^ sameBelong)
+            if (!(useToEnemy ^ sameBelong))
             {
-                CAlertDialog.Show("不能打自己人");
+                CAlertDialog.Show("belong不对");
                 return;
             }
             this.mCharacter.Target = mCharacter;
@@ -79,57 +79,63 @@ namespace App.Util.Battle{
             //attackCharacterList.Clear();
             if (useToEnemy)
             {
-                if (false && cBattlefield.charactersManager.IsInAttackDistance(this.mCharacter, mCharacter))
+                if (false && cBattlefield.charactersManager.IsInSkillDistance(this.mCharacter, mCharacter))
                 {
                     //先手攻击
-                    SetAttackCharacterList(mCharacter, this.mCharacter, true);
+                    SetActionCharacterList(mCharacter, this.mCharacter, true);
                 }
                 else
                 {
-                    SetAttackCharacterList(this.mCharacter, mCharacter, true);
+                    SetActionCharacterList(this.mCharacter, mCharacter, true);
                 }
             }
             else
             {
-                SetAttackCharacterList(this.mCharacter, mCharacter, false);
+                SetActionCharacterList(this.mCharacter, mCharacter, false);
             }
 
             cBattlefield.tilesManager.ClearCurrentTiles();
             cBattlefield.CloseOperatingMenu();
             cBattlefield.HideBattleCharacterPreviewDialog();
-            cBattlefield.battleMode = CBattlefield.BattleMode.attacking;
-            cBattlefield.ActionEndHandler += OnAttackComplete;
-            OnAttackComplete();
+            cBattlefield.battleMode = CBattlefield.BattleMode.actioning;
+            cBattlefield.ActionEndHandler += OnActionComplete;
+            OnActionComplete();
         }
-        private void SetAttackCharacterList(MCharacter attackCharacter, MCharacter targetCharacter, bool canCounter){
+        private void SetActionCharacterList(MCharacter actionCharacter, MCharacter targetCharacter, bool canCounter){
             //Debug.LogError("attackCharacter="+attackCharacter.Belong+", "+attackCharacter.Id);
             //Debug.LogError("targetCharacter="+targetCharacter.Belong+", "+targetCharacter.Id);
-            int attackCount = cBattlefield.calculateManager.AttackCount(attackCharacter, targetCharacter);
-            while(attackCount-- > 0){
-                attackCharacterList.Add(attackCharacter);
+            int count = cBattlefield.calculateManager.SkillCount(actionCharacter, targetCharacter);
+            while(count-- > 0){
+                actionCharacterList.Add(actionCharacter);
             }
-            if (canCounter && cBattlefield.calculateManager.CanCounterAttack(attackCharacter, targetCharacter, attackCharacter.CoordinateX, attackCharacter.CoordinateY, targetCharacter.CoordinateX, targetCharacter.CoordinateY))
+            if (canCounter && cBattlefield.calculateManager.CanCounterAttack(actionCharacter, targetCharacter, actionCharacter.CoordinateX, actionCharacter.CoordinateY, targetCharacter.CoordinateX, targetCharacter.CoordinateY))
             {
-                attackCount = cBattlefield.calculateManager.CounterAttackCount(attackCharacter, targetCharacter);
-                while (attackCount-- > 0)
+                count = cBattlefield.calculateManager.CounterAttackCount(actionCharacter, targetCharacter);
+                while (count-- > 0)
                 {
-                    attackCharacterList.Add(targetCharacter);
+                    actionCharacterList.Add(targetCharacter);
                 }
             }
             //Debug.LogError("attackCharacterList.Count="+attackCharacterList.Count);
         }
-        public void OnAttackComplete(){
-            if (attackCharacterList.Count > 0)
+        public void OnActionComplete(){
+            if (actionCharacterList.Count > 0)
             {
-                MCharacter currentCharacter = attackCharacterList[0];
-                attackCharacterList.RemoveAt(0);
+                MCharacter currentCharacter = actionCharacterList[0];
+                actionCharacterList.RemoveAt(0);
+                bool isContinue = ActionStart(currentCharacter);
+                if (isContinue)
+                {
+                    return;
+                }
+                /*
                 if (currentCharacter.Hp > 0)
                 {
                     currentCharacter.Direction = (currentCharacter.X > currentCharacter.Target.X ? Direction.left : Direction.right);
                     currentCharacter.Action = ActionType.attack;
                     return;
                 }
-                attackCharacterList.Clear();
+                actionCharacterList.Clear();
                 bool continueAttack = false;
                 //TODO::是否引导攻击
                 if (continueAttack)
@@ -137,15 +143,42 @@ namespace App.Util.Battle{
                     MCharacter mCharacter = null;
                     if (mCharacter != null)
                     {
-                        cBattlefield.ActionEndHandler -= OnAttackComplete;
+                        cBattlefield.ActionEndHandler -= OnActionComplete;
                         VTile tile = cBattlefield.mapSearch.GetTile(mCharacter.CoordinateX, mCharacter.CoordinateY);
-                        ClickAttackNode(tile.Index);
+                        ClickSkillNode(tile.Index);
                         return;
                     }
+                }*/
+            }
+            cBattlefield.ActionEndHandler -= OnActionComplete;
+            ActionOver();
+        }
+        private bool ActionStart(MCharacter currentCharacter){
+            if (currentCharacter.Hp > 0)
+            {
+                currentCharacter.Direction = (currentCharacter.X > currentCharacter.Target.X ? Direction.left : Direction.right);
+                currentCharacter.Action = ActionType.attack;
+                return true;
+            }
+            actionCharacterList.Clear();
+            if (cBattlefield.charactersManager.IsSameCharacter(currentCharacter, this.mCharacter))
+            {
+                return true;
+            }
+            bool continueAttack = false;
+            //TODO::是否引导攻击
+            if (continueAttack)
+            {
+                MCharacter mCharacter = null;
+                if (mCharacter != null)
+                {
+                    cBattlefield.ActionEndHandler -= OnActionComplete;
+                    VTile tile = cBattlefield.mapSearch.GetTile(mCharacter.CoordinateX, mCharacter.CoordinateY);
+                    ClickSkillNode(tile.Index);
+                    return true;
                 }
             }
-            cBattlefield.ActionEndHandler -= OnAttackComplete;
-            ActionOver();
+            return false;
         }
         public void ActionOver(){
             this.mCharacter.ActionOver = true;
@@ -192,10 +225,16 @@ namespace App.Util.Battle{
             MCharacter mCharacter = cBattlefield.charactersManager.GetCharacter(index);
             if (mCharacter != null)
             {
-                if (!cBattlefield.charactersManager.IsSameBelong(this.mCharacter.Belong, mCharacter.Belong))
+                bool sameBelong = cBattlefield.charactersManager.IsSameBelong(mCharacter.Belong, this.mCharacter.Belong);
+                bool useToEnemy = this.mCharacter.CurrentSkill.UseToEnemy;
+                if (useToEnemy ^ sameBelong)
                 {
-                    ClickAttackNode(index);
+                    ClickSkillNode(index);
                 }
+                /*if (!cBattlefield.charactersManager.IsSameBelong(this.mCharacter.Belong, mCharacter.Belong))
+                {
+                    ClickSkillNode(index);
+                }*/
                 return;
             }
             //Debug.LogError("ClickMovingNode="+index+", " + cBattlefield.tilesManager.IsInMovingCurrentTiles(index));
@@ -212,7 +251,7 @@ namespace App.Util.Battle{
                         cBattlefield.battleMode = CBattlefield.BattleMode.move_end;
                         this.mCharacter.CoordinateY = endTile.CoordinateY;
                         this.mCharacter.CoordinateX = endTile.CoordinateX;
-                        cBattlefield.tilesManager.ShowCharacterAttackArea(this.mCharacter);
+                        cBattlefield.tilesManager.ShowCharacterSkillArea(this.mCharacter);
                         cBattlefield.OpenOperatingMenu();
                     };
                 

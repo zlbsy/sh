@@ -32,7 +32,7 @@ namespace App.Util.Battle{
             vBaseMap.ShowMovingTiles(currentMovingTiles, mCharacter.Belong);
             cBattlefield.battleMode = CBattlefield.BattleMode.show_move_tiles;
         }
-        public void ShowCharacterAttackArea(MCharacter mCharacter){
+        public void ShowCharacterSkillArea(MCharacter mCharacter){
             int[] distance = mCharacter.CurrentSkill.Master.distance;
             currentAttackTiles = cBattlefield.breadthFirst.Search(mCharacter, distance[1]);
             VTile characterTile = currentAttackTiles.Find(_=>_.CoordinateX == mCharacter.CoordinateX && _.CoordinateY == mCharacter.CoordinateY);
@@ -40,23 +40,34 @@ namespace App.Util.Battle{
             vBaseMap.ShowAttackTiles(currentAttackTiles);
             if (mCharacter.Belong == Belong.self && !mCharacter.ActionOver)
             {
-                ShowCharacterAttackTween(mCharacter, currentAttackTiles);
+                ShowCharacterSkillTween(mCharacter, currentAttackTiles);
             }
         }
-        public void ShowCharacterAttackTween(MCharacter mCharacter, List<VTile> tiles){
+        public void ShowCharacterSkillTween(MCharacter mCharacter, List<VTile> tiles){
             foreach(VTile tile in tiles){
                 if (tile.IsAttackTween)
                 {
                     continue;
                 }
                 MCharacter character = cBattlefield.charactersManager.GetCharacter(tile.Index);
-                if (character == null || cBattlefield.charactersManager.IsSameBelong(character.Belong, mCharacter.Belong))
+                if (character == null)
                 {
                     continue;
                 }
-                GameObject attackTween = cBattlefield.CreateAttackTween();
-                tile.SetAttackTween(attackTween);
-                attackIcons.Add(attackTween);
+                bool sameBelong = cBattlefield.charactersManager.IsSameBelong(character.Belong, mCharacter.Belong);
+                bool useToEnemy = mCharacter.CurrentSkill.UseToEnemy;
+                Debug.LogError("useToEnemy="+useToEnemy + ", sameBelong="+sameBelong);
+                if (useToEnemy ^ sameBelong)
+                {
+                    GameObject attackTween = cBattlefield.CreateAttackTween();
+                    tile.SetAttackTween(attackTween);
+                    attackIcons.Add(attackTween);
+                }
+                /*
+                if (character == null || cBattlefield.charactersManager.IsSameBelong(character.Belong, mCharacter.Belong))
+                {
+                    continue;
+                }*/
             }
         }
         public bool IsInMovingCurrentTiles(int index){

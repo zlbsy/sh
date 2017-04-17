@@ -27,15 +27,15 @@ namespace App.Util.Battle{
         /// <summary>
         /// 是否在攻击范围内
         /// </summary>
-        public bool IsInAttackDistance(MCharacter checkCharacter, MCharacter distanceCharacter){
+        public bool IsInSkillDistance(MCharacter checkCharacter, MCharacter distanceCharacter){
             Debug.LogError("checkCharacter = " + checkCharacter);
             Debug.LogError("distanceCharacter = " + distanceCharacter);
-            return IsInAttackDistance(checkCharacter.CoordinateX, checkCharacter.CoordinateY, distanceCharacter.CoordinateX, distanceCharacter.CoordinateY, distanceCharacter);
+            return IsInSkillDistance(checkCharacter.CoordinateX, checkCharacter.CoordinateY, distanceCharacter.CoordinateX, distanceCharacter.CoordinateY, distanceCharacter);
         }
         /// <summary>
         /// 是否在攻击范围内
         /// </summary>
-        public bool IsInAttackDistance(int CoordinateX, int CoordinateY, int targetX, int targetY, MCharacter distanceCharacter){
+        public bool IsInSkillDistance(int CoordinateX, int CoordinateY, int targetX, int targetY, MCharacter distanceCharacter){
             MSkill targetSkill = distanceCharacter.CurrentSkill;
             App.Model.Master.MSkill targetSkillMaster = targetSkill.Master;
             int distance = cBattlefield.mapSearch.GetDistance(CoordinateX, CoordinateY, targetX, targetY);
@@ -48,7 +48,7 @@ namespace App.Util.Battle{
         /// <param name="vCharacter">攻击方</param>
         /// <param name="targetView">攻击目标</param>
         /// <param name="skill">Skill.</param>
-        public List<VCharacter> GetDamageCharacters(VCharacter vCharacter, VCharacter targetView, App.Model.Master.MSkill skill){
+        public List<VCharacter> GetTargetCharacters(VCharacter vCharacter, VCharacter targetView, App.Model.Master.MSkill skill){
             List<VCharacter> result = new List<VCharacter>(){ targetView };
             if (skill.radius_type == RadiusType.point)
             {

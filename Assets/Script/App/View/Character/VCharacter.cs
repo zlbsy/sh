@@ -95,7 +95,7 @@ namespace App.View.Character{
                 oldVm.Y.OnValueChanged -= YChanged;
                 oldVm.Direction.OnValueChanged -= DirectionChanged;
                 oldVm.Hp.OnValueChanged -= HpChanged;
-                oldVm.ActionOver.OnValueChanged -= ActionEndChanged;
+                oldVm.ActionOver.OnValueChanged -= ActionOverChanged;
             }
             if (ViewModel!=null)
             {
@@ -111,7 +111,7 @@ namespace App.View.Character{
                 ViewModel.Y.OnValueChanged += YChanged;
                 ViewModel.Direction.OnValueChanged += DirectionChanged;
                 ViewModel.Hp.OnValueChanged += HpChanged;
-                ViewModel.ActionOver.OnValueChanged += ActionEndChanged;
+                ViewModel.ActionOver.OnValueChanged += ActionOverChanged;
             }
         }
         private App.Controller.CBaseMap cBaseMap{
@@ -119,7 +119,7 @@ namespace App.View.Character{
                 return this.Controller as App.Controller.CBaseMap;
             }
         }
-        private void ActionEndChanged(bool oldvalue, bool newvalue)
+        private void ActionOverChanged(bool oldvalue, bool newvalue)
         {
             Gray = newvalue;
         }
@@ -294,15 +294,26 @@ namespace App.View.Character{
         #endregion
 
         public void AttackToHert(){
+            //Debug.LogError("AttackToHert:"+ViewModel.Name+", " + ViewModel.Target.Value);
             if (ViewModel.Target.Value == null)
             {
                 return;
             }
-            this.Controller.SendMessage("OnDamage", this, SendMessageOptions.DontRequireReceiver);
+            if (ViewModel.CurrentSkill.Value.UseToEnemy)
+            {
+                this.Controller.SendMessage("OnDamage", this, SendMessageOptions.DontRequireReceiver);
+            }
+            else
+            {
+                this.Controller.SendMessage("OnHeal", this, SendMessageOptions.DontRequireReceiver);
+            }
         }
         public void ChangeAction(App.Model.ActionType type){
             animationIndex = 0;
             ViewModel.Action.Value = type;
+        }
+        public void ActionEnd(){
+            ChangeAction(ViewModel.ActionOver.Value ? App.Model.ActionType.stand : App.Model.ActionType.move);
         }
         public void ChangeAnimationIdex(int index){
             animationIndex = index;

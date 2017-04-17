@@ -64,8 +64,10 @@ namespace App.Util.Battle{
                 });
                 if (healSkill != null)
                 {
-                    Debug.LogError("healSkill = " + healSkill);
                     mCharacter.CurrentSkill = healSkill;
+                    cBattlefield.manager.CharacterReturnNone();
+                    cBattlefield.manager.ClickNoneNode(index);
+                    yield return new WaitForEndOfFrame();
                     MCharacter healTarget = null;
                     VTile healTile = null;
                     FindHealTarget(out healTarget, out healTile);
@@ -83,27 +85,18 @@ namespace App.Util.Battle{
                 }
                 else
                 {
-                    mCharacter.CurrentSkill = attackSkill;
+                    if (healSkill != null)
+                    {
+                        cBattlefield.manager.CharacterReturnNone();
+                        cBattlefield.manager.ClickNoneNode(index);
+                        yield return new WaitForEndOfFrame();
+                        mCharacter.CurrentSkill = attackSkill;
+                    }
                     yield return cBattlefield.StartCoroutine(Attack());
                 }
             }
         }
 
-        private IEnumerator Attack(){
-            yield return cBattlefield.StartCoroutine(WaitMoving());
-            if (targetTile == null)
-            {
-                //向最近武将移动
-                yield return cBattlefield.StartCoroutine(MoveToNearestTarget());
-                cBattlefield.manager.ActionOver();
-            }
-            else
-            {
-                //攻击
-                VTile vTile = cBattlefield.mapSearch.GetTile(attackTarget.CoordinateX, attackTarget.CoordinateY);
-                cBattlefield.manager.ClickAttackNode(vTile.Index);
-            }
-        }
         private IEnumerator MoveToNearestTarget(){
             List<VTile> tileList = null;
             foreach (MCharacter character in mBaseMap.Characters)
@@ -162,7 +155,7 @@ namespace App.Util.Battle{
                     continue;
                 }
                 VTile vTile = GetNearestNode(character, cBattlefield.tilesManager.CurrentMovingTiles);
-                bool canAttack = cBattlefield.charactersManager.IsInAttackDistance(character.CoordinateX, character.CoordinateY, vTile.CoordinateX, vTile.CoordinateY, mCharacter);
+                bool canAttack = cBattlefield.charactersManager.IsInSkillDistance(character.CoordinateX, character.CoordinateY, vTile.CoordinateX, vTile.CoordinateY, mCharacter);
                 if (!canAttack)
                 {
                     continue;
@@ -213,7 +206,7 @@ namespace App.Util.Battle{
                     continue;
                 }
                 VTile vTile = GetNearestNode(character, cBattlefield.tilesManager.CurrentMovingTiles);
-                bool canAttack = cBattlefield.charactersManager.IsInAttackDistance(character.CoordinateX, character.CoordinateY, vTile.CoordinateX, vTile.CoordinateY, mCharacter);
+                bool canAttack = cBattlefield.charactersManager.IsInSkillDistance(character.CoordinateX, character.CoordinateY, vTile.CoordinateX, vTile.CoordinateY, mCharacter);
                 if (!canAttack)
                 {
                     continue;
@@ -224,7 +217,7 @@ namespace App.Util.Battle{
                     healTile = vTile;
                     continue;
                 }
-                if (character.Hp < attackTarget.Hp)
+                if (character.Hp < healTarget.Hp)
                 {
                     healTarget = character;
                     healTile = vTile;
@@ -237,8 +230,12 @@ namespace App.Util.Battle{
                 return cBattlefield.tilesManager.CurrentMovingTiles[0];
             }
             tiles.Sort((a, b)=>{
-                bool aCanAttack = cBattlefield.charactersManager.IsInAttackDistance(target.CoordinateX, target.CoordinateY, a.CoordinateX, a.CoordinateY, mCharacter);
-                bool bCanAttack = cBattlefield.charactersManager.IsInAttackDistance(target.CoordinateX, target.CoordinateY, b.CoordinateX, b.CoordinateY, mCharacter);
+                bool aNotRoad = System.Array.Exists(mBaseMap.Characters, _=>_.CoordinateX == a.CoordinateX && _.CoordinateY == a.CoordinateY);
+                if(aNotRoad){
+                    return 1;
+                }
+                bool aCanAttack = cBattlefield.charactersManager.IsInSkillDistance(target.CoordinateX, target.CoordinateY, a.CoordinateX, a.CoordinateY, mCharacter);
+                bool bCanAttack = cBattlefield.charactersManager.IsInSkillDistance(target.CoordinateX, target.CoordinateY, b.CoordinateX, b.CoordinateY, mCharacter);
                 if(aCanAttack && !bCanAttack){
                     return -1;
                 }else if(!aCanAttack && bCanAttack){
@@ -261,10 +258,29 @@ namespace App.Util.Battle{
             });
             return cBattlefield.tilesManager.CurrentMovingTiles[0];
         }
+        private IEnumerator Attack(){
+            yield return cBattlefield.StartCoroutine(WaitMoving());
+            if (targetTile == null)
+            {
+                //向最近武将移动
+                yield return cBattlefield.StartCoroutine(MoveToNearestTarget());
+                cBattlefield.manager.ActionOver();
+            }
+            else
+            {
+                //攻击
+                VTile vTile = cBattlefield.mapSearch.GetTile(attackTarget.CoordinateX, attackTarget.CoordinateY);
+                cBattlefield.manager.ClickSkillNode(vTile.Index);
+            }
+        }
         private IEnumerator Heal(){
             yield return cBattlefield.StartCoroutine(WaitMoving());
             VTile vTile = cBattlefield.mapSearch.GetTile(attackTarget.CoordinateX, attackTarget.CoordinateY);
-            cBattlefield.manager.ClickAttackNode(vTile.Index);
+            cBattlefield.manager.ClickSkillNode(vTile.Index);
+            while (!mCharacter.ActionOver)
+            {
+                yield return 0;
+            }
         }
     }
 }
