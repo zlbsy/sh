@@ -79,6 +79,10 @@ namespace App.Model{
         friend,
         enemy
     }
+    public enum Gender{
+        male,
+        female
+    }
     public enum Mission{
         /// <summary>
         /// 主动出击
@@ -163,9 +167,19 @@ namespace App.Model{
                 return this.WeaponType == WeaponType.archery;
             }
         }
+        private App.Model.Master.MCharacter master = null;
         public App.Model.Master.MCharacter Master{
             get{ 
-                return CharacterCacher.Instance.Get(CharacterId);
+                if (master == null)
+                {
+                    master = CharacterCacher.Instance.Get(CharacterId);
+                }
+                return master;
+            }
+        }
+        public Gender Gender{
+            get{ 
+                return System.Array.Exists(App.Util.Global.Constant.female_heads, head=>head == Master.head) ? Gender.female : Gender.male;
             }
         }
         public void StatusInit(){
@@ -186,6 +200,10 @@ namespace App.Model{
         }
         public int Id{
             set{
+                if (this.ViewModel.Id.Value != value)
+                {
+                    master = null;
+                }
                 this.ViewModel.Id.Value = value;
             }
             get{ 

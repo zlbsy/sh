@@ -11,6 +11,7 @@ namespace App.Model.Master{
         }
         public int recover_ap_time;
         public int world_map_id = 1;
+        public int[] female_heads = new int[]{};
         public float weak_hp = 0.2f;
 	}
 }

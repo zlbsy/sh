@@ -27,5 +27,13 @@ namespace App.Service{
             ResponseList response = client.Deserialize<ResponseList>();
             this.characters = response.characters;
         }
+        public IEnumerator RequestRegisterList()
+        {
+            var url = "character/register_character_list";
+            HttpClient client = new HttpClient();
+            yield return App.Util.SceneManager.CurrentScene.StartCoroutine(client.Send( url ));
+            ResponseList response = client.Deserialize<ResponseList>();
+            this.characters = response.characters;
+        }
 	}
 }
