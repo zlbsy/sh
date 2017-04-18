@@ -9,6 +9,7 @@ using App.Util.Cacher;
 using System.Linq;
 using UnityEngine.UI;
 using App.View.Character;
+using App.Controller.Common;
 
 
 namespace App.Controller{

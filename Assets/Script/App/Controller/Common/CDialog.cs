@@ -6,7 +6,7 @@ using Holoville.HOTween;
 using UnityEngine.UI;
 
 
-namespace App.Controller{
+namespace App.Controller.Common{
     /// <summary>
     /// 窗口弹出方式
     /// </summary>

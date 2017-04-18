@@ -6,7 +6,7 @@ using App.Model;
 using App.View;
 
 
-namespace App.Controller{
+namespace App.Controller.Common{
     /// <summary>
     /// 场景
     /// </summary>

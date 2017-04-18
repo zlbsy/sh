@@ -9,6 +9,7 @@ using App.Util.Cacher;
 using System.Linq;
 using App.Model.Scriptable;
 using App.View.Gacha;
+using App.Controller.Common;
 
 
 namespace App.Controller{

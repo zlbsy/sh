@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using App.Controller.Common;
 
 namespace App.Util{
     public class SceneManager {
@@ -31,14 +32,14 @@ namespace App.Util{
             BattleMenuDialog,
             BoutWaveDialog,
         }
-        public static App.Controller.CScene CurrentScene;
-        public static App.Controller.Request CurrentSceneRequest;
-        private List<App.Controller.CDialog> Dialogs = new List<App.Controller.CDialog>();
-        public static void LoadScene(string name, App.Controller.Request req = null){
+        public static CScene CurrentScene;
+        public static Request CurrentSceneRequest;
+        private List<CDialog> Dialogs = new List<CDialog>();
+        public static void LoadScene(string name, Request req = null){
             App.Controller.CConnectingDialog.ToShow();
             CurrentScene.StartCoroutine(LoadSceneCoroutine(name, req));
         }
-        public static IEnumerator LoadSceneCoroutine(string name, App.Controller.Request req = null){
+        public static IEnumerator LoadSceneCoroutine(string name, Request req = null){
             yield return new WaitForSeconds(0.1f);
             CurrentSceneRequest = req;
             UnityEngine.SceneManagement.SceneManager.LoadScene( name );
@@ -47,13 +48,13 @@ namespace App.Util{
             System.GC.Collect();
         }
 
-        public IEnumerator ShowDialog(Prefabs prefab, App.Controller.Request req = null)
+        public IEnumerator ShowDialog(Prefabs prefab, Request req = null)
         {
-            App.Controller.CDialog dialog = Dialogs.Find(_=>_.name == (prefab.ToString() + "(Clone)") && _ is App.Controller.CSingleDialog);
+            CDialog dialog = Dialogs.Find(_=>_.name == (prefab.ToString() + "(Clone)") && _ is CSingleDialog);
             if (dialog == null)
             {
                 GameObject instance = LoadPrefab(prefab.ToString());
-                dialog = instance.GetComponent<App.Controller.CDialog>();
+                dialog = instance.GetComponent<CDialog>();
                 dialog.SetIndex();
                 Dialogs.Add(dialog);
             }
@@ -70,7 +71,7 @@ namespace App.Util{
         }
         public bool DialogIsShow()
         {
-            foreach(App.Controller.CDialog dialog in Dialogs){
+            foreach(CDialog dialog in Dialogs){
                 if(dialog.gameObject.activeSelf){
                     return true;
                 }
@@ -79,7 +80,7 @@ namespace App.Util{
         }
         public bool DialogIsShow(Prefabs prefab)
         {
-            foreach(App.Controller.CDialog dialog in Dialogs){
+            foreach(CDialog dialog in Dialogs){
                 if(!dialog.gameObject.activeSelf){
                     continue;
                 }
@@ -90,12 +91,12 @@ namespace App.Util{
             }
             return false;
         }
-        public App.Controller.CDialog CurrentDialog
+        public CDialog CurrentDialog
         {
             get{ 
                 for (int i = Dialogs.Count - 1; i >= 0; i--)
                 {
-                    App.Controller.CDialog dialog = Dialogs[i];
+                    CDialog dialog = Dialogs[i];
                     if (dialog.gameObject.activeSelf)
                     {
                         return dialog;
@@ -104,11 +105,11 @@ namespace App.Util{
                 return null;
             }
         }
-        public void DestoryDialog(App.Controller.CDialog deleteDialog = null)
+        public void DestoryDialog(CDialog deleteDialog = null)
         {
             for (int i = Dialogs.Count - 1; i >= 0; i--)
             {
-                App.Controller.CDialog dialog = Dialogs[i];
+                CDialog dialog = Dialogs[i];
                 if (deleteDialog == null)
                 {
                     Dialogs.RemoveAt(i);

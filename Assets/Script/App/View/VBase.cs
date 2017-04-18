@@ -11,7 +11,7 @@ namespace App.View{
 	}
 	public class VBase : MonoBehaviour, IView {
 		public readonly VMProperty<VMBase> vmProperty = new VMProperty<VMBase>();
-        private App.Controller.CBase _controller;
+        private App.Controller.Common.CBase _controller;
 		public VMBase BindingContext
 		{
 			get { return vmProperty.Value; }
@@ -24,11 +24,11 @@ namespace App.View{
 		{
 			this.vmProperty.OnValueChanged += OnBindingContextChanged;
 		}
-        public App.Controller.CBase Controller{
+        public App.Controller.Common.CBase Controller{
             get{ 
                 if (_controller == null)
                 {
-                    _controller = this.GetComponentInParent<App.Controller.CBase>();
+                    _controller = this.GetComponentInParent<App.Controller.Common.CBase>();
                 }
                 return _controller;
             }

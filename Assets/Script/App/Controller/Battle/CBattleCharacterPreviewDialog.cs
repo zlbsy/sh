@@ -10,6 +10,7 @@ using System.Linq;
 using App.View.Equipment;
 using App.View.Character;
 using App.View.Battlefield;
+using App.Controller.Common;
 
 
 namespace App.Controller.Battle{

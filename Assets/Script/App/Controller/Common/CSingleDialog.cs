@@ -11,7 +11,7 @@ using UnityEngine.UI;
 using App.View.Character;
 
 
-namespace App.Controller{
+namespace App.Controller.Common{
     /// <summary>
     /// 可重复利用窗口
     /// </summary>

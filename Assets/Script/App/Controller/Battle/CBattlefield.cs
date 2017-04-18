@@ -10,6 +10,7 @@ using App.Util.Battle;
 using App.View.Common;
 using App.View.Character;
 using App.Util;
+using App.Controller.Common;
 
 
 namespace App.Controller.Battle{

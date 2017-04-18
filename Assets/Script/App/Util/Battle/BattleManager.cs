@@ -128,27 +128,6 @@ namespace App.Util.Battle{
                 {
                     return;
                 }
-                /*
-                if (currentCharacter.Hp > 0)
-                {
-                    currentCharacter.Direction = (currentCharacter.X > currentCharacter.Target.X ? Direction.left : Direction.right);
-                    currentCharacter.Action = ActionType.attack;
-                    return;
-                }
-                actionCharacterList.Clear();
-                bool continueAttack = false;
-                //TODO::是否引导攻击
-                if (continueAttack)
-                {
-                    MCharacter mCharacter = null;
-                    if (mCharacter != null)
-                    {
-                        cBattlefield.ActionEndHandler -= OnActionComplete;
-                        VTile tile = cBattlefield.mapSearch.GetTile(mCharacter.CoordinateX, mCharacter.CoordinateY);
-                        ClickSkillNode(tile.Index);
-                        return;
-                    }
-                }*/
             }
             cBattlefield.ActionEndHandler -= OnActionComplete;
             ActionOver();

@@ -8,6 +8,7 @@ using UnityEngine.UI;
 using App.Util.Cacher;
 using Holoville.HOTween;
 using App.View.Top;
+using App.Controller.Common;
 
 
 namespace App.Controller{

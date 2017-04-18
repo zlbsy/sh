@@ -6,6 +6,7 @@ using App.ViewModel;
 using App.Service;
 using App.Controller;
 using System;
+using App.Controller.Common;
 
 namespace App.Util.LSharp{
     public class LSharpBattle : LSharpBase<LSharpBattle> {

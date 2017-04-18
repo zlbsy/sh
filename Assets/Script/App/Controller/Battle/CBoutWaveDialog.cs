@@ -1,6 +1,7 @@
 ﻿using UnityEngine.UI;
 using System.Collections;
 using UnityEngine;
+using App.Controller.Common;
 
 
 namespace App.Controller.Battle{

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace App.Controller{
+namespace App.Controller.Common{
 	public class Request {
 
         protected Dictionary<string,object> parameters = new Dictionary<string, object>();

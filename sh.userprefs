@@ -1,16 +1,8 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Script/App/Util/Battle/CharacterAI.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Script/App/Controller/Common/CSingleDialog.cs">
     <Files>
-      <File FileName="Assets/Script/App/Util/Battle/CharacterAI.cs" Line="98" Column="43" />
-      <File FileName="Assets/Script/App/View/Character/VCharacter.cs" Line="195" Column="59" />
-      <File FileName="Assets/Script/App/View/Character/VCharacterBattlefieldEvent.cs" Line="22" Column="27" />
-      <File FileName="Assets/Script/App/View/Common/VBottomMenu.cs" Line="22" Column="17" />
-      <File FileName="Assets/Script/App/Model/Master/MConstant.cs" Line="13" Column="27" />
-      <File FileName="Assets/Script/App/Controller/CWorld.cs" Line="27" Column="55" />
-      <File FileName="Assets/Script/App/Util/Battle/BattleManager.cs" Line="94" Column="74" />
-      <File FileName="Assets/Script/App/Model/MCharacter.cs" Line="203" Column="20" />
-      <File FileName="Assets/Script/App/Model/MSkill.cs" Line="54" Column="31" />
+      <File FileName="Assets/Script/App/Controller/Common/CSingleDialog.cs" Line="14" Column="32" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

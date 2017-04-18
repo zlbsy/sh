@@ -10,6 +10,7 @@ using Holoville.HOTween;
 using App.View.Top;
 using System.Linq;
 using App.View.Character;
+using App.Controller.Common;
 
 
 namespace App.Controller{

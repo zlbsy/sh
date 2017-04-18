@@ -8,6 +8,7 @@ using App.Util;
 using App.Util.Cacher;
 using System.Linq;
 using UnityEngine.UI;
+using App.Controller.Common;
 
 
 namespace App.Controller.Battle{

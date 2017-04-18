@@ -8,6 +8,7 @@ using Holoville.HOTween;
 using App.Util;
 using App.Controller;
 using App.View.Common;
+using App.Controller.Common;
 
 namespace App.View.Top{
     public class VBuildingMenu : VBottomMenu{
