@@ -24,7 +24,7 @@ namespace App.View.Character{
 				icon = this.GetComponent<RawImage>();
 			}
             string url = string.Format(App.Model.Scriptable.FaceAsset.FaceUrl, characterId);
-            yield return this.StartCoroutine(Global.SUser.Download(url, App.Util.Global.SUser.versions.face, (AssetBundle assetbundle)=>{
+            yield return this.StartCoroutine(Global.SUser.Download(url, App.Util.Global.versions.face, (AssetBundle assetbundle)=>{
                 App.Model.Scriptable.FaceAsset.assetbundle = assetbundle;
                 App.Model.Scriptable.MFace mFace = App.Model.Scriptable.FaceAsset.Data.face;
                 icon.texture = mFace.image as Texture;

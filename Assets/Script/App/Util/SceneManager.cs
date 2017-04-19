@@ -11,6 +11,7 @@ namespace App.Util{
             Stage,
             Area,
             World,
+            Register,
             Battlefield
         }
         public enum Prefabs{
@@ -31,6 +32,7 @@ namespace App.Util{
             BattleListDialog,
             BattleMenuDialog,
             BoutWaveDialog,
+            RegisterConfirmDialog,
         }
         public static CScene CurrentScene;
         public static Request CurrentSceneRequest;
@@ -54,6 +56,7 @@ namespace App.Util{
             if (dialog == null)
             {
                 GameObject instance = LoadPrefab(prefab.ToString());
+                instance.SetActive(true);
                 dialog = instance.GetComponent<CDialog>();
                 dialog.SetIndex();
                 Dialogs.Add(dialog);

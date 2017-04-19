@@ -5,6 +5,8 @@ using App.View.Character;
 using App.Controller.Common;
 using App.Service;
 using App.Model;
+using UnityEngine.UI;
+using App.Util;
 
 
 namespace App.Controller.Register{
@@ -18,14 +20,34 @@ namespace App.Controller.Register{
         private Gender gender = Gender.male;
         public override IEnumerator OnLoad( Request request ) 
         {  
-            SCharacter sCharacter = new SCharacter();
-            yield return StartCoroutine(sCharacter.RequestRegisterList());
-            allCharacters = sCharacter.characters;
-            characters = System.Array.FindAll(allCharacters, chara => chara.Gender == gender);
-            yield return StartCoroutine(base.OnLoad(request));
+            SRegister sRegister = new SRegister();
+            yield return StartCoroutine(sRegister.RequestList());
+            allCharacters = sRegister.characters;
+            foreach (MCharacter character in allCharacters)
+            {
+                character.StatusInit();
+            }
+            ChangeGender();
+            //yield return StartCoroutine(base.OnLoad(request));
 		}
         public void CharacterSelectComplete(){
-            
+            MCharacter character = characters[index];
+            Request req = Request.Create("selectId", character.Id);
+            this.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.RegisterConfirmDialog, req));
+        }
+        private void CharacterUpdate(){
+            MCharacter character = characters[index];
+            faceIcon.CharacterId = character.CharacterId;
+            vCharacter.BindingContext = character.ViewModel;
+            vCharacter.UpdateView();
+            vCharacterStatus.BindingContext = character.ViewModel;
+            vCharacterStatus.UpdateView();
+        }
+        public void ChangeGender(Toggle toggle = null){
+            App.Util.Global.Constant.female_heads = new int[]{ 2 };
+            gender = (toggle == null || toggle.isOn) ? Gender.male : Gender.female;
+            characters = System.Array.FindAll(allCharacters, chara => chara.Gender == gender);
+            CharacterUpdate();
         }
         public void SelectLeft(){
             index -= 1;
@@ -33,6 +55,7 @@ namespace App.Controller.Register{
             {
                 index = characters.Length - 1;
             }
+            CharacterUpdate();
         }
         public void SelectRight(){
             index += 1;
@@ -40,6 +63,7 @@ namespace App.Controller.Register{
             {
                 index = 0;
             }
+            CharacterUpdate();
         }
 	}
 }

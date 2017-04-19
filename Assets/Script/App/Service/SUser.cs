@@ -11,7 +11,6 @@ namespace App.Service{
     */
 	public class SUser : SBase {
         public MUser self;
-        public MVersion versions;
         public SUser(){
         }
         public class ResponseAll : ResponseBase
@@ -29,7 +28,6 @@ namespace App.Service{
             yield return App.Util.SceneManager.CurrentScene.StartCoroutine(client.Send( url, form));
             ResponseAll response = client.Deserialize<ResponseAll>();
             this.self = App.Util.Cacher.UserCacher.Instance.Get(response.user.id);
-            this.versions = response.versions;
             App.Util.Global.ssid = response.ssid;
         }
         public IEnumerator RequestGet(int id)

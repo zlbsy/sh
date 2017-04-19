@@ -42,6 +42,7 @@ namespace App.View.Character{
         public override void UpdateView()
         {
             Global.ClearChild(statusContent.gameObject);
+            statusContent.parent.gameObject.SetActive(false);
             App.Model.MCharacterAbility ability = ViewModel.Ability.Value;
             Dictionary<string, string> statusList = new Dictionary<string, string>();
             statusList.Add("资质","99");
@@ -79,6 +80,7 @@ namespace App.View.Character{
                 VStatusChild vStatusChild = obj.GetComponent<VStatusChild>();
                 vStatusChild.Set(key,statusList[key]);
             }
+            statusContent.parent.gameObject.SetActive(true);
         }
     }
 }

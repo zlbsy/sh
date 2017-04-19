@@ -26,7 +26,19 @@ namespace App.Controller{
         }
         public void GameStart(){
             CConnectingDialog.ToShow();
-            StartCoroutine(ToLogin( ));
+            StartCoroutine(GetAssetsData( ));
+        }
+        public IEnumerator GetAssetsData( ) 
+        {  
+            SMaster sMaster = new SMaster();
+            yield return StartCoroutine (sMaster.RequestVersions());
+            App.Util.Global.versions = sMaster.versions;
+            CConnectingDialog.ToClose();
+            CLoadingDialog.ToShow();
+            yield return StartCoroutine(Init( App.Util.Global.versions ));
+            App.Util.SceneManager.LoadScene( App.Util.SceneManager.Scenes.Register.ToString() );
+            yield break;
+            //StartCoroutine(ToLogin( ));
         }
         public IEnumerator ToLogin( ) 
         {  
@@ -36,8 +48,8 @@ namespace App.Controller{
             {
                 yield break;
             }
-            CLoadingDialog.ToShow();
-            yield return StartCoroutine(Init( App.Util.Global.SUser.versions ));
+            //CLoadingDialog.ToShow();
+            //yield return StartCoroutine(Init( App.Util.Global.SUser.versions ));
             App.Util.SceneManager.LoadScene( App.Util.SceneManager.Scenes.Top.ToString() );
         }
         public IEnumerator Init(MVersion versions)
@@ -162,7 +174,11 @@ namespace App.Controller{
                 ImageAssetBundleManager.skillIcon = assetbundle;
             }, false));
 
-            list.Add(sUser.RequestGet());
+            if (App.Util.Global.SUser.self != null)
+            {
+                list.Add(sUser.RequestGet());
+            }
+            //list.Add(sUser.RequestGet());
             float step = 100f / list.Count;
             for (int i = 0; i < list.Count; i++)
             {

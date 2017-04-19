@@ -19,10 +19,10 @@ namespace App.Controller{
         public override IEnumerator OnLoad( Request request ) 
 		{  
             StartCoroutine(base.OnLoad(request));
-            yield return StartCoroutine(Global.SGacha.Download(ImageAssetBundleManager.gachaIconUrl, App.Util.Global.SUser.versions.gacha, (AssetBundle assetbundle)=>{
+            yield return StartCoroutine(Global.SGacha.Download(ImageAssetBundleManager.gachaIconUrl, App.Util.Global.versions.gacha, (AssetBundle assetbundle)=>{
                 ImageAssetBundleManager.gachaIcon = assetbundle;
             }, false));
-            yield return StartCoroutine(Global.SGacha.Download(GachaAsset.Url, App.Util.Global.SUser.versions.gacha, (AssetBundle assetbundle)=>{
+            yield return StartCoroutine(Global.SGacha.Download(GachaAsset.Url, App.Util.Global.versions.gacha, (AssetBundle assetbundle)=>{
                 GachaAsset.assetbundle = assetbundle;
                 GachaCacher.Instance.Reset(GachaAsset.Data.gachas);
                 GachaAsset.Clear();

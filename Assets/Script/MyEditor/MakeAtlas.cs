@@ -367,19 +367,15 @@ namespace MyEditor
         [MenuItem("SH/Build Assetbundle/Face")]
         static private void BuildAssetBundleFace()
         {
-            int index = 1;
-            ScriptableObject asset = null;
-            string assetPath;
-            do{
-                if(asset == null){
-                    assetPath = string.Format("ScriptableObject/face/{0}.asset", index);
-                    asset = EditorGUIUtility.Load(assetPath) as ScriptableObject;
-                }
+            string spriteDir = Application.dataPath + "/Editor Default Resources/ScriptableObject/face";
+            DirectoryInfo dirInfo = new DirectoryInfo(spriteDir);
+            foreach (FileInfo assetFile in dirInfo.GetFiles("*.asset",SearchOption.AllDirectories))
+            {
+                int index = int.Parse(assetFile.Name.Replace(".asset", ""));
+                string assetPath = string.Format("ScriptableObject/face/{0}.asset", index);
+                ScriptableObject asset = EditorGUIUtility.Load(assetPath) as ScriptableObject;
                 BuildAssetBundleFace(index, asset);
-                index++;
-                assetPath = string.Format("ScriptableObject/face/{0}.asset", index);
-                asset = EditorGUIUtility.Load(assetPath) as ScriptableObject;
-            }while(asset != null);
+            }
         }
         static private void BuildAssetBundleFace(int index, ScriptableObject asset)
         {

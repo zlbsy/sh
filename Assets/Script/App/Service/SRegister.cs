@@ -9,21 +9,19 @@ namespace App.Service{
     /**
      * 
     */
-    public class SCharacter : SBase {
+    public class SRegister : SBase {
         public MCharacter[] characters;
-        public SCharacter(){
+        public SRegister(){
         }
         public class ResponseList : ResponseBase
 		{
             public MCharacter[] characters;
 		}
-        public IEnumerator RequestList(int userId)
+        public IEnumerator RequestList()
 		{
-            var url = "character/character_list";
-            WWWForm form = new WWWForm();
-            form.AddField("user_id", userId);
+            var url = "register/character_list";
             HttpClient client = new HttpClient();
-            yield return App.Util.SceneManager.CurrentScene.StartCoroutine(client.Send( url, form));
+            yield return App.Util.SceneManager.CurrentScene.StartCoroutine(client.Send( url ));
             ResponseList response = client.Deserialize<ResponseList>();
             this.characters = response.characters;
         }
