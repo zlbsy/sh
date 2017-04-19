@@ -10,20 +10,24 @@ namespace App.Service{
      * 
     */
     public class SRegister : SBase {
-        public MCharacter[] characters;
+        //public MCharacter[] characters;
         public SRegister(){
         }
-        public class ResponseList : ResponseBase
+        //public class ResponseList : ResponseBase
+		//{
+        //    public MCharacter[] characters;
+		//}
+        public IEnumerator RequestInsert(int selectId, string account, string password, string name)
 		{
-            public MCharacter[] characters;
-		}
-        public IEnumerator RequestList()
-		{
-            var url = "register/character_list";
+            var url = "register/insert";
             HttpClient client = new HttpClient();
+            WWWForm form = new WWWForm();
+            form.AddField("selectId", selectId);
+            form.AddField("account", account);
+            form.AddField("password", password);
+            form.AddField("name", name);
             yield return App.Util.SceneManager.CurrentScene.StartCoroutine(client.Send( url ));
-            ResponseList response = client.Deserialize<ResponseList>();
-            this.characters = response.characters;
+            //ResponseList response = client.Deserialize<ResponseList>();
         }
 	}
 }

@@ -44,7 +44,6 @@ namespace App.Controller.Register{
             vCharacterStatus.UpdateView();
         }
         public void ChangeGender(Toggle toggle = null){
-            App.Util.Global.Constant.female_heads = new int[]{ 2 };
             gender = (toggle == null || toggle.isOn) ? Gender.male : Gender.female;
             characters = System.Array.FindAll(allCharacters, chara => chara.Gender == gender);
             CharacterUpdate();

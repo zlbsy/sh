@@ -20,14 +20,38 @@ namespace App.Controller.Register{
         private int selectId;
         public override IEnumerator OnLoad( Request request ) 
         {  
-            //selectId = request.Get<int>("selectId");
+            selectId = request.Get<int>("selectId");
 
             yield return this.StartCoroutine(base.OnLoad(request));
         }
         public void Submit(){
-            Debug.LogError("account="+account.text);
-            Debug.LogError("password="+password.text);
-            Debug.LogError("name="+name.text);
+            string accountText = account.text.Trim();
+            if (string.IsNullOrEmpty(accountText) || accountText.Length < 6)
+            {
+                CAlertDialog.Show("账号长度不够");
+                return;
+            }
+            string passwordText = password.text.Trim();
+            if (string.IsNullOrEmpty(accountText) || accountText.Length < 8)
+            {
+                CAlertDialog.Show("密码长度不够");
+                return;
+            }
+            string passwordCheckText = passwordCheck.text.Trim();
+            if (passwordText != passwordCheckText)
+            {
+                CAlertDialog.Show("两次密码不一致");
+                return;
+            }
+            string nameText = name.text.Trim();
+            if (string.IsNullOrEmpty(nameText) || nameText.Length < 6)
+            {
+                CAlertDialog.Show("明子长度不够");
+                return;
+            }
+
+            SRegister register = new SRegister();
+            this.StartCoroutine(register.RequestInsert(selectId, accountText, passwordText, nameText));
         }
 	}
 }
