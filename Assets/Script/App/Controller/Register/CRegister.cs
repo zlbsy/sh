@@ -32,7 +32,7 @@ namespace App.Controller.Register{
 		}
         public void CharacterSelectComplete(){
             MCharacter character = characters[index];
-            Request req = Request.Create("selectId", character.Id);
+            Request req = Request.Create("characterId", character.CharacterId);
             this.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.RegisterConfirmDialog, req));
         }
         private void CharacterUpdate(){
@@ -63,6 +63,9 @@ namespace App.Controller.Register{
                 index = 0;
             }
             CharacterUpdate();
+        }
+        public void ReturnLogo(){
+            App.Util.SceneManager.LoadScene( App.Util.SceneManager.Scenes.Logo.ToString() );
         }
 	}
 }

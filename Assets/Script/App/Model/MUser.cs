@@ -19,14 +19,7 @@ namespace App.Model{
         public MEquipment[] equipments;
         public MBattleChild[] battlelist;
         public MItem[] items;
-        public StoryProgress[] progress{
-            set{ 
-                Progress.Clear();
-                foreach(StoryProgress story in value){
-                    Progress.Add(story.k, story.v);
-                }
-            }
-        }
+        public StoryProgress[] progress;
         public Dictionary<string, int> Progress = new Dictionary<string, int>();
         public int GetValue(string key){
             if (!Progress.ContainsKey(key))
@@ -151,9 +144,14 @@ namespace App.Model{
             if(user.LastApDate != this.LastApDate){
                 this.LastApDate = user.LastApDate;
             }
-            //UnityEngine.Debug.LogError("user.TopMap = " + user.TopMap);
             if(user.TopMap != null){
                 this.TopMap = user.TopMap;
+            }
+            if(user.progress != null){
+                this.Progress.Clear();
+                foreach(StoryProgress story in user.progress){
+                    this.Progress.Add(story.k, story.v);
+                }
             }
         }
 	}

@@ -9,7 +9,7 @@ namespace App.Util.Cacher{
         private List<App.Model.MUser> userList = new List<App.Model.MUser>();
         public void Update(App.Model.MUser user){
             App.Model.MUser userData = Get(user.id);
-            //Debug.LogError("userData="+userData);
+            Debug.LogError("userData="+userData);
             if (userData == null)
             {
                 userList.Add(user);

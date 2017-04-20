@@ -11,6 +11,7 @@ using App.View.Top;
 using App.Util;
 using App.View.Common;
 using App.Controller.Common;
+using App.Model.Scriptable;
 
 
 namespace App.Controller{
@@ -27,7 +28,26 @@ namespace App.Controller{
 		{  
             InitHeader();
             InitMap();
+            yield return this.StartCoroutine(OnLoadEnd());
+        }
+        private IEnumerator OnLoadEnd(){
+            SUser sUser = Global.SUser;
+            int tutorial = sUser.self.GetValue("tutorial");
+            if (tutorial < Global.Constant.tutorial_end)
+            {
+                if (Global.tutorials == null)
+                {
+                    yield return StartCoroutine(sUser.Download(TutorialAsset.Url, Global.versions.tutorial, (AssetBundle assetbundle)=>{
+                        TutorialAsset.assetbundle = assetbundle;
+                        Global.tutorials = TutorialAsset.Data.tutorials;
+                    }));
+                }
+                TutorialStart();
+                yield break;
+            }
             yield break;
+        }
+        private void TutorialStart(){
         }
         private void InitHeader(){
             MUser mUser = App.Util.Global.SUser.self;

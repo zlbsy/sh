@@ -6,6 +6,7 @@ using App.Service;
 namespace App.Util{
     public class Global {
         public static App.Model.MVersion versions;
+        public static List<string>[] tutorials;
         public static SUser SUser;
         public static SGacha SGacha;
         public static string ssid;

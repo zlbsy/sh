@@ -58,7 +58,17 @@ namespace App.Service{
                 //Debug.LogError("response.result = " + response.result + ", response.now = " + response.now);
                 if (!response.result)
                 {
-                    Debug.LogError("Error");
+                    if (response.goto_login)
+                    {
+                        App.Controller.CAlertDialog.Show(response.message, () =>
+                            {
+                                App.Util.SceneManager.LoadScene(App.Util.SceneManager.Scenes.Logo.ToString());
+                            });
+                    }
+                    else
+                    {
+                        App.Controller.CAlertDialog.Show(response.message);
+                    }
                 }
                 if (response.user != null)
                 {

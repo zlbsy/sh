@@ -32,6 +32,10 @@ namespace App.Model{
         public int clothes;
         public int weapon;
         public int face;
+        /// <summary>
+        /// assetbundle/scenario/scenario_XXXX
+        /// </summary>
         public int scenario;
+        public int tutorial;
 	}
 }

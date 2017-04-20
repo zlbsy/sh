@@ -8,10 +8,14 @@ using App.Util;
 using App.Util.Cacher;
 using App.Model.Scriptable;
 using App.Controller.Common;
+using UnityEngine.UI;
 
 
 namespace App.Controller{
     public class CLogo : CScene {
+        [SerializeField]private InputField account;
+        [SerializeField]private InputField password;
+        [SerializeField]private Transform loginWindow;
         public override IEnumerator Start()
         {
             Global.Initialize();
@@ -23,13 +27,33 @@ namespace App.Controller{
 		}
         public void ClearCacher(){
             Caching.CleanCache();
+            PlayerPrefs.DeleteAll();
         }
         public void GameStart(){
-            CConnectingDialog.ToShow();
-            StartCoroutine(GetAssetsData( ));
+            if (loginWindow.gameObject.activeSelf)
+            {
+                return;
+            }
+            bool hasAccount = PlayerPrefs.HasKey("account");
+            if (hasAccount)
+            {
+                string accountStr = PlayerPrefs.GetString("account");
+                string passwordStr = PlayerPrefs.GetString("password");
+                StartCoroutine(ToLoginStart( accountStr, passwordStr ));
+            }
+            else
+            {
+                loginWindow.localScale = new Vector3(0f, 0f, 0f);
+                loginWindow.gameObject.SetActive(true);
+                Holoville.HOTween.HOTween.To(loginWindow, 0.2f, new Holoville.HOTween.TweenParms().Prop("localScale", Vector3.one));
+            }
         }
-        public IEnumerator GetAssetsData( ) 
+        public void ToRegister(){
+            StartCoroutine(ToRegisterStart( ));
+        }
+        public IEnumerator ToRegisterStart( ) 
         {  
+            CConnectingDialog.ToShow();
             SMaster sMaster = new SMaster();
             yield return StartCoroutine (sMaster.RequestVersions());
             App.Util.Global.versions = sMaster.versions;
@@ -37,19 +61,26 @@ namespace App.Controller{
             CLoadingDialog.ToShow();
             yield return StartCoroutine(Init( App.Util.Global.versions ));
             App.Util.SceneManager.LoadScene( App.Util.SceneManager.Scenes.Register.ToString() );
-            yield break;
-            //StartCoroutine(ToLogin( ));
         }
-        public IEnumerator ToLogin( ) 
+        public void ToLogin( ) 
         {  
-            yield return StartCoroutine (App.Util.Global.SUser.RequestLogin("aaa", "bbb"));
-            CConnectingDialog.ToClose();
+            StartCoroutine(ToLoginStart( account.text.Trim(), password.text.Trim() ));
+        }
+        public IEnumerator ToLoginStart( string accountStr, string passwordStr ) 
+        {  
+            CConnectingDialog.ToShow();
+            yield return StartCoroutine (App.Util.Global.SUser.RequestLogin(accountStr, passwordStr));
             if (App.Util.Global.SUser.self == null)
             {
+                CConnectingDialog.ToClose();
                 yield break;
             }
-            //CLoadingDialog.ToShow();
-            //yield return StartCoroutine(Init( App.Util.Global.SUser.versions ));
+            SMaster sMaster = new SMaster();
+            yield return StartCoroutine (sMaster.RequestVersions());
+            App.Util.Global.versions = sMaster.versions;
+            CConnectingDialog.ToClose();
+            CLoadingDialog.ToShow();
+            yield return StartCoroutine(Init( App.Util.Global.versions ));
             App.Util.SceneManager.LoadScene( App.Util.SceneManager.Scenes.Top.ToString() );
         }
         public IEnumerator Init(MVersion versions)
@@ -178,7 +209,6 @@ namespace App.Controller{
             {
                 list.Add(sUser.RequestGet());
             }
-            //list.Add(sUser.RequestGet());
             float step = 100f / list.Count;
             for (int i = 0; i < list.Count; i++)
             {

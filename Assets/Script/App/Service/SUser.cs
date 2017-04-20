@@ -18,17 +18,23 @@ namespace App.Service{
             public string ssid;
             public MVersion versions;
 		}
-        public IEnumerator RequestLogin(string name, string pass)
+        public IEnumerator RequestLogin(string account, string pass)
 		{
             var url = "user/login";
             WWWForm form = new WWWForm();
-            form.AddField("name", name);
+            form.AddField("account", account);
             form.AddField("pass", pass);
             HttpClient client = new HttpClient();
             yield return App.Util.SceneManager.CurrentScene.StartCoroutine(client.Send( url, form));
             ResponseAll response = client.Deserialize<ResponseAll>();
-            this.self = App.Util.Cacher.UserCacher.Instance.Get(response.user.id);
-            App.Util.Global.ssid = response.ssid;
+            if (response.result)
+            {
+                this.self = App.Util.Cacher.UserCacher.Instance.Get(response.user.id);
+                App.Util.Global.ssid = response.ssid;
+                PlayerPrefs.SetString("account", account);
+                PlayerPrefs.SetString("password", pass);
+                PlayerPrefs.Save();
+            }
         }
         public IEnumerator RequestGet(int id)
         {
