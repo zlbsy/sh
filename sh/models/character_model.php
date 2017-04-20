@@ -20,18 +20,27 @@ class Character_model extends MY_Model
 		$result_select = $this->master_db->select($select, $table, $where, null, null, Database_Result::TYPE_DEFAULT);
 		$result = array();
 		while ($row = mysql_fetch_assoc($result_select)) {
-			$row["Skills"] = $this->get_character_skills($row["CharacterId"]);
+			$row["Skills"] = $this->get_character_skills($user_id, $row["CharacterId"]);
 			$result[] = $row;
 		}
 		return $result;
 	}
-	function get_character_skills($character_id){
+	function get_character_skills($user_id, $character_id){
 		$select = "skill_id as SkillId, level as Level";
 		$table = $this->user_db->character_skill;
 		$where = array();
-		$where[] = "characters_id = {$character_id}";
+		$where[] = "user_id = {$user_id}";
+		$where[] = "character_id = {$character_id}";
 		$order_by = "id asc";
 		$result = $this->user_db->select($select, $table, $where, $order_by);
 		return $result;
+	}
+	function character_insert($values){
+		$res = $this->user_db->insert($values, $this->user_db->characters);
+		return $res;
+	}
+	function character_skill_insert($values){
+		$res = $this->user_db->insert($values, $this->user_db->character_skill);
+		return $res;
 	}
 }

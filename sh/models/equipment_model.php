@@ -4,12 +4,15 @@ class Equipment_model extends MY_Model
 	function __construct(){
 		parent::__construct();
 	}
-	function set_equipment($user_id, $equipment_id, $equipment_type){
+	function set_equipment($user_id, $equipment_id, $equipment_type, $character_id = 0){
 		$values = array();
 		$values["user_id"] = "{$user_id}";
 		$values["equipment_id"] = "{$equipment_id}";
 		$values["equipment_type"] = "'{$equipment_type}'";
 		$values["register_time"] = "'".date("Y-m-d H:i:s",time())."'";
+		if($character_id > 0){
+			$values["character_id"] = "{$character_id}";
+		}
 		return $this->user_db->insert($values, $this->user_db->equipment);
 	}
 	

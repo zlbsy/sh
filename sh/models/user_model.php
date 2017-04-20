@@ -6,21 +6,78 @@ class User_model extends MY_Model
 	}
 	var $_select_clums = 'id, name, nickname as Nickname, face as Face, level as Level, gold as Gold, silver as Silver, ap as Ap, map_id as MapId, last_ap_date as LastApDate';
 	var $_select_other_clums = 'id, name, nickname as Nickname, face as Face, level as Level, gold as Gold, silver as Silver, ap as Ap, map_id as MapId, last_ap_date as LastApDate';
-	function register($args){
-		$res = $this->login($args);
-		if($res){
+	function register($account, $password, $name, $character_id){
+		$character_model = new Character_model();
+		$character = $character_model->get_character_list(0, $character_id);
+		if(is_null($character)){
 			return false;
 		}
-		$this->user_db->set('account',$args["account"]);
-		$this->user_db->set('face',$args["face"]);
-		$this->user_db->set('name',$args["name"]);
-		$this->user_db->set('nickname',$args["nickname"]);
-		$this->user_db->set('pass',$args["pass"]);
-		$res = $this->user_db->insert(USER_PLAYER);
-		if(!$res){
-			return false;
+		$this->user_db->trans_begin();
+		$values = array();
+		$values['account'] = "'{$account}'";
+		$values['pass'] = "'{$password}'";
+		$values['name'] = "'{$name}'";
+		$values['face'] = $character_id;
+		$now = date("Y-m-d H:i:s");
+		$values['last_ap_date'] = "'{$now}'";
+		$values['register_time'] = "'{$now}'";
+		$res_player = $this->user_db->insert($values, $this->user_db->player);
+		if(!$res_player){
+			$this->user_db->trans_rollback();
+			$this->error("register fail");
 		}
-		return $this->user_db->insert_id();
+		$user = $this->login(array("account"=>$account, "pass"=>$password));
+		if(is_null($user)){
+			$this->user_db->trans_rollback();
+			$this->error("register fail");
+		}
+		$user_id = $user["Id"];
+		$character_values = array();
+		$character_values['user_id'] = $user_id;
+		$character_values['character_id'] = $character_id;
+		$character_values['star'] = $character["Star"];
+		$character_values['weapon_type'] = "'".$character["WeaponType"]."'";
+		$character_values['move_type'] = "'".$character["MoveType"]."'";
+		$character_values['horse'] = $character["Horse"];
+		$character_values['clothes'] = $character["Clothes"];
+		$character_values['weapon'] = $character["Weapon"];
+		$character_values['register_time'] = "'{$now}'";
+		$res_character = $character_model->character_insert($character_values);
+		if(!$res_character){
+			$this->user_db->trans_rollback();
+			$this->error("register fail");
+		}
+		$character_skills = array();
+		$character_values['user_id'] = $user_id;
+		$character_values['character_id'] = $character_id;
+		$Skills = $character["Skills"];
+		$character_skills['skill_id'] = $Skills["SkillId"];
+		$character_skills['level'] = $Skills["Level"];
+		$character_skills['register_time'] = "'{$now}'";
+		$res_character = $character_model->character_skill_insert($character_skills);
+		if(!$res_character){
+			$this->user_db->trans_rollback();
+			$this->error("register fail");
+		}
+		if($character["Horse"] > 0){
+			$rs_horse = $equipment_mmodel->set_equipment($user_id, $character["Horse"], "horse", $character_id);
+			if(!$rs_horse){
+				$this->user_db->trans_rollback();
+				$this->error("register fail");
+			}
+		}
+		$rs_weapon = $equipment_mmodel->set_equipment($user_id, $character["Weapon"], "weapon", $character_id);
+		if(!$rs_weapon){
+			$this->user_db->trans_rollback();
+			$this->error("register fail");
+		}
+		$rs_clothes = $equipment_mmodel->set_equipment($user_id, $character["Clothes"], "clothes", $character_id);
+		if(!$rs_clothes){
+			$this->user_db->trans_rollback();
+			$this->error("register fail");
+		}
+		$this->user_db->trans_commit();
+		return true;
 	}
 	function login($args){
 		$table = $this->user_db->player;

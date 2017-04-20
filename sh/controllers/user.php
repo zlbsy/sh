@@ -42,6 +42,7 @@ class User extends MY_Controller {
 			$user_model = is_null($user_model) ? new User_model() : $user_model;
 			$user["progress"] = $user_model->get_story_progress($user["id"]);
 		}
+		$this->setSessionData("user", $user);
 		$this->out(array("user"=>$user));
 	}
 }

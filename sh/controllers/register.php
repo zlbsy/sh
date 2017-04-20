@@ -17,16 +17,21 @@ class Register extends MY_Controller {
 	}
 	public function insert()
 	{
-		$this->checkParam("account", "password","name","select_id");
+		$this->checkParam("account", "password","name","character_id");
 		$account = $this->args["account"];
 		$user_model = new User_model();
 		$has_account = $user_model->getUserFromAccount($account);
 		if($has_account){
 			$this->error("account is exist");
 		}	
-		$result = $user_model->register($account, $password, $name, $select_id);
-		if($result){
-				
+		$password = $this->args["password"];
+		$name = $this->args["name"];
+		$character_id = $this->args["character_id"];
+		$id = $user_model->register($account, $password, $name, $character_id);
+		if($id){
+				$user = $user_model->get($id, true);
+				$this->setSessionData("user", $user);
+				$this->out(array("user"=>$user));
 		}else{
 			$this->error("register fail");
 		}
