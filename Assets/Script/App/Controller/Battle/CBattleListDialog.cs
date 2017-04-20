@@ -25,7 +25,10 @@ namespace App.Controller.Battle{
                 yield return StartCoroutine(sBattlefield.RequestBattlelist());
                 Global.SUser.self.battlelist = sBattlefield.battlelist;
             }
-            ScrollViewSets(content, childItem, Global.SUser.self.battlelist);
+            if (Global.SUser.self.battlelist != null && Global.SUser.self.battlelist.Length > 0)
+            {
+                ScrollViewSets(content, childItem, Global.SUser.self.battlelist);
+            }
         }
         public void BattleChildClick(int id){
             MBattleChild mBattleChild = System.Array.Find(Global.SUser.self.battlelist, _=>_.Id == id);
