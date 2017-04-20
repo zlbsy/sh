@@ -33,10 +33,14 @@ class User extends MY_Controller {
 	public function get()
 	{
 		$user = $this->getSessionData("user");
-		//将主页面地图信息加进user
+		$user_model = null;
 		if(is_null($user["TopMap"])){
-			$user_model = new User_model();
+			$user_model = is_null($user_model) ? new User_model() : $user_model;
 			$user["TopMap"] = $user_model->get_top_map($user["id"]);
+		}
+		if(is_null($user["progress"])){
+			$user_model = is_null($user_model) ? new User_model() : $user_model;
+			$user["progress"] = $user_model->get_story_progress($user["id"]);
 		}
 		$this->out(array("user"=>$user));
 	}

@@ -16,7 +16,22 @@ class Character_model extends MY_Model
 				$where[] = "character_id = {$chara_id}";
 			}
 		}
-		$result = $this->master_db->select($select, $table, $where);
+		
+		$result_select = $this->master_db->select($select, $table, $where, null, null, Database_Result::TYPE_DEFAULT);
+		$result = array();
+		while ($row = mysql_fetch_assoc($result_select)) {
+			$row["Skills"] = $this->get_character_skills($row["CharacterId"]);
+			$result[] = $row;
+		}
+		return $result;
+	}
+	function get_character_skills($character_id){
+		$select = "skill_id as SkillId, level as Level";
+		$table = $this->user_db->character_skill;
+		$where = array();
+		$where[] = "characters_id = {$character_id}";
+		$order_by = "id asc";
+		$result = $this->user_db->select($select, $table, $where, $order_by);
 		return $result;
 	}
 }

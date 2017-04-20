@@ -5,8 +5,8 @@ class Master_model extends MY_Model
 		parent::__construct();
 	}
 	public function get_master_character(){
-		$select = "`id`,`name`,`nickname`,`head`,`hat`,`qualification`,`force`,`intelligence`,
-		`command`,`agility`,`luck`,`power`,`moving_power`,`riding`,`walker`,`pike`,`sword`,
+		$select = "`id`,`name`,`nickname`,`head`,`hat`,`qualification`,
+		`power`,`knowledge`,`trick`,`endurance`,`speed`,`moving_power`,`riding`,`walker`,`pike`,`sword`,
 		`long_knife`,`knife`,`long_ax`,`ax`,`sticks`,`fist`,`archery`,`hidden_weapons`,`dual_wield`, `start_star` ";
 		$table = $this->master_db->base_character;
 		$order_by = "id";
@@ -32,7 +32,11 @@ class Master_model extends MY_Model
 		$result = $this->master_db->select("`name`,`val`", $this->master_db->constant, null, null, null, Database_Result::TYPE_DEFAULT);
 		$result_array = array();
 		while ($row = mysql_fetch_assoc($result)) {
-			$result_array[$row["name"]] = $row["val"];
+			if($row["name"] == "female_heads"){
+				$result_array[$row["name"]] = explode(",", $row["val"]);
+			}else{
+				$result_array[$row["name"]] = $row["val"];
+			}
 		}
 		return $result_array;
 	}
@@ -113,10 +117,18 @@ class Master_model extends MY_Model
 		return $result;
 	}
 	function get_master_skill(){
-		$select = "`id`,`name`,`type`,`price`";
+		$select = "`id`,`name`,`type`,`level`,`price`,`weapon_types`,`distance`,`strength`,`radius_type`,`radius`,
+		`hp`,`mp`,`power`,`knowledge`,`speed`,`trick`,`endurance`,`moving_power`,`riding`,`walker`,
+		`pike`,`sword`,`long_knife`,`knife`,`long_ax`,`ax`,`sticks`,`fist`,`archery`,`hidden_weapons`,`dual_wield`";
 		$table = $this->master_db->skill;
 		$order_by = "id asc";
-		$result = $this->master_db->select($select, $table, null, $order_by);
+		$result_select = $this->master_db->select($select, $table, null, $order_by, null, Database_Result::TYPE_DEFAULT);
+		$result = array();
+		while ($row = mysql_fetch_assoc($result_select)) {
+			$row["weapon_types"] = json_decode($row["weapon_types"]);
+			$row["distance"] = json_decode($row["distance"]);
+			$result[] = $row;
+		}
 		return $result;
 	}
 	function get_master_items(){
@@ -140,10 +152,10 @@ class Master_model extends MY_Model
 		$result = $this->master_db->select($select, $table, $where, $order_by);
 		return $result;
 	}
-	function get_master_battlefield_npcs($battlefield_id){
-		$select = "`id`, `npc_id`, `x`,`y`, `level`,`star`,`weapon`,`horse`,`clothes`";
+	function get_master_battlefield_npcs($battlefield_id,$belong){
+		$select = "`id`, `npc_id`,`boss`,`skills`, `x`,`y`, `level`,`star`,`weapon`,`horse`,`clothes`";
 		$table = $this->master_db->battlefield_npc;
-		$where = array("battlefield_id = {$battlefield_id}");
+		$where = array("battlefield_id = {$battlefield_id}","belong='{$belong}'");
 		$order_by = "id asc";
 		$result = $this->master_db->select($select, $table, $where, $order_by);
 		return $result;
@@ -157,7 +169,7 @@ class Master_model extends MY_Model
 		return $result;
 	}
 	function get_master_battlefields($language="cn"){
-		$select = "`id`,`name`,`map_id`,`script_{$language}` as `script`, `max_num`";
+		$select = "`id`,`name_{$language}` as `name`,`map_id`,`script_{$language}` as `script`, `max_num`";
 		$table = $this->master_db->battlefield;
 		$order_by = "id asc";
 		$result_array = $this->master_db->select($select, $table, null, $order_by);
@@ -169,7 +181,8 @@ class Master_model extends MY_Model
 			//$battlefield["map_id"] = $val["map_id"];
 			$val["script"] = explode(";",$val["script"]);
 			$val["tiles"] = $this->get_master_battlefield_tiles($val["id"]);
-			$val["enemys"] = $this->get_master_battlefield_npcs($val["id"]);
+			$val["enemys"] = $this->get_master_battlefield_npcs($val["id"], "enemy");
+			$val["friends"] = $this->get_master_battlefield_npcs($val["id"], "friend");
 			$val["owns"] = $this->get_master_battlefield_owns($val["id"]);
 			$result[] = $val;
 		}

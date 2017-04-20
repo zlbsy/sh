@@ -3,6 +3,7 @@ class Database_Result{
 	const TYPE_DEFAULT = "default";
 	const TYPE_ARRAY = "array";
 	const TYPE_ROW = "row";
+	const TYPE_OBJECT = "object";
 }
 class Base_Database {
 	var $connect;
@@ -50,6 +51,14 @@ class Base_Database {
 			$result = array();
 			while ($row = mysql_fetch_assoc($result_select)) {
 				$result[] = $row;
+			}
+			return $result;
+		}else if($result_type == Database_Result::TYPE_OBJECT){
+			$result = array();
+			while ($row = mysql_fetch_assoc($result_select)) {
+				foreach($row as $k=>$v){
+					$result[$k] = $v;	
+				}
 			}
 			return $result;
 		}else if($result_type == Database_Result::TYPE_ROW){

@@ -11,8 +11,10 @@ class User_model extends MY_Model
 		if($res){
 			return false;
 		}
+		$this->user_db->set('account',$args["account"]);
+		$this->user_db->set('face',$args["face"]);
 		$this->user_db->set('name',$args["name"]);
-		$this->user_db->set('nickname',$args["name"]);
+		$this->user_db->set('nickname',$args["nickname"]);
 		$this->user_db->set('pass',$args["pass"]);
 		$res = $this->user_db->insert(USER_PLAYER);
 		if(!$res){
@@ -23,7 +25,7 @@ class User_model extends MY_Model
 	function login($args){
 		$table = $this->user_db->player;
 		$where = array();
-		$where[] = "name='{$args["name"]}'";
+		$where[] = "account='{$args["account"]}'";
 		$where[] = "pass='{$args["pass"]}'";
 		$result = $this->user_db->select($this->_select_clums, $table, $where, null, null, Database_Result::TYPE_ROW);
 		return $result;
@@ -72,12 +74,20 @@ class User_model extends MY_Model
 		}
 		if($is_self && $is_all){
 			$result["TopMap"] = $this->get_top_map($id);
+			$result["progress"] = $this->get_story_progress($id);
 		}
 		return $result;
 	}
 	function get_top_map($user_id){
 		$select = "id, user_id, num, tile_id, x, y, level";
 		$table = $this->user_db->top_map;
+		$where = array("user_id={$user_id}");
+		$result = $this->user_db->select($select, $table, $where);
+		return $result;
+	}
+	function get_story_progress($user_id){
+		$select = "k, v";
+		$table = $this->user_db->story_progress;
 		$where = array("user_id={$user_id}");
 		$result = $this->user_db->select($select, $table, $where);
 		return $result;
