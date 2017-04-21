@@ -50,6 +50,7 @@ namespace App.Service{
         }
         public IEnumerator RequestProgress(string key, int value, System.Action callback = null)
         {
+            Debug.LogError("SUser RequestProgress,"+this.self.id+","+key+","+value);
             var url = "user/progress";
             WWWForm form = new WWWForm();
             form.AddField("user_id", this.self.id);

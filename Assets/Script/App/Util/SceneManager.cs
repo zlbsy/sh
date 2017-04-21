@@ -33,6 +33,7 @@ namespace App.Util{
             BattleMenuDialog,
             BoutWaveDialog,
             RegisterConfirmDialog,
+            TutorialDialog,
         }
         public static CScene CurrentScene;
         public static Request CurrentSceneRequest;
@@ -83,7 +84,8 @@ namespace App.Util{
         }
         public bool DialogIsShow(Prefabs prefab)
         {
-            foreach(CDialog dialog in Dialogs){
+            return FindDialog(prefab) != null;
+            /*foreach(CDialog dialog in Dialogs){
                 if(!dialog.gameObject.activeSelf){
                     continue;
                 }
@@ -92,7 +94,20 @@ namespace App.Util{
                     return true;
                 }
             }
-            return false;
+            return false;*/
+        }
+        public CDialog FindDialog(Prefabs prefab)
+        {
+            foreach(CDialog dialog in Dialogs){
+                if(!dialog.gameObject.activeSelf){
+                    continue;
+                }
+                if (dialog.name == (prefab.ToString() + "(Clone)"))
+                {
+                    return dialog;
+                }
+            }
+            return null;
         }
         public CDialog CurrentDialog
         {

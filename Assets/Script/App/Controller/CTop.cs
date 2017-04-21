@@ -28,26 +28,29 @@ namespace App.Controller{
 		{  
             InitHeader();
             InitMap();
-            yield return this.StartCoroutine(OnLoadEnd());
+            yield return StartCoroutine(base.OnLoad(request));
+            yield return StartCoroutine(OnLoadEnd());
         }
         private IEnumerator OnLoadEnd(){
-            SUser sUser = Global.SUser;
-            int tutorial = sUser.self.GetValue("tutorial");
-            if (tutorial < Global.Constant.tutorial_end)
+            if (Global.SUser.self.GetValue("tutorial") < Global.Constant.tutorial_end)
             {
-                if (Global.tutorials == null)
-                {
-                    yield return StartCoroutine(sUser.Download(TutorialAsset.Url, Global.versions.tutorial, (AssetBundle assetbundle)=>{
-                        TutorialAsset.assetbundle = assetbundle;
-                        Global.tutorials = TutorialAsset.Data.tutorials;
-                    }));
-                }
                 TutorialStart();
                 yield break;
             }
             yield break;
         }
         private void TutorialStart(){
+            SUser sUser = Global.SUser;
+            int tutorial = sUser.self.GetValue("tutorial");
+            StartCoroutine(sUser.Download(TutorialAsset.TutorialUrl(tutorial), Global.versions.tutorial, (AssetBundle assetbundle)=>{
+                TutorialAsset.assetbundle = assetbundle;
+                //App.Util.LSharp.LSharpScript.Instance.Analysis(TutorialAsset.Data.tutorial);
+                List<string> script = new List<string>();
+                script.Add("Talk.set(1,0,少年，现在开始教学,true);");
+                script.Add("Var.setprogress(tutorial,1);");
+                script.Add("Tutorial.close();");
+                App.Util.LSharp.LSharpScript.Instance.Analysis(script);
+            }));
         }
         private void InitHeader(){
             MUser mUser = App.Util.Global.SUser.self;

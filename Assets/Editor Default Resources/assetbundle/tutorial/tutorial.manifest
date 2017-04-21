@@ -1,0 +1,7 @@
+ManifestFileVersion: 0
+CRC: 2545754851
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: tutorial_tutorialasset.unity3d
+      Dependencies: {}

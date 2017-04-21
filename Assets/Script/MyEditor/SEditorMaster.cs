@@ -31,6 +31,7 @@ namespace App.Service{
             public App.Model.Master.MWord[] words;
             public App.Model.Master.MNpcEquipment[] npc_equipments;
             public App.Model.Master.MNpc[] npcs;
+            public List<string>[] tutorials;
 		}
         public IEnumerator RequestAll(string type = "")
 		{

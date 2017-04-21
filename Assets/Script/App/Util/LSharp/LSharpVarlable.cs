@@ -19,10 +19,11 @@ namespace App.Util.LSharp{
             LSharpVarlable.SetVarlable(arguments[0], arguments[1]);
             LSharpScript.Instance.Analysis();
         }
-        public void SetProgress(string[] arguments){
-            Global.SUser.RequestProgress(arguments[0], int.Parse(arguments[1]), ()=>{
+        public void Setprogress(string[] arguments){
+            Debug.LogError("LSharpVarlable Setprogress");
+            SceneManager.CurrentScene.StartCoroutine(Global.SUser.RequestProgress(arguments[0], int.Parse(arguments[1]), ()=>{
                 this.Set(arguments);
-            });
+            }));
         }
         public static void SetVarlable(string key, string value){
             if (LSharpVarlable.Instance.VarList.ContainsKey(key))

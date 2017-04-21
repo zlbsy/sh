@@ -21,8 +21,9 @@ namespace App.Controller.Common{
     /// 新窗口
     /// </summary>
     public class CDialog : CBase {
-        [SerializeField]OpenType opentype;
-        [SerializeField]bool noBackground;
+        [SerializeField]private OpenType opentype;
+        [SerializeField]private bool noBackground;
+        [SerializeField]private int staticSortingOrder = 0;
         Transform panel;
         protected UnityEngine.UI.Image background;
         [HideInInspector]public int index;
@@ -80,9 +81,13 @@ namespace App.Controller.Common{
                 canvasGroup.alpha = 0;
             }
             canvas = this.GetComponent<Canvas>();
-            if (canvas != null)
+            if (canvas != null && staticSortingOrder == 0)
             {
                 canvas.sortingOrder = ++App.Util.Global.DialogSortOrder;
+            }
+            else
+            {
+                canvas.sortingOrder = staticSortingOrder;
             }
         }
         /// <summary>
@@ -124,7 +129,7 @@ namespace App.Controller.Common{
                 return;
             }
             _isClose = true;
-            if (canvas != null)
+            if (canvas != null && staticSortingOrder == 0)
             {
                 App.Util.Global.DialogSortOrder--;
             }
