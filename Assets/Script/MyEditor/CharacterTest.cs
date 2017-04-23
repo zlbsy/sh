@@ -12,11 +12,134 @@ using App.View.Character;
 
 namespace MyEditor
 {
-    public class CharacterTest : MonoBehaviour
+    public class CharacterTest : App.Controller.Common.CBase
     {
         [SerializeField]GameObject characterPrefab;
         [SerializeField]Canvas layer;
+        private bool loadComplete = false;
         // Use this for initialization
+        // Update is called once per frame
+        void Update()
+        {
+	
+        }
+
+        VCharacter view;
+        MCharacter model;
+
+        void OnGUI()
+        {
+            if (!loadComplete)
+            {
+                GUI.TextField(new Rect(100, 50, 100, 30), "Loading");
+                return;
+            }
+            if (GUI.Button(new Rect(100, 50, 100, 30), "Create"))
+            {
+                GameObject obj = GameObject.Instantiate(characterPrefab);
+                obj.transform.SetParent(layer.transform);
+                //obj.transform.localPosition = new Vector3(100f, 100f, 0f);
+                obj.SetActive(true);
+                //obj.GetComponent<RectTransform> ().localScale = new Vector3(2f,2f,1f);
+                model = new MCharacter();
+                model.MoveType = MoveType.infantry;
+                model.WeaponType = WeaponType.longKnife;
+                model.Weapon = 1;
+                model.Clothes = 3;
+                //model.Action = ActionType.attack;
+                model.Horse = 0;
+                model.Head = 1;
+                model.Hat = 1;
+                model.StatusInit();
+                model.Hp = 100;
+                view = obj.GetComponent<VCharacter>();
+                view.BindingContext = model.ViewModel;
+                model.Action = ActionType.stand;
+                characterPrefab.SetActive(false);
+            }
+            if (GUI.Button(new Rect(50, 100, 50, 30), "Stand"))
+            {
+                model.Action = ActionType.stand;
+            }
+            if (GUI.Button(new Rect(100, 100, 50, 30), "Move"))
+            {
+                model.Action = ActionType.move;
+            }
+            if (GUI.Button(new Rect(150, 100, 50, 30), "Block"))
+            {
+                model.Action = ActionType.block;
+            }
+            if (GUI.Button(new Rect(200, 100, 50, 30), "Hert"))
+            {
+                model.Action = ActionType.hert;
+            }
+            if (GUI.Button(new Rect(250, 100, 50, 30), "Attack"))
+            {
+                model.Action = ActionType.attack;
+            }
+            if (GUI.Button(new Rect(100, 140, 100, 30), "ChangeHead"))
+            {
+                if (model.Head == 3)
+                {
+                    model.Head = 1;
+                }
+                else
+                {
+                    model.Head += 1;
+                }
+            }
+            if (GUI.Button(new Rect(100, 180, 100, 30), "ChangeHat"))
+            {
+                if (model.Hat == 5)
+                {
+                    model.Hat = 1;
+                }
+                else
+                {
+                    model.Hat += 1;
+                }
+            }
+            if (GUI.Button(new Rect(200, 180, 100, 30), "ChangeHorse"))
+            {
+                if (model.Horse == 2)
+                {
+                    model.Horse = 1;
+                }
+                else
+                {
+                    model.Horse += 1;
+                }
+            }
+            if (GUI.Button(new Rect(100, 220, 100, 30), "ChangeWeapon"))
+            {
+                if (model.Weapon == 2)
+                {
+                    model.Weapon = 1;
+                }
+                else
+                {
+                    model.Weapon += 1;
+                }
+            }
+            if (GUI.Button(new Rect(200, 220, 100, 30), "ChangeClothes"))
+            {
+                if (model.Clothes == 2)
+                {
+                    model.Clothes = 1;
+                }
+                else
+                {
+                    model.Clothes += 1;
+                }
+            }
+
+            if (GUI.Button(new Rect(100, 260, 100, 30), "Damage"))
+            {
+                App.Model.Battle.MDamageParam arg = new App.Model.Battle.MDamageParam(-20);
+                view.SendMessage(App.Controller.Battle.CharacterEvent.OnDamage.ToString(), arg);
+            }
+        }
+
         IEnumerator Start()
         {
             Caching.CleanCache();
@@ -31,11 +154,11 @@ namespace MyEditor
                 Language.Reset(LanguageAsset.Data.words);
                 LanguageAsset.Clear();
             }));
-            list.Add(sMaster.Download(LanguageAsset.CHARACTER_WORD_URL, versions.characterword, (AssetBundle assetbundle)=>{
+            /*list.Add(sMaster.Download(LanguageAsset.CHARACTER_WORD_URL, versions.characterword, (AssetBundle assetbundle)=>{
                 LanguageAsset.assetbundle = assetbundle;
                 Language.ResetCharacterWord(LanguageAsset.Data.words);
                 LanguageAsset.Clear();
-            }));
+            }));*/
             list.Add(sMaster.Download(WorldAsset.Url, versions.world, (AssetBundle assetbundle)=>{
                 WorldAsset.assetbundle = assetbundle;
                 Global.worlds = WorldAsset.Data.worlds;
@@ -138,123 +261,7 @@ namespace MyEditor
                 yield return this.StartCoroutine(list[i]);
             }
             Debug.Log("Start Over");
-        }
-	
-        // Update is called once per frame
-        void Update()
-        {
-	
-        }
-
-        VCharacter view;
-        MCharacter model;
-
-        void OnGUI()
-        {
-            if (GUI.Button(new Rect(100, 50, 100, 30), "Create"))
-            {
-                GameObject obj = GameObject.Instantiate(characterPrefab);
-                obj.transform.parent = layer.transform;
-                //obj.transform.localPosition = new Vector3(100f, 100f, 0f);
-                obj.SetActive(true);
-                //obj.GetComponent<RectTransform> ().localScale = new Vector3(2f,2f,1f);
-                model = new MCharacter();
-                model.MoveType = MoveType.cavalry;
-                model.WeaponType = WeaponType.longKnife;
-                model.Weapon = 1;
-                model.Clothes = 1;
-                model.Action = ActionType.attack;
-                model.Horse = 1;
-                model.Head = 1;
-                model.Hat = 1;
-                //model.body = 1;
-                model.StatusInit();
-                view = obj.GetComponent<VCharacter>();
-                view.BindingContext = model.ViewModel;
-                model.Action = ActionType.stand;
-                characterPrefab.SetActive(false);
-            }
-            if (GUI.Button(new Rect(50, 100, 50, 30), "Stand"))
-            {
-                model.Action = ActionType.stand;
-            }
-            if (GUI.Button(new Rect(100, 100, 50, 30), "Move"))
-            {
-                model.Action = ActionType.move;
-            }
-            if (GUI.Button(new Rect(150, 100, 50, 30), "Block"))
-            {
-                model.Action = ActionType.block;
-            }
-            if (GUI.Button(new Rect(200, 100, 50, 30), "Hert"))
-            {
-                model.Action = ActionType.hert;
-            }
-            if (GUI.Button(new Rect(250, 100, 50, 30), "Attack"))
-            {
-                model.Action = ActionType.attack;
-            }
-            if (GUI.Button(new Rect(100, 140, 100, 30), "ChangeHead"))
-            {
-                if (model.Head == 3)
-                {
-                    model.Head = 1;
-                }
-                else
-                {
-                    model.Head += 1;
-                }
-            }
-            if (GUI.Button(new Rect(100, 180, 100, 30), "ChangeHat"))
-            {
-                if (model.Hat == 5)
-                {
-                    model.Hat = 1;
-                }
-                else
-                {
-                    model.Hat += 1;
-                }
-            }
-            if (GUI.Button(new Rect(200, 180, 100, 30), "ChangeHorse"))
-            {
-                if (model.Horse == 2)
-                {
-                    model.Horse = 1;
-                }
-                else
-                {
-                    model.Horse += 1;
-                }
-            }
-            if (GUI.Button(new Rect(100, 220, 100, 30), "ChangeWeapon"))
-            {
-                if (model.Weapon == 2)
-                {
-                    model.Weapon = 1;
-                }
-                else
-                {
-                    model.Weapon += 1;
-                }
-            }
-            if (GUI.Button(new Rect(200, 220, 100, 30), "ChangeClothes"))
-            {
-                if (model.Clothes == 2)
-                {
-                    model.Clothes = 1;
-                }
-                else
-                {
-                    model.Clothes += 1;
-                }
-            }
-
-            if (GUI.Button(new Rect(100, 260, 100, 30), "Damage"))
-            {
-                App.Model.Battle.MDamageParam arg = new App.Model.Battle.MDamageParam(-20);
-                view.SendMessage(App.Controller.Battle.CharacterEvent.OnDamage.ToString(), arg);
-            }
+            loadComplete = true;
         }
 
     }

@@ -185,7 +185,7 @@ namespace App.Model{
         public void StatusInit(){
             if (this.CurrentSkill == null)
             {
-                this.CurrentSkill = System.Array.Find(this.Skills, _=>System.Array.IndexOf(_.Master.weapon_types, this.WeaponType) >= 0);
+                this.CurrentSkill = this.Skills == null ? null : System.Array.Find(this.Skills, _=>System.Array.IndexOf(_.Master.weapon_types, this.WeaponType) >= 0);
             }
             if (this.Ability == null)
             {

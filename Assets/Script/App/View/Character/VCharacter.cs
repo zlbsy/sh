@@ -192,7 +192,9 @@ namespace App.View.Character{
                 {
                     Holoville.HOTween.HOTween.To(this.transform, 1f, new Holoville.HOTween.TweenParms().Prop("localPosition", this.transform.localPosition).OnComplete(()=>{
                         this.gameObject.SetActive(false);
-                        App.Util.SceneManager.CurrentScene.StartCoroutine(RemoveDynamicCharacter());
+                        if(App.Util.SceneManager.CurrentScene != null){
+                            App.Util.SceneManager.CurrentScene.StartCoroutine(RemoveDynamicCharacter());
+                        }
                     }));
                 }
                 else

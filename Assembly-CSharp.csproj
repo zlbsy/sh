@@ -257,6 +257,7 @@
      <Compile Include="Assets\Script\MyEditor\CTopScene.cs" />
      <Compile Include="Assets\Script\MyEditor\CharacterTest.cs" />
      <Compile Include="Assets\Script\MyEditor\EditorCoroutine.cs" />
+     <Compile Include="Assets\Script\MyEditor\MAvatar.cs" />
      <Compile Include="Assets\Script\MyEditor\MakeAtlas.cs" />
      <Compile Include="Assets\Script\MyEditor\SEditorMaster.cs" />
      <Compile Include="Assets\Script\Plugin\JsonFx\About.cs" />

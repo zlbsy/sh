@@ -56,6 +56,7 @@ namespace App.Controller{
                     apis.Add("word", CreateScriptableObjectMasterWordRun());
                     apis.Add("npc", CreateScriptableObjectMasterNpcRun());
                     apis.Add("npc_equip", CreateScriptableObjectMasterNpcEquipmentRun());
+                    apis.Add("avatar", CreateScriptableObjectMasterAvatarRun());
                     apiKeys = apis.Keys.ToArray();
 
                     assets.Add("face", CreateScriptableObjectFaceAssetRun());
@@ -117,6 +118,18 @@ namespace App.Controller{
                     this.StartCoroutine(apis[key]);
                 }
             }
+        }
+        IEnumerator CreateScriptableObjectMasterAvatarRun()
+        {
+            var asset = ScriptableObject.CreateInstance<App.Model.Avatar.AvatarAsset>();
+
+            SEditorMaster sMaster = new SEditorMaster();
+            yield return StartCoroutine (sMaster.RequestAll("avatar"));
+            App.MyEditor.MAvatar avatar = sMaster.responseAll.avatar;
+            asset.cavalry = avatar.cavalry;
+            asset.infantry = avatar.infantry;
+            UnityEditor.AssetDatabase.CreateAsset(asset, string.Format("Assets/Editor Default Resources/ScriptableObject/{0}.asset", App.Model.Avatar.AvatarAsset.Name));
+            UnityEditor.AssetDatabase.Refresh();
         }
         IEnumerator CreateScriptableObjectLanguageAssetRun()
         {

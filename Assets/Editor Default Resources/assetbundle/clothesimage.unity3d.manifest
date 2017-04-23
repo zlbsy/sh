@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 3599255816
+CRC: 3181391462
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 0407b99bc61f3b0eba9f737b4538b0ea
+    Hash: a8e71233991ff676dac96156ab92176a
   TypeTreeHash:
     serializedVersion: 2
     Hash: 4d24bf54f46935ed9e6cf78ac481bb9d
@@ -16,18 +16,26 @@ ClassTypes:
 Assets:
 - Assets/Atlas/clothes/clothes_1_cavalry_longKnife_attack_1.png
 - Assets/Atlas/clothes/clothes_2_cavalry_longKnife_attack_3.png
+- Assets/Atlas/clothes/clothes_3_infantry_longKnife_attack_1.png
+- Assets/Atlas/clothes/clothes_3_infantry_longKnife_stand_1.png
 - Assets/Atlas/clothes/clothes_2_cavalry_longKnife_block_1.png
 - Assets/Atlas/clothes/clothes_1_cavalry_longKnife_block_1.png
 - Assets/Atlas/clothes/clothes_1_cavalry_longKnife_hert_1.png
+- Assets/Atlas/clothes/clothes_3_infantry_longKnife_move_2.png
+- Assets/Atlas/clothes/clothes_3_infantry_longKnife_attack_2.png
 - Assets/Atlas/clothes/clothes_2_cavalry_longKnife_move_1.png
+- Assets/Atlas/clothes/clothes_3_infantry_longKnife_block_1.png
 - Assets/Atlas/clothes/clothes_1_cavalry_longKnife_move_1.png
 - Assets/Atlas/clothes/clothes_2_cavalry_longKnife_attack_2.png
 - Assets/Atlas/clothes/clothes_2_cavalry_longKnife_attack_1.png
 - Assets/Atlas/clothes/clothes_2_cavalry_longKnife_hert_1.png
 - Assets/Atlas/clothes/clothes_1_cavalry_longKnife_attack_3.png
+- Assets/Atlas/clothes/clothes_3_infantry_longKnife_move_1.png
+- Assets/Atlas/clothes/clothes_3_infantry_longKnife_attack_3.png
 - Assets/Atlas/clothes/clothes_1_cavalry_longKnife_stand_1.png
 - Assets/Atlas/clothes/clothes_2_cavalry_longKnife_stand_1.png
 - Assets/Atlas/clothes/clothes_1_cavalry_longKnife_move_2.png
 - Assets/Atlas/clothes/clothes_2_cavalry_longKnife_move_2.png
 - Assets/Atlas/clothes/clothes_1_cavalry_longKnife_attack_2.png
+- Assets/Atlas/clothes/clothes_3_infantry_longKnife_hert_1.png
 Dependencies: []

@@ -4,6 +4,7 @@ using UnityEngine;
 
 
 namespace App.Model.Avatar{
+    [System.Serializable]
     public class AvatarAsset : App.Model.Scriptable.AssetBase<AvatarAsset> {
 		[SerializeField]public MoveArms cavalry;
 		[SerializeField]public MoveArms infantry;

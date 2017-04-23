@@ -18,6 +18,10 @@ namespace App.Model{
         public VMCharacterAbility ViewModel { get { return (VMCharacterAbility)viewModel; } }
         public void Update(MCharacter mCharacter){
             App.Model.Master.MCharacter master = mCharacter.Master;
+            if (master == null)
+            {
+                return;
+            }
             App.Model.MSkill[] skills = mCharacter.Skills;
             this.Power = master.power;
             this.Knowledge = master.knowledge;

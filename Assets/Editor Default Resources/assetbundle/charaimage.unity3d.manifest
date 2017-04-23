@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 3103810122
+CRC: 3046532894
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 81c2861035a34c487d44e000ec88ef9d
+    Hash: b5865fe708bd5bd3b1e2a9bf9ade0160
   TypeTreeHash:
     serializedVersion: 2
     Hash: 4d24bf54f46935ed9e6cf78ac481bb9d
@@ -14,10 +14,12 @@ ClassTypes:
 - Class: 213
   Script: {instanceID: 0}
 Assets:
+- Assets/Atlas/chara/body_infantry_longKnife_move_2.png
 - Assets/Atlas/chara/body_cavalry_longKnife_attack_2.png
 - Assets/Atlas/chara/body_infantry_longKnife_attack_3.png
 - Assets/Atlas/chara/body_cavalry_longKnife_move_2.png
 - Assets/Atlas/chara/body_cavalry_longKnife_attack_1.png
+- Assets/Atlas/chara/body_infantry_longKnife_move_1.png
 - Assets/Atlas/chara/head_1.png
 - Assets/Atlas/chara/body_cavalry_longKnife_attack_3.png
 - Assets/Atlas/chara/body_infantry_longKnife_attack_4.png
