@@ -32,6 +32,7 @@ namespace App.Service{
             public App.Model.Master.MNpcEquipment[] npc_equipments;
             public App.Model.Master.MNpc[] npcs;
             public App.MyEditor.MAvatar avatar;
+            public List<string>[] tutorials;
 		}
         public IEnumerator RequestAll(string type = "")
 		{

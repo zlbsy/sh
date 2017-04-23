@@ -346,15 +346,34 @@ namespace MyEditor
                 string name = file.Name;
                 assetPath = string.Format("ScriptableObject/scenario/{0}", name);
                 asset = EditorGUIUtility.Load(assetPath) as ScriptableObject;
-                BuildAssetBundleScenario(name.Replace(".asset",""), asset);
+                BuildAssetBundleChilds(name.Replace(".asset",""), "scenario", asset);
             }
         }
-        static private void BuildAssetBundleScenario(string name, ScriptableObject asset)
+        [MenuItem("SH/Build Assetbundle/Tutorial")]
+        static private void BuildAssetBundleTutorial()
         {
-            string path = "Assets/Editor Default Resources/assetbundle/scenario/";
-            string assetPath = string.Format("Assets/Editor Default Resources/ScriptableObject/scenario/{0}.asset", name);
+            ScriptableObject asset = null;
+            string assetPath;
+            DirectoryInfo rootDirInfo = new DirectoryInfo(Application.dataPath + "/Editor Default Resources/ScriptableObject/tutorial");
+            FileInfo[] files = rootDirInfo.GetFiles();
+            foreach (FileInfo file in files)
+            {
+                if (file.Extension != ".asset")
+                {
+                    continue;
+                }
+                string name = file.Name;
+                assetPath = string.Format("ScriptableObject/tutorial/{0}", name);
+                asset = EditorGUIUtility.Load(assetPath) as ScriptableObject;
+                BuildAssetBundleChilds(name.Replace(".asset",""), "tutorial", asset);
+            }
+        }
+        static private void BuildAssetBundleChilds(string name, string child, ScriptableObject asset)
+        {
+            string path = "Assets/Editor Default Resources/assetbundle/"+child+"/";
+            string assetPath = string.Format("Assets/Editor Default Resources/ScriptableObject/{0}/{1}.asset", child, name);
             AssetBundleBuild[] builds = new AssetBundleBuild[1];
-            builds[0].assetBundleName = "scenario_"+name + ".unity3d";
+            builds[0].assetBundleName = child + "_"+name + ".unity3d";
             string[] enemyAssets = new string[1];
             enemyAssets[0] = assetPath;
             builds[0].assetNames = enemyAssets;
@@ -362,8 +381,10 @@ namespace MyEditor
                 BuildAssetBundleOptions.ChunkBasedCompression
                 ,GetBuildTarget()
             );
-            Debug.LogError("BuildAssetBundleMaster success scenario : "+name);
+            Debug.LogError("BuildAssetBundleMaster success "+child+" : "+name);
         }
+
+
         [MenuItem("SH/Build Assetbundle/Face")]
         static private void BuildAssetBundleFace()
         {

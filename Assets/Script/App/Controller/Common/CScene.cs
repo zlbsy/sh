@@ -4,6 +4,7 @@ using UnityEngine;
 using App.Service;
 using App.Model;
 using App.View;
+using App.Util;
 
 
 namespace App.Controller.Common{
@@ -21,7 +22,16 @@ namespace App.Controller.Common{
             App.Util.SceneManager.CurrentSceneRequest = null;
         }
         public override IEnumerator OnLoad( Request request ) 
-		{  
+        {  
+            SUser sUser = Global.SUser;
+            if (sUser != null && sUser.self != null && Global.Constant != null)
+            {
+                int tutorial = sUser.self.GetValue("tutorial");
+                if (tutorial < Global.Constant.tutorial_end)
+                {
+                    this.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.TutorialDialog));
+                }
+            }
 			yield return 0;
 		}
 	}

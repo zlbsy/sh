@@ -39,6 +39,7 @@ namespace App.Controller{
             {
                 if (GUI.Button(new Rect(50, 100, 200, 30), "Init"))
                 {
+                    apis.Add("tutorial", CreateScriptableObjectMasterTutorialRun());
                     apis.Add("tiles", CreateScriptableObjectMasterTileRun());
                     apis.Add("base_maps", CreateScriptableObjectMasterBaseMapRun());
                     apis.Add("buildings", CreateScriptableObjectMasterBuildingRun());
@@ -151,6 +152,19 @@ namespace App.Controller{
             UnityEditor.AssetDatabase.CreateAsset(faceAsset, string.Format("Assets/Editor Default Resources/ScriptableObject/{0}.asset", App.Model.Scriptable.FaceAsset.Name));
             UnityEditor.AssetDatabase.Refresh();
             yield break;
+        }
+        IEnumerator CreateScriptableObjectMasterTutorialRun()
+        {
+            SEditorMaster sMaster = new SEditorMaster();
+            yield return StartCoroutine (sMaster.RequestAll("tutorial"));
+            int i = 0;
+            foreach(List<string> tutorial in sMaster.responseAll.tutorials){
+                var asset = ScriptableObject.CreateInstance<App.Model.Scriptable.TutorialAsset>();
+                asset.tutorial = tutorial;
+                UnityEditor.AssetDatabase.CreateAsset(asset, string.Format("Assets/Editor Default Resources/ScriptableObject/tutorial/{0}.asset", i++));
+                UnityEditor.AssetDatabase.Refresh();
+            }
+
         }
         IEnumerator CreateScriptableObjectMasterNpcRun()
         {
