@@ -72,6 +72,7 @@
      <Compile Include="Assets\Script\App\Controller\CStage.cs" />
      <Compile Include="Assets\Script\App\Controller\CTalkDialog.cs" />
      <Compile Include="Assets\Script\App\Controller\CTop.cs" />
+     <Compile Include="Assets\Script\App\Controller\CTutorialDialog.cs" />
      <Compile Include="Assets\Script\App\Controller\CWorld.cs" />
      <Compile Include="Assets\Script\App\Controller\Common\CBase.cs" />
      <Compile Include="Assets\Script\App\Controller\Common\CDialog.cs" />
@@ -286,7 +287,6 @@
      <None Include="Assets\Script\Plugin\JsonFx\History.txt" />
      <None Include="Assets\Shader\Sprites-Gray.shader" />
      <None Include="Assets\HOTween\readme.txt" />
-     <None Include="Assets\Shader\Unlit - Depth Cutout.shader" />
      <None Include="Assets\Script\Plugin\JsonFx\Readme.txt" />
      <None Include="Assets\Script\Plugin\JsonFx\TODO.txt" />
      <None Include="Assets\Script\Plugin\JsonFx\License.txt" />
