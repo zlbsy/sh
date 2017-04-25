@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using App.ViewModel;
+using App.Util.Cacher;
 
 
 namespace App.Model{
@@ -15,6 +16,18 @@ namespace App.Model{
         public VMUser ViewModel { get { return (VMUser)viewModel; } }
         public string name;
         public string password;
+        public int lastStageId;
+        public int lastWorldId{
+            get{ 
+                if (lastStageId == 0)
+                {
+                    return App.Util.Global.worlds[0].id;
+                }
+                App.Model.Master.MArea area = AreaCacher.Instance.GetArea(lastStageId);
+                App.Model.Master.MWorld world = System.Array.Find(App.Util.Global.worlds, w => w.id == area.world_id);
+                return world.id;
+            }
+        }
         public MCharacter[] characters;
         public MEquipment[] equipments;
         public MBattleChild[] battlelist;

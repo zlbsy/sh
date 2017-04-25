@@ -15,15 +15,15 @@ namespace App.Controller.Battle{
     public class CBattleListDialog : CDialog {
         [SerializeField]private Transform content;
         [SerializeField]private GameObject childItem;
-        private SBattlefield sBattlefield;
+        //private SBattlefield sBattlefield;
         public override IEnumerator OnLoad( Request request ) 
 		{  
             yield return StartCoroutine(base.OnLoad(request));
             if (Global.SUser.self.battlelist == null)
             {
-                sBattlefield = new SBattlefield();
-                yield return StartCoroutine(sBattlefield.RequestBattlelist());
-                Global.SUser.self.battlelist = sBattlefield.battlelist;
+                //sBattlefield = new SBattlefield();
+                yield return StartCoroutine(Global.SBattlefield.RequestBattlelist());
+                //Global.SUser.self.battlelist = sBattlefield.battlelist;
             }
             if (Global.SUser.self.battlelist != null && Global.SUser.self.battlelist.Length > 0)
             {

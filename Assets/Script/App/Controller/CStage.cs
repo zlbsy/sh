@@ -33,7 +33,7 @@ namespace App.Controller{
             vBaseMap.BindingContext = mBaseMap.ViewModel;
             vBaseMap.UpdateView();
             vBaseMap.transform.parent.localScale = Vector3.one;
-            vBaseMap.MoveToCenter();
+            vBaseMap.MoveToPosition();
             App.Util.LSharp.LSharpScript.Instance.Analysis(new List<string>{string.Format("Load.script({0})", area.tile_id)});
         }
         public override void OnClickTile(int index){

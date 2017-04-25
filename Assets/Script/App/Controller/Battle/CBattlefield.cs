@@ -90,7 +90,7 @@ namespace App.Controller.Battle{
             vBaseMap.BindingContext = mBaseMap.ViewModel;
             vBaseMap.UpdateView();
             vBaseMap.transform.parent.localScale = Vector3.one;
-            vBaseMap.MoveToCenter();
+            vBaseMap.MoveToPosition();
             base.InitMap();
             characters.ForEach(character=>character.Action = ActionType.move);
             battlefieldMaster.script.Add("Battle.boutwave(self);");

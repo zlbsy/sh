@@ -22,6 +22,7 @@ namespace App.Util.LSharp{
             subClasses.Add("Talk", LSharpTalk.Instance);
             subClasses.Add("Battle", LSharpBattle.Instance);
             subClasses.Add("Var", LSharpVarlable.Instance);
+            subClasses.Add("Tutorial", LSharpTutorial.Instance);
             if (LSharpVarlable.Instance.VarList.Count == 0 && Global.SUser.self.Progress != null)
             {
                 Dictionary<string, int> progress = Global.SUser.self.Progress;

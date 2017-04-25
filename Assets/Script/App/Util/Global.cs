@@ -8,6 +8,7 @@ namespace App.Util{
         public static App.Model.MVersion versions;
         public static SUser SUser;
         public static SGacha SGacha;
+        public static SBattlefield SBattlefield;
         public static string ssid;
         public static int DialogSortOrder = 0;
         public static App.Model.Master.MConstant Constant;
@@ -20,6 +21,7 @@ namespace App.Util{
             SceneManager = new SceneManager();
             SUser = new SUser();
             SGacha = new SGacha();
+            SBattlefield = new SBattlefield();
         }
         public static void ClearChild(GameObject obj)
         {

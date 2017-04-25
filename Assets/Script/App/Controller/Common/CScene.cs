@@ -12,6 +12,41 @@ namespace App.Controller.Common{
     /// 场景
     /// </summary>
     public class CScene : CBase {
+        private static string[] scriptWaitPaths = null;
+        public void WaitScript(string[] paths){
+            scriptWaitPaths = paths;
+            this.StartCoroutine(WaitScriptContinue());
+        }
+        private IEnumerator WaitScriptContinue(){
+            yield return new WaitForEndOfFrame();
+            GameObject targetObj = GameObject.Find(scriptWaitPaths[0]);
+            Debug.LogError("WaitScriptContinue : " + scriptWaitPaths[0] + ", targetObj : " + targetObj);
+            if (targetObj == null)
+            {
+                yield return new WaitForEndOfFrame();
+                App.Util.SceneManager.CurrentScene.StartCoroutine(WaitScriptContinue());
+                yield break;
+            }
+            Transform target = targetObj.transform;
+            int index = 1;
+            while (index < scriptWaitPaths.Length)
+            {
+                Transform tran = target.FindChild(scriptWaitPaths[index]);
+                if (tran == null)
+                {
+                    App.Util.SceneManager.CurrentScene.StartCoroutine(WaitScriptContinue());
+                    yield break;
+                }
+                else
+                {
+                    target = tran;
+                    index++;
+                }
+            }
+            scriptWaitPaths = null;
+            App.Util.LSharp.LSharpScript.Instance.Analysis();
+            yield break;
+        }
         public override IEnumerator Start()
         {
             //场景子窗口排序初始化
@@ -32,7 +67,11 @@ namespace App.Controller.Common{
                     this.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.TutorialDialog));
                 }
             }
-			yield return 0;
+            yield return 0;
+            if (scriptWaitPaths != null)
+            {
+                this.StartCoroutine(WaitScriptContinue());
+            }
 		}
 	}
 }

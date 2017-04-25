@@ -173,11 +173,14 @@ namespace App.View{
                 return _isDraging;
             }
         }
-        public void MoveToCenter(){
+        public void MoveToPosition(int x = int.MinValue, int y = 0){
             App.Model.Master.MBaseMap baseMapMaster = BaseMapCacher.Instance.Get(ViewModel.MapId.Value);
-            int widthCount = Mathf.FloorToInt(baseMapMaster.width / 2f);
-            int heightCount = Mathf.FloorToInt(baseMapMaster.height / 2f);
-            int i = heightCount * mapWidth + widthCount;
+            if (x == int.MinValue)
+            {
+                x = Mathf.FloorToInt(baseMapMaster.width / 2f);
+                y = Mathf.FloorToInt(baseMapMaster.height / 2f);
+            }
+            int i = y * mapWidth + x;
             VTile obj = tileUnits[i];
             //obj = tileUnits[0];
             //i = (baseMapMaster.height - 1) * mapWidth + baseMapMaster.width - 1;

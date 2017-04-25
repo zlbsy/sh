@@ -30,7 +30,7 @@ namespace App.Controller{
             vBaseMap.BindingContext = mBaseMap.ViewModel;
             vBaseMap.UpdateView();
             vBaseMap.transform.parent.localScale = Vector3.one;
-            vBaseMap.MoveToCenter();
+            vBaseMap.MoveToPosition();
         }
         public override void OnClickTile(App.Model.MTile tile){
             App.Model.Master.MArea area = tile as App.Model.Master.MArea;

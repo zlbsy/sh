@@ -9,6 +9,7 @@ using App.Util.Cacher;
 using Holoville.HOTween;
 using App.View.Top;
 using App.Controller.Common;
+using App.Util;
 
 
 namespace App.Controller{
@@ -20,8 +21,13 @@ namespace App.Controller{
         private MWorldMap mWorldMap;
         public override IEnumerator OnLoad( Request request ) 
         {  
+            if (Global.SUser.self.battlelist == null)
+            {
+                yield return StartCoroutine(Global.SBattlefield.RequestBattlelist());
+            }
             InitMap();
-            yield break;
+            yield return this.StartCoroutine(base.OnLoad(request));
+            Debug.LogError("CWorld OnLoad");
         }
         private void InitMap(){
             mWorldMap = new MWorldMap();
@@ -30,7 +36,8 @@ namespace App.Controller{
             vWorldMap.BindingContext = mWorldMap.ViewModel;
             vWorldMap.UpdateView();
             vWorldMap.transform.parent.localScale = Vector3.one;
-            vWorldMap.MoveToCenter();
+            App.Util.Global.SUser.self;
+            //vWorldMap.MoveToCenter();
         }
         /// <summary>
         /// 点击州府县，进入州府县场景

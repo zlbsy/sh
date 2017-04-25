@@ -46,8 +46,14 @@ namespace App.Controller{
                 TutorialAsset.assetbundle = assetbundle;
                 //App.Util.LSharp.LSharpScript.Instance.Analysis(TutorialAsset.Data.tutorial);
                 List<string> script = new List<string>();
-                script.Add("Talk.set(1,0,少年，现在开始教学,true);");
-                script.Add("Var.setprogress(tutorial,1);");
+                //script.Add("Talk.set(1,0,少年，现在开始教学,true);");
+                //script.Add("Var.setprogress(tutorial,1);");
+                //script.Add("Tutorial.clickmask(SceneTop.UICamera.Canvas.LeftFooter.MapButton,96,96);");
+                script.Add("Tutorial.call(SceneTop,GotoWorld);");
+                script.Add("Tutorial.wait(SceneWorld);");
+                //script.Add("Tutorial.call(Scene,OpenCharacterList);");
+                ///script.Add("Tutorial.wait(CharacterListDialog(Clone));");
+                //script.Add("Talk.set(1,0,武将一览打开了,true);");
                 script.Add("Tutorial.close();");
                 App.Util.LSharp.LSharpScript.Instance.Analysis(script);
             }));
@@ -68,7 +74,7 @@ namespace App.Controller{
             vTopMap.BindingContext = mTopMap.ViewModel;
             vTopMap.UpdateView();
             vTopMap.transform.parent.localScale = Vector3.one;
-            vTopMap.MoveToCenter();
+            vTopMap.MoveToPosition();
         }
         public void OnClickTile(int index){
             App.Model.Master.MBaseMap topMapMaster = BaseMapCacher.Instance.Get(mTopMap.MapId);

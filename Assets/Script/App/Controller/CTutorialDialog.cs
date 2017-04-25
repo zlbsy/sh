@@ -30,6 +30,10 @@ namespace App.Controller{
             HideFocus();
             yield return StartCoroutine(base.OnLoad(request));
         }
+        public void ClickFocus(){
+            HideFocus();
+            App.Util.LSharp.LSharpScript.Instance.Analysis();
+        }
         public void HideFocus(){
             rect.gameObject.SetActive(false);
         }

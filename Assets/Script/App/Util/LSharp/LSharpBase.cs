@@ -22,7 +22,7 @@ namespace App.Util.LSharp{
         protected void Analysis(string value, out string methodName, out string[] arguments){
             int methodStart = value.IndexOf('.');
             int start = value.IndexOf("(");
-            int end = value.IndexOf(")");
+            int end = value.LastIndexOf(")");
             methodName = value.Substring(methodStart + 1, start - methodStart - 1).Trim();
             //Debug.LogError("methodName="+methodName);
             methodName = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(methodName);

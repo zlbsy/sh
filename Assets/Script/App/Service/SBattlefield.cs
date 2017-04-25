@@ -6,7 +6,7 @@ using App.Model;
 
 namespace App.Service{
 	public class SBattlefield : SBase {
-        public MBattleChild[] battlelist;
+        //public MBattleChild[] battlelist;
 		public SBattlefield(){
 			
 		}
@@ -20,7 +20,8 @@ namespace App.Service{
             HttpClient client = new HttpClient();
             yield return App.Util.SceneManager.CurrentScene.StartCoroutine(client.Send( url ));
             ResponseBattleList response = client.Deserialize<ResponseBattleList>();
-            battlelist = response.battlelist;
+            //battlelist = response.battlelist;
+            App.Util.Global.SUser.self.battlelist = response.battlelist;
         }
 	}
 }
