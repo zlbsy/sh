@@ -182,12 +182,6 @@ namespace App.View{
             }
             int i = y * mapWidth + x;
             VTile obj = tileUnits[i];
-            //obj = tileUnits[0];
-            //i = (baseMapMaster.height - 1) * mapWidth + baseMapMaster.width - 1;
-            //obj = tileUnits[i];
-            //Debug.LogError(obj.transform.position.x +","+ ( obj.transform.position.y - 9f));
-            //1.4,-4.69
-            //21.755,-22.09
             Camera3dToPosition(obj.transform.position.x, obj.transform.position.y - 9f);
 
 

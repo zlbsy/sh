@@ -195,6 +195,7 @@
      <Compile Include="Assets\Script\App\Util\LSharp\LSharpTalk.cs" />
      <Compile Include="Assets\Script\App\Util\LSharp\LSharpTutorial.cs" />
      <Compile Include="Assets\Script\App\Util\LSharp\LSharpVarlable.cs" />
+     <Compile Include="Assets\Script\App\Util\LSharp\LSharpWait.cs" />
      <Compile Include="Assets\Script\App\Util\Language.cs" />
      <Compile Include="Assets\Script\App\Util\SceneManager.cs" />
      <Compile Include="Assets\Script\App\Util\Search\AStar.cs" />
@@ -290,9 +291,6 @@
      <None Include="Assets\Script\Plugin\JsonFx\Readme.txt" />
      <None Include="Assets\Script\Plugin\JsonFx\TODO.txt" />
      <None Include="Assets\Script\Plugin\JsonFx\License.txt" />
- <Reference Include="UnityEngine.Advertisements">
- <HintPath>/Applications/Unity5.5/Unity5.5.app/Contents/UnityExtensions/Unity/Advertisements/UnityEngine.Advertisements.dll</HintPath>
- </Reference>
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity5.5/Unity5.5.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
@@ -307,9 +305,6 @@
  </Reference>
  <Reference Include="UnityEngine.HoloLens">
  <HintPath>/Applications/Unity5.5/Unity5.5.app/Contents/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.Purchasing">
- <HintPath>/Applications/Unity5.5/Unity5.5.app/Contents/UnityExtensions/Unity/UnityPurchasing/UnityEngine.Purchasing.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.VR">
  <HintPath>/Applications/Unity5.5/Unity5.5.app/Contents/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>

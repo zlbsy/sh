@@ -16,28 +16,37 @@ namespace App.Controller{
     /// <summary>
     /// 大地图场景
     /// </summary>
-    public class CWorld : CScene {
-        [SerializeField]VWorldMap vWorldMap;
-        private MWorldMap mWorldMap;
+    public class CWorld : CBaseMap {
         public override IEnumerator OnLoad( Request request ) 
         {  
             if (Global.SUser.self.battlelist == null)
             {
                 yield return StartCoroutine(Global.SBattlefield.RequestBattlelist());
             }
-            InitMap();
             yield return this.StartCoroutine(base.OnLoad(request));
             Debug.LogError("CWorld OnLoad");
         }
-        private void InitMap(){
-            mWorldMap = new MWorldMap();
-            mWorldMap.MapId = App.Util.Global.Constant.world_map_id;
-            mWorldMap.Tiles = App.Util.Global.worlds;
-            vWorldMap.BindingContext = mWorldMap.ViewModel;
-            vWorldMap.UpdateView();
-            vWorldMap.transform.parent.localScale = Vector3.one;
-            App.Util.Global.SUser.self;
-            //vWorldMap.MoveToCenter();
+        protected override void InitMap(){
+            mBaseMap = new MWorldMap();
+            mBaseMap.MapId = App.Util.Global.Constant.world_map_id;
+            mBaseMap.Tiles = App.Util.Global.worlds;
+            vBaseMap.BindingContext = mBaseMap.ViewModel;
+            vBaseMap.UpdateView();
+            vBaseMap.transform.parent.localScale = Vector3.one;
+            if (App.Util.Global.SUser.self.IsTutorial)
+            {
+                return;
+            }
+            CameraTo(App.Util.Global.SUser.self.lastWorldId);
+        }
+        /*public override void CameraTo(int id){
+            App.Model.Master.MWorld mWorld = System.Array.Find(App.Util.Global.worlds, w=>w.id==id);
+            vBaseMap.MoveToPosition(mWorld.x, mWorld.y);
+            base.CameraTo(id);
+        }*/
+        public void OnClickTutorialTile(){
+            App.Model.Master.MWorld tile = App.Util.Global.worlds[0];
+            OnClickTile(tile);
         }
         /// <summary>
         /// 点击州府县，进入州府县场景
@@ -45,11 +54,14 @@ namespace App.Controller{
         /// <param name="index">州府县索引</param>
         public void OnClickTile(int index){
             //地图信息
-            App.Model.Master.MBaseMap topMapMaster = BaseMapCacher.Instance.Get(mWorldMap.MapId);
+            App.Model.Master.MBaseMap topMapMaster = BaseMapCacher.Instance.Get(mBaseMap.MapId);
             //根据索引获取所点击的州府县坐标
             Vector2 coordinate = topMapMaster.GetCoordinateFromIndex(index);
             //根据州府县坐标获取州府县
-            App.Model.Master.MWorld tile = System.Array.Find(mWorldMap.Tiles, _=>_.x == coordinate.x && _.y == coordinate.y) as App.Model.Master.MWorld;
+            App.Model.Master.MWorld tile = System.Array.Find(mBaseMap.Tiles, _=>_.x == coordinate.x && _.y == coordinate.y) as App.Model.Master.MWorld;
+            OnClickTile(tile);
+        }
+        public override void OnClickTile(App.Model.MTile tile){
             if (tile != null)
             {
                 Request req = Request.Create("worldId", tile.id, "nameKey", tile.Master.name);

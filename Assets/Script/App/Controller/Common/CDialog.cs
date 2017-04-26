@@ -81,7 +81,11 @@ namespace App.Controller.Common{
                 canvasGroup.alpha = 0;
             }
             canvas = this.GetComponent<Canvas>();
-            if (canvas != null && staticSortingOrder == 0)
+            if (canvas == null)
+            {
+                return;
+            }
+            if (staticSortingOrder == 0)
             {
                 canvas.sortingOrder = ++App.Util.Global.DialogSortOrder;
             }

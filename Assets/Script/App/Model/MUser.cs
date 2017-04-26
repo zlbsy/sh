@@ -17,6 +17,16 @@ namespace App.Model{
         public string name;
         public string password;
         public int lastStageId;
+        public int lastAreaId{
+            get{ 
+                if (lastStageId == 0)
+                {
+                    return 0;
+                }
+                App.Model.Master.MArea area = AreaCacher.Instance.GetArea(lastStageId);
+                return area.id;
+            }
+        }
         public int lastWorldId{
             get{ 
                 if (lastStageId == 0)
@@ -40,6 +50,11 @@ namespace App.Model{
                 return 0;
             }
             return Progress[key];
+        }
+        public bool IsTutorial{
+            get{ 
+                return GetValue("tutorial") < App.Util.Global.Constant.tutorial_end;
+            }
         }
         public string Nickname{
             get{ 

@@ -30,8 +30,22 @@ namespace App.Controller{
             vBaseMap.BindingContext = mBaseMap.ViewModel;
             vBaseMap.UpdateView();
             vBaseMap.transform.parent.localScale = Vector3.one;
-            vBaseMap.MoveToPosition();
+            if (App.Util.Global.SUser.self.IsTutorial)
+            {
+                return;
+            }
+            int lastAreaId = App.Util.Global.SUser.self.lastAreaId > 0 ? App.Util.Global.SUser.self.lastAreaId : mBaseMap.Tiles[0].id;
+            CameraTo(lastAreaId);
         }
+        public void OnClickTutorialTile(){
+            App.Model.MTile tile = mBaseMap.Tiles[0];
+            OnClickTile(tile);
+        }
+        /*public override void CameraTo(int id){
+            App.Model.MTile tile = System.Array.Find(mBaseMap.Tiles, w=>w.id==id);
+            vBaseMap.MoveToPosition(tile.x, tile.y);
+            base.CameraTo(id);
+        }*/
         public override void OnClickTile(App.Model.MTile tile){
             App.Model.Master.MArea area = tile as App.Model.Master.MArea;
             if (area != null)

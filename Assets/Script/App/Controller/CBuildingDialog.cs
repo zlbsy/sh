@@ -37,14 +37,14 @@ namespace App.Controller{
         public void ToBuild(int buildId){
             MBuilding mBuilding = BuildingCacher.Instance.GetBuilding(buildId);
             App.Model.Master.MBuilding buildingMaster = mBuilding.Master;
-            VTopMap vTopMap = (App.Util.SceneManager.CurrentScene as CTop).GetVTopMap();
-            App.Model.MTile[] tiles = vTopMap.ViewModel.Tiles.Value;
+            VBaseMap vBaseMap = (App.Util.SceneManager.CurrentScene as CTop).GetVBaseMap();
+            App.Model.MTile[] tiles = vBaseMap.ViewModel.Tiles.Value;
             int currentNum = System.Array.FindAll(tiles, _ => _.tile_id == buildingMaster.tile_id).Length;
             if (currentNum < buildingMaster.sum)
             {
                 if (BuyManager.CanBuy(buildingMaster.price, buildingMaster.price_type))
                 {
-                    this.StartCoroutine(Build(mBuilding.TileId, vTopMap, buildingMaster));
+                    this.StartCoroutine(Build(mBuilding.TileId, vBaseMap, buildingMaster));
                 }
                 else
                 {
@@ -57,16 +57,16 @@ namespace App.Controller{
                 CAlertDialog.Show("已经达到了购买的上限了！");
             }
         }
-        private IEnumerator Build(int buildId, VTopMap vTopMap, App.Model.Master.MBuilding buildingMaster){
-            App.Model.Master.MBaseMap topMapMaster = BaseMapCacher.Instance.Get(vTopMap.ViewModel.MapId.Value);
+        private IEnumerator Build(int buildId, VBaseMap vBaseMap, App.Model.Master.MBuilding buildingMaster){
+            App.Model.Master.MBaseMap topMapMaster = BaseMapCacher.Instance.Get(vBaseMap.ViewModel.MapId.Value);
             Vector2 coordinate = topMapMaster.GetCoordinateFromIndex(tileIndex);
             SShop sShop = new SShop();
             yield return StartCoroutine(sShop.RequestBuyBuild(buildId, (int)coordinate.x, (int)coordinate.y));
 
             App.Model.MTile currentTile = App.Model.MTile.Create(buildingMaster.tile_id, (int)coordinate.x, (int)coordinate.y);
-            List<App.Model.MTile> tileList = vTopMap.ViewModel.Tiles.Value.ToList();
+            List<App.Model.MTile> tileList = vBaseMap.ViewModel.Tiles.Value.ToList();
             tileList.Add(currentTile);
-            vTopMap.ViewModel.Tiles.Value = tileList.ToArray();
+            vBaseMap.ViewModel.Tiles.Value = tileList.ToArray();
             this.Close();
         }
 	}

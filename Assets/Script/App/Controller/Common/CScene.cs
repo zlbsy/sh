@@ -61,8 +61,7 @@ namespace App.Controller.Common{
             SUser sUser = Global.SUser;
             if (sUser != null && sUser.self != null && Global.Constant != null)
             {
-                int tutorial = sUser.self.GetValue("tutorial");
-                if (tutorial < Global.Constant.tutorial_end)
+                if (sUser.self.IsTutorial)
                 {
                     this.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.TutorialDialog));
                 }

@@ -21,7 +21,7 @@ namespace App.Controller{
         public override IEnumerator OnLoad( Request request ) 
         {  
             InitMap();
-            yield break;
+            yield return this.StartCoroutine(base.OnLoad(request));
         }
         protected virtual void InitManager(){
             mapSearch = new App.Util.Search.TileMap(mBaseMap, vBaseMap);
@@ -30,6 +30,11 @@ namespace App.Controller{
         }
         protected virtual void InitMap(){
             InitManager();
+        }
+        public virtual void CameraTo(int id){
+            App.Model.MTile tile = System.Array.Find(mBaseMap.Tiles, w=>w.id==id);
+            vBaseMap.MoveToPosition(tile.x, tile.y);
+            App.Util.LSharp.LSharpScript.Instance.Analysis();
         }
         /// <summary>
         /// 点击地图块儿
