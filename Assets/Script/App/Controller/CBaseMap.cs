@@ -9,6 +9,7 @@ using App.Util.Cacher;
 using Holoville.HOTween;
 using App.View.Top;
 using App.Controller.Common;
+using System.Linq;
 
 
 namespace App.Controller{
@@ -67,6 +68,26 @@ namespace App.Controller{
         public MCharacter GetCharacterModel(App.View.Character.VCharacter vCharacter){
             MCharacter mCharacter = System.Array.Find(mBaseMap.Characters, _=>_.CharacterId == vCharacter.ViewModel.CharacterId.Value && _.Belong == vCharacter.ViewModel.Belong.Value);
             return mCharacter;
+        }
+        public void addCharacter(int npcId, ActionType action, string direction, int x, int y){
+            MCharacter mCharacter = NpcCacher.Instance.GetFromNpc(npcId);
+            mCharacter.Action = action;
+            mCharacter.CoordinateX = x;
+            mCharacter.CoordinateY = y;
+            mCharacter.Direction = (Direction)System.Enum.Parse(typeof(Direction), direction, true);
+            /*
+            mCharacter.CharacterId = characterId;
+            mCharacter.MoveType = MoveType.cavalry;
+            mCharacter.WeaponType = WeaponType.longKnife;
+            mCharacter.Weapon = 1;
+            mCharacter.Clothes = 1;
+            mCharacter.Horse = 1;
+            mCharacter.Head = 1;
+            mCharacter.Hat = 1;
+            */
+            List<MCharacter> characters = mBaseMap.Characters == null ? new List<MCharacter>() : mBaseMap.Characters.ToList();
+            characters.Add(mCharacter);
+            mBaseMap.Characters = characters.ToArray();
         }
 	}
 }

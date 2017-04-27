@@ -24,6 +24,9 @@ namespace App.Util.LSharp{
             subClasses.Add("Var", LSharpVarlable.Instance);
             subClasses.Add("Tutorial", LSharpTutorial.Instance);
             subClasses.Add("Wait", LSharpWait.Instance);
+            LSharpVarlable.SetVarlable("player_id", Global.SUser.self.id.ToString());
+            LSharpVarlable.SetVarlable("player_name", Global.SUser.self.name);
+            LSharpVarlable.SetVarlable("player_nickname", Global.SUser.self.Nickname);
             if (LSharpVarlable.Instance.VarList.Count == 0 && Global.SUser.self.Progress != null)
             {
                 Dictionary<string, int> progress = Global.SUser.self.Progress;

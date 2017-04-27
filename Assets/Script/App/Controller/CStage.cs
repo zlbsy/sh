@@ -51,24 +51,5 @@ namespace App.Controller{
             Request req = Request.Create("worldId", saveRequest.Get<int>("worldId"), "nameKey", saveRequest.Get<string>("nameKey"));
             App.Util.SceneManager.LoadScene( App.Util.SceneManager.Scenes.Area.ToString(), req );
         }
-        public void addCharacter(int npcId, ActionType action, string direction, int x, int y){
-            MCharacter mCharacter = NpcCacher.Instance.GetFromNpc(npcId);
-            mCharacter.Action = action;
-            mCharacter.CoordinateX = x;
-            mCharacter.CoordinateY = y;
-            /*
-            mCharacter.CharacterId = characterId;
-            mCharacter.MoveType = MoveType.cavalry;
-            mCharacter.WeaponType = WeaponType.longKnife;
-            mCharacter.Weapon = 1;
-            mCharacter.Clothes = 1;
-            mCharacter.Horse = 1;
-            mCharacter.Head = 1;
-            mCharacter.Hat = 1;
-            */
-            List<MCharacter> characters = mBaseMap.Characters.ToList();
-            characters.Add(mCharacter);
-            mBaseMap.Characters = characters.ToArray();
-        }
 	}
 }

@@ -61,7 +61,7 @@ namespace App.Controller.Battle{
             List<MCharacter> characters = new List<MCharacter>();
             for (int i = 0; i < characterIds.Count; i++)
             {
-                MCharacter mCharacter = System.Array.Find(App.Util.Global.SUser.self.characters, _=>_.Id==characterIds[i]);
+                MCharacter mCharacter = System.Array.Find(App.Util.Global.SUser.self.characters, _=>_.CharacterId==characterIds[i]);
                 mCharacter.Belong = Belong.self;
                 //己方出战坐标
                 App.Model.Master.MBattleOwn mBattleOwn = battlefieldMaster.owns[i];

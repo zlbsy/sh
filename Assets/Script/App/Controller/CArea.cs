@@ -27,6 +27,7 @@ namespace App.Controller{
             mBaseMap = new MBaseMap();
             mBaseMap.MapId = worldId;
             mBaseMap.Tiles = AreaCacher.Instance.GetAreas(worldId);
+            mBaseMap.Characters = new MCharacter[]{};
             vBaseMap.BindingContext = mBaseMap.ViewModel;
             vBaseMap.UpdateView();
             vBaseMap.transform.parent.localScale = Vector3.one;

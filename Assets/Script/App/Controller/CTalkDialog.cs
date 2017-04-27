@@ -36,7 +36,21 @@ namespace App.Controller{
         }
         public override IEnumerator OnLoad( Request request ) 
 		{  
-            int characterId = request.Get<int>("characterId");
+            int faceId;
+            string name;
+            if (request.Has("userId"))
+            {
+                int userId = request.Get<int>("userId");
+                App.Model.MUser user = App.Util.Cacher.UserCacher.Instance.Get(userId);
+                faceId = user.Face;
+                name = user.name;
+            }
+            else
+            {
+                faceId = request.Get<int>("characterId");
+                App.Model.Master.MCharacter mCharacter = CharacterCacher.Instance.Get(faceId);
+                name = mCharacter.name;
+            }
             message = request.Get<string>("message");
             bool isLeft = request.Get<bool>("isLeft");
             if (isLeft)
@@ -52,9 +66,8 @@ namespace App.Controller{
                 talkTransform.anchoredPosition = new Vector2(rightTextPosition, talkTransform.anchoredPosition.y);
             }
             characterTalk.text = string.Empty;
-            face.CharacterId = characterId;
-            App.Model.Master.MCharacter mCharacter = CharacterCacher.Instance.Get(characterId);
-            characterName.text = mCharacter.name;
+            face.CharacterId = faceId;
+            characterName.text = name;
             StartCoroutine(UpdateMessage());
             yield return StartCoroutine(base.OnLoad(request));
         }
@@ -67,6 +80,10 @@ namespace App.Controller{
         /// <param name="onComplete">对话框结束回掉</param>
         public static void ToShow(int characterId, string message, bool isLeft = true, System.Action onComplete = null){
             Request req = Request.Create("characterId",characterId,"message",message,"isLeft",isLeft,"closeEvent",onComplete);
+            SceneManager.CurrentScene.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.TalkDialog, req));
+        }
+        public static void ToShowPlayer(int userId, string message, bool isLeft = true, System.Action onComplete = null){
+            Request req = Request.Create("userId",userId,"message",message,"isLeft",isLeft,"closeEvent",onComplete);
             SceneManager.CurrentScene.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.TalkDialog, req));
         }
         IEnumerator UpdateMessage(){

@@ -15,5 +15,12 @@ namespace App.Util.LSharp{
             bool isLeft = arguments[3] == "true";
             CTalkDialog.ToShow(characterId, message, isLeft, LSharpScript.Instance.Analysis);
         }
+        public void Setplayer(string[] arguments){
+            int userId = int.Parse(arguments[0]);
+            //int faceType = int.Parse(arguments[1]); //TODO:表情扩展用
+            string message = arguments[2];
+            bool isLeft = arguments[3] == "true";
+            CTalkDialog.ToShowPlayer(userId, message, isLeft, LSharpScript.Instance.Analysis);
+        }
 	}
 }

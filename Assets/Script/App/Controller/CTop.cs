@@ -44,9 +44,51 @@ namespace App.Controller{
                 TutorialAsset.assetbundle = assetbundle;
                 //App.Util.LSharp.LSharpScript.Instance.Analysis(TutorialAsset.Data.tutorial);
                 List<string> script = new List<string>();
+                /*script.Add("Talk.set(4100,0,@player_name，起床了，太阳都晒到屁股了！,false);");
+                script.Add("Talk.setplayer(@player_id,0,......,true);");
+                script.Add("Talk.setplayer(@player_id,0,哇！！你是谁啊？怎么随便跑到别人家里来了？,true);");
+                script.Add("Talk.set(4100,0,哈哈！你果然连我都不认识了啊！,false);");
+                script.Add("Talk.setplayer(@player_id,0,果然？什么啊？我认识你？,true);");
+                script.Add("Talk.set(4100,0,我问你！你知道自己的身世吗？,false);");
+                script.Add("Talk.setplayer(@player_id,0,我......这个......,true);");
+                script.Add("Talk.set(4100,0,你竖起耳朵听好了，我接下来说的话，关系到你的命运。,false);");
+                script.Add("Talk.setplayer(@player_id,0,怪里怪气的，暂且听一听吧,true);");
+                script.Add("Talk.set(4100,0,你是星宿下凡，原本是九天玄女娘娘的大弟子——青衣。,false);");
+                script.Add("Talk.setplayer(@player_id,0,等等！说什么鬼话？那我不就是神仙了？,true);");
+                script.Add("Talk.set(4100,0,不许插嘴！好好听我说！,false);");
+                script.Add("Talk.setplayer(@player_id,0,哦，但是九天玄女是谁啊？,true);");
+                script.Add("Talk.set(4100,0,闭嘴！,false);");
+                script.Add("Talk.setplayer(@player_id,0,......,true);");
+                script.Add("Talk.set(4100,0,九天玄女娘娘是上古神仙，娘娘命你看守镇魔塔，你因贪睡，放走了镇魔塔里的数百只妖星魔星，娘娘才罚你下界，让你抓捕放走的妖星魔星！,false);");
+                script.Add("Talk.setplayer(@player_id,0,......,true);");
+                script.Add("Talk.set(4100,0,你发什么呆啊，我说完了！,false);");
+                script.Add("Talk.setplayer(@player_id,0,继续编啊！,true);");
+                script.Add("Talk.set(4100,0,谁编了！我说的都是事实！,false);");
+                script.Add("Talk.setplayer(@player_id,0,我既然是神仙，怎么不会法术呢？,true);");
+                script.Add("Talk.set(4100,0,那是因为你是被贬下界，所以法力都被封起来了！,false);");
+                script.Add("Talk.setplayer(@player_id,0,那我怎么抓那些妖星魔星啊？,true);");
+                script.Add("Talk.set(4100,0,这我帮不了你，你要自己想办法，现在给你第一个任务！,false);");
+                script.Add("Talk.setplayer(@player_id,0,还有其他任务？,true);");*/
+                script.Add("Talk.set(4100,0,别废话，跟我来，点一下这里！,false);");
+                script.Add("Tutorial.clickmask(SceneTop.UICamera.Canvas.LeftFooter.MapButton,0,0,96,96);");
+                script.Add("Tutorial.call(SceneTop,GotoWorld);");
+                script.Add("Tutorial.wait(SceneWorld);");
+                script.Add("Tutorial.camerato(1);");
+                script.Add("Wait.time(0.4);");
+                script.Add("Talk.set(4100,0,别废话，跟我来，点一下这里！,false);");
+                script.Add("Tutorial.clickmask3d(SceneWorld.3DPanel.BaseMap.Tile_6_5,-50,-50,100,100);");
+                script.Add("Tutorial.call(SceneWorld,OnClickTutorialTile);");
+                script.Add("Tutorial.wait(SceneArea);");
+                script.Add("Character.add(1,stand,right,4,3,true);");
+                script.Add("Character.add(2,stand,left,5,3,true);");
+                script.Add("Tutorial.camerato(1);");
+                script.Add("Wait.time(0.4);");
+                script.Add("Talk.set(4100,0,看到前面了吗？八十万禁军教头王进遇到了些麻烦！,false);");
+
+                /*
                 //script.Add("Talk.set(1,0,少年，现在开始教学,true);");
                 //script.Add("Var.setprogress(tutorial,1);");
-                //script.Add("Tutorial.clickmask(SceneTop.UICamera.Canvas.LeftFooter.MapButton,0,0,96,96);");
+                script.Add("Tutorial.clickmask(SceneTop.UICamera.Canvas.LeftFooter.MapButton,0,0,96,96);");
                 script.Add("Tutorial.call(SceneTop,GotoWorld);");
                 script.Add("Tutorial.wait(SceneWorld);");
                 script.Add("Tutorial.camerato(1);");
@@ -62,6 +104,7 @@ namespace App.Controller{
                 //script.Add("Tutorial.call(Scene,OpenCharacterList);");
                 ///script.Add("Tutorial.wait(CharacterListDialog(Clone));");
                 //script.Add("Talk.set(1,0,武将一览打开了,true);");
+                */
                 script.Add("Tutorial.close();");
                 App.Util.LSharp.LSharpScript.Instance.Analysis(script);
             }));

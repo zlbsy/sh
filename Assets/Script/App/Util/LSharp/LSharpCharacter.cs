@@ -15,14 +15,14 @@ namespace App.Util.LSharp{
             string direction = arguments[2];
             int x = int.Parse(arguments[3]);
             int y = int.Parse(arguments[4]);
-            CStage cStage = App.Util.SceneManager.CurrentScene as CStage;
-            if (cStage == null)
+            CBaseMap cBaseMap = App.Util.SceneManager.CurrentScene as CBaseMap;
+            if (cBaseMap == null)
             {
                 LSharpScript.Instance.Analysis();
                 return;
             }
             App.Model.ActionType actionType = (App.Model.ActionType)Enum.Parse(typeof(App.Model.ActionType), action);
-            cStage.addCharacter(characterId, actionType, direction, x, y);
+            cBaseMap.addCharacter(characterId, actionType, direction, x, y);
             LSharpScript.Instance.Analysis();
         }
 	}
