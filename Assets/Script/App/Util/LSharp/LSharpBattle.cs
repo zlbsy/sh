@@ -14,7 +14,7 @@ namespace App.Util.LSharp{
             int battleId = int.Parse(arguments[0]);
             Request req = Request.Create("battleId", battleId);
             App.Util.SceneManager.CurrentScene.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.ReadyBattleDialog, req));
-            //LSharpScript.Instance.Analysis();
+            LSharpScript.Instance.Analysis();
         }
         public void Boutwave(string[] arguments){
             App.Model.Belong belong = (App.Model.Belong)System.Enum.Parse(typeof(App.Model.Belong), arguments[0], true);

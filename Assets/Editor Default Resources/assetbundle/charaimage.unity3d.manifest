@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 3046532894
+CRC: 3386002822
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: b5865fe708bd5bd3b1e2a9bf9ade0160
+    Hash: 5bc36f19b70948862f8d05066a444b5a
   TypeTreeHash:
     serializedVersion: 2
     Hash: 4d24bf54f46935ed9e6cf78ac481bb9d
@@ -14,25 +14,43 @@ ClassTypes:
 - Class: 213
   Script: {instanceID: 0}
 Assets:
+- Assets/Atlas/chara/body_infantry_shortKnife_stand_1.png
+- Assets/Atlas/chara/body_cavalry_sword_move_2.png
+- Assets/Atlas/chara/body_cavalry_sword_hert_1.png
 - Assets/Atlas/chara/body_infantry_longKnife_move_2.png
 - Assets/Atlas/chara/body_cavalry_longKnife_attack_2.png
+- Assets/Atlas/chara/body_cavalry_sword_move_1.png
 - Assets/Atlas/chara/body_infantry_longKnife_attack_3.png
 - Assets/Atlas/chara/body_cavalry_longKnife_move_2.png
 - Assets/Atlas/chara/body_cavalry_longKnife_attack_1.png
 - Assets/Atlas/chara/body_infantry_longKnife_move_1.png
+- Assets/Atlas/chara/body_cavalry_sword_attack_3.png
 - Assets/Atlas/chara/head_1.png
+- Assets/Atlas/chara/body_cavalry_sword_attack_2.png
 - Assets/Atlas/chara/body_cavalry_longKnife_attack_3.png
+- Assets/Atlas/chara/body_infantry_shortKnife_attack_1.png
+- Assets/Atlas/chara/body_infantry_shortKnife_block_1.png
+- Assets/Atlas/chara/body_cavalry_sword_attack_1.png
 - Assets/Atlas/chara/body_infantry_longKnife_attack_4.png
 - Assets/Atlas/chara/body_infantry_longKnife_block_1.png
+- Assets/Atlas/chara/body_infantry_shortKnife_attack_3.png
 - Assets/Atlas/chara/head_2.png
+- Assets/Atlas/chara/body_cavalry_sword_stand_1.png
 - Assets/Atlas/chara/body_cavalry_longKnife_attack_4.png
+- Assets/Atlas/chara/body_cavalry_sword_attack_4.png
+- Assets/Atlas/chara/body_infantry_shortKnife_hert_1.png
+- Assets/Atlas/chara/body_infantry_shortKnife_attack_4.png
+- Assets/Atlas/chara/body_infantry_shortKnife_attack_2.png
 - Assets/Atlas/chara/body_cavalry_longKnife_block_1.png
 - Assets/Atlas/chara/body_cavalry_longKnife_stand_1.png
 - Assets/Atlas/chara/head_3.png
 - Assets/Atlas/chara/body_infantry_longKnife_attack_2.png
 - Assets/Atlas/chara/body_infantry_longKnife_attack_1.png
+- Assets/Atlas/chara/body_infantry_shortKnife_move_2.png
+- Assets/Atlas/chara/body_cavalry_sword_block_1.png
 - Assets/Atlas/chara/body_infantry_longKnife_hert_1.png
 - Assets/Atlas/chara/body_cavalry_longKnife_move_1.png
 - Assets/Atlas/chara/body_cavalry_longKnife_hert_1.png
 - Assets/Atlas/chara/body_infantry_longKnife_stand_1.png
+- Assets/Atlas/chara/body_infantry_shortKnife_move_1.png
 Dependencies: []

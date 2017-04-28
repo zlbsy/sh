@@ -71,11 +71,11 @@ namespace MyEditor
             }
             if (GUI.Button(new Rect(200, 100, 50, 30), "Hert"))
             {
-                model.Action = ActionType.hert;
+                this.StartCoroutine(ChangeAction(ActionType.hert));
             }
             if (GUI.Button(new Rect(250, 100, 50, 30), "Attack"))
             {
-                model.Action = ActionType.attack;
+                this.StartCoroutine(ChangeAction(ActionType.attack));
             }
             if (GUI.Button(new Rect(100, 140, 100, 30), "ChangeHead"))
             {
@@ -138,6 +138,12 @@ namespace MyEditor
                 App.Model.Battle.MDamageParam arg = new App.Model.Battle.MDamageParam(-20);
                 view.SendMessage(App.Controller.Battle.CharacterEvent.OnDamage.ToString(), arg);
             }
+        }
+
+        IEnumerator ChangeAction(ActionType at)
+        {
+            yield return new WaitForSeconds(0.5f);
+            model.Action = at;
         }
 
         IEnumerator Start()

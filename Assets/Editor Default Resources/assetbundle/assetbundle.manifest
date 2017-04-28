@@ -1,7 +1,7 @@
 ManifestFileVersion: 0
-CRC: 3056664145
+CRC: 3525201438
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
-      Name: avatarasset.unity3d
+      Name: charaimage.unity3d
       Dependencies: {}

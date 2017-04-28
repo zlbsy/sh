@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2932369014
+CRC: 2704998087
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 57a0a9990fcd7d71a94b143156dd28f3
+    Hash: 6ea98695197e23d7bb0ef0f3a0c365f7
   TypeTreeHash:
     serializedVersion: 2
     Hash: 4d24bf54f46935ed9e6cf78ac481bb9d
@@ -14,16 +14,29 @@ ClassTypes:
 - Class: 213
   Script: {instanceID: 0}
 Assets:
+- Assets/Atlas/weapon/weapon_3_infantry_shortKnife_hert_1.png
 - Assets/Atlas/weapon/weapon_2_cavalry_longKnife_attack_3.png
 - Assets/Atlas/weapon/weapon_1_infantry_longKnife_attack_4.png
 - Assets/Atlas/weapon/weapon_1_cavalry_longKnife_attack_2.png
 - Assets/Atlas/weapon/weapon_1_infantry_longKnife_attack_1.png
+- Assets/Atlas/weapon/weapon_4_cavalry_sword_attack_3.png
 - Assets/Atlas/weapon/weapon_1_cavalry_longKnife_move_1.png
+- Assets/Atlas/weapon/weapon_3_infantry_shortKnife_attack_3.png
 - Assets/Atlas/weapon/weapon_1_infantry_longKnife_move_1.png
+- Assets/Atlas/weapon/weapon_4_cavalry_sword_attack_4.png
 - Assets/Atlas/weapon/weapon_1_infantry_longKnife_block_1.png
+- Assets/Atlas/weapon/weapon_4_cavalry_sword_attack_1.png
+- Assets/Atlas/weapon/weapon_3_infantry_shortKnife_move_2.png
 - Assets/Atlas/weapon/weapon_2_cavalry_longKnife_move_2.png
+- Assets/Atlas/weapon/weapon_3_infantry_shortKnife_block_1.png
+- Assets/Atlas/weapon/weapon_4_cavalry_sword_move_1.png
+- Assets/Atlas/weapon/weapon_4_cavalry_sword_hert_1.png
 - Assets/Atlas/weapon/weapon_2_cavalry_longKnife_attack_2.png
+- Assets/Atlas/weapon/weapon_4_cavalry_sword_block_1.png
 - Assets/Atlas/weapon/weapon_1_infantry_longKnife_hert_1.png
+- Assets/Atlas/weapon/weapon_3_infantry_shortKnife_attack_1.png
+- Assets/Atlas/weapon/weapon_3_infantry_shortKnife_stand_1.png
+- Assets/Atlas/weapon/weapon_4_cavalry_sword_stand_1.png
 - Assets/Atlas/weapon/weapon_1_cavalry_longKnife_attack_1.png
 - Assets/Atlas/weapon/weapon_1_cavalry_longKnife_block_1.png
 - Assets/Atlas/weapon/weapon_1_infantry_longKnife_stand_1.png
@@ -31,7 +44,11 @@ Assets:
 - Assets/Atlas/weapon/weapon_1_cavalry_longKnife_hert_1.png
 - Assets/Atlas/weapon/weapon_1_cavalry_longKnife_stand_1.png
 - Assets/Atlas/weapon/weapon_2_cavalry_longKnife_stand_1.png
+- Assets/Atlas/weapon/weapon_3_infantry_shortKnife_attack_2.png
+- Assets/Atlas/weapon/weapon_3_infantry_shortKnife_attack_4.png
 - Assets/Atlas/weapon/weapon_1_infantry_longKnife_attack_2.png
+- Assets/Atlas/weapon/weapon_4_cavalry_sword_attack_2.png
+- Assets/Atlas/weapon/weapon_3_infantry_shortKnife_move_1.png
 - Assets/Atlas/weapon/weapon_1_cavalry_longKnife_attack_4.png
 - Assets/Atlas/weapon/weapon_1_cavalry_longKnife_move_2.png
 - Assets/Atlas/weapon/weapon_1_infantry_longKnife_move_2.png
@@ -40,5 +57,6 @@ Assets:
 - Assets/Atlas/weapon/weapon_2_cavalry_longKnife_attack_4.png
 - Assets/Atlas/weapon/weapon_1_cavalry_longKnife_attack_3.png
 - Assets/Atlas/weapon/weapon_2_cavalry_longKnife_attack_1.png
+- Assets/Atlas/weapon/weapon_4_cavalry_sword_move_2.png
 - Assets/Atlas/weapon/weapon_1_infantry_longKnife_attack_3.png
 Dependencies: []
