@@ -280,7 +280,8 @@ namespace App.View.Character{
             }
 
             //Weapon
-            key = string.Format("weapon_{0}_{1}_{2}_{3}_{4}", ViewModel.Weapon.Value, ViewModel.MoveType.Value, ViewModel.WeaponType.Value, ViewModel.Action.Value, avatarAction.body.index);
+            key = string.Format("weapon_{0}_{1}_{2}_{3}_{4}", ViewModel.Weapon.Value, ViewModel.MoveType.Value, ViewModel.WeaponType.Value, ViewModel.Action.Value, avatarAction.weapon.index);
+            //Debug.LogError("Weapon key="+key);
             imgWeapon.sprite = ImageAssetBundleManager.GetWeapon(key);
 
             imgBody.transform.localPosition = avatarAction.body.position;

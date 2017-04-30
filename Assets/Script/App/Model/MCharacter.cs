@@ -21,7 +21,7 @@ namespace App.Model{
         /// <summary>
         /// 短刀
         /// </summary>
-        knife,
+        shortKnife,
         /// <summary>
         /// 大刀
         /// </summary>
@@ -137,7 +137,7 @@ namespace App.Model{
         /// <value><c>true</c> if this instance is knife; otherwise, <c>false</c>.</value>
         public bool IsKnife{
             get{ 
-                return this.WeaponType == WeaponType.longKnife || this.WeaponType == WeaponType.knife;
+                return this.WeaponType == WeaponType.longKnife || this.WeaponType == WeaponType.shortKnife;
             }
         }
         /// <summary>
@@ -155,7 +155,7 @@ namespace App.Model{
         /// <value><c>true</c> if this instance is short weapon; otherwise, <c>false</c>.</value>
         public bool IsShortWeapon{
             get{ 
-                return this.WeaponType == WeaponType.knife || this.WeaponType == WeaponType.ax || this.WeaponType == WeaponType.sword || this.WeaponType == WeaponType.fist;
+                return this.WeaponType == WeaponType.shortKnife || this.WeaponType == WeaponType.ax || this.WeaponType == WeaponType.sword || this.WeaponType == WeaponType.fist;
             }
         }
         /// <summary>

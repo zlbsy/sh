@@ -9,11 +9,15 @@ namespace App.Model.Avatar{
 		public MoveArms(){
 		}
 		public Arms shortKnife;
-		public Arms longKnife;
+        public Arms longKnife;
+        public Arms sword;
 		public AvatarAction GetAvatarAction(WeaponType weaponType, ActionType actionType, int index){
 			Arms arms = null;
-			switch(weaponType){
-			case WeaponType.knife:
+            switch(weaponType){
+            case WeaponType.sword:
+                arms = sword;
+                break;
+			case WeaponType.shortKnife:
 				arms = shortKnife;
 				break;
 			case WeaponType.longKnife:

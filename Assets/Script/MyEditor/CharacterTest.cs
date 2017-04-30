@@ -42,10 +42,10 @@ namespace MyEditor
                 obj.SetActive(true);
                 //obj.GetComponent<RectTransform> ().localScale = new Vector3(2f,2f,1f);
                 model = new MCharacter();
-                model.MoveType = MoveType.cavalry;
-                model.WeaponType = WeaponType.sword;
-                model.Weapon = 4;
-                model.Clothes = 5;
+                model.MoveType = MoveType.infantry;
+                model.WeaponType = WeaponType.shortKnife;
+                model.Weapon = 3;
+                model.Clothes = 4;
                 //model.Action = ActionType.attack;
                 model.Horse = 1;
                 model.Head = 1;
