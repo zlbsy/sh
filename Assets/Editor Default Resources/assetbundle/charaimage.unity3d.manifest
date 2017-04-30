@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 4089199577
+CRC: 3945300215
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 27fd33be5addbd3a7217d5245ff59b27
+    Hash: 712df1425971ba78036652a6ec716ac6
   TypeTreeHash:
     serializedVersion: 2
     Hash: 4d24bf54f46935ed9e6cf78ac481bb9d
@@ -17,21 +17,29 @@ Assets:
 - Assets/Atlas/chara/body_infantry_shortKnife_stand_1.png
 - Assets/Atlas/chara/body_cavalry_sword_move_2.png
 - Assets/Atlas/chara/body_cavalry_sword_hert_1.png
+- Assets/Atlas/chara/body_infantry_short_block_1.png
 - Assets/Atlas/chara/body_infantry_longKnife_move_2.png
 - Assets/Atlas/chara/body_cavalry_longKnife_attack_2.png
 - Assets/Atlas/chara/body_cavalry_sword_move_1.png
+- Assets/Atlas/chara/body_infantry_short_attack_1.png
 - Assets/Atlas/chara/body_infantry_longKnife_attack_3.png
 - Assets/Atlas/chara/body_cavalry_longKnife_move_2.png
 - Assets/Atlas/chara/body_cavalry_longKnife_attack_1.png
 - Assets/Atlas/chara/body_infantry_longKnife_move_1.png
 - Assets/Atlas/chara/body_cavalry_sword_attack_3.png
 - Assets/Atlas/chara/head_1.png
+- Assets/Atlas/chara/body_infantry_short_attack_2.png
+- Assets/Atlas/chara/body_infantry_short_move_1.png
 - Assets/Atlas/chara/body_cavalry_sword_attack_2.png
 - Assets/Atlas/chara/body_cavalry_longKnife_attack_3.png
 - Assets/Atlas/chara/body_infantry_shortKnife_attack_1.png
 - Assets/Atlas/chara/body_infantry_shortKnife_block_1.png
 - Assets/Atlas/chara/body_cavalry_sword_attack_1.png
+- Assets/Atlas/chara/body_infantry_short_attack_3.png
+- Assets/Atlas/chara/body_infantry_short_move_2.png
 - Assets/Atlas/chara/body_infantry_longKnife_block_1.png
+- Assets/Atlas/chara/body_infantry_short_stand_1.png
+- Assets/Atlas/chara/body_infantry_short_hert_1.png
 - Assets/Atlas/chara/body_infantry_shortKnife_attack_3.png
 - Assets/Atlas/chara/head_2.png
 - Assets/Atlas/chara/body_cavalry_sword_stand_1.png
