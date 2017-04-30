@@ -258,10 +258,10 @@ namespace App.View.Character{
             }
 
             //Body
-            key = string.Format("body_{0}_{1}_{2}_{3}", ViewModel.MoveType.Value, ViewModel.WeaponType.Value, ViewModel.Action.Value, avatarAction.body.index);
+            key = string.Format("body_{0}_{1}_{2}_{3}", ViewModel.MoveType.Value, avatarAction.clothesType, ViewModel.Action.Value, avatarAction.body.index);
             imgBody.sprite = ImageAssetBundleManager.GetAvatarBody(key);
             //Clothes
-            key = string.Format("clothes_{0}_{1}_{2}_{3}_{4}", ViewModel.Clothes.Value, ViewModel.MoveType.Value, ViewModel.WeaponType.Value, ViewModel.Action.Value, avatarAction.clothes.index);
+            key = string.Format("clothes_{0}_{1}_{2}_{3}_{4}", ViewModel.Clothes.Value, ViewModel.MoveType.Value, avatarAction.clothesType, ViewModel.Action.Value, avatarAction.clothes.index);
             imgClothes.sprite = ImageAssetBundleManager.GetClothes(key);
             //Head
             if (imgHead.gameObject.activeSelf && avatarAction.head.index == 0)

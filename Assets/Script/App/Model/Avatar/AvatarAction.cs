@@ -13,6 +13,7 @@ namespace App.Model.Avatar{
 		public AvatarProperty clothes;
 		public AvatarProperty head;
 		public AvatarProperty hat;
-		public AvatarProperty weapon;
+        public AvatarProperty weapon;
+        public string clothesType;
 	}
 }
