@@ -79,7 +79,8 @@ namespace App.Util.Battle{
             //attackCharacterList.Clear();
             if (useToEnemy)
             {
-                if (false && cBattlefield.charactersManager.IsInSkillDistance(this.mCharacter, mCharacter))
+                bool forceFirst = false;
+                if (forceFirst && cBattlefield.charactersManager.IsInSkillDistance(this.mCharacter, mCharacter))
                 {
                     //先手攻击
                     SetActionCharacterList(mCharacter, this.mCharacter, true);

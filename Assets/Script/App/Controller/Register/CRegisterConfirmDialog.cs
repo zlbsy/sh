@@ -16,7 +16,7 @@ namespace App.Controller.Register{
         [SerializeField]private InputField account;
         [SerializeField]private InputField password;
         [SerializeField]private InputField passwordCheck;
-        [SerializeField]private InputField name;
+        [SerializeField]private InputField nameInput;
         private int characterId;
         public override IEnumerator OnLoad( Request request ) 
         {  
@@ -43,7 +43,7 @@ namespace App.Controller.Register{
                 CAlertDialog.Show("两次密码不一致");
                 return;
             }
-            string nameText = name.text.Trim();
+            string nameText = nameInput.text.Trim();
             if (string.IsNullOrEmpty(nameText) || nameText.Length < 2)
             {
                 CAlertDialog.Show("名字长度不够");

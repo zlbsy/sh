@@ -52,7 +52,7 @@ namespace App.Controller{
         /// 点击州府县，进入州府县场景
         /// </summary>
         /// <param name="index">州府县索引</param>
-        public void OnClickTile(int index){
+        public override void OnClickTile(int index){
             //地图信息
             App.Model.Master.MBaseMap topMapMaster = BaseMapCacher.Instance.Get(mBaseMap.MapId);
             //根据索引获取所点击的州府县坐标

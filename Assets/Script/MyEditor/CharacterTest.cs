@@ -38,15 +38,12 @@ namespace MyEditor
             {
                 GameObject obj = GameObject.Instantiate(characterPrefab);
                 obj.transform.SetParent(layer.transform);
-                //obj.transform.localPosition = new Vector3(100f, 100f, 0f);
                 obj.SetActive(true);
-                //obj.GetComponent<RectTransform> ().localScale = new Vector3(2f,2f,1f);
                 model = new MCharacter();
                 model.MoveType = MoveType.infantry;
                 model.WeaponType = WeaponType.shortKnife;
                 model.Weapon = 3;
                 model.Clothes = 4;
-                //model.Action = ActionType.attack;
                 model.Horse = 1;
                 model.Head = 1;
                 model.Hat = 1;
@@ -146,7 +143,7 @@ namespace MyEditor
             model.Action = at;
         }
 
-        IEnumerator Start()
+        public override IEnumerator Start()
         {
             Caching.CleanCache();
             SEditorMaster sMaster = new SEditorMaster();
