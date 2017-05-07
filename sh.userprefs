@@ -1,21 +1,15 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Anima2D/Examples/Shaders/Unlit-Alpha-Cull-off.shader">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Script/App/View/Character/VCharacter.cs">
     <Files>
-      <File FileName="Assets/Script/App/View/Common/VTweenPosition.cs" Line="31" Column="1" />
-      <File FileName="Assets/Script/MyEditor/CharacterTest.cs" Line="146" Column="24" />
-      <File FileName="Assets/Script/App/Controller/Register/CRegister.cs" Line="1" Column="1" />
-      <File FileName="Assets/Script/App/Controller/Register/CRegisterConfirmDialog.cs" Line="46" Column="40" />
-      <File FileName="Assets/Script/App/Util/SceneManager.cs" Line="1" Column="1" />
-      <File FileName="Assets/Script/App/Controller/CLogo.cs" Line="1" Column="1" />
-      <File FileName="Assets/Script/App/Controller/Common/CScene.cs" Line="1" Column="1" />
-      <File FileName="Assets/Script/App/Controller/Common/CDialog.cs" Line="1" Column="1" />
-      <File FileName="Assets/Script/App/Controller/CTop.cs" Line="157" Column="14" />
-      <File FileName="Assets/Script/App/Controller/CBaseMap.cs" Line="44" Column="15" />
-      <File FileName="Assets/Script/App/Controller/CWorld.cs" Line="54" Column="46" />
-      <File FileName="Assets/Script/App/Util/Battle/BattleManager.cs" Line="82" Column="40" />
-      <File FileName="Assets/Script/App/Util/Battle/BattleCalculateManager.cs" Line="22" Column="21" />
-      <File FileName="Assets/Anima2D/Examples/Shaders/Unlit-Alpha-Cull-off.shader" Line="1" Column="1" />
+      <File FileName="Assets/Anima2D/Scripts/Editor/SpriteMeshInstancePostProcessor.cs" Line="1" Column="1" />
+      <File FileName="Assets/Script/MyEditor/CharacterTest.cs" Line="1" Column="1" />
+      <File FileName="Assets/Script/App/Model/Avatar/MoveArms.cs" Line="1" Column="1" />
+      <File FileName="Assets/Script/App/View/Character/VCharacter.cs" Line="284" Column="49" />
+      <File FileName="Assets/Script/App/Model/Avatar/AvatarAsset.cs" Line="1" Column="1" />
+      <File FileName="Assets/Script/App/Model/MCharacter.cs" Line="1" Column="1" />
+      <File FileName="Assets/Script/App/Model/Avatar/Arms.cs" Line="1" Column="1" />
+      <File FileName="Assets/Script/App/Model/Avatar/AvatarAction.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
