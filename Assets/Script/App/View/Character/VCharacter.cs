@@ -11,6 +11,51 @@ using App.Util.Battle;
 
 namespace App.View.Character{
     public partial class VCharacter : VBase {
+        [SerializeField]Anima2D.SpriteMeshInstance body;
+        [SerializeField]Anima2D.SpriteMeshInstance head;
+        [SerializeField]Anima2D.SpriteMeshInstance weapon;
+        [SerializeField]Anima2D.SpriteMeshInstance weaponArchery;
+        [SerializeField]Anima2D.SpriteMeshInstance weaponString;
+        [SerializeField]Anima2D.SpriteMeshInstance weaponArrow;
+        [SerializeField]Anima2D.SpriteMeshInstance clothesUpShort;
+        [SerializeField]Anima2D.SpriteMeshInstance clothesDownShort;
+        [SerializeField]Anima2D.SpriteMeshInstance clothesUpLong;
+        [SerializeField]Anima2D.SpriteMeshInstance clothesDownLong;
+        [SerializeField]Anima2D.SpriteMeshInstance armLeftShort;
+        [SerializeField]Anima2D.SpriteMeshInstance armRightShort;
+        [SerializeField]Anima2D.SpriteMeshInstance armLeftLong;
+        [SerializeField]Anima2D.SpriteMeshInstance armRightLong;
+        [SerializeField]Anima2D.SpriteMeshInstance horseBody;
+        [SerializeField]Anima2D.SpriteMeshInstance horseFrontLegLeft;
+        [SerializeField]Anima2D.SpriteMeshInstance horseFrontLegRight;
+        [SerializeField]Anima2D.SpriteMeshInstance horseHindLegLeft;
+        [SerializeField]Anima2D.SpriteMeshInstance horseHindLegRight;
+        [SerializeField]Anima2D.SpriteMeshInstance horseSaddle;
+        private Anima2D.SpriteMeshInstance Weapon{
+            get{ 
+                return weapon;
+            }
+        }
+        private Anima2D.SpriteMeshInstance ClothesUp{
+            get{ 
+                return clothesUpShort;
+            }
+        }
+        private Anima2D.SpriteMeshInstance ClothesDown{
+            get{ 
+                return clothesDownShort;
+            }
+        }
+        private Anima2D.SpriteMeshInstance ArmLeft{
+            get{ 
+                return armLeftShort;
+            }
+        }
+        private Anima2D.SpriteMeshInstance ArmRight{
+            get{ 
+                return armRightShort;
+            }
+        }
 
         [SerializeField]SpriteRenderer imgHorse;
         [SerializeField]SpriteRenderer imgBody;

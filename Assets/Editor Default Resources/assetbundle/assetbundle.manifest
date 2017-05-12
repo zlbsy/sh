@@ -1,7 +1,7 @@
 ManifestFileVersion: 0
-CRC: 4045993399
+CRC: 2017075528
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
-      Name: clothesimage.unity3d
+      Name: mapimage.unity3d
       Dependencies: {}
