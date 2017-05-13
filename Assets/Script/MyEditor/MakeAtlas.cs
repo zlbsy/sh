@@ -118,6 +118,26 @@ namespace MyEditor
         {
             BuildImageAssetBundle("skillicon");
         }
+        [MenuItem("SH/Build Assetbundle/SpriteMesh/Head")]
+        static private void BuildAssetBundleSpriteMeshHead()
+        {
+            BuildAssetBundleSpriteMesh("Head");
+        }
+        [MenuItem("SH/Build Assetbundle/SpriteMesh/Clothes")]
+        static private void BuildAssetBundleSpriteMeshClothes()
+        {
+            BuildAssetBundleSpriteMesh("Clothes");
+        }
+        [MenuItem("SH/Build Assetbundle/SpriteMesh/Weapon")]
+        static private void BuildAssetBundleSpriteMeshWeapon()
+        {
+            BuildAssetBundleSpriteMesh("Weapon");
+        }
+        [MenuItem("SH/Build Assetbundle/SpriteMesh/Horse")]
+        static private void BuildAssetBundleSpriteMeshHorse()
+        {
+            BuildAssetBundleSpriteMesh("Horse");
+        }
         [MenuItem("SH/Build Assetbundle/Image/All")]
         static private void BuildAssetBundleImageAll()
         {
@@ -264,6 +284,49 @@ namespace MyEditor
                 ,GetBuildTarget()
             );
             Debug.LogError("BuildAssetBundleMaster success : "+name);
+        }
+        static private void BuildAssetBundleSpriteMesh(string atlasName)
+        {
+
+
+            DirectoryInfo rootDirInfo = new DirectoryInfo(Application.dataPath + "/Atlas/SpriteMesh");
+            //List<AssetBundleBuild> builds = new List<AssetBundleBuild>();
+            foreach (DirectoryInfo dirInfo in rootDirInfo.GetDirectories())
+            {
+                if (!string.IsNullOrEmpty(atlasName) && dirInfo.Name != atlasName)
+                {
+                    continue;
+                }
+                var asset = ScriptableObject.CreateInstance<App.Model.Scriptable.AvatarSpriteAsset>();
+                List<Anima2D.SpriteMeshInstance> meshs = new List<Anima2D.SpriteMeshInstance>();
+                //List<string> paths = new List<string>();
+                foreach (FileInfo pngFile in dirInfo.GetFiles("*.prefab",SearchOption.AllDirectories))
+                {
+                    string allPath = pngFile.FullName;
+                    GameObject obj = AssetDatabase.LoadAssetAtPath<GameObject>(allPath.Substring(allPath.IndexOf("Assets")));
+                    Debug.Log("allPath = " + allPath + ", " + allPath.Substring(allPath.IndexOf("Assets")) + ", " + obj);
+                    //GameObject obj = GameObject.Instantiate(Resources.Load(allPath.Substring(allPath.IndexOf("Assets"))));
+                    obj.name = pngFile.Name;
+                    meshs.Add(obj.GetComponent<Anima2D.SpriteMeshInstance>());
+                    //string assetPath = allPath.Substring(allPath.IndexOf("Assets"));
+                    //paths.Add(assetPath);
+                }
+                asset.meshs = meshs.ToArray();
+                UnityEditor.AssetDatabase.CreateAsset(asset, string.Format("Assets/Editor Default Resources/ScriptableObject/{0}mesh.asset", dirInfo.Name));
+                UnityEditor.AssetDatabase.Refresh();
+                BuildAssetBundleMaster(dirInfo.Name+"mesh");
+                /*AssetBundleBuild build = new AssetBundleBuild();
+                build.assetBundleName = dirInfo.Name + "mesh.unity3d";
+                //build.assetNames = paths.ToArray();
+                builds.Add(build);
+                Debug.LogError("BuildAssetBundle success : "+dirInfo.Name);*/
+            } 
+            /*string path = "Assets/Editor Default Resources/assetbundle/";
+            BuildPipeline.BuildAssetBundles(path,builds.ToArray(),
+                BuildAssetBundleOptions.ChunkBasedCompression
+                ,GetBuildTarget()
+            );*/
+            Debug.LogError("BuildAssetBundleSpriteMesh over ");  
         }
         static private void BuildImageAssetBundle(string atlasName)
         {

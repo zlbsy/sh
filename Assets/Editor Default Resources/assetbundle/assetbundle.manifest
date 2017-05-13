@@ -1,7 +1,7 @@
 ManifestFileVersion: 0
-CRC: 2017075528
+CRC: 2442271006
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
-      Name: mapimage.unity3d
+      Name: horsemesh.unity3d
       Dependencies: {}
