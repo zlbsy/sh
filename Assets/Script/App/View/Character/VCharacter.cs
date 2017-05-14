@@ -230,7 +230,6 @@ namespace App.View.Character{
         private void ActionChanged(App.Model.ActionType oldvalue, App.Model.ActionType newvalue)
         {
             string animatorName = string.Format("{0}_{1}_{2}", ViewModel.MoveType.ToString(), App.Util.WeaponManager.GetWeaponTypeAction(ViewModel.WeaponType.Value), newvalue.ToString());
-            Debug.LogError("ActionChanged="+animatorName);
             animator.Play(animatorName);
             animationIndex = 0;
             if (newvalue == App.Model.ActionType.idle || newvalue == App.Model.ActionType.move)
@@ -268,13 +267,13 @@ namespace App.View.Character{
         }
         private void HeadChanged(int oldvalue, int newvalue)
         {
-            head.spriteMesh = ImageAssetBundleManager.GetHeadMesh(newvalue).spriteMesh;
+            head.spriteMesh = ImageAssetBundleManager.GetHeadMesh(newvalue);
             //imgHead.sprite = ImageAssetBundleManager.GetAvatarHead(newvalue);
             //UpdateView();
         }
         private void HatChanged(int oldvalue, int newvalue)
         {
-            hat.spriteMesh = ImageAssetBundleManager.GetHatMesh(newvalue).spriteMesh;
+            hat.spriteMesh = ImageAssetBundleManager.GetHatMesh(newvalue);
             //imgHat.sprite = ImageAssetBundleManager.GetAvatarHat(newvalue);
             //UpdateView();
         }
@@ -288,19 +287,18 @@ namespace App.View.Character{
             bool isArchery = (mEquipment.weapon_type == App.Model.WeaponType.archery);
             weapon.gameObject.SetActive(!isArchery);
             weaponArchery.gameObject.SetActive(isArchery);
-            this.Weapon.spriteMesh = ImageAssetBundleManager.GetWeaponMesh(newvalue).spriteMesh;
+            this.Weapon.spriteMesh = ImageAssetBundleManager.GetWeaponMesh(newvalue);
         }
         private void HorseChanged(int oldvalue, int newvalue)
         {
-            Debug.LogError("HorseChanged="+newvalue);
-            horseBody.spriteMesh = ImageAssetBundleManager.GetHorseBodyMesh(newvalue).spriteMesh;
-            horseFrontLegLeft.spriteMesh = ImageAssetBundleManager.GetHorseFrontLegLeftMesh(newvalue).spriteMesh;
-            horseFrontLegRight.spriteMesh = ImageAssetBundleManager.GetHorseFrontLegRightMesh(newvalue).spriteMesh;
-            horseHindLegLeft.spriteMesh = ImageAssetBundleManager.GetHorseHindLegLeftMesh(newvalue).spriteMesh;
-            horseHindLegRight.spriteMesh = ImageAssetBundleManager.GetHorseHindLegRightMesh(newvalue).spriteMesh;
+            horseBody.spriteMesh = ImageAssetBundleManager.GetHorseBodyMesh(newvalue);
+            horseFrontLegLeft.spriteMesh = ImageAssetBundleManager.GetHorseFrontLegLeftMesh(newvalue);
+            horseFrontLegRight.spriteMesh = ImageAssetBundleManager.GetHorseFrontLegRightMesh(newvalue);
+            horseHindLegLeft.spriteMesh = ImageAssetBundleManager.GetHorseHindLegLeftMesh(newvalue);
+            horseHindLegRight.spriteMesh = ImageAssetBundleManager.GetHorseHindLegRightMesh(newvalue);
 
             App.Model.Master.MEquipment mEquipment = EquipmentCacher.Instance.GetEquipment(newvalue, MEquipment.EquipmentType.horse);
-            horseSaddle.spriteMesh = ImageAssetBundleManager.GetHorseSaddleMesh(mEquipment.saddle).spriteMesh;
+            horseSaddle.spriteMesh = ImageAssetBundleManager.GetHorseSaddleMesh(mEquipment.saddle);
         }
         private void ClothesChanged(int oldvalue, int newvalue)
         {
@@ -315,8 +313,8 @@ namespace App.View.Character{
             armLeftLong.gameObject.SetActive(!isArmor);
             armRightLong.gameObject.SetActive(!isArmor);
 
-            ClothesUp.spriteMesh = ImageAssetBundleManager.GetClothesUpMesh(newvalue).spriteMesh;
-            ClothesDown.spriteMesh = ImageAssetBundleManager.GetClothesDownMesh(newvalue).spriteMesh;
+            ClothesUp.spriteMesh = ImageAssetBundleManager.GetClothesUpMesh(newvalue);
+            ClothesDown.spriteMesh = ImageAssetBundleManager.GetClothesDownMesh(newvalue);
         }
         public override void UpdateView(){
             this.Init();

@@ -10,18 +10,18 @@ namespace App.Util{
         private static AssetBundle _weapon = null;
         public static string weaponUrl{ get{ return HttpClient.assetBandleURL + "weaponmesh.unity3d";} }
         //public static string weaponUrl{ get{ return HttpClient.assetBandleURL + "weaponimage.unity3d";} }
-        public static Anima2D.SpriteMeshInstance[] weapon;
+        public static Anima2D.SpriteMesh[] weapon;
         private static AssetBundle _head = null;
         public static string headUrl{ get{ return HttpClient.assetBandleURL + "headmesh.unity3d";} }
-        public static Anima2D.SpriteMeshInstance[] head;
+        public static Anima2D.SpriteMesh[] head;
         private static AssetBundle _horse = null;
         public static string horseUrl{ get{ return HttpClient.assetBandleURL + "horsemesh.unity3d";} }
         //public static string horseUrl{ get{ return HttpClient.assetBandleURL + "horseimage.unity3d";} }
-        public static Anima2D.SpriteMeshInstance[] horse;
+        public static Anima2D.SpriteMesh[] horse;
         private static AssetBundle _clothes = null;
         public static string clothesUrl{ get{ return HttpClient.assetBandleURL + "clothesmesh.unity3d";} }
         //public static string clothesUrl{ get{ return HttpClient.assetBandleURL + "clothesimage.unity3d";} }
-        public static Anima2D.SpriteMeshInstance[] clothes;
+        public static Anima2D.SpriteMesh[] clothes;
 
         private static AssetBundle _avatar = null;
         public static string avatarUrl{ get{ return HttpClient.assetBandleURL + "charaimage.unity3d";} }
@@ -46,55 +46,49 @@ namespace App.Util{
         public static string skillIconUrl{ get{ return HttpClient.assetBandleURL + "skilliconimage.unity3d";} }
         public static AssetBundle skillIcon{ set{ _skillIcon = value; } }
 
-        public static Anima2D.SpriteMeshInstance GetClothesUpMesh(int id){
+        public static Anima2D.SpriteMesh GetClothesUpMesh(int id){
             string name = string.Format("clothes_{0}_up", id);
             return System.Array.Find(clothes, _=>_.name == name);
-            //return _clothes.LoadAsset<Anima2D.SpriteMeshInstance>(string.Format("clothes_{0}_up", id));
         }
-        public static Anima2D.SpriteMeshInstance GetClothesDownMesh(int id){
+        public static Anima2D.SpriteMesh GetClothesDownMesh(int id){
             string name = string.Format("clothes_{0}_down", id);
             return System.Array.Find(clothes, _=>_.name == name);
-            //return _clothes.LoadAsset<Anima2D.SpriteMeshInstance>(string.Format("clothes_{0}_down", id));
         }
-        public static Anima2D.SpriteMeshInstance GetHatMesh(int id){
+        public static Anima2D.SpriteMesh GetHatMesh(int id){
             string name = string.Format("hat_{0}", id);
             return System.Array.Find(head, _=>_.name == name);
-            //return _head.LoadAsset<Anima2D.SpriteMeshInstance>(string.Format("hat_{0}", id));
         }
-        public static Anima2D.SpriteMeshInstance GetHeadMesh(int id){
+        public static Anima2D.SpriteMesh GetHeadMesh(int id){
             string name = string.Format("head_{0}", id);
             return System.Array.Find(head, _=>_.name == name);
-            //return _head.LoadAsset<Anima2D.SpriteMeshInstance>(string.Format("head_{0}", id));
         }
-        public static Anima2D.SpriteMeshInstance GetWeaponMesh(int id){
+        public static Anima2D.SpriteMesh GetWeaponMesh(int id){
             string name = string.Format("weapon_{0}", id);
             return System.Array.Find(weapon, _=>_.name == name);
-            //return _weapon.LoadAsset<Anima2D.SpriteMeshInstance>(string.Format("weapon_{0}", id));
         }
-        public static Anima2D.SpriteMeshInstance GetHorseBodyMesh(int id){
+        public static Anima2D.SpriteMesh GetHorseBodyMesh(int id){
             string name = string.Format("horse_body_{0}", id);
             return System.Array.Find(horse, _=>_.name == name);
         }
-        public static Anima2D.SpriteMeshInstance GetHorseFrontLegLeftMesh(int id){
+        public static Anima2D.SpriteMesh GetHorseFrontLegLeftMesh(int id){
             string name = string.Format("horse_front_lleg_{0}", id);
             return System.Array.Find(horse, _=>_.name == name);
         }
-        public static Anima2D.SpriteMeshInstance GetHorseFrontLegRightMesh(int id){
+        public static Anima2D.SpriteMesh GetHorseFrontLegRightMesh(int id){
             string name = string.Format("horse_front_rleg_{0}", id);
             return System.Array.Find(horse, _=>_.name == name);
         }
-        public static Anima2D.SpriteMeshInstance GetHorseHindLegLeftMesh(int id){
+        public static Anima2D.SpriteMesh GetHorseHindLegLeftMesh(int id){
             string name = string.Format("horse_hind_lleg_{0}", id);
             return System.Array.Find(horse, _=>_.name == name);
         }
-        public static Anima2D.SpriteMeshInstance GetHorseHindLegRightMesh(int id){
+        public static Anima2D.SpriteMesh GetHorseHindLegRightMesh(int id){
             string name = string.Format("horse_hind_rleg_{0}", id);
             return System.Array.Find(horse, _=>_.name == name);
         }
-        public static Anima2D.SpriteMeshInstance GetHorseSaddleMesh(int id){
+        public static Anima2D.SpriteMesh GetHorseSaddleMesh(int id){
             string name = string.Format("horse_saddle_{0}", id);
             return System.Array.Find(horse, _=>_.name == name);
-            //return _horse.LoadAsset<Anima2D.SpriteMeshInstance>(string.Format("horse_saddle_{0}", id));
         }
 
 		public static Sprite GetAvatarBody(string name){

@@ -287,10 +287,7 @@ namespace MyEditor
         }
         static private void BuildAssetBundleSpriteMesh(string atlasName)
         {
-
-
             DirectoryInfo rootDirInfo = new DirectoryInfo(Application.dataPath + "/Atlas/SpriteMesh");
-            //List<AssetBundleBuild> builds = new List<AssetBundleBuild>();
             foreach (DirectoryInfo dirInfo in rootDirInfo.GetDirectories())
             {
                 if (!string.IsNullOrEmpty(atlasName) && dirInfo.Name != atlasName)
@@ -298,35 +295,20 @@ namespace MyEditor
                     continue;
                 }
                 var asset = ScriptableObject.CreateInstance<App.Model.Scriptable.AvatarSpriteAsset>();
-                List<Anima2D.SpriteMeshInstance> meshs = new List<Anima2D.SpriteMeshInstance>();
-                //List<string> paths = new List<string>();
-                foreach (FileInfo pngFile in dirInfo.GetFiles("*.prefab",SearchOption.AllDirectories))
+                List<Anima2D.SpriteMesh> meshs = new List<Anima2D.SpriteMesh>();
+                foreach (FileInfo pngFile in dirInfo.GetFiles("*.asset",SearchOption.AllDirectories))
                 {
                     string allPath = pngFile.FullName;
-                    GameObject obj = AssetDatabase.LoadAssetAtPath<GameObject>(allPath.Substring(allPath.IndexOf("Assets")));
-                    Debug.Log("allPath = " + allPath + ", " + allPath.Substring(allPath.IndexOf("Assets")) + ", " + obj);
-                    //GameObject obj = GameObject.Instantiate(Resources.Load(allPath.Substring(allPath.IndexOf("Assets"))));
+                    Debug.LogError("allPath = " + allPath);
+                    Anima2D.SpriteMesh obj = AssetDatabase.LoadAssetAtPath<Anima2D.SpriteMesh>(allPath.Substring(allPath.IndexOf("Assets")));
                     obj.name = System.IO.Path.GetFileNameWithoutExtension(pngFile.Name);
-                    Debug.LogError("obj.name = " + obj.name);
-                    meshs.Add(obj.GetComponent<Anima2D.SpriteMeshInstance>());
-                    //string assetPath = allPath.Substring(allPath.IndexOf("Assets"));
-                    //paths.Add(assetPath);
+                    meshs.Add(obj);
                 }
                 asset.meshs = meshs.ToArray();
                 UnityEditor.AssetDatabase.CreateAsset(asset, string.Format("Assets/Editor Default Resources/ScriptableObject/{0}mesh.asset", dirInfo.Name));
                 UnityEditor.AssetDatabase.Refresh();
                 BuildAssetBundleMaster(dirInfo.Name+"mesh");
-                /*AssetBundleBuild build = new AssetBundleBuild();
-                build.assetBundleName = dirInfo.Name + "mesh.unity3d";
-                //build.assetNames = paths.ToArray();
-                builds.Add(build);
-                Debug.LogError("BuildAssetBundle success : "+dirInfo.Name);*/
             } 
-            /*string path = "Assets/Editor Default Resources/assetbundle/";
-            BuildPipeline.BuildAssetBundles(path,builds.ToArray(),
-                BuildAssetBundleOptions.ChunkBasedCompression
-                ,GetBuildTarget()
-            );*/
             Debug.LogError("BuildAssetBundleSpriteMesh over ");  
         }
         static private void BuildImageAssetBundle(string atlasName)

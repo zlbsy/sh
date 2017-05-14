@@ -5,6 +5,6 @@ using UnityEngine;
 
 namespace App.Model.Scriptable{
     public class AvatarSpriteAsset : AssetBase<AvatarSpriteAsset> {
-        [SerializeField]public Anima2D.SpriteMeshInstance[] meshs;
+        [SerializeField]public Anima2D.SpriteMesh[] meshs;
 	}
 }
