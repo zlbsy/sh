@@ -11,8 +11,8 @@ using App.Util.Battle;
 
 namespace App.View.Character{
     public partial class VCharacter : VBase {
-        [SerializeField]Anima2D.SpriteMeshInstance body;
         [SerializeField]Anima2D.SpriteMeshInstance head;
+        [SerializeField]Anima2D.SpriteMeshInstance hat;
         [SerializeField]Anima2D.SpriteMeshInstance weapon;
         [SerializeField]Anima2D.SpriteMeshInstance weaponArchery;
         [SerializeField]Anima2D.SpriteMeshInstance weaponString;
@@ -100,7 +100,7 @@ namespace App.View.Character{
                 hpMaterials.Add(App.Model.Belong.friend, Resources.Load("Material/FriendHp") as Material);
                 hpMaterials.Add(App.Model.Belong.enemy, Resources.Load("Material/EnemyHp") as Material);
             }
-            num.GetComponent<MeshRenderer>().sortingOrder = imgHorse.sortingOrder + 10;
+            num.GetComponent<MeshRenderer>().sortingOrder = clothesDownLong.sortingOrder + 10;
             num.gameObject.SetActive(false);
             BelongChanged(ViewModel.Belong.Value, ViewModel.Belong.Value);
         }
@@ -262,32 +262,48 @@ namespace App.View.Character{
         }
         private void HeadChanged(int oldvalue, int newvalue)
         {
+            head.spriteMesh = ImageAssetBundleManager.GetHeadMesh(newvalue).spriteMesh;
             //imgHead.sprite = ImageAssetBundleManager.GetAvatarHead(newvalue);
-            UpdateView();
+            //UpdateView();
+        }
+        private void HatChanged(int oldvalue, int newvalue)
+        {
+            hat.spriteMesh = ImageAssetBundleManager.GetHatMesh(newvalue).spriteMesh;
+            //imgHat.sprite = ImageAssetBundleManager.GetAvatarHat(newvalue);
+            //UpdateView();
         }
         private void BelongChanged(App.Model.Belong oldvalue, App.Model.Belong newvalue)
         {
             meshRenderer.material = hpMaterials[newvalue];
         }
-        private void HatChanged(int oldvalue, int newvalue)
-        {
-            //imgHat.sprite = ImageAssetBundleManager.GetAvatarHat(newvalue);
-            UpdateView();
-        }
         private void WeaponChanged(int oldvalue, int newvalue)
         {
-            UpdateView();
+            this.Weapon.spriteMesh = ImageAssetBundleManager.GetWeaponMesh(newvalue).spriteMesh;
+            //UpdateView();
         }
         private void HorseChanged(int oldvalue, int newvalue)
         {
-            UpdateView();
+            horseBody.spriteMesh = ImageAssetBundleManager.GetHorseBodyMesh(newvalue).spriteMesh;
+            horseSaddle.spriteMesh = ImageAssetBundleManager.GetHorseSaddleMesh(newvalue).spriteMesh;
+            //UpdateView();
         }
         private void ClothesChanged(int oldvalue, int newvalue)
         {
-            UpdateView();
+            Debug.LogError("ClothesChanged = " + newvalue);
+            Anima2D.SpriteMeshInstance clothesDownMesh = ImageAssetBundleManager.GetClothesDownMesh(newvalue);
+            ClothesUp.spriteMesh = ImageAssetBundleManager.GetClothesUpMesh(newvalue).spriteMesh;
+            ClothesDown.spriteMesh = clothesDownMesh.spriteMesh;
+            //UpdateView();
         }
         public override void UpdateView(){
             this.Init();
+            this.HatChanged(0, ViewModel.Hat.Value);
+            this.HeadChanged(0, ViewModel.Head.Value);
+            this.ClothesChanged(0, ViewModel.Clothes.Value);
+            this.WeaponChanged(0, ViewModel.Weapon.Value);
+            this.HorseChanged(0, ViewModel.Horse.Value);
+
+            return;
             Debug.Log(ViewModel.MoveType.Value+", " + ViewModel.WeaponType.Value + ", " + ViewModel.Action.Value + ", " + animationIndex);
             AvatarAction avatarAction = AvatarAsset.Data.GetAvatarAction(ViewModel.MoveType.Value, ViewModel.WeaponType.Value, ViewModel.Action.Value, animationIndex);
             string key;

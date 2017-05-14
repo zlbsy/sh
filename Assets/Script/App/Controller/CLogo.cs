@@ -101,6 +101,22 @@ namespace App.Controller{
                 Language.ResetCharacterWord(LanguageAsset.Data.words);
                 LanguageAsset.Clear();
             }));*/
+            list.Add(sUser.Download(ImageAssetBundleManager.horseUrl, versions.horse_img, (AssetBundle assetbundle)=>{
+                AvatarSpriteAsset.assetbundle = assetbundle;
+                ImageAssetBundleManager.horse = AvatarSpriteAsset.Data.meshs;
+            }));
+            list.Add(sUser.Download(ImageAssetBundleManager.headUrl, versions.hat, (AssetBundle assetbundle)=>{
+                AvatarSpriteAsset.assetbundle = assetbundle;
+                ImageAssetBundleManager.head = AvatarSpriteAsset.Data.meshs;
+            }));
+            list.Add(sUser.Download(ImageAssetBundleManager.clothesUrl, versions.clothes_img, (AssetBundle assetbundle)=>{
+                AvatarSpriteAsset.assetbundle = assetbundle;
+                ImageAssetBundleManager.clothes = AvatarSpriteAsset.Data.meshs;
+            }));
+            list.Add(sUser.Download(ImageAssetBundleManager.weaponUrl, versions.weapon_img, (AssetBundle assetbundle)=>{
+                AvatarSpriteAsset.assetbundle = assetbundle;
+                ImageAssetBundleManager.weapon = AvatarSpriteAsset.Data.meshs;
+            }));
             list.Add(sUser.Download(WorldAsset.Url, versions.world, (AssetBundle assetbundle)=>{
                 WorldAsset.assetbundle = assetbundle;
                 Global.worlds = WorldAsset.Data.worlds;
@@ -180,20 +196,11 @@ namespace App.Controller{
             list.Add(sUser.Download(ImageAssetBundleManager.avatarUrl, versions.avatar, (AssetBundle assetbundle)=>{
                 ImageAssetBundleManager.avatar = assetbundle;
             }, false));
-            list.Add(sUser.Download(ImageAssetBundleManager.horseUrl, versions.horse_img, (AssetBundle assetbundle)=>{
-                ImageAssetBundleManager.horse = assetbundle;
-            }, false));
             list.Add(sUser.Download(ImageAssetBundleManager.hatUrl, versions.hat, (AssetBundle assetbundle)=>{
                 ImageAssetBundleManager.hat = assetbundle;
             }, false));
             list.Add(sUser.Download(ImageAssetBundleManager.mapUrl, versions.map, (AssetBundle assetbundle)=>{
                 ImageAssetBundleManager.map = assetbundle;
-            }, false));
-            list.Add(sUser.Download(ImageAssetBundleManager.clothesUrl, versions.clothes_img, (AssetBundle assetbundle)=>{
-                ImageAssetBundleManager.clothes = assetbundle;
-            }, false));
-            list.Add(sUser.Download(ImageAssetBundleManager.weaponUrl, versions.weapon_img, (AssetBundle assetbundle)=>{
-                ImageAssetBundleManager.weapon = assetbundle;
             }, false));
             list.Add(sUser.Download(ImageAssetBundleManager.equipmentIconUrl, versions.equipmenticon_icon, (AssetBundle assetbundle)=>{
                 ImageAssetBundleManager.equipmentIcon = assetbundle;

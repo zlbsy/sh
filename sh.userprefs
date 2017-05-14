@@ -1,15 +1,20 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Script/App/View/Character/VCharacter.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Script/App/Util/ImageAssetBundleManager.cs">
     <Files>
-      <File FileName="Assets/Anima2D/Scripts/Editor/SpriteMeshInstancePostProcessor.cs" Line="1" Column="1" />
       <File FileName="Assets/Script/MyEditor/CharacterTest.cs" Line="1" Column="1" />
-      <File FileName="Assets/Script/App/Model/Avatar/MoveArms.cs" Line="1" Column="1" />
-      <File FileName="Assets/Script/App/View/Character/VCharacter.cs" Line="284" Column="49" />
-      <File FileName="Assets/Script/App/Model/Avatar/AvatarAsset.cs" Line="1" Column="1" />
-      <File FileName="Assets/Script/App/Model/MCharacter.cs" Line="1" Column="1" />
-      <File FileName="Assets/Script/App/Model/Avatar/Arms.cs" Line="1" Column="1" />
-      <File FileName="Assets/Script/App/Model/Avatar/AvatarAction.cs" Line="1" Column="1" />
+      <File FileName="Assets/Script/App/View/Character/VAvatar.cs" Line="16" Column="53" />
+      <File FileName="Assets/Script/App/View/Character/VCharacter.cs" Line="271" Column="56" />
+      <File FileName="Assets/Script/App/Controller/CTop.cs" Line="18" Column="30" />
+      <File FileName="Assets/Script/App/Util/ImageAssetBundleManager.cs" Line="80" Column="55" />
+      <File FileName="Assets/Script/App/Model/Scriptable/FaceAsset.cs" Line="17" Column="56" />
+      <File FileName="Assets/Script/App/Model/Scriptable/AvatarSpriteAsset.cs" Line="8" Column="67" />
+      <File FileName="Assets/Script/MyEditor/MakeAtlas.cs" Line="136" Column="60" />
+      <File FileName="Assets/Script/MyEditor/CMasterScene.cs" Line="244" Column="49" />
+      <File FileName="Assets/Script/App/Model/Master/MTile.cs" Line="24" Column="93" />
+      <File FileName="Assets/Script/App/Controller/CLogo.cs" Line="118" Column="79" />
+      <File FileName="Assets/Script/App/Model/Scriptable/AssetBase.cs" Line="45" Column="10" />
+      <File FileName="Assets/Script/App/Model/Scriptable/WorldAsset.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

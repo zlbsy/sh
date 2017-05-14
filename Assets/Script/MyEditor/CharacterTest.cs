@@ -180,21 +180,30 @@ namespace MyEditor
                 NpcEquipmentCacher.Instance.Reset(NpcEquipmentAsset.Data.npc_equipments);
                 NpcEquipmentAsset.Clear();
             }));
-            list.Add(sMaster.Download(HorseAsset.Url, versions.horse, (AssetBundle assetbundle)=>{
+            /*list.Add(sMaster.Download(HorseAsset.Url, versions.horse, (AssetBundle assetbundle)=>{
                 HorseAsset.assetbundle = assetbundle;
                 EquipmentCacher.Instance.ResetHorse(HorseAsset.Data.equipments);
                 HorseAsset.Clear();
             }));
+            list.Add(sMaster.Download(ImageAssetBundleManager.hatUrl, versions.hat, (AssetBundle assetbundle)=>{
+                ImageAssetBundleManager.hat = assetbundle;
+            }, false));
             list.Add(sMaster.Download(WeaponAsset.Url, versions.weapon, (AssetBundle assetbundle)=>{
                 WeaponAsset.assetbundle = assetbundle;
                 EquipmentCacher.Instance.ResetWeapon(WeaponAsset.Data.equipments);
                 WeaponAsset.Clear();
             }));
+            list.Add(sMaster.Download(ImageAssetBundleManager.clothesUrl, versions.clothes_img, (AssetBundle assetbundle)=>{
+                ImageAssetBundleManager.clothes = assetbundle;
+            }, false));
+            list.Add(sMaster.Download(ImageAssetBundleManager.weaponUrl, versions.weapon_img, (AssetBundle assetbundle)=>{
+                ImageAssetBundleManager.weapon = assetbundle;
+            }, false));
             list.Add(sMaster.Download(ClothesAsset.Url, versions.clothes, (AssetBundle assetbundle)=>{
                 ClothesAsset.assetbundle = assetbundle;
                 EquipmentCacher.Instance.ResetClothes(ClothesAsset.Data.equipments);
                 ClothesAsset.Clear();
-            }));
+            }));*/
             list.Add(sMaster.Download(AreaAsset.Url, versions.area, (AssetBundle assetbundle)=>{
                 AreaAsset.assetbundle = assetbundle;
                 AreaCacher.Instance.Reset(AreaAsset.Data.areas);
@@ -236,20 +245,8 @@ namespace MyEditor
             list.Add(sMaster.Download(ImageAssetBundleManager.avatarUrl, versions.avatar, (AssetBundle assetbundle)=>{
                 ImageAssetBundleManager.avatar = assetbundle;
             }, false));
-            list.Add(sMaster.Download(ImageAssetBundleManager.horseUrl, versions.horse_img, (AssetBundle assetbundle)=>{
-                ImageAssetBundleManager.horse = assetbundle;
-            }, false));
-            list.Add(sMaster.Download(ImageAssetBundleManager.hatUrl, versions.hat, (AssetBundle assetbundle)=>{
-                ImageAssetBundleManager.hat = assetbundle;
-            }, false));
             list.Add(sMaster.Download(ImageAssetBundleManager.mapUrl, versions.map, (AssetBundle assetbundle)=>{
                 ImageAssetBundleManager.map = assetbundle;
-            }, false));
-            list.Add(sMaster.Download(ImageAssetBundleManager.clothesUrl, versions.clothes_img, (AssetBundle assetbundle)=>{
-                ImageAssetBundleManager.clothes = assetbundle;
-            }, false));
-            list.Add(sMaster.Download(ImageAssetBundleManager.weaponUrl, versions.weapon_img, (AssetBundle assetbundle)=>{
-                ImageAssetBundleManager.weapon = assetbundle;
             }, false));
             list.Add(sMaster.Download(ImageAssetBundleManager.equipmentIconUrl, versions.equipmenticon_icon, (AssetBundle assetbundle)=>{
                 ImageAssetBundleManager.equipmentIcon = assetbundle;
