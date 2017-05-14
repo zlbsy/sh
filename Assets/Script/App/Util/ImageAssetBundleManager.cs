@@ -74,7 +74,22 @@ namespace App.Util{
         public static Anima2D.SpriteMeshInstance GetHorseBodyMesh(int id){
             string name = string.Format("horse_body_{0}", id);
             return System.Array.Find(horse, _=>_.name == name);
-            //return _horse.LoadAsset<Anima2D.SpriteMeshInstance>(string.Format("horse_body_{0}", id));
+        }
+        public static Anima2D.SpriteMeshInstance GetHorseFrontLegLeftMesh(int id){
+            string name = string.Format("horse_front_lleg_{0}", id);
+            return System.Array.Find(horse, _=>_.name == name);
+        }
+        public static Anima2D.SpriteMeshInstance GetHorseFrontLegRightMesh(int id){
+            string name = string.Format("horse_front_rleg_{0}", id);
+            return System.Array.Find(horse, _=>_.name == name);
+        }
+        public static Anima2D.SpriteMeshInstance GetHorseHindLegLeftMesh(int id){
+            string name = string.Format("horse_hind_lleg_{0}", id);
+            return System.Array.Find(horse, _=>_.name == name);
+        }
+        public static Anima2D.SpriteMeshInstance GetHorseHindLegRightMesh(int id){
+            string name = string.Format("horse_hind_rleg_{0}", id);
+            return System.Array.Find(horse, _=>_.name == name);
         }
         public static Anima2D.SpriteMeshInstance GetHorseSaddleMesh(int id){
             string name = string.Format("horse_saddle_{0}", id);

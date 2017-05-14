@@ -58,9 +58,13 @@ namespace App.Model{
         /// 双手
         /// </summary>
         dualWield,
+        /// <summary>
+        /// 法宝
+        /// </summary>
+        magicWeapon,
     }
     public enum ActionType{
-        stand,
+        idle,
         move,
         attack,
         block,
@@ -119,7 +123,7 @@ namespace App.Model{
         /// <value><c>true</c> if this instance is pike; otherwise, <c>false</c>.</value>
         public bool IsPike{
             get{ 
-                return this.WeaponType == WeaponType.pike || this.WeaponType == WeaponType.sword;
+                return App.Util.WeaponManager.IsPike(this.WeaponType);
             }
         }
         /// <summary>
@@ -128,7 +132,7 @@ namespace App.Model{
         /// <value><c>true</c> if this instance is ax; otherwise, <c>false</c>.</value>
         public bool IsAx{
             get{ 
-                return this.WeaponType == WeaponType.ax || this.WeaponType == WeaponType.longAx;
+                return App.Util.WeaponManager.IsAx(this.WeaponType);
             }
         }
         /// <summary>
@@ -137,7 +141,7 @@ namespace App.Model{
         /// <value><c>true</c> if this instance is knife; otherwise, <c>false</c>.</value>
         public bool IsKnife{
             get{ 
-                return this.WeaponType == WeaponType.longKnife || this.WeaponType == WeaponType.shortKnife;
+                return App.Util.WeaponManager.IsKnife(this.WeaponType);
             }
         }
         /// <summary>
@@ -146,7 +150,7 @@ namespace App.Model{
         /// <value><c>true</c> if this instance is long weapon; otherwise, <c>false</c>.</value>
         public bool IsLongWeapon{
             get{ 
-                return this.WeaponType == WeaponType.longKnife || this.WeaponType == WeaponType.longAx || this.WeaponType == WeaponType.pike || this.WeaponType == WeaponType.sticks;
+                return App.Util.WeaponManager.IsLongWeapon(this.WeaponType);
             }
         }
         /// <summary>
@@ -154,8 +158,8 @@ namespace App.Model{
         /// </summary>
         /// <value><c>true</c> if this instance is short weapon; otherwise, <c>false</c>.</value>
         public bool IsShortWeapon{
-            get{ 
-                return this.WeaponType == WeaponType.shortKnife || this.WeaponType == WeaponType.ax || this.WeaponType == WeaponType.sword || this.WeaponType == WeaponType.fist;
+            get{
+                return App.Util.WeaponManager.IsShortWeapon(this.WeaponType);
             }
         }
         /// <summary>
@@ -164,7 +168,7 @@ namespace App.Model{
         /// <value><c>true</c> if this instance is archery; otherwise, <c>false</c>.</value>
         public bool IsArcheryWeapon{
             get{ 
-                return this.WeaponType == WeaponType.archery;
+                return App.Util.WeaponManager.IsArcheryWeapon(this.WeaponType);
             }
         }
         private App.Model.Master.MCharacter master = null;
@@ -369,6 +373,8 @@ namespace App.Model{
         }
         public int Weapon{
             set{ 
+                App.Model.Master.MEquipment mEquipment = EquipmentCacher.Instance.GetEquipment(value, App.Model.Master.MEquipment.EquipmentType.weapon);
+                this.WeaponType = mEquipment.weapon_type;
                 this.ViewModel.Weapon.Value = value;
             }
             get{ 

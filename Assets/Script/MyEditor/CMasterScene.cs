@@ -237,7 +237,7 @@ namespace App.Controller{
             var asset = ScriptableObject.CreateInstance<App.Model.Scriptable.HorseAsset>();
 
             SEditorMaster sMaster = new SEditorMaster();
-            yield return StartCoroutine (sMaster.RequestAll("character"));
+            yield return StartCoroutine (sMaster.RequestAll("horse"));
             asset.equipments = sMaster.responseAll.horses;
 
             UnityEditor.AssetDatabase.CreateAsset(asset, string.Format("Assets/Editor Default Resources/ScriptableObject/{0}.asset", App.Model.Scriptable.HorseAsset.Name));
@@ -248,7 +248,7 @@ namespace App.Controller{
             var asset = ScriptableObject.CreateInstance<App.Model.Scriptable.ClothesAsset>();
 
             SEditorMaster sMaster = new SEditorMaster();
-            yield return StartCoroutine (sMaster.RequestAll("character"));
+            yield return StartCoroutine (sMaster.RequestAll("clothes"));
             asset.equipments = sMaster.responseAll.clothes;
 
             UnityEditor.AssetDatabase.CreateAsset(asset, string.Format("Assets/Editor Default Resources/ScriptableObject/{0}.asset", App.Model.Scriptable.ClothesAsset.Name));
@@ -259,7 +259,7 @@ namespace App.Controller{
             var asset = ScriptableObject.CreateInstance<App.Model.Scriptable.WeaponAsset>();
 
             SEditorMaster sMaster = new SEditorMaster();
-            yield return StartCoroutine (sMaster.RequestAll("character"));
+            yield return StartCoroutine (sMaster.RequestAll("weapon"));
             asset.equipments = sMaster.responseAll.weapons;
 
             UnityEditor.AssetDatabase.CreateAsset(asset, string.Format("Assets/Editor Default Resources/ScriptableObject/{0}.asset", App.Model.Scriptable.WeaponAsset.Name));

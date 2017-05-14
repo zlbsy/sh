@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 1465809021
+CRC: 3317566910
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 4889594498eeec6e27e45fdef33de28e
+    Hash: 41f775a1e6542de4f2b19aaca9c22799
   TypeTreeHash:
     serializedVersion: 2
-    Hash: fc177057b61bfb8c9e8dbe6140788d22
+    Hash: 67d1fff0a2642594ec023e8da317ce4a
 HashAppended: 0
 ClassTypes:
 - Class: 114

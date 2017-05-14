@@ -226,7 +226,7 @@ namespace App.Util.Battle{
 
                 Holoville.HOTween.Core.TweenDelegate.TweenCallback moveComplete = () =>
                     {
-                        this.mCharacter.Action = ActionType.stand;
+                        this.mCharacter.Action = ActionType.idle;
                         cBattlefield.tilesManager.ClearCurrentTiles();
                         cBattlefield.battleMode = CBattlefield.BattleMode.move_end;
                         this.mCharacter.CoordinateY = endTile.CoordinateY;

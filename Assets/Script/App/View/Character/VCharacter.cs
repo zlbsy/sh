@@ -33,27 +33,27 @@ namespace App.View.Character{
         [SerializeField]Anima2D.SpriteMeshInstance horseSaddle;
         private Anima2D.SpriteMeshInstance Weapon{
             get{ 
-                return weapon;
+                return weapon.gameObject.activeSelf ? weapon : weaponArchery;
             }
         }
         private Anima2D.SpriteMeshInstance ClothesUp{
             get{ 
-                return clothesUpShort;
+                return clothesUpShort.gameObject.activeSelf ? clothesUpShort : clothesUpLong;
             }
         }
         private Anima2D.SpriteMeshInstance ClothesDown{
             get{ 
-                return clothesDownShort;
+                return clothesDownShort.gameObject.activeSelf ? clothesDownShort : clothesDownLong;
             }
         }
         private Anima2D.SpriteMeshInstance ArmLeft{
             get{ 
-                return armLeftShort;
+                return armLeftShort.gameObject.activeSelf ? armLeftShort : armLeftLong;
             }
         }
         private Anima2D.SpriteMeshInstance ArmRight{
             get{ 
-                return armRightShort;
+                return armRightShort.gameObject.activeSelf ? armRightShort : armRightLong;
             }
         }
 
@@ -134,6 +134,7 @@ namespace App.View.Character{
                 oldVm.Clothes.OnValueChanged -= ClothesChanged;
                 oldVm.Weapon.OnValueChanged -= WeaponChanged;
                 oldVm.Action.OnValueChanged -= ActionChanged;
+                oldVm.MoveType.OnValueChanged -= MoveTypeChanged;
                 oldVm.CoordinateX.OnValueChanged -= CoordinateXChanged;
                 oldVm.CoordinateY.OnValueChanged -= CoordinateYChanged;
                 oldVm.X.OnValueChanged -= XChanged;
@@ -150,6 +151,7 @@ namespace App.View.Character{
                 ViewModel.Clothes.OnValueChanged += ClothesChanged;
                 ViewModel.Weapon.OnValueChanged += WeaponChanged;
                 ViewModel.Action.OnValueChanged += ActionChanged;
+                ViewModel.MoveType.OnValueChanged += MoveTypeChanged;
                 ViewModel.CoordinateX.OnValueChanged += CoordinateXChanged;
                 ViewModel.CoordinateY.OnValueChanged += CoordinateYChanged;
                 ViewModel.X.OnValueChanged += XChanged;
@@ -227,11 +229,11 @@ namespace App.View.Character{
         }
         private void ActionChanged(App.Model.ActionType oldvalue, App.Model.ActionType newvalue)
         {
-            //Debug.LogError(ViewModel.Id.Value + ","+ViewModel.Name.Value + " : " + newvalue.ToString());
-            animator.Play(newvalue.ToString());
+            string animatorName = string.Format("{0}_{1}_{2}", ViewModel.MoveType.ToString(), App.Util.WeaponManager.GetWeaponTypeAction(ViewModel.WeaponType.Value), newvalue.ToString());
+            Debug.LogError("ActionChanged="+animatorName);
+            animator.Play(animatorName);
             animationIndex = 0;
-            UpdateView();
-            if (newvalue == App.Model.ActionType.stand || newvalue == App.Model.ActionType.move)
+            if (newvalue == App.Model.ActionType.idle || newvalue == App.Model.ActionType.move)
             {
                 if (ViewModel.Hp.Value == 0)
                 {
@@ -260,6 +262,10 @@ namespace App.View.Character{
             yield return new WaitForEndOfFrame();
             this.Controller.SendMessage("RemoveDynamicCharacter", this, SendMessageOptions.DontRequireReceiver);
         }
+        private void MoveTypeChanged(App.Model.MoveType oldvalue, App.Model.MoveType newvalue)
+        {
+            ActionChanged(ViewModel.Action.Value, ViewModel.Action.Value);
+        }
         private void HeadChanged(int oldvalue, int newvalue)
         {
             head.spriteMesh = ImageAssetBundleManager.GetHeadMesh(newvalue).spriteMesh;
@@ -278,22 +284,39 @@ namespace App.View.Character{
         }
         private void WeaponChanged(int oldvalue, int newvalue)
         {
+            App.Model.Master.MEquipment mEquipment = EquipmentCacher.Instance.GetEquipment(newvalue, MEquipment.EquipmentType.weapon);
+            bool isArchery = (mEquipment.weapon_type == App.Model.WeaponType.archery);
+            weapon.gameObject.SetActive(!isArchery);
+            weaponArchery.gameObject.SetActive(isArchery);
             this.Weapon.spriteMesh = ImageAssetBundleManager.GetWeaponMesh(newvalue).spriteMesh;
-            //UpdateView();
         }
         private void HorseChanged(int oldvalue, int newvalue)
         {
+            Debug.LogError("HorseChanged="+newvalue);
             horseBody.spriteMesh = ImageAssetBundleManager.GetHorseBodyMesh(newvalue).spriteMesh;
-            horseSaddle.spriteMesh = ImageAssetBundleManager.GetHorseSaddleMesh(newvalue).spriteMesh;
-            //UpdateView();
+            horseFrontLegLeft.spriteMesh = ImageAssetBundleManager.GetHorseFrontLegLeftMesh(newvalue).spriteMesh;
+            horseFrontLegRight.spriteMesh = ImageAssetBundleManager.GetHorseFrontLegRightMesh(newvalue).spriteMesh;
+            horseHindLegLeft.spriteMesh = ImageAssetBundleManager.GetHorseHindLegLeftMesh(newvalue).spriteMesh;
+            horseHindLegRight.spriteMesh = ImageAssetBundleManager.GetHorseHindLegRightMesh(newvalue).spriteMesh;
+
+            App.Model.Master.MEquipment mEquipment = EquipmentCacher.Instance.GetEquipment(newvalue, MEquipment.EquipmentType.horse);
+            horseSaddle.spriteMesh = ImageAssetBundleManager.GetHorseSaddleMesh(mEquipment.saddle).spriteMesh;
         }
         private void ClothesChanged(int oldvalue, int newvalue)
         {
-            Debug.LogError("ClothesChanged = " + newvalue);
-            Anima2D.SpriteMeshInstance clothesDownMesh = ImageAssetBundleManager.GetClothesDownMesh(newvalue);
+            App.Model.Master.MEquipment mEquipment = EquipmentCacher.Instance.GetEquipment(newvalue, MEquipment.EquipmentType.clothes);
+            bool isArmor = (mEquipment.clothes_type == MEquipment.ClothesType.armor);
+            clothesUpShort.gameObject.SetActive(isArmor);
+            clothesDownShort.gameObject.SetActive(isArmor);
+            armLeftShort.gameObject.SetActive(isArmor);
+            armRightShort.gameObject.SetActive(isArmor);
+            clothesUpLong.gameObject.SetActive(!isArmor);
+            clothesDownLong.gameObject.SetActive(!isArmor);
+            armLeftLong.gameObject.SetActive(!isArmor);
+            armRightLong.gameObject.SetActive(!isArmor);
+
             ClothesUp.spriteMesh = ImageAssetBundleManager.GetClothesUpMesh(newvalue).spriteMesh;
-            ClothesDown.spriteMesh = clothesDownMesh.spriteMesh;
-            //UpdateView();
+            ClothesDown.spriteMesh = ImageAssetBundleManager.GetClothesDownMesh(newvalue).spriteMesh;
         }
         public override void UpdateView(){
             this.Init();
@@ -302,6 +325,7 @@ namespace App.View.Character{
             this.ClothesChanged(0, ViewModel.Clothes.Value);
             this.WeaponChanged(0, ViewModel.Weapon.Value);
             this.HorseChanged(0, ViewModel.Horse.Value);
+            this.ActionChanged(ViewModel.Action.Value, ViewModel.Action.Value);
 
             return;
             Debug.Log(ViewModel.MoveType.Value+", " + ViewModel.WeaponType.Value + ", " + ViewModel.Action.Value + ", " + animationIndex);
@@ -377,11 +401,11 @@ namespace App.View.Character{
             ViewModel.Action.Value = type;
         }
         public void ActionEnd(){
-            ChangeAction(ViewModel.ActionOver.Value ? App.Model.ActionType.stand : App.Model.ActionType.move);
+            ChangeAction(ViewModel.ActionOver.Value ? App.Model.ActionType.idle : App.Model.ActionType.move);
         }
         public void ChangeAnimationIdex(int index){
             animationIndex = index;
-            UpdateView ();
+            //UpdateView ();
         }
         /// <summary>
         /// Empties the action.

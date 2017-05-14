@@ -36,7 +36,7 @@ namespace App.Model.Avatar
                 case ActionType.hert:
                     actions = hert;
                     break;
-                case ActionType.stand:
+                case ActionType.idle:
                 default:
                     actions = stand;
                     break;

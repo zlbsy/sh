@@ -306,7 +306,8 @@ namespace MyEditor
                     GameObject obj = AssetDatabase.LoadAssetAtPath<GameObject>(allPath.Substring(allPath.IndexOf("Assets")));
                     Debug.Log("allPath = " + allPath + ", " + allPath.Substring(allPath.IndexOf("Assets")) + ", " + obj);
                     //GameObject obj = GameObject.Instantiate(Resources.Load(allPath.Substring(allPath.IndexOf("Assets"))));
-                    obj.name = pngFile.Name;
+                    obj.name = System.IO.Path.GetFileNameWithoutExtension(pngFile.Name);
+                    Debug.LogError("obj.name = " + obj.name);
                     meshs.Add(obj.GetComponent<Anima2D.SpriteMeshInstance>());
                     //string assetPath = allPath.Substring(allPath.IndexOf("Assets"));
                     //paths.Add(assetPath);

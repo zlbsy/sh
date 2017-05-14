@@ -227,6 +227,7 @@
      <Compile Include="Assets\Script\App\Util\Search\BreadthFirst.cs" />
      <Compile Include="Assets\Script\App\Util\Search\TileMap.cs" />
      <Compile Include="Assets\Script\App\Util\SingleClass.cs" />
+     <Compile Include="Assets\Script\App\Util\WeaponManager.cs" />
      <Compile Include="Assets\Script\App\View\Battlefield\VBattleCharacterPreview.cs" />
      <Compile Include="Assets\Script\App\View\Battlefield\VBattleListChild.cs" />
      <Compile Include="Assets\Script\App\View\Battlefield\VBattleSkillIcon.cs" />

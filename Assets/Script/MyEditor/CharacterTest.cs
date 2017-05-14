@@ -51,12 +51,12 @@ namespace MyEditor
                 model.Hp = 100;
                 view = obj.GetComponent<VCharacter>();
                 view.BindingContext = model.ViewModel;
-                model.Action = ActionType.stand;
+                model.Action = ActionType.idle;
                 characterPrefab.SetActive(false);
             }
             if (GUI.Button(new Rect(50, 100, 50, 30), "Stand"))
             {
-                model.Action = ActionType.stand;
+                model.Action = ActionType.idle;
             }
             if (GUI.Button(new Rect(100, 100, 50, 30), "Move"))
             {
