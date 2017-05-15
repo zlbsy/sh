@@ -67,7 +67,11 @@ namespace App.Service{
                     }
                     else
                     {
-                        App.Controller.CAlertDialog.Show(response.message);
+                        App.Controller.CAlertDialog.Show(response.message, () =>{
+                            if (App.Util.Global.SceneManager != null && Global.SceneManager.DialogIsShow(SceneManager.Prefabs.ConnectingDialog)){
+                                App.Controller.CConnectingDialog.ToClose();
+                            }
+                        });
                     }
                 }
                 if (response.user != null)

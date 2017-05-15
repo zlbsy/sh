@@ -259,14 +259,6 @@ namespace App.Model{
                 return this.ViewModel.ActionOver.Value;
             }
         }
-        public int Horse{
-            set{
-                this.ViewModel.Horse.Value = value;
-            }
-            get{ 
-                return this.ViewModel.Horse.Value;
-            }
-        }
         public int CoordinateX{
             set{
                 this.ViewModel.CoordinateX.Value = value;
@@ -363,8 +355,26 @@ namespace App.Model{
                 return this.ViewModel.WeaponType.Value;
             }
         }
+        public int Horse{
+            set{
+                if (value == 0)
+                {
+                    App.Model.Master.MCharacter character = CharacterCacher.Instance.Get(this.CharacterId);
+                    value = character.horse;
+                }
+                this.ViewModel.Horse.Value = value;
+            }
+            get{ 
+                return this.ViewModel.Horse.Value;
+            }
+        }
         public int Clothes{
             set{ 
+                if (value == 0)
+                {
+                    App.Model.Master.MCharacter character = CharacterCacher.Instance.Get(this.CharacterId);
+                    value = character.clothes;
+                }
                 this.ViewModel.Clothes.Value = value;
             }
             get{ 
@@ -373,7 +383,18 @@ namespace App.Model{
         }
         public int Weapon{
             set{ 
-                App.Model.Master.MEquipment mEquipment = EquipmentCacher.Instance.GetEquipment(value, App.Model.Master.MEquipment.EquipmentType.weapon);
+                App.Model.Master.MEquipment mEquipment = null;
+                if (value == 0)
+                {
+                    App.Model.Master.MCharacter character = CharacterCacher.Instance.Get(this.CharacterId);
+                    mEquipment = EquipmentCacher.Instance.GetEquipment(character.weapon, App.Model.Master.MEquipment.EquipmentType.weapon);
+                    Debug.LogError(this.CharacterId + ", mEquipment = " + mEquipment + ", " + character.weapon);
+                    value = character.weapon;
+                }
+                else
+                {
+                    mEquipment = EquipmentCacher.Instance.GetEquipment(value, App.Model.Master.MEquipment.EquipmentType.weapon);
+                }
                 this.WeaponType = mEquipment.weapon_type;
                 this.ViewModel.Weapon.Value = value;
             }

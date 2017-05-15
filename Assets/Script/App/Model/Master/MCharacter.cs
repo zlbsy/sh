@@ -14,6 +14,10 @@ namespace App.Model.Master{
         public int mp;//
         public int head;//
         public int hat;//
+        public int weapon;//默认兵器
+        public int clothes;//默认衣服
+        public int horse;//默认马
+        public int shoe;//默认鞋
 
         public int qualification;//资质
         public int power;//力量

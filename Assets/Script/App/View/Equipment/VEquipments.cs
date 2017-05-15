@@ -48,6 +48,7 @@ namespace App.View.Equipment{
         }
         private IEnumerator EquipmentChanged(VEquipmentIcon equipmentIcon, int equipmentId, App.Model.Master.MEquipment.EquipmentType equipmentType)
         {
+            Debug.LogError("EquipmentChanged "+equipmentId);
             App.Model.MEquipment mEquipment;
             if (ViewModel.UserId.Value > 0)
             {
@@ -65,7 +66,14 @@ namespace App.View.Equipment{
             {
                 mEquipment = NpcEquipmentCacher.Instance.GetEquipment(equipmentId);
             }
-            equipmentIcon.BindingContext = mEquipment != null ? mEquipment.ViewModel : null;
+            if (mEquipment == null)
+            {
+                mEquipment = new App.Model.MEquipment();
+                mEquipment.EquipmentType = equipmentType;
+                mEquipment.EquipmentId = equipmentId;
+                mEquipment.Level = 1;
+            }
+            equipmentIcon.BindingContext = mEquipment.ViewModel;
             equipmentIcon.UpdateView();
             yield break;
         }

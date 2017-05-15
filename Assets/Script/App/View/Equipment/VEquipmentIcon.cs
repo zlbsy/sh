@@ -10,6 +10,7 @@ using App.Controller;
 
 namespace App.View.Equipment{
     public class VEquipmentIcon : VBase {
+        [SerializeField]private Image back;
         [SerializeField]private Image icon;
         [SerializeField]private GameObject[] stars;
         [SerializeField]private Text level;
@@ -48,6 +49,7 @@ namespace App.View.Equipment{
             if (ViewModel != null)
             {
                 icon.gameObject.SetActive(true);
+                Debug.LogError("UpdateView:" + string.Format("{0}_{1}", ViewModel.EquipmentType.Value, ViewModel.EquipmentId.Value));
                 icon.sprite = ImageAssetBundleManager.GetEquipmentIcon(string.Format("{0}_{1}", ViewModel.EquipmentType.Value, ViewModel.EquipmentId.Value));
             }
             else
