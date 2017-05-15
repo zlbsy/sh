@@ -5,8 +5,21 @@ namespace App.Model.Master{
 	public class MEquipment : MBase {
         public enum EquipmentType
         {
+            /// <summary>
+            /// 武器
+            /// </summary>
             weapon,
+            /// <summary>
+            /// 马
+            /// </summary>
             horse,
+            /// <summary>
+            /// 鞋
+            /// </summary>
+            shoe,
+            /// <summary>
+            /// 衣服
+            /// </summary>
             clothes
         }
         public enum ClothesType

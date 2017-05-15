@@ -58,13 +58,14 @@ namespace App.View.Equipment{
                     user = UserCacher.Instance.Get(ViewModel.UserId.Value);
                 }
                 mEquipment = System.Array.Find(user.equipments, 
-                    _=>_.EquipmentId == equipmentId && _.character_id == ViewModel.Id.Value && _.EquipmentType == equipmentType);
+                    _=>_.Id == equipmentId && _.character_id == ViewModel.CharacterId.Value && _.EquipmentType == equipmentType);
+                Debug.LogError("mEquipment = " + mEquipment);
             }
             else
             {
                 mEquipment = NpcEquipmentCacher.Instance.GetEquipment(equipmentId);
             }
-            equipmentIcon.BindingContext = mEquipment.ViewModel;
+            equipmentIcon.BindingContext = mEquipment != null ? mEquipment.ViewModel : null;
             equipmentIcon.UpdateView();
             yield break;
         }

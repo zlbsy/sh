@@ -76,6 +76,10 @@ namespace App.Util.LSharp{
         }
         public override void Analysis(){
             string lineValue = "";
+            if (lineList == null)
+            {
+                return;
+            }
             if (lineList.Count == 0)
             {
                 dataList.RemoveAt(0);

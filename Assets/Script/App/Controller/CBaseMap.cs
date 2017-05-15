@@ -75,6 +75,7 @@ namespace App.Controller{
             mCharacter.CoordinateX = x;
             mCharacter.CoordinateY = y;
             mCharacter.Direction = (Direction)System.Enum.Parse(typeof(Direction), direction, true);
+            mCharacter.Hp = 10;
             /*
             mCharacter.CharacterId = characterId;
             mCharacter.MoveType = MoveType.cavalry;

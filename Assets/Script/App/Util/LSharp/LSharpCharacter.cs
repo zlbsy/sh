@@ -12,6 +12,10 @@ namespace App.Util.LSharp{
         public void Add(string[] arguments){
             int characterId = int.Parse(arguments[0]);
             string action = arguments[1];
+            if (action == "stand")
+            {
+                action = "idle";
+            }
             string direction = arguments[2];
             int x = int.Parse(arguments[3]);
             int y = int.Parse(arguments[4]);

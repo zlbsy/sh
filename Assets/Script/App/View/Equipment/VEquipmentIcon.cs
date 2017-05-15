@@ -45,8 +45,15 @@ namespace App.View.Equipment{
             }
         }
         public override void UpdateView(){
-            //App.Model.MEquipment mEquipment = System.Array.Find(Global.SUser.user.equipments, _=>_.Id == ViewModel.Id.Value);
-            icon.sprite = ImageAssetBundleManager.GetEquipmentIcon(string.Format("{0}_{1}", ViewModel.EquipmentType.Value, ViewModel.EquipmentId.Value));
+            if (ViewModel != null)
+            {
+                icon.gameObject.SetActive(true);
+                icon.sprite = ImageAssetBundleManager.GetEquipmentIcon(string.Format("{0}_{1}", ViewModel.EquipmentType.Value, ViewModel.EquipmentId.Value));
+            }
+            else
+            {
+                icon.gameObject.SetActive(false);
+            }
         }
         #endregion
         public void ClickChild(){

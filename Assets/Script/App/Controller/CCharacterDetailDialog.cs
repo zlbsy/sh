@@ -49,8 +49,25 @@ namespace App.Controller{
 		}
         public void EquipmentIconClick(int id){
             App.Model.MEquipment mEquipment = System.Array.Find(Global.SUser.self.equipments, _=>_.Id == id);
-            Request req = Request.Create("id", id, "equipmentType", mEquipment.EquipmentType);
+            System.Action<int> selectEvent = (int selectId)=>{
+                StartCoroutine(EquipmentChange(selectId));
+            };
+            Request req = Request.Create("id", id, "equipmentType", mEquipment.EquipmentType, "selectEvent", selectEvent);
             this.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.EquipmentListDialog, req));
+        }
+        public IEnumerator EquipmentChange(int id){
+            yield return 0;
+            App.Model.MEquipment mEquipment = System.Array.Find(Global.SUser.self.equipments, _=>_.Id == id);
+            if (mEquipment.EquipmentType == App.Model.Master.MEquipment.EquipmentType.weapon)
+            {
+                character.Weapon = mEquipment.EquipmentId;
+            }else if (mEquipment.EquipmentType == App.Model.Master.MEquipment.EquipmentType.clothes)
+            {
+                character.Clothes = mEquipment.EquipmentId;
+            }else if (mEquipment.EquipmentType == App.Model.Master.MEquipment.EquipmentType.horse)
+            {
+                character.Horse = mEquipment.EquipmentId;
+            }
         }
         public void ChangeContent(){
             int index = System.Array.FindIndex(contents, _=>_.gameObject.name == currentContent.name) + 1;

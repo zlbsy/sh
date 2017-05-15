@@ -56,14 +56,7 @@ namespace App.View.Character{
                 return armRightShort.gameObject.activeSelf ? armRightShort : armRightLong;
             }
         }
-
-        [SerializeField]SpriteRenderer imgHorse;
-        [SerializeField]SpriteRenderer imgBody;
-        [SerializeField]SpriteRenderer imgClothes;
-        [SerializeField]SpriteRenderer imgHead;
-        [SerializeField]SpriteRenderer imgHat;
-        [SerializeField]SpriteRenderer imgWeapon;
-        [SerializeField]RectTransform content;
+        [SerializeField]Transform content;
         [SerializeField]Transform hpTransform;
         [SerializeField]TextMesh num;
         [SerializeField]MeshRenderer meshRenderer;
@@ -77,7 +70,7 @@ namespace App.View.Character{
             get{ 
                 if (_animator == null)
                 {
-                    _animator = this.GetComponent<Animator>();
+                    _animator = this.GetComponentInChildren<Animator>();
                 }
                 return _animator;
             }
@@ -107,15 +100,17 @@ namespace App.View.Character{
         private bool Gray{
             set{ 
                 Shader shader = value ? shaderGray : shaderDefault;
-                imgClothes.material.shader = shader;
+
+                /*imgClothes.material.shader = shader;
                 imgBody.material.shader = shader;
                 imgHorse.material.shader = shader;
                 imgHead.material.shader = shader;
                 imgHat.material.shader = shader;
-                imgWeapon.material.shader = shader;
+                imgWeapon.material.shader = shader;*/
             }
             get{ 
-                return imgClothes.material.shader.Equals(shaderGray);
+                //return imgClothes.material.shader.Equals(shaderGray);
+                return false;
             }
         }
         #region VM处理
@@ -263,6 +258,14 @@ namespace App.View.Character{
         }
         private void MoveTypeChanged(App.Model.MoveType oldvalue, App.Model.MoveType newvalue)
         {
+            if (newvalue == App.Model.MoveType.cavalry)
+            {
+                content.localPosition = new Vector3(content.localPosition.x, 0.48f, content.localPosition.z);
+            }
+            else
+            {
+                content.localPosition = new Vector3(content.localPosition.x, 0.24f, content.localPosition.z);
+            }
             ActionChanged(ViewModel.Action.Value, ViewModel.Action.Value);
         }
         private void HeadChanged(int oldvalue, int newvalue)
@@ -323,8 +326,8 @@ namespace App.View.Character{
             this.ClothesChanged(0, ViewModel.Clothes.Value);
             this.WeaponChanged(0, ViewModel.Weapon.Value);
             this.HorseChanged(0, ViewModel.Horse.Value);
-            this.ActionChanged(ViewModel.Action.Value, ViewModel.Action.Value);
-
+            this.MoveTypeChanged(ViewModel.MoveType.Value, ViewModel.MoveType.Value);
+            /*
             return;
             Debug.Log(ViewModel.MoveType.Value+", " + ViewModel.WeaponType.Value + ", " + ViewModel.Action.Value + ", " + animationIndex);
             AvatarAction avatarAction = AvatarAsset.Data.GetAvatarAction(ViewModel.MoveType.Value, ViewModel.WeaponType.Value, ViewModel.Action.Value, animationIndex);
@@ -375,7 +378,7 @@ namespace App.View.Character{
             imgBody.sortingOrder = avatarAction.body.sibling;
             imgClothes.sortingOrder = avatarAction.clothes.sibling;
             imgHead.sortingOrder = avatarAction.head.sibling;
-            imgWeapon.sortingOrder = avatarAction.weapon.sibling;
+            imgWeapon.sortingOrder = avatarAction.weapon.sibling;*/
         }
         #endregion
 

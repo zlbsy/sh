@@ -1,7 +1,7 @@
 ManifestFileVersion: 0
-CRC: 966362889
+CRC: 2433599171
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
-      Name: weaponmesh.unity3d
+      Name: equipmenticonimage.unity3d
       Dependencies: {}

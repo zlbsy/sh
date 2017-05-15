@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 4283560365
+CRC: 2732635800
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: d717c43ed993c790ec4fddcb30e2e758
+    Hash: c50763225338ccba5418a4585fc2f136
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 4d24bf54f46935ed9e6cf78ac481bb9d
+    Hash: 4774d6da9b606debf00b5a5d61c4487c
 HashAppended: 0
 ClassTypes:
 - Class: 28
@@ -14,10 +14,15 @@ ClassTypes:
 - Class: 213
   Script: {instanceID: 0}
 Assets:
+- Assets/Atlas/equipmenticon/weapon_6.png
 - Assets/Atlas/equipmenticon/clothes_2.png
+- Assets/Atlas/equipmenticon/weapon_3.png
 - Assets/Atlas/equipmenticon/horse_2.png
 - Assets/Atlas/equipmenticon/weapon_2.png
 - Assets/Atlas/equipmenticon/horse_1.png
 - Assets/Atlas/equipmenticon/weapon_1.png
+- Assets/Atlas/equipmenticon/weapon_7.png
+- Assets/Atlas/equipmenticon/weapon_5.png
 - Assets/Atlas/equipmenticon/clothes_1.png
+- Assets/Atlas/equipmenticon/weapon_4.png
 Dependencies: []
