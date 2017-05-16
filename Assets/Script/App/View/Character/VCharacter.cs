@@ -128,6 +128,7 @@ namespace App.View.Character{
                 oldVm.Horse.OnValueChanged -= HorseChanged;
                 oldVm.Clothes.OnValueChanged -= ClothesChanged;
                 oldVm.Weapon.OnValueChanged -= WeaponChanged;
+                oldVm.WeaponType.OnValueChanged -= WeaponTypeChanged;
                 oldVm.Action.OnValueChanged -= ActionChanged;
                 oldVm.MoveType.OnValueChanged -= MoveTypeChanged;
                 oldVm.CoordinateX.OnValueChanged -= CoordinateXChanged;
@@ -145,6 +146,7 @@ namespace App.View.Character{
                 ViewModel.Horse.OnValueChanged += HorseChanged;
                 ViewModel.Clothes.OnValueChanged += ClothesChanged;
                 ViewModel.Weapon.OnValueChanged += WeaponChanged;
+                ViewModel.WeaponType.OnValueChanged += WeaponTypeChanged;
                 ViewModel.Action.OnValueChanged += ActionChanged;
                 ViewModel.MoveType.OnValueChanged += MoveTypeChanged;
                 ViewModel.CoordinateX.OnValueChanged += CoordinateXChanged;
@@ -284,8 +286,12 @@ namespace App.View.Character{
         {
             meshRenderer.material = hpMaterials[newvalue];
         }
+        private void WeaponTypeChanged(App.Model.WeaponType oldvalue, App.Model.WeaponType newvalue){
+            ActionChanged(ViewModel.Action.Value, ViewModel.Action.Value);
+        }
         private void WeaponChanged(int oldvalue, int newvalue)
         {
+            Debug.LogError("WeaponChanged = " + newvalue);
             App.Model.Master.MEquipment mEquipment = EquipmentCacher.Instance.GetEquipment(newvalue, MEquipment.EquipmentType.weapon);
             bool isArchery = (mEquipment.weapon_type == App.Model.WeaponType.archery);
             weapon.gameObject.SetActive(!isArchery);

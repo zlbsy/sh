@@ -402,6 +402,7 @@ namespace App.Model{
                     mEquipment = EquipmentCacher.Instance.GetEquipment(value, App.Model.Master.MEquipment.EquipmentType.weapon);
                 }
                 this.WeaponType = mEquipment.weapon_type;
+                Debug.LogError("this.WeaponType = " + this.WeaponType);
                 this.ViewModel.Weapon.Value = value;
             }
             get{ 

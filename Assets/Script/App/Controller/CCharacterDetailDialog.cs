@@ -22,12 +22,12 @@ namespace App.Controller{
         private GameObject currentContent;
         private VBase[] contents;
         App.Model.MCharacter character;
+        SEquipment sEquipment = new SEquipment();
         public override IEnumerator OnLoad( Request request ) 
         {  
             int characterId = request.Get<int>("character_id");
             if (Global.SUser.self.equipments == null)
             {
-                SEquipment sEquipment = new SEquipment();
                 yield return StartCoroutine(sEquipment.RequestList());
                 Global.SUser.self.equipments = sEquipment.equipments;
             }
@@ -47,17 +47,17 @@ namespace App.Controller{
             ShowContentFromIndex(0);
             yield return StartCoroutine(base.OnLoad(request));
 		}
-        public void EquipmentIconClick(int id){
-            App.Model.MEquipment mEquipment = System.Array.Find(Global.SUser.self.equipments, _=>_.Id == id);
+        public void EquipmentIconClick(App.ViewModel.VMEquipment vm){
             System.Action<int> selectEvent = (int selectId)=>{
                 StartCoroutine(EquipmentChange(selectId));
             };
-            Request req = Request.Create("id", id, "equipmentType", mEquipment.EquipmentType, "selectEvent", selectEvent);
+            Request req = Request.Create("equipmentType", vm.EquipmentType.Value, "selectEvent", selectEvent);
             this.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.EquipmentListDialog, req));
         }
         public IEnumerator EquipmentChange(int id){
-            yield return 0;
+            yield return StartCoroutine(sEquipment.RequestEquip(character.CharacterId, id));
             App.Model.MEquipment mEquipment = System.Array.Find(Global.SUser.self.equipments, _=>_.Id == id);
+            Global.SUser.self.equipments = sEquipment.equipments;
             if (mEquipment.EquipmentType == App.Model.Master.MEquipment.EquipmentType.weapon)
             {
                 character.Weapon = mEquipment.EquipmentId;

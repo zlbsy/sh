@@ -70,6 +70,7 @@ namespace App.View.Equipment{
             {
                 mEquipment = new App.Model.MEquipment();
                 mEquipment.EquipmentType = equipmentType;
+                mEquipment.Id = equipmentId;
                 mEquipment.EquipmentId = equipmentId;
                 mEquipment.Level = 1;
             }

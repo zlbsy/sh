@@ -25,7 +25,6 @@ namespace App.Controller{
                 yield return StartCoroutine(sEquipment.RequestList());
                 Global.SUser.self.equipments = sEquipment.equipments;
             }
-            int id = request.Get<int>("id");
             if (request != null && request.Has("selectEvent"))
             {
                 selectEvent = request.Get<System.Action<int>>("selectEvent");
@@ -38,16 +37,12 @@ namespace App.Controller{
             App.Model.MEquipment[] equipments = System.Array.FindAll(Global.SUser.self.equipments, 
                 _=>_.EquipmentType == equipmentType && _.character_id == 0);
             foreach(App.Model.MEquipment equipment in equipments){
-                if (equipment.Id == id)
-                {
-                    continue;
-                }
                 ScrollViewSetChild(content, childItem, equipment);
             }
 			yield return 0;
         }
-        public void EquipmentIconClick(int id){
-            selectEvent(id);
+        public void EquipmentIconClick(App.ViewModel.VMEquipment vm){
+            selectEvent(vm.Id.Value);
             this.Close();
         }
 	}
