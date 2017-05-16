@@ -1,7 +1,7 @@
 ManifestFileVersion: 0
-CRC: 3421545584
+CRC: 2327045455
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
-      Name: characterasset.unity3d
+      Name: horseasset.unity3d
       Dependencies: {}

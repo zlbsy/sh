@@ -14,10 +14,6 @@ namespace App.Model.Master{
             /// </summary>
             horse,
             /// <summary>
-            /// 鞋
-            /// </summary>
-            shoe,
-            /// <summary>
             /// 衣服
             /// </summary>
             clothes
@@ -37,15 +33,18 @@ namespace App.Model.Master{
 		}
         public string name;//
         public WeaponType weapon_type;//武器类型
+        public MoveType move_type;//移动类型
         public ClothesType clothes_type;//衣服类型
         public int physical_attack;//物理攻击
         public int magic_attack;//魔法攻击
         public int power;//力量
         public int move_power;//轻功／移动力
         public int hp;//血量
+        public int speed;//速度
         public int physical_defense;//物理防御
         public int magic_defense;//魔法防御
 
+        public int horse_body;//马匹
         public int saddle;//马铠
 	}
 }

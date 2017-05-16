@@ -294,13 +294,13 @@ namespace App.View.Character{
         }
         private void HorseChanged(int oldvalue, int newvalue)
         {
-            horseBody.spriteMesh = ImageAssetBundleManager.GetHorseBodyMesh(newvalue);
-            horseFrontLegLeft.spriteMesh = ImageAssetBundleManager.GetHorseFrontLegLeftMesh(newvalue);
-            horseFrontLegRight.spriteMesh = ImageAssetBundleManager.GetHorseFrontLegRightMesh(newvalue);
-            horseHindLegLeft.spriteMesh = ImageAssetBundleManager.GetHorseHindLegLeftMesh(newvalue);
-            horseHindLegRight.spriteMesh = ImageAssetBundleManager.GetHorseHindLegRightMesh(newvalue);
-
             App.Model.Master.MEquipment mEquipment = EquipmentCacher.Instance.GetEquipment(newvalue, MEquipment.EquipmentType.horse);
+            horseBody.spriteMesh = ImageAssetBundleManager.GetHorseBodyMesh(mEquipment.horse_body);
+            horseFrontLegLeft.spriteMesh = ImageAssetBundleManager.GetHorseFrontLegLeftMesh(mEquipment.horse_body);
+            horseFrontLegRight.spriteMesh = ImageAssetBundleManager.GetHorseFrontLegRightMesh(mEquipment.horse_body);
+            horseHindLegLeft.spriteMesh = ImageAssetBundleManager.GetHorseHindLegLeftMesh(mEquipment.horse_body);
+            horseHindLegRight.spriteMesh = ImageAssetBundleManager.GetHorseHindLegRightMesh(mEquipment.horse_body);
+
             horseSaddle.spriteMesh = ImageAssetBundleManager.GetHorseSaddleMesh(mEquipment.saddle);
         }
         private void ClothesChanged(int oldvalue, int newvalue)

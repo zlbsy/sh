@@ -357,11 +357,18 @@ namespace App.Model{
         }
         public int Horse{
             set{
+                App.Model.Master.MEquipment mEquipment = null;
                 if (value == 0)
                 {
                     App.Model.Master.MCharacter character = CharacterCacher.Instance.Get(this.CharacterId);
+                    mEquipment = EquipmentCacher.Instance.GetEquipment(character.horse, App.Model.Master.MEquipment.EquipmentType.horse);
                     value = character.horse;
                 }
+                else
+                {
+                    mEquipment = EquipmentCacher.Instance.GetEquipment(value, App.Model.Master.MEquipment.EquipmentType.horse);
+                }
+                this.MoveType = mEquipment.move_type;
                 this.ViewModel.Horse.Value = value;
             }
             get{ 
@@ -388,7 +395,6 @@ namespace App.Model{
                 {
                     App.Model.Master.MCharacter character = CharacterCacher.Instance.Get(this.CharacterId);
                     mEquipment = EquipmentCacher.Instance.GetEquipment(character.weapon, App.Model.Master.MEquipment.EquipmentType.weapon);
-                    Debug.LogError(this.CharacterId + ", mEquipment = " + mEquipment + ", " + character.weapon);
                     value = character.weapon;
                 }
                 else

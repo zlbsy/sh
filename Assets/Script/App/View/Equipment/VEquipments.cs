@@ -59,7 +59,7 @@ namespace App.View.Equipment{
                     user = UserCacher.Instance.Get(ViewModel.UserId.Value);
                 }
                 mEquipment = System.Array.Find(user.equipments, 
-                    _=>_.Id == equipmentId && _.character_id == ViewModel.CharacterId.Value && _.EquipmentType == equipmentType);
+                    e=>e.EquipmentId == equipmentId && e.character_id == ViewModel.CharacterId.Value && e.EquipmentType == equipmentType);
                 Debug.LogError("mEquipment = " + mEquipment);
             }
             else
