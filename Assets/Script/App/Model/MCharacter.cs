@@ -368,6 +368,7 @@ namespace App.Model{
                 {
                     mEquipment = EquipmentCacher.Instance.GetEquipment(value, App.Model.Master.MEquipment.EquipmentType.horse);
                 }
+                Debug.LogError(mEquipment.name+", " + mEquipment.move_type);
                 this.MoveType = mEquipment.move_type;
                 this.ViewModel.Horse.Value = value;
             }

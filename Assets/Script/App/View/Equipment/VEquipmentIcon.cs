@@ -10,10 +10,9 @@ using App.Controller;
 
 namespace App.View.Equipment{
     public class VEquipmentIcon : VBase {
-        [SerializeField]private Image back;
-        [SerializeField]private Image icon;
-        [SerializeField]private GameObject[] stars;
-        [SerializeField]private Text level;
+        [SerializeField]protected Image icon;
+        [SerializeField]protected GameObject[] stars;
+        [SerializeField]protected Text level;
         #region VM处理
         public VMEquipment ViewModel { get { return (VMEquipment)BindingContext; } }
         protected override void OnBindingContextChanged(VMBase oldViewModel, VMBase newViewModel)
@@ -49,17 +48,15 @@ namespace App.View.Equipment{
             if (ViewModel != null)
             {
                 icon.gameObject.SetActive(true);
-                Debug.LogError("UpdateView:" + string.Format("{0}_{1}", ViewModel.EquipmentType.Value, ViewModel.EquipmentId.Value));
+                level.transform.parent.gameObject.SetActive(true);
+                stars[0].transform.parent.gameObject.SetActive(true);
                 icon.sprite = ImageAssetBundleManager.GetEquipmentIcon(string.Format("{0}_{1}", ViewModel.EquipmentType.Value, ViewModel.EquipmentId.Value));
-            }
-            else
-            {
-                icon.gameObject.SetActive(false);
+                LevelChanged(0, ViewModel.Level.Value);
             }
         }
         #endregion
         public void ClickChild(){
-            this.Controller.SendMessage("EquipmentIconClick", ViewModel);
+            this.Controller.SendMessage("EquipmentIconClick", ViewModel.Id.Value);
         }
     }
 }

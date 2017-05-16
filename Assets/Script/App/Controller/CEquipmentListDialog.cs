@@ -25,6 +25,10 @@ namespace App.Controller{
                 yield return StartCoroutine(sEquipment.RequestList());
                 Global.SUser.self.equipments = sEquipment.equipments;
             }
+            if (request.Has("equipmentType") && request.Has("moveType"))
+            {
+                
+            }
             if (request != null && request.Has("selectEvent"))
             {
                 selectEvent = request.Get<System.Action<int>>("selectEvent");
@@ -41,8 +45,11 @@ namespace App.Controller{
             }
 			yield return 0;
         }
-        public void EquipmentIconClick(App.ViewModel.VMEquipment vm){
-            selectEvent(vm.Id.Value);
+        public void EquipmentIconClick(int id){
+            if (selectEvent != null)
+            {
+                selectEvent(id);
+            }
             this.Close();
         }
 	}

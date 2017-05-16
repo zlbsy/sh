@@ -47,11 +47,15 @@ namespace App.Controller{
             ShowContentFromIndex(0);
             yield return StartCoroutine(base.OnLoad(request));
 		}
-        public void EquipmentIconClick(App.ViewModel.VMEquipment vm){
+        public void EquipmentIconClick(App.Model.Master.MEquipment.EquipmentType equipmentType){
             System.Action<int> selectEvent = (int selectId)=>{
                 StartCoroutine(EquipmentChange(selectId));
             };
-            Request req = Request.Create("equipmentType", vm.EquipmentType.Value, "selectEvent", selectEvent);
+            Request req = Request.Create("equipmentType", equipmentType, "selectEvent", selectEvent);
+            if (equipmentType == App.Model.Master.MEquipment.EquipmentType.horse)
+            {
+                req.Set("moveType", character.MoveType);
+            }
             this.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.EquipmentListDialog, req));
         }
         public IEnumerator EquipmentChange(int id){

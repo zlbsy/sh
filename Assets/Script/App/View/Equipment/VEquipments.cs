@@ -10,9 +10,10 @@ using App.Controller;
 
 namespace App.View.Equipment{
     public class VEquipments : VBase {
-        [SerializeField]private VEquipmentIcon weapon;
-        [SerializeField]private VEquipmentIcon clothes;
-        [SerializeField]private VEquipmentIcon horse;
+        [SerializeField]private VCharacterEquipmentIcon weapon;
+        [SerializeField]private VCharacterEquipmentIcon clothes;
+        [SerializeField]private VCharacterEquipmentIcon horse;
+        [SerializeField]private VCharacterEquipmentIcon shoe;
         #region VM处理
         public VMCharacter ViewModel { get { return (VMCharacter)BindingContext; } }
         protected override void OnBindingContextChanged(VMBase oldViewModel, VMBase newViewModel)
@@ -44,11 +45,13 @@ namespace App.View.Equipment{
         }
         private void HorseChanged(int oldvalue, int newvalue)
         {
-            StartCoroutine(EquipmentChanged(horse, newvalue, App.Model.Master.MEquipment.EquipmentType.horse));
+            Debug.LogError("HorseChanged");
+            horse.Init();
+            shoe.Init();
+            StartCoroutine(EquipmentChanged(ViewModel.MoveType.Value == App.Model.MoveType.cavalry ? horse : shoe, newvalue, App.Model.Master.MEquipment.EquipmentType.horse));
         }
         private IEnumerator EquipmentChanged(VEquipmentIcon equipmentIcon, int equipmentId, App.Model.Master.MEquipment.EquipmentType equipmentType)
         {
-            Debug.LogError("EquipmentChanged "+equipmentId);
             App.Model.MEquipment mEquipment;
             if (ViewModel.UserId.Value > 0)
             {
@@ -60,7 +63,6 @@ namespace App.View.Equipment{
                 }
                 mEquipment = System.Array.Find(user.equipments, 
                     e=>e.EquipmentId == equipmentId && e.character_id == ViewModel.CharacterId.Value && e.EquipmentType == equipmentType);
-                Debug.LogError("mEquipment = " + mEquipment);
             }
             else
             {
@@ -84,7 +86,9 @@ namespace App.View.Equipment{
         public IEnumerator CoroutineUpdateView(){
             yield return App.Util.SceneManager.CurrentScene.StartCoroutine(EquipmentChanged(weapon, ViewModel.Weapon.Value, App.Model.Master.MEquipment.EquipmentType.weapon));
             yield return App.Util.SceneManager.CurrentScene.StartCoroutine(EquipmentChanged(clothes, ViewModel.Clothes.Value, App.Model.Master.MEquipment.EquipmentType.clothes));
-            yield return App.Util.SceneManager.CurrentScene.StartCoroutine(EquipmentChanged(horse, ViewModel.Horse.Value, App.Model.Master.MEquipment.EquipmentType.horse));
+            horse.Init();
+            shoe.Init();
+            yield return App.Util.SceneManager.CurrentScene.StartCoroutine(EquipmentChanged(ViewModel.MoveType.Value == App.Model.MoveType.cavalry ? horse : shoe, ViewModel.Horse.Value, App.Model.Master.MEquipment.EquipmentType.horse));
         }
         #endregion
 
