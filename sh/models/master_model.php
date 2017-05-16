@@ -5,7 +5,7 @@ class Master_model extends MY_Model
 		parent::__construct();
 	}
 	public function get_master_character(){
-		$select = "`id`,`name`,`nickname`,`head`,`hat`,`qualification`,
+		$select = "`id`,`name`,`nickname`,`head`,`hat`,`weapon`,`clothes`,`horse`,`shoe`,`qualification`,
 		`power`,`knowledge`,`trick`,`endurance`,`speed`,`moving_power`,`riding`,`walker`,`pike`,`sword`,
 		`long_knife`,`knife`,`long_ax`,`ax`,`sticks`,`fist`,`archery`,`hidden_weapons`,`dual_wield`, `start_star` ";
 		$table = $this->master_db->base_character;
@@ -27,6 +27,48 @@ class Master_model extends MY_Model
 			$result_array[] = $row["skill_id"];
 		}
 		return $result_array;
+	}
+	public function get_master_avatar(){
+		$select = "`id`,`move_arms`,`arms`,`clothes`,`avatar_action`,`avatar_action_index`,`avatar_property`,`animation_index`,`position_x`,`position_y`,`sibling`,`scale_x`,`scale_y`";
+		$order_by = "move_arms ASC, arms ASC, avatar_action ASC, avatar_action_index ASC";
+		$result = $this->master_db->select($select, $this->master_db->avatar_setting, null, $order_by, null, Database_Result::TYPE_DEFAULT);
+		$result_array = array();
+		while ($row = mysql_fetch_assoc($result)) {
+			if(!$result_array[$row["move_arms"]]){
+				$result_array[$row["move_arms"]] = array();
+			}
+			$this->get_master_avatar_move_arms($result_array[$row["move_arms"]], $row);
+		}
+		return $result_array;
+	}
+	public function get_master_avatar_move_arms(&$move_arms, $row){
+		if(!$move_arms[$row["arms"]]){
+			$move_arms[$row["arms"]] = array();
+		}
+		$this->get_master_avatar_arms($move_arms[$row["arms"]], $row);
+	}
+	public function get_master_avatar_arms(&$arms, $row){
+		if(!$arms[$row["avatar_action"]]){
+			$arms[$row["avatar_action"]] = array();
+		}
+		$this->get_master_avatar_avatar_action($arms[$row["avatar_action"]], $row);
+	}
+	public function get_master_avatar_avatar_action(&$avatar_action, $row){
+		if(!$avatar_action[$row["avatar_action_index"]]){
+			$avatar_action[$row["avatar_action_index"]] = array();
+		}
+		$this->get_master_avatar_avatar_action_index($avatar_action[$row["avatar_action_index"]], $row);
+		$avatar_action[$row["avatar_action_index"]]["clothesType"] = $row["clothes"];
+	}
+	public function get_master_avatar_avatar_action_index(&$avatar_action_index, $row){
+		$avatar_property = array();
+		$avatar_property["index"] = $row["animation_index"];
+		//$avatar_property["position_x"] = $row["position_x"];
+		//$avatar_property["position_y"] = $row["position_y"];
+		$avatar_property["position_value"] = $row["position_x"].",".$row["position_y"];
+		$avatar_property["sibling"] = $row["sibling"];
+		$avatar_property["scale_value"] = $row["scale_x"].",".$row["scale_y"];
+		$avatar_action_index[$row["avatar_property"]] = $avatar_property;
 	}
 	public function get_master_constant(){
 		$result = $this->master_db->select("`name`,`val`", $this->master_db->constant, null, null, null, Database_Result::TYPE_DEFAULT);
@@ -95,22 +137,22 @@ class Master_model extends MY_Model
 		$result = $this->master_db->select($select, $table, null, $order_by);
 		return $result;
 	}
-	function get_master_horse(){
-		$select = "`id`,`name`,`move_power`,`hp`";
+	function get_master_horse($language = "cn"){
+		$select = "`id`,`name_{$language}` as `name`,`move_power`,`saddle`,`hp`";
 		$table = $this->master_db->horse;
 		$order_by = "id asc";
 		$result = $this->master_db->select($select, $table, null, $order_by);
 		return $result;
 	}
-	function get_master_weapon(){
-		$select = "`id`,`name`,`physical_attack`,`power`";
+	function get_master_weapon($language = "cn"){
+		$select = "`id`,`name_{$language}` as `name`,`weapon_type`,`physical_attack`,`magic_attack`,`power`";
 		$table = $this->master_db->weapon;
 		$order_by = "id asc";
 		$result = $this->master_db->select($select, $table, null, $order_by);
 		return $result;
 	}
-	function get_master_clothes(){
-		$select = "`id`,`name`,`defense`,`hp`";
+	function get_master_clothes($language = "cn"){
+		$select = "`id`,`name_{$language}` as `name`,`clothes_type`,`physical_defense`,`magic_defense`,`hp`";
 		$table = $this->master_db->clothes;
 		$order_by = "id asc";
 		$result = $this->master_db->select($select, $table, null, $order_by);
@@ -168,6 +210,18 @@ class Master_model extends MY_Model
 		$result = $this->master_db->select($select, $table, $where, $order_by);
 		return $result;
 	}
+	function get_master_tutorial($language="cn"){
+		$select = "`id`,`script_{$language}` as `script`";
+		$table = $this->master_db->tutorial;
+		$order_by = "id asc";
+		$result_array = $this->master_db->select($select, $table, null, $order_by);
+		$result = array();
+		foreach($result_array as $val){
+			//$val["script"] = explode(";",$val["script"]);
+			$result[] = explode(";",$val["script"]);
+		}
+		return $result;
+	}
 	function get_master_battlefields($language="cn"){
 		$select = "`id`,`name_{$language}` as `name`,`map_id`,`script_{$language}` as `script`, `max_num`";
 		$table = $this->master_db->battlefield;
@@ -175,10 +229,6 @@ class Master_model extends MY_Model
 		$result_array = $this->master_db->select($select, $table, null, $order_by);
 		$result = array();
 		foreach($result_array as $val){
-			//$battlefield = array();
-			//$battlefield["id"] = $val["id"];
-			//$battlefield["name"] = $val["name"];
-			//$battlefield["map_id"] = $val["map_id"];
 			$val["script"] = explode(";",$val["script"]);
 			$val["tiles"] = $this->get_master_battlefield_tiles($val["id"]);
 			$val["enemys"] = $this->get_master_battlefield_npcs($val["id"], "enemy");

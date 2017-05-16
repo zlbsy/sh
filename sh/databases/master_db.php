@@ -24,6 +24,8 @@ class Master_DB extends Base_Database {
 	var $npc = "fsyy_master_lufylegend.npc";
 	var $npc_equipment = "fsyy_master_lufylegend.npc_equipment";
 	var $character_skill = "fsyy_master_lufylegend.character_skill";
+	var $tutorial = "fsyy_master_lufylegend.tutorial";
+	var $avatar_setting = "fsyy_master_lufylegend.avatar_setting";
 	function __construct() {
 		parent::__construct();
 		$db = mysql_select_db('fsyy_master_lufylegend', $this->connect);

@@ -14,9 +14,17 @@ class Master extends MY_Controller {
 			$master_constant = $master_model->get_master_constant();
 			$result["constant"]=$master_constant;
 		}
+		if($args["avatar"]){
+			$master_avatar = $master_model->get_master_avatar();
+			$result["avatar"]=$master_avatar;
+		}
 		if($args["building"]){
 			$master_building = $master_model->get_master_building();
 			$result["buildings"]=$master_building;
+		}
+		if($args["tutorial"]){
+			$master_tutorial = $master_model->get_master_tutorial();
+			$result["tutorials"]=$master_tutorial;
 		}
 		if($args["tile"]){
 			$master_tile = $master_model->get_master_tile();

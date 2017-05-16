@@ -30,6 +30,12 @@ class User extends MY_Controller {
 	{
 		$this->out(null);
 	}
+	public function progress()
+	{
+		$user_model = new User_model();
+		$result = $user_model->set_story_progress($this->args["user_id"], $this->args["k"], $this->args["v"]);
+		$this->out(array());
+	}
 	public function get()
 	{
 		$user = $this->getSessionData("user");

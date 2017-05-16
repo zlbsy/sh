@@ -12,7 +12,7 @@ class Battle extends MY_Controller {
 		$user = $this->getSessionData("user");
 		$battle_model = new Battle_model();
 		$battle_list = $battle_model->get_list($user["id"]);
-		if($battle_list){
+		if(!is_null($battle_list)){
 			$result = array("battlelist"=>$battle_list);
 			$this->out($result);
 		}else{

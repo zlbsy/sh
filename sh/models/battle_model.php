@@ -11,6 +11,9 @@ class Battle_model extends MY_Model
 		$where = array();
 		$where[] = "user_id={$user_id}";
 		$result = $this->user_db->select($select, $table, $where);
+		if(!is_null($result)){
+			return array();
+		}
 		return $result;
 	}
 	function get_equipment($user_id, $equipment_id){

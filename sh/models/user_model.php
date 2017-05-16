@@ -8,10 +8,11 @@ class User_model extends MY_Model
 	var $_select_other_clums = 'id, name, nickname as Nickname, face as Face, level as Level, gold as Gold, silver as Silver, ap as Ap, map_id as MapId, last_ap_date as LastApDate';
 	function register($account, $password, $name, $character_id){
 		$character_model = new Character_model();
-		$character = $character_model->get_character_list(0, $character_id);
-		if(is_null($character)){
+		$characters = $character_model->get_character_list(0, $character_id);
+		if(count($characters) == 0){
 			return false;
 		}
+		$character = $characters[0];
 		$this->user_db->trans_begin();
 		$values = array();
 		$values['account'] = "'{$account}'";
@@ -24,14 +25,14 @@ class User_model extends MY_Model
 		$res_player = $this->user_db->insert($values, $this->user_db->player);
 		if(!$res_player){
 			$this->user_db->trans_rollback();
-			$this->error("register fail");
+			$this->error("register fail player");
 		}
 		$user = $this->login(array("account"=>$account, "pass"=>$password));
 		if(is_null($user)){
 			$this->user_db->trans_rollback();
-			$this->error("register fail");
+			$this->error("register fail user");
 		}
-		$user_id = $user["Id"];
+		$user_id = $user["id"];
 		$character_values = array();
 		$character_values['user_id'] = $user_id;
 		$character_values['character_id'] = $character_id;
@@ -45,45 +46,53 @@ class User_model extends MY_Model
 		$res_character = $character_model->character_insert($character_values);
 		if(!$res_character){
 			$this->user_db->trans_rollback();
-			$this->error("register fail");
+			$this->error("register fail character");
 		}
 		$character_skills = array();
-		$character_values['user_id'] = $user_id;
-		$character_values['character_id'] = $character_id;
-		$Skills = $character["Skills"];
+		$character_skills['user_id'] = $user_id;
+		$character_skills['character_id'] = $character_id;
+		$Skills = $character["Skills"][0];
 		$character_skills['skill_id'] = $Skills["SkillId"];
 		$character_skills['level'] = $Skills["Level"];
 		$character_skills['register_time'] = "'{$now}'";
 		$res_character = $character_model->character_skill_insert($character_skills);
 		if(!$res_character){
 			$this->user_db->trans_rollback();
-			$this->error("register fail");
+			$this->error("register fail skill");
 		}
+		$equipment_model = new Equipment_model();
 		if($character["Horse"] > 0){
-			$rs_horse = $equipment_mmodel->set_equipment($user_id, $character["Horse"], "horse", $character_id);
+			$rs_horse = $equipment_model->set_equipment($user_id, $character["Horse"], "horse", $character_id);
 			if(!$rs_horse){
 				$this->user_db->trans_rollback();
-				$this->error("register fail");
+				$this->error("register fail horse");
 			}
 		}
-		$rs_weapon = $equipment_mmodel->set_equipment($user_id, $character["Weapon"], "weapon", $character_id);
+		$rs_weapon = $equipment_model->set_equipment($user_id, $character["Weapon"], "weapon", $character_id);
 		if(!$rs_weapon){
 			$this->user_db->trans_rollback();
-			$this->error("register fail");
+			$this->error("register fail weapon");
 		}
-		$rs_clothes = $equipment_mmodel->set_equipment($user_id, $character["Clothes"], "clothes", $character_id);
+		$rs_clothes = $equipment_model->set_equipment($user_id, $character["Clothes"], "clothes", $character_id);
 		if(!$rs_clothes){
 			$this->user_db->trans_rollback();
-			$this->error("register fail");
+			$this->error("register fail clothes");
 		}
 		$this->user_db->trans_commit();
-		return true;
+		return $user_id;
 	}
 	function login($args){
 		$table = $this->user_db->player;
 		$where = array();
 		$where[] = "account='{$args["account"]}'";
 		$where[] = "pass='{$args["pass"]}'";
+		$result = $this->user_db->select($this->_select_clums, $table, $where, null, null, Database_Result::TYPE_ROW);
+		return $result;
+	}
+	function get_user_from_account($account){
+		$table = $this->user_db->player;
+		$where = array();
+		$where[] = "account='{$account}'";
 		$result = $this->user_db->select($this->_select_clums, $table, $where, null, null, Database_Result::TYPE_ROW);
 		return $result;
 	}
@@ -119,12 +128,14 @@ class User_model extends MY_Model
 		}
 		return $this->update($result);
 	}
-	function get($id, $is_all = false){
+	function get($id, $is_all = false, $is_self = false){
 		$user = $this->getSessionData("user");
-		$is_self = (isset($id) && $id == $user["id"]);
+		if(!$is_self){
+			$is_self = (isset($id) && $id == $user["id"]);
+		}
 		$select = $is_self ? $this->_select_clums : $this->_select_other_clums;
 		$table = $this->user_db->player;
-		$where = array("id={$user["id"]}");
+		$where = array("id={$id}");
 		$result = $this->user_db->select($select, $table, $where, null, null, Database_Result::TYPE_ROW);
 		if(is_null($result)){
 			return null;
@@ -142,11 +153,30 @@ class User_model extends MY_Model
 		$result = $this->user_db->select($select, $table, $where);
 		return $result;
 	}
-	function get_story_progress($user_id){
+	function get_story_progress($user_id, $k=null){
 		$select = "k, v";
 		$table = $this->user_db->story_progress;
 		$where = array("user_id={$user_id}");
+		if(!is_null($k)){
+			$where[] = "k='".$k."'";
+		}
 		$result = $this->user_db->select($select, $table, $where);
+		return $result;
+	}
+	function set_story_progress($user_id,$k,$v){
+		$values = array();
+		$all_progress = $this->get_story_progress($user_id, $k);
+		if(count($all_progress) == 0){
+			$values["k"] = "'{$k}'";
+			$values["v"] = $v;
+			$values["user_id"] = $user_id;
+			return  $this->user_db->insert($values, $this->user_db->story_progress);
+		}
+		//$values[] = "k=".$k;
+		$values[] = "v=".$v;
+		$table = $this->user_db->story_progress;
+		$where = array("user_id={$user_id}","k='{$k}'");
+		$result = $this->user_db->update($values, $table, $where);
 		return $result;
 	}
 }
