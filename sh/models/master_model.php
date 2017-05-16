@@ -138,7 +138,7 @@ class Master_model extends MY_Model
 		return $result;
 	}
 	function get_master_horse($language = "cn"){
-		$select = "`id`,`name_{$language}` as `name`,`move_power`,`saddle`,`hp`";
+		$select = "`id`,`name_{$language}` as `name`,`move_type`,`move_power`,`saddle`,`hp`,`speed`";
 		$table = $this->master_db->horse;
 		$order_by = "id asc";
 		$result = $this->master_db->select($select, $table, null, $order_by);

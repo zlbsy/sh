@@ -27,76 +27,65 @@ class Equipment_model extends MY_Model
 		$result = $this->user_db->select($select, $table, $where);
 		return $result;
 	}
-	function get_equipment($user_id, $equipment_id){
-		$this->user_db->where("id", $equipment_id);
-		$this->user_db->where("user_id", $user_id);
-		$query = $this->user_db->get(USER_EQUIPMENT);
-		if ($query->num_rows() == 0){
-			return null;
+	function update($id, $args){
+		if(!$args || !is_array($args))return false;
+		$values = array();
+		foreach ($args as $key=>$value){
+			if($key == "id")continue;
+			$values[] = $key ."=". $value;
 		}
-		$result = $query->first_row('array');
+		$where = array("id={$id}");
+		$table = $this->user_db->equipment;
+		$result = $this->user_db->update($values, $table, $where);
 		return $result;
 	}
-	function get_equipment_by_position($user_id, $character_id, $position){
-		$this->user_db->where("user_id", $user_id);
-		$this->user_db->where("character_id", $character_id);
-		$this->user_db->where("position", $position);
-		$query = $this->user_db->get(USER_EQUIPMENT);
-		if ($query->num_rows() == 0){
-			return null;
+	function equip_remove($user_id, $character_id, $equipment_type){
+		$equiped_equipment = $this->get_equiped_equipment($user_id, $character_id, $equipment_type);
+		if(!is_null($equiped_equipment)){
+			return $this->update($equiped_equipment["Id"], array("character_id"=>0));
 		}
-		$result = $query->first_row('array');
-		return $result;
+		return true;
 	}
-	function equip($user_id, $equipment, $equipment_master, $character_id, &$update_character_ids){
-		$equiped = $this->get_equipment_by_position($user_id, $character_id, $equipment_master["position"]);
+	function equip($user_id, $character_id, $equipment_id){
+		$equipment = $this->get_equipment_by_id($equipment_id);
 		$this->user_db->trans_begin();
-		$update_character_ids[] = $character_id;
-		if($equipment["character_id"] > 0){
-			$update_character_ids[] = $equipment["character_id"];
-			//如果物品已被英雄装备，则先取消装备
-			$this->user_db->set("character_id",0);
-			$this->user_db->where("id", $equipment["id"]);
-			$this->user_db->where("user_id", $user_id);
-			$result_remove = $this->user_db->update(USER_EQUIPMENT);
-			if(!$this->transBool($result_remove)){
-				return null;
-			}
+		$delete_old = $this->equip_remove($user_id, $character_id, $equipment["EquipmentType"]);
+		if(!$delete_old){
+			$this->user_db->trans_rollback();
+			$this->error("delete equip error");
 		}
-		if(!empty($equiped)){
-			$update_character_ids[] = $equiped["character_id"];
-			//如果英雄已装备物品，则先取消装备
-			$this->user_db->set("character_id",0);
-			$this->user_db->where("user_id", $user_id);
-			$this->user_db->where("character_id", $character_id);
-			$this->user_db->where("position", $equipment_master["position"]);
-			$result_remove = $this->user_db->update(USER_EQUIPMENT);
-			if(!$this->transBool($result_remove)){
-				return null;
-			}
+		$equip_new = $this->update($equipment["Id"], array("character_id"=>$character_id));
+		if(!$equip_new){
+			$this->user_db->trans_rollback();
+			$this->error("equip new error");
 		}
-		//装备
-		$this->user_db->set("character_id",$character_id);
-		$this->user_db->set("position", $equipment_master["position"]);
-		$this->user_db->where("user_id", $user_id);
-		$this->user_db->where("id", $equipment["id"]);
-		$result = $this->user_db->update(USER_EQUIPMENT);
-		if(!$this->transBool($result)){
-			return null;
+		$character_model = new Character_model();
+		$character_args = array();
+		$character_args[$equipment["EquipmentType"]] = $equipment["EquipmentId"];
+		$character_equip = $character_model->update_character($user_id, $character_id, $character_args);
+		if(!$character_equip){
+			$this->user_db->trans_rollback();
+			$this->error("character equip error");
 		}
-		if (!$this->transStatus()){
-			return null;
-		}
+		$this->user_db->trans_commit();
+		return true;
+	}
+	function get_equipment_by_id($id){
+		$select = "id as Id,character_id,equipment_id as EquipmentId,equipment_type as EquipmentType";
+		$table = $this->user_db->equipment;
+		$where = array();
+		$where[] = "id={$id}";
+		$result = $this->user_db->select($select, $table, $where, null, null, Database_Result::TYPE_ROW);
 		return $result;
 	}
-	function get_master($id){
-		$this->master_db->select('id, arms, level, star, position, img, explanation, five1, five2, five3, five4, five5, hp, attack, magic, def, magicDef, speed, dodge, breakout, strength, force, strategy, command, intelligence, agility');
-		$this->master_db->where("id", $id);
-		$query = $this->master_db->get(MASTER_EQUIPMENT);
-		if ($query->num_rows() == 0){
-			return null;
-		}
-		$result = $query->first_row('array');
+	function get_equiped_equipment($user_id, $character_id, $equipment_type){
+		$select = "id as Id,character_id,equipment_id as EquipmentId,equipment_type as EquipmentType";
+		$table = $this->user_db->equipment;
+		$where = array();
+		$where[] = "id={$id}";
+		$where[] = "character_id={$character_id}";
+		$where[] = "equipment_type={$equipment_type}";
+		$result = $this->user_db->select($select, $table, $where, null, null, Database_Result::TYPE_ROW);
 		return $result;
 	}
 }

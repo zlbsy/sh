@@ -5,7 +5,7 @@ class Character_model extends MY_Model
 		parent::__construct();
 	}
 	function get_character_list($user_id, $chara_id = null){
-		$select = "`id` as Id,`user_id` as UserId, `character_id` as `CharacterId`, `exp` as `Exp`, `star` as `Star`, `level` as `Level`, `move_type` as `MoveType`, `horse` as `Horse`, `clothes` as `Clothes`, `weapon` as `Weapon`";
+		$select = "`id` as Id,`user_id` as UserId, `character_id` as `CharacterId`, `exp` as `Exp`, `star` as `Star`, `level` as `Level`, `horse` as `Horse`, `clothes` as `Clothes`, `weapon` as `Weapon`";
 		$table = $this->user_db->characters;
 		$where = array();
 		$where[] = "user_id = {$user_id}";
@@ -42,5 +42,16 @@ class Character_model extends MY_Model
 	function character_skill_insert($values){
 		$res = $this->user_db->insert($values, $this->user_db->character_skill);
 		return $res;
+	}
+	function update_character($user_id, $character_id, $args){
+		if(!$args || !is_array($args))return false;
+		$values = array();
+		foreach ($args as $key=>$value){
+			$values[] = $key ."=". $value;
+		}
+		$where = array("user_id={$user_id}", "character_id={$character_id}");
+		$table = $this->user_db->equipment;
+		$result = $this->user_db->update($values, $table, $where);
+		return $result;
 	}
 }
