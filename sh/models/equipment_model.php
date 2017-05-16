@@ -65,7 +65,7 @@ class Equipment_model extends MY_Model
 		$character_equip = $character_model->update_character($user_id, $character_id, $character_args);
 		if(!$character_equip){
 			$this->user_db->trans_rollback();
-			$this->error("character equip error");
+			$this->error("character equip error ". $this->user_db->last_sql);
 		}
 		$this->user_db->trans_commit();
 		return true;

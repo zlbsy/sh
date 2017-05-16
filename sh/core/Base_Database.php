@@ -7,6 +7,7 @@ class Database_Result{
 }
 class Base_Database {
 	var $connect;
+	var $last_sql;
 	function __construct() {
 		$this->connect = mysql_connect('localhost', 'lufy', '3gj_lufy');
 		if (!$this->connect) {
@@ -46,6 +47,7 @@ class Base_Database {
 		if(isset($_GET["debug"])){
 			echo $sql;
 		}
+		$this->last_sql = $sql;
 		$result_select = mysql_query($sql, $this->connect);
 		if($result_type == Database_Result::TYPE_ARRAY){
 			$result = array();
@@ -77,6 +79,7 @@ class Base_Database {
 		if(isset($_GET["debug"])){
 			echo $sql;
 		}
+		$this->last_sql = $sql;
 		$result = mysql_query($sql, $this->connect);
 		return $result;
 	}
@@ -98,6 +101,7 @@ class Base_Database {
 		if(isset($_GET["debug"])){
 			echo $sql;
 		}
+		$this->last_sql = $sql;
 		$result = mysql_query($sql, $this->connect);
 		return $result;
 	}
