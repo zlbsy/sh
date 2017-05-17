@@ -334,7 +334,7 @@ namespace MyEditor
                 {
                     string allPath = pngFile.FullName;
                     string assetPath = allPath.Substring(allPath.IndexOf("Assets"));
-                    //assets.Add(AssetDatabase.LoadAssetAtPath<Sprite>(assetPath));
+                    Debug.Log(assetPath);
                     paths.Add(assetPath);
                 }
                 AssetBundleBuild build = new AssetBundleBuild();

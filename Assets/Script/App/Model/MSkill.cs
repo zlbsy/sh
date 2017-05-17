@@ -62,5 +62,8 @@ namespace App.Model{
                 return false;
             }
         }
+        public void Update(MSkill skill){
+            this.Level = skill.Level;
+        }
 	}
 }

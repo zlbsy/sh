@@ -22,6 +22,7 @@ namespace App.Service{
             var url = "skill/level_up";
             WWWForm form = new WWWForm();
             form.AddField("skill_id", id);
+            Debug.Log("RequestLevelUp skill_id="+id);
             HttpClient client = new HttpClient();
             yield return App.Util.SceneManager.CurrentScene.StartCoroutine(client.Send( url, form ));
             ResponseLevelUp response = client.Deserialize<ResponseLevelUp>();

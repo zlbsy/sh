@@ -315,10 +315,12 @@ namespace App.View.Character{
         {
             App.Model.Master.MEquipment mEquipment = EquipmentCacher.Instance.GetEquipment(newvalue, MEquipment.EquipmentType.clothes);
             bool isArmor = (mEquipment.clothes_type == MEquipment.ClothesType.armor);
+
             clothesUpShort.gameObject.SetActive(isArmor);
             clothesDownShort.gameObject.SetActive(isArmor);
             armLeftShort.gameObject.SetActive(isArmor);
             armRightShort.gameObject.SetActive(isArmor);
+
             clothesUpLong.gameObject.SetActive(!isArmor);
             clothesDownLong.gameObject.SetActive(!isArmor);
             armLeftLong.gameObject.SetActive(!isArmor);

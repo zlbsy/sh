@@ -58,7 +58,7 @@ namespace App.Controller{
             }
             this.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.EquipmentListDialog, req));
         }
-        public IEnumerator EquipmentChange(int id){
+        private IEnumerator EquipmentChange(int id){
             yield return StartCoroutine(sEquipment.RequestEquip(character.CharacterId, id));
             App.Model.MEquipment mEquipment = System.Array.Find(Global.SUser.self.equipments, _=>_.Id == id);
             Global.SUser.self.equipments = sEquipment.equipments;
@@ -74,10 +74,19 @@ namespace App.Controller{
             }
         }
         public void SkillLevelUp(int id){
+            Debug.Log("SkillLevelUp id="+id);
             App.Model.MSkill mSkill = System.Array.Find(character.Skills, s=>s.Id == id);
-
-            //SSkill sSkill = new SSkill();
-            //yield return StartCoroutine(sSkill.RequestLevelUp(id));
+            if (Global.SUser.self.Silver < mSkill.Master.price)
+            {
+                CAlertDialog.Show("银两不够");
+                return;
+            }
+            StartCoroutine(SkillLevelUpRun(id, mSkill));
+        }
+        private IEnumerator SkillLevelUpRun(int id, App.Model.MSkill mSkill){
+            SSkill sSkill = new SSkill();
+            yield return StartCoroutine(sSkill.RequestLevelUp(id));
+            mSkill.Update(sSkill.skill);
         }
         public void ChangeContent(){
             int index = System.Array.FindIndex(contents, _=>_.gameObject.name == currentContent.name) + 1;
