@@ -47,14 +47,14 @@ namespace App.Controller{
             ShowContentFromIndex(0);
             yield return StartCoroutine(base.OnLoad(request));
 		}
-        public void EquipmentIconClick(App.Model.Master.MEquipment.EquipmentType equipmentType){
+        public void EquipmentIconClick(VCharacterEquipmentIcon vEquipmentIcon){
             System.Action<int> selectEvent = (int selectId)=>{
                 StartCoroutine(EquipmentChange(selectId));
             };
-            Request req = Request.Create("equipmentType", equipmentType, "selectEvent", selectEvent);
-            if (equipmentType == App.Model.Master.MEquipment.EquipmentType.horse)
+            Request req = Request.Create("equipmentType", vEquipmentIcon.equipmentType, "selectEvent", selectEvent);
+            if (vEquipmentIcon.equipmentType == App.Model.Master.MEquipment.EquipmentType.horse)
             {
-                req.Set("moveType", character.MoveType);
+                req.Set("moveType", vEquipmentIcon.moveType);
             }
             this.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.EquipmentListDialog, req));
         }
@@ -72,6 +72,12 @@ namespace App.Controller{
             {
                 character.Horse = mEquipment.EquipmentId;
             }
+        }
+        public void SkillLevelUp(int id){
+            App.Model.MSkill mSkill = System.Array.Find(character.Skills, s=>s.Id == id);
+
+            //SSkill sSkill = new SSkill();
+            //yield return StartCoroutine(sSkill.RequestLevelUp(id));
         }
         public void ChangeContent(){
             int index = System.Array.FindIndex(contents, _=>_.gameObject.name == currentContent.name) + 1;

@@ -44,7 +44,7 @@ namespace App.Model.Master{
         public int physical_defense;//物理防御
         public int magic_defense;//魔法防御
 
-        public int horse_body;//马匹
+        public int image_index;//马匹或鞋
         public int saddle;//马铠
 	}
 }

@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2732635800
+CRC: 4022455191
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: c50763225338ccba5418a4585fc2f136
+    Hash: 45f34b11d2f0137f119157f98a8862de
   TypeTreeHash:
     serializedVersion: 2
     Hash: 4774d6da9b606debf00b5a5d61c4487c
@@ -17,9 +17,12 @@ Assets:
 - Assets/Atlas/equipmenticon/weapon_6.png
 - Assets/Atlas/equipmenticon/clothes_2.png
 - Assets/Atlas/equipmenticon/weapon_3.png
+- Assets/Atlas/equipmenticon/horse_4.png
 - Assets/Atlas/equipmenticon/horse_2.png
 - Assets/Atlas/equipmenticon/weapon_2.png
 - Assets/Atlas/equipmenticon/horse_1.png
+- Assets/Atlas/equipmenticon/horse_5.png
+- Assets/Atlas/equipmenticon/horse_3.png
 - Assets/Atlas/equipmenticon/weapon_1.png
 - Assets/Atlas/equipmenticon/weapon_7.png
 - Assets/Atlas/equipmenticon/weapon_5.png

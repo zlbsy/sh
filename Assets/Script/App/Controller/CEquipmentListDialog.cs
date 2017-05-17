@@ -25,10 +25,6 @@ namespace App.Controller{
                 yield return StartCoroutine(sEquipment.RequestList());
                 Global.SUser.self.equipments = sEquipment.equipments;
             }
-            if (request.Has("equipmentType") && request.Has("moveType"))
-            {
-                
-            }
             if (request != null && request.Has("selectEvent"))
             {
                 selectEvent = request.Get<System.Action<int>>("selectEvent");
@@ -40,6 +36,13 @@ namespace App.Controller{
             App.Model.Master.MEquipment.EquipmentType equipmentType = request.Get<App.Model.Master.MEquipment.EquipmentType>("equipmentType");
             App.Model.MEquipment[] equipments = System.Array.FindAll(Global.SUser.self.equipments, 
                 _=>_.EquipmentType == equipmentType && _.character_id == 0);
+            Debug.LogError("equipmentType="+equipmentType);
+            if (equipmentType == App.Model.Master.MEquipment.EquipmentType.horse && request.Has("moveType"))
+            {
+                MoveType moveType = request.Get<MoveType>("moveType");
+                Debug.LogError("moveType="+moveType);
+                equipments = System.Array.FindAll(equipments, e=>e.Master.move_type == moveType);
+            }
             foreach(App.Model.MEquipment equipment in equipments){
                 ScrollViewSetChild(content, childItem, equipment);
             }

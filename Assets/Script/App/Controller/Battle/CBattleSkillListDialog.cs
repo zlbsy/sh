@@ -34,7 +34,7 @@ namespace App.Controller.Battle{
             RectTransform trans = preview.GetComponent<RectTransform>();
             trans.anchoredPosition = new Vector2(110 * index - 190, trans.anchoredPosition.y);
             preview.SetActive(true);
-            preview.transform.Find("Name").GetComponent<Text>().text = Language.Get(skill.Master.name);
+            preview.transform.Find("Name").GetComponent<Text>().text = skill.Master.name;
         }
         public void HidePreview(){
             preview.SetActive(false);

@@ -6,9 +6,9 @@ namespace App.Model.Master{
 	public class MSkill : MBase {
         public MSkill(){
         }
+        public int level;
         public string name;//
         public SkillType type;//
-        public int level;
         public int price;//升级所需费用
         public int character_level;//升级所需英雄等级
         public WeaponType[] weapon_types;

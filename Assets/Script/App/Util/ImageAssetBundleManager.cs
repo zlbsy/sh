@@ -70,6 +70,14 @@ namespace App.Util{
             string name = string.Format("horse_body_{0}", id);
             return System.Array.Find(horse, _=>_.name == name);
         }
+        public static Anima2D.SpriteMesh GetShoeLeftMesh(int id){
+            string name = string.Format("shoe_left_{0}", id);
+            return System.Array.Find(horse, _=>_.name == name);
+        }
+        public static Anima2D.SpriteMesh GetShoeRightMesh(int id){
+            string name = string.Format("shoe_right_{0}", id);
+            return System.Array.Find(horse, _=>_.name == name);
+        }
         public static Anima2D.SpriteMesh GetHorseFrontLegLeftMesh(int id){
             string name = string.Format("horse_front_lleg_{0}", id);
             return System.Array.Find(horse, _=>_.name == name);

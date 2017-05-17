@@ -31,6 +31,8 @@ namespace App.View.Character{
         [SerializeField]Anima2D.SpriteMeshInstance horseHindLegLeft;
         [SerializeField]Anima2D.SpriteMeshInstance horseHindLegRight;
         [SerializeField]Anima2D.SpriteMeshInstance horseSaddle;
+        [SerializeField]Anima2D.SpriteMeshInstance legLeft;
+        [SerializeField]Anima2D.SpriteMeshInstance legRight;
         private Anima2D.SpriteMeshInstance Weapon{
             get{ 
                 return weapon.gameObject.activeSelf ? weapon : weaponArchery;
@@ -60,9 +62,10 @@ namespace App.View.Character{
         [SerializeField]Transform hpTransform;
         [SerializeField]TextMesh num;
         [SerializeField]MeshRenderer meshRenderer;
-        private static Shader shaderGray;
-        private static Shader shaderDefault;
+        private static Material materialGray;
+        private static Material materialDefault;
         private static Dictionary<App.Model.Belong, Material> hpMaterials;
+        private Anima2D.SpriteMeshInstance[] allSprites;
         private bool init = false;
         private int animationIndex = 0;
         private Animator _animator;
@@ -81,13 +84,11 @@ namespace App.View.Character{
                 return;
             }
             init = true;
-            if (shaderDefault == null)
-            {
-                shaderGray = Shader.Find("Sprites/Gray");
-                shaderDefault = Shader.Find("Sprites/Default");
-            }
             if (hpMaterials == null)
             {
+                materialGray = Resources.Load("Material/GrayMaterial") as Material;
+                materialDefault = head.sharedMaterial;
+
                 hpMaterials = new Dictionary<App.Model.Belong, Material>();
                 hpMaterials.Add(App.Model.Belong.self, Resources.Load("Material/SelfHp") as Material);
                 hpMaterials.Add(App.Model.Belong.friend, Resources.Load("Material/FriendHp") as Material);
@@ -98,19 +99,16 @@ namespace App.View.Character{
             BelongChanged(ViewModel.Belong.Value, ViewModel.Belong.Value);
         }
         private bool Gray{
-            set{ 
-                Shader shader = value ? shaderGray : shaderDefault;
-
-                /*imgClothes.material.shader = shader;
-                imgBody.material.shader = shader;
-                imgHorse.material.shader = shader;
-                imgHead.material.shader = shader;
-                imgHat.material.shader = shader;
-                imgWeapon.material.shader = shader;*/
+            set{
+                Material material = value ? materialGray : materialDefault;
+                allSprites = (allSprites == null ? this.GetComponentsInChildren<Anima2D.SpriteMeshInstance>(true) : allSprites);
+                foreach (Anima2D.SpriteMeshInstance sprite in allSprites)
+                {
+                    sprite.sharedMaterial = material;
+                }
             }
             get{ 
-                //return imgClothes.material.shader.Equals(shaderGray);
-                return false;
+                return head.sharedMaterial.Equals(materialGray);
             }
         }
         #region VM处理
@@ -221,7 +219,6 @@ namespace App.View.Character{
             VBaseMap vBaseMap = cBaseMap.GetVBaseMap();
             int i = ViewModel.CoordinateY.Value * vBaseMap.mapWidth + newvalue;
             VTile vTile = vBaseMap.tileUnits[i];
-            //this.transform.localPosition = vTile.transform.localPosition;
             ViewModel.Y.Value = vTile.transform.localPosition.y;
         }
         private void ActionChanged(App.Model.ActionType oldvalue, App.Model.ActionType newvalue)
@@ -273,14 +270,10 @@ namespace App.View.Character{
         private void HeadChanged(int oldvalue, int newvalue)
         {
             head.spriteMesh = ImageAssetBundleManager.GetHeadMesh(newvalue);
-            //imgHead.sprite = ImageAssetBundleManager.GetAvatarHead(newvalue);
-            //UpdateView();
         }
         private void HatChanged(int oldvalue, int newvalue)
         {
             hat.spriteMesh = ImageAssetBundleManager.GetHatMesh(newvalue);
-            //imgHat.sprite = ImageAssetBundleManager.GetAvatarHat(newvalue);
-            //UpdateView();
         }
         private void BelongChanged(App.Model.Belong oldvalue, App.Model.Belong newvalue)
         {
@@ -291,7 +284,6 @@ namespace App.View.Character{
         }
         private void WeaponChanged(int oldvalue, int newvalue)
         {
-            Debug.LogError("WeaponChanged = " + newvalue);
             App.Model.Master.MEquipment mEquipment = EquipmentCacher.Instance.GetEquipment(newvalue, MEquipment.EquipmentType.weapon);
             bool isArchery = (mEquipment.weapon_type == App.Model.WeaponType.archery);
             weapon.gameObject.SetActive(!isArchery);
@@ -301,13 +293,23 @@ namespace App.View.Character{
         private void HorseChanged(int oldvalue, int newvalue)
         {
             App.Model.Master.MEquipment mEquipment = EquipmentCacher.Instance.GetEquipment(newvalue, MEquipment.EquipmentType.horse);
-            horseBody.spriteMesh = ImageAssetBundleManager.GetHorseBodyMesh(mEquipment.horse_body);
-            horseFrontLegLeft.spriteMesh = ImageAssetBundleManager.GetHorseFrontLegLeftMesh(mEquipment.horse_body);
-            horseFrontLegRight.spriteMesh = ImageAssetBundleManager.GetHorseFrontLegRightMesh(mEquipment.horse_body);
-            horseHindLegLeft.spriteMesh = ImageAssetBundleManager.GetHorseHindLegLeftMesh(mEquipment.horse_body);
-            horseHindLegRight.spriteMesh = ImageAssetBundleManager.GetHorseHindLegRightMesh(mEquipment.horse_body);
+            if (mEquipment.move_type == App.Model.MoveType.cavalry)
+            {
+                horseBody.spriteMesh = ImageAssetBundleManager.GetHorseBodyMesh(mEquipment.image_index);
+                horseFrontLegLeft.spriteMesh = ImageAssetBundleManager.GetHorseFrontLegLeftMesh(mEquipment.image_index);
+                horseFrontLegRight.spriteMesh = ImageAssetBundleManager.GetHorseFrontLegRightMesh(mEquipment.image_index);
+                horseHindLegLeft.spriteMesh = ImageAssetBundleManager.GetHorseHindLegLeftMesh(mEquipment.image_index);
+                horseHindLegRight.spriteMesh = ImageAssetBundleManager.GetHorseHindLegRightMesh(mEquipment.image_index);
 
-            horseSaddle.spriteMesh = ImageAssetBundleManager.GetHorseSaddleMesh(mEquipment.saddle);
+                horseSaddle.spriteMesh = ImageAssetBundleManager.GetHorseSaddleMesh(mEquipment.saddle);
+                legLeft.spriteMesh = ImageAssetBundleManager.GetShoeLeftMesh(App.Util.Global.Constant.shoe_default_index);
+                legRight.spriteMesh = ImageAssetBundleManager.GetShoeRightMesh(App.Util.Global.Constant.shoe_default_index);
+            }
+            else
+            {
+                legLeft.spriteMesh = ImageAssetBundleManager.GetShoeLeftMesh(mEquipment.image_index);
+                legRight.spriteMesh = ImageAssetBundleManager.GetShoeRightMesh(mEquipment.image_index);
+            }
         }
         private void ClothesChanged(int oldvalue, int newvalue)
         {
@@ -333,58 +335,6 @@ namespace App.View.Character{
             this.WeaponChanged(0, ViewModel.Weapon.Value);
             this.HorseChanged(0, ViewModel.Horse.Value);
             this.MoveTypeChanged(ViewModel.MoveType.Value, ViewModel.MoveType.Value);
-            /*
-            return;
-            Debug.Log(ViewModel.MoveType.Value+", " + ViewModel.WeaponType.Value + ", " + ViewModel.Action.Value + ", " + animationIndex);
-            AvatarAction avatarAction = AvatarAsset.Data.GetAvatarAction(ViewModel.MoveType.Value, ViewModel.WeaponType.Value, ViewModel.Action.Value, animationIndex);
-            string key;
-            //Horse
-            if (avatarAction.horse == null) {
-                imgHorse.gameObject.SetActive (false);
-            } else {
-                imgHorse.gameObject.SetActive (true);
-                key = string.Format("horse_{0}_{1}_{2}", ViewModel.Horse.Value, ViewModel.Action.Value, avatarAction.horse.index);
-                imgHorse.sprite = ImageAssetBundleManager.GetHorse(key);
-                imgHorse.transform.localPosition = avatarAction.horse.position;
-                imgHorse.sortingOrder = avatarAction.horse.sibling;
-            }
-
-            //Body
-            key = string.Format("body_{0}_{1}_{2}_{3}", ViewModel.MoveType.Value, avatarAction.clothesType, ViewModel.Action.Value, avatarAction.body.index);
-            imgBody.sprite = ImageAssetBundleManager.GetAvatarBody(key);
-            //Clothes
-            key = string.Format("clothes_{0}_{1}_{2}_{3}_{4}", ViewModel.Clothes.Value, ViewModel.MoveType.Value, avatarAction.clothesType, ViewModel.Action.Value, avatarAction.clothes.index);
-            imgClothes.sprite = ImageAssetBundleManager.GetClothes(key);
-            //Head
-            if (imgHead.gameObject.activeSelf && avatarAction.head.index == 0)
-            {
-                imgHead.gameObject.SetActive(false);
-            }else if (!imgHead.gameObject.activeSelf && avatarAction.head.index > 0)
-            {
-                imgHead.gameObject.SetActive(true);
-            }
-            if (imgHead.gameObject.activeSelf)
-            {
-                imgHead.sprite = ImageAssetBundleManager.GetAvatarHead(ViewModel.Head.Value);
-                imgHat.sprite = ImageAssetBundleManager.GetAvatarHat(ViewModel.Hat.Value);
-                imgHead.sortingOrder = avatarAction.head.sibling;
-                imgHat.sortingOrder = avatarAction.hat.sibling;
-            }
-
-            //Weapon
-            key = string.Format("weapon_{0}_{1}_{2}_{3}_{4}", ViewModel.Weapon.Value, ViewModel.MoveType.Value, ViewModel.WeaponType.Value, ViewModel.Action.Value, avatarAction.weapon.index);
-            //Debug.LogError("Weapon key="+key);
-            imgWeapon.sprite = ImageAssetBundleManager.GetWeapon(key);
-
-            imgBody.transform.localPosition = avatarAction.body.position;
-            imgClothes.transform.localPosition = avatarAction.clothes.position;
-            imgHead.transform.localPosition = avatarAction.head.position;
-            imgWeapon.transform.localPosition = avatarAction.weapon.position;
-
-            imgBody.sortingOrder = avatarAction.body.sibling;
-            imgClothes.sortingOrder = avatarAction.clothes.sibling;
-            imgHead.sortingOrder = avatarAction.head.sibling;
-            imgWeapon.sortingOrder = avatarAction.weapon.sibling;*/
         }
         #endregion
 

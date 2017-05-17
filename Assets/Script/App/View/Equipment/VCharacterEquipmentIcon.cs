@@ -11,7 +11,8 @@ using App.Controller;
 namespace App.View.Equipment{
     public class VCharacterEquipmentIcon : VEquipmentIcon {
         [SerializeField]private Image equipmentTypeView;
-        [SerializeField]private App.Model.Master.MEquipment.EquipmentType equipmentType;
+        public App.Model.Master.MEquipment.EquipmentType equipmentType;
+        public App.Model.MoveType moveType;
         #region VM处理
         public VMEquipment ViewModel { get { return (VMEquipment)BindingContext; } }
         protected override void OnBindingContextChanged(VMBase oldViewModel, VMBase newViewModel)
@@ -35,8 +36,8 @@ namespace App.View.Equipment{
                 equipmentTypeView.gameObject.SetActive(true);
             }
         }
-        public void ClickChildVsType(){
-            this.Controller.SendMessage("EquipmentIconClick", equipmentType);
+        public void ClickChild(){
+            this.Controller.SendMessage("EquipmentIconClick", this);
         }
     }
 }

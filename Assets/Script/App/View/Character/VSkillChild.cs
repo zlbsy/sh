@@ -18,10 +18,13 @@ namespace App.View.Character{
         public override void UpdateView()
         {
             App.Model.Master.MSkill skillMaster = App.Util.Cacher.SkillCacher.Instance.Get(ViewModel.SkillId.Value);
-            skillName.text = Language.Get(skillMaster.name);
-            skillLevel.text = string.Format("Lv.{0}", ViewModel.Level.Value);
-            money.text = "500";
+            skillName.text = skillMaster.name;
+            skillLevel.text = string.Format("Lv.{0}", ViewModel.Level.Value) + (skillMaster.character_level > 0 ? "" : "(MAX)");
+            money.text = skillMaster.character_level > 0 ? skillMaster.price.ToString() : "--";
             icon.sprite = ImageAssetBundleManager.GetSkillIcon(ViewModel.SkillId.Value);
+        }
+        public void LevelUp(){
+            
         }
     }
 }
