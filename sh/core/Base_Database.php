@@ -64,7 +64,8 @@ class Base_Database {
 			}
 			return $result;
 		}else if($result_type == Database_Result::TYPE_ROW){
-			return mysql_fetch_assoc($result_select);
+			$result =  mysql_fetch_assoc($result_select);
+			return $result ? $result : null;
 		}
 		return $result_select;
 	}

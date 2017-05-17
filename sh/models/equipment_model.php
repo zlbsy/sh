@@ -52,7 +52,7 @@ class Equipment_model extends MY_Model
 		$delete_old = $this->equip_remove($user_id, $character_id, $equipment["EquipmentType"]);
 		if(!$delete_old){
 			$this->user_db->trans_rollback();
-			$this->error("delete equip error");
+			$this->error("delete equip error".$this->user_db->last_sql);
 		}
 		$equip_new = $this->update($equipment["Id"], array("character_id"=>$character_id));
 		if(!$equip_new){
@@ -82,9 +82,9 @@ class Equipment_model extends MY_Model
 		$select = "id as Id,character_id,equipment_id as EquipmentId,equipment_type as EquipmentType";
 		$table = $this->user_db->equipment;
 		$where = array();
-		$where[] = "id={$id}";
+		$where[] = "user_id={$user_id}";
 		$where[] = "character_id={$character_id}";
-		$where[] = "equipment_type={$equipment_type}";
+		$where[] = "equipment_type='{$equipment_type}'";
 		$result = $this->user_db->select($select, $table, $where, null, null, Database_Result::TYPE_ROW);
 		return $result;
 	}

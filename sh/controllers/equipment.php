@@ -27,9 +27,7 @@ class Equipment extends MY_Controller {
 		$equip_result = $equipment_model->equip($user["id"], $character_id, $this->args["equipment_id"]);
 		if($equip_result){
 			$equipments = $equipment_model->get_list($user["id"]);
-			$character_model = new Character_model();
-			$characters = $character_model->get_character_list($user["id"], $character_id);
-			$result = array("equipments"=>$equipments,"character"=>$characters[0]);
+			$result = array("equipments"=>$equipments);
 			$this->out($result);
 		}else{
 			$this->error("Equipment->equip error");

@@ -138,7 +138,7 @@ class Master_model extends MY_Model
 		return $result;
 	}
 	function get_master_horse($language = "cn"){
-		$select = "`id`,`name_{$language}` as `name`,`move_type`,`move_power`,`saddle`,`hp`,`speed`";
+		$select = "`id`,`name_{$language}` as `name`,`move_type`,`move_power`,`image_index`,`saddle`,`hp`,`speed`";
 		$table = $this->master_db->horse;
 		$order_by = "id asc";
 		$result = $this->master_db->select($select, $table, null, $order_by);
@@ -158,8 +158,8 @@ class Master_model extends MY_Model
 		$result = $this->master_db->select($select, $table, null, $order_by);
 		return $result;
 	}
-	function get_master_skill(){
-		$select = "`id`,`name`,`type`,`level`,`price`,`weapon_types`,`distance`,`strength`,`radius_type`,`radius`,
+	function get_master_skill($language="cn"){
+		$select = "`id`,`name_{$language}` as `name`,`type`,`level`,`character_level`,`price`,`weapon_types`,`distance`,`strength`,`radius_type`,`radius`,
 		`hp`,`mp`,`power`,`knowledge`,`speed`,`trick`,`endurance`,`moving_power`,`riding`,`walker`,
 		`pike`,`sword`,`long_knife`,`knife`,`long_ax`,`ax`,`sticks`,`fist`,`archery`,`hidden_weapons`,`dual_wield`";
 		$table = $this->master_db->skill;
