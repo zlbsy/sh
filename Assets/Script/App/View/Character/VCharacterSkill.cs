@@ -14,11 +14,27 @@ namespace App.View.Character{
         [SerializeField]private Transform skillContent;
         #region VM处理
         public VMCharacter ViewModel { get { return (VMCharacter)BindingContext; } }
-        #endregion
-
-        public override void UpdateView()
+        protected override void OnBindingContextChanged(VMBase oldViewModel, VMBase newViewModel)
         {
-            this.Controller.ScrollViewSets(skillContent, skillChild, ViewModel.Skills.Value);
+
+            base.OnBindingContextChanged(oldViewModel, newViewModel);
+
+            VMCharacter oldVm = oldViewModel as VMCharacter;
+            if (oldVm != null)
+            {
+                oldVm.Skills.OnValueChanged -= SkillsChanged;
+            }
+            if (ViewModel!=null)
+            {
+                ViewModel.Skills.OnValueChanged += SkillsChanged;
+            }
+        }
+        private void SkillsChanged(App.Model.MSkill[] oldvalue, App.Model.MSkill[] newvalue)
+        {
+            Debug.LogError("SkillsChanged run");
+            App.Util.Global.ClearChild(skillContent.gameObject);
+
+            this.Controller.ScrollViewSets(skillContent, skillChild, newvalue);
             App.Model.Master.MCharacterSkill[] skills = CharacterCacher.Instance.Get(ViewModel.CharacterId.Value).skills;
             foreach (App.Model.Master.MCharacterSkill skill in skills)
             {
@@ -37,6 +53,12 @@ namespace App.View.Character{
                 App.Model.MSkill mSkill = new App.Model.MSkill();
                 this.Controller.ScrollViewSetChild(skillContent, skillChild, mSkill);
             }
+        }
+        #endregion
+
+        public override void UpdateView()
+        {
+            SkillsChanged(null, ViewModel.Skills.Value);
         }
     }
 }

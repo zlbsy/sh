@@ -74,7 +74,6 @@ namespace App.Controller{
             }
         }
         public void SkillLevelUp(int id){
-            Debug.Log("SkillLevelUp id="+id);
             App.Model.MSkill mSkill = System.Array.Find(character.Skills, s=>s.Id == id);
             if (Global.SUser.self.Silver < mSkill.Master.price)
             {
@@ -86,8 +85,17 @@ namespace App.Controller{
         private IEnumerator SkillLevelUpRun(int id, App.Model.MSkill mSkill){
             SSkill sSkill = new SSkill();
             yield return StartCoroutine(sSkill.RequestLevelUp(id));
-            Debug.LogError("sSkill.skill.Level="+sSkill.skill.Level);
             mSkill.Update(sSkill.skill);
+        }
+        public void SkillUnlock(int skill_id){
+            StartCoroutine(SkillUnlockRun(skill_id));
+            //App.Model.Master.MCharacterSkill[] skills = CharacterCacher.Instance.Get(character.CharacterId).skills;
+            //System.Array.Find(skills, s => s.skill_id == skill_id);
+        }
+        private IEnumerator SkillUnlockRun(int skill_id){
+            SSkill sSkill = new SSkill();
+            yield return StartCoroutine(sSkill.RequestUnlock(character.CharacterId, skill_id));
+            character.Skills = sSkill.skills;
         }
         public void ChangeContent(){
             int index = System.Array.FindIndex(contents, _=>_.gameObject.name == currentContent.name) + 1;

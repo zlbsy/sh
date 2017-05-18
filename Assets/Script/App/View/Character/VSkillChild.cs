@@ -42,8 +42,8 @@ namespace App.View.Character{
         private void LevelChanged(int oldvalue, int newvalue)
         {
             App.Model.Master.MSkill skillMaster = App.Util.Cacher.SkillCacher.Instance.Get(ViewModel.SkillId.Value, ViewModel.Level.Value);
-            skillLevel.text = string.Format("Lv.{0}", newvalue) + (skillMaster.character_level > 0 ? "" : "(MAX)");
-            money.text = skillMaster.character_level > 0 ? skillMaster.price.ToString() : "--";
+            skillLevel.text = string.Format("Lv.{0}", newvalue);
+            money.text = skillMaster.character_level > 0 ? skillMaster.price.ToString() : "MAX";
             levelUpButton.SetActive(skillMaster.character_level > 0);
         }
         #endregion

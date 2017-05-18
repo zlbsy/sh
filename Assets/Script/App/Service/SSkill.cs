@@ -10,23 +10,38 @@ namespace App.Service{
      * 
     */
     public class SSkill : SBase {
+        public MSkill[] skills;
         public MSkill skill;
         public SSkill(){
         }
         public class ResponseLevelUp : ResponseBase
 		{
             public MSkill skill;
-		}
+        }
+        public class ResponseUnlock : ResponseBase
+        {
+            public MSkill[] skills;
+        }
         public IEnumerator RequestLevelUp(int id)
         {
             var url = "skill/level_up";
             WWWForm form = new WWWForm();
             form.AddField("skill_id", id);
-            Debug.Log("RequestLevelUp skill_id="+id);
             HttpClient client = new HttpClient();
             yield return App.Util.SceneManager.CurrentScene.StartCoroutine(client.Send( url, form ));
             ResponseLevelUp response = client.Deserialize<ResponseLevelUp>();
             this.skill = response.skill;
+        }
+        public IEnumerator RequestUnlock(int character_id, int skill_id)
+        {
+            var url = "skill/unlock";
+            WWWForm form = new WWWForm();
+            form.AddField("character_id", character_id);
+            form.AddField("skill_id", skill_id);
+            HttpClient client = new HttpClient();
+            yield return App.Util.SceneManager.CurrentScene.StartCoroutine(client.Send( url, form ));
+            ResponseUnlock response = client.Deserialize<ResponseUnlock>();
+            this.skills = response.skills;
         }
 	}
 }
