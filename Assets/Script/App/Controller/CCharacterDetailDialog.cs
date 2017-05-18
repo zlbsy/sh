@@ -86,6 +86,7 @@ namespace App.Controller{
         private IEnumerator SkillLevelUpRun(int id, App.Model.MSkill mSkill){
             SSkill sSkill = new SSkill();
             yield return StartCoroutine(sSkill.RequestLevelUp(id));
+            Debug.LogError("sSkill.skill.Level="+sSkill.skill.Level);
             mSkill.Update(sSkill.skill);
         }
         public void ChangeContent(){

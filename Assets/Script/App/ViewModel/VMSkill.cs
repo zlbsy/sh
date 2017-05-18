@@ -11,5 +11,6 @@ namespace App.ViewModel
         public VMProperty<int> Id = new VMProperty<int>();
         public VMProperty<int> SkillId = new VMProperty<int>();
         public VMProperty<int> Level = new VMProperty<int>();
+        public VMProperty<bool> CanUnlock = new VMProperty<bool>();
 	}
 }

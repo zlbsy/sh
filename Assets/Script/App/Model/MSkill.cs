@@ -17,7 +17,7 @@ namespace App.Model{
         range,//面攻击
         direction,//穿透攻击
     }
-	public class MSkill : MBase {
+    public class MSkill : MBase {
         public MSkill(){
             viewModel = new VMSkill ();
         }
@@ -44,6 +44,14 @@ namespace App.Model{
             }
             get{ 
                 return ViewModel.Level.Value;
+            }
+        }
+        public bool CanUnlock{
+            set{ 
+                ViewModel.CanUnlock.Value = value;
+            }
+            get{ 
+                return ViewModel.CanUnlock.Value;
             }
         }
         public App.Model.Master.MSkill Master{
