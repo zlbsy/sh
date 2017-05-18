@@ -5,7 +5,7 @@ class Skill_model extends MY_Model
 		parent::__construct();
 	}
 	function get_skill($id){
-		$select = 'id, skill_id, level';
+		$select = 'id as Id, skill_id as SkillId, level as Level';
 		$table = $this->user_db->character_skill;
 		$where = array();
 		$where[] = "id={$id}";
@@ -35,12 +35,12 @@ class Skill_model extends MY_Model
 	function level_up($user_id, $id){
 		$skill = $this->get_skill($id);
 		if($skill == null){
-			$this->error("get_skill error".$this->user_db->last_sql);
+			$this->error("get_skill error");
 			return false;
 		}
-		$skillMaster = $this->get_master($skill["skill_id"], $skill["level"]);
+		$skillMaster = $this->get_master($skill["SkillId"], $skill["Level"]);
 		if($skillMaster == null){
-			$this->error("get_master error".$this->master_db->last_sql);
+			$this->error("get_master error");
 			return false;
 		}
 		$user = $this->getSessionData("user");
@@ -52,15 +52,15 @@ class Skill_model extends MY_Model
 		$use_money = $this->set_levelup_log($user_id, 0, $skillMaster["price"]);
 		if($use_money == null){
 			$this->user_db->trans_rollback();
-			$this->error("use money error".$this->user_db->last_sql);
+			$this->error("use money error");
 		}
 		$user_model = new User_model();
 		$user_silver_update = $user_model->update_silver();
 		if($user_silver_update == null){
 			$this->user_db->trans_rollback();
-			$this->error("silver update error".$this->user_db->last_sql);
+			$this->error("silver update error");
 		}
-		$skill_up = $this->update($id,array("level"=>$skill["level"] + 1));
+		$skill_up = $this->update($id,array("level"=>$skill["Level"] + 1));
 		$this->user_db->trans_commit();
 		return true;
 	}
