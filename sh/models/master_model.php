@@ -21,7 +21,7 @@ class Master_model extends MY_Model
 	public function get_character_skill_ids($character_id){
 		$where = array();
 		$where[] = "character_id = {$character_id}";
-		$result = $this->master_db->select("`skill_id`", $this->master_db->character_skill, $where, "id asc", null, Database_Result::TYPE_DEFAULT);
+		$result = $this->master_db->select("`skill_id`,`star`,`skill_point`", $this->master_db->character_skill, $where, "star asc", null, Database_Result::TYPE_DEFAULT);
 		$result_array = array();
 		while ($row = mysql_fetch_assoc($result)) {
 			$result_array[] = $row["skill_id"];

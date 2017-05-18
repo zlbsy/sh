@@ -60,7 +60,7 @@ class User_model extends MY_Model
 			$this->user_db->trans_rollback();
 			$this->error("register fail skill");
 		}
-		$equipment_model = new Equipment_model();
+		/*$equipment_model = new Equipment_model();
 		if($character["Horse"] > 0){
 			$rs_horse = $equipment_model->set_equipment($user_id, $character["Horse"], "horse", $character_id);
 			if(!$rs_horse){
@@ -77,7 +77,7 @@ class User_model extends MY_Model
 		if(!$rs_clothes){
 			$this->user_db->trans_rollback();
 			$this->error("register fail clothes");
-		}
+		}*/
 		$this->user_db->trans_commit();
 		return $user_id;
 	}
