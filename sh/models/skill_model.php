@@ -32,6 +32,51 @@ class Skill_model extends MY_Model
 		$res = $this->user_db->insert($values, $this->user_db->bankbook);
 		return $res;
 	}
+	function unlock($user_id, $character_id, $skill_id){
+		$master_model = new Master_model();
+		$character_skills = $master_model->get_character_skills($character_id);
+		
+		$skill = null;
+		foreach ($character_skills as $child) {
+			if($child["character_id"] == $character_id && $child["skill_id"] == $skill_id){
+				$skill = $child;
+				break;
+			}
+		}
+		if(is_null($skill)){
+			return false;
+		}
+		$character_model = new Character_model();
+		$characters = $character_model->get_character_list($user_id, $character_id);
+		$character = $characters[0];
+		if($character["Star"] < $skill["star"]){
+			return false;
+		}
+		$item_model = new Item_model();
+		$item = $item_model->get_item($user_id, Item_model::SKILL_POINT_ITEM_ID);
+		if(is_null($item) || $item["cnt"] < $skill["skill_point"]){
+			return false;			
+		}
+		$this->user_db->trans_begin();
+		$res_item = $item_model->remove_item($item, $skill["skill_point"]);
+		if(!$res_item){
+			$this->user_db->trans_rollback();
+			$this->error("remove skill point error");
+		}
+		$character_skills = array();
+		$character_skills['user_id'] = $user_id;
+		$character_skills['character_id'] = $character_id;
+		$character_skills['skill_id'] = $skill_id;
+		$character_skills['level'] = 1;
+		$character_skills['register_time'] = "'{$now}'";
+		$res_character = $character_model->character_skill_insert($character_skills);
+		if(is_null($res_character)){
+			$this->user_db->trans_rollback();
+			$this->error("character skill insert error");
+		}
+		$this->user_db->trans_commit();
+		return true;
+	}
 	function level_up($user_id, $id){
 		$skill = $this->get_skill($id);
 		if($skill == null){

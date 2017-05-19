@@ -8,6 +8,7 @@ class ItemType{
 }
 class Item_model extends MY_Model
 {
+	const SKILL_POINT_ITEM_ID = 4;
 	function __construct(){
 		parent::__construct();
 	}
@@ -165,13 +166,25 @@ class Item_model extends MY_Model
 	}
 	function remove_item($item, $number = 1){
 		$new_cnt = $item['cnt'] - $number;
-		$this->user_db->where('id', $item['id']);
+		$where = array();
+		$where[] = "id = {$item['id']}";
 		if($new_cnt == 0){
-			$result = $this->user_db->delete(USER_ITEM); 
+			$result = $this->user_db->delete($this->user_db->item,$where); 
 		}else{
-			$this->user_db->set('cnt', $new_cnt);
-			$result = $this->user_db->update(USER_ITEM);
+			return $this->update($item["id"], array("cnt"=>$new_cnt));
 		}
+		return $result;
+	}
+	function update($id, $args){
+		if(!$args || !is_array($args))return false;
+		$values = array();
+		foreach ($args as $key=>$value){
+			if($key == "id")continue;
+			$values[] = $key ."=". $value;
+		}
+		$where = array("id={$id}");
+		$table = $this->user_db->item;
+		$result = $this->user_db->update($values, $table, $where);
 		return $result;
 	}
 	function set_sale_log($user_id, $item_id, $price){

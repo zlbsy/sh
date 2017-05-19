@@ -13,20 +13,23 @@ class Master_model extends MY_Model
 		$result = $this->master_db->select($select, $table, null, $order_by, null, Database_Result::TYPE_DEFAULT);
 		$result_array = array();
 		while ($row = mysql_fetch_assoc($result)) {
-			$row['skills'] = $this->get_character_skill_ids($row["id"]);
+			$row['skills'] = $this->get_character_skills($row["id"]);
 			$result_array[] = $row;
 		}
 		return $result_array;
 	}
-	public function get_character_skill_ids($character_id){
+	public function get_character_skills($character_id){
 		$where = array();
 		$where[] = "character_id = {$character_id}";
-		$result = $this->master_db->select("`skill_id`,`star`,`skill_point`", $this->master_db->character_skill, $where, "star asc", null, Database_Result::TYPE_DEFAULT);
-		$result_array = array();
-		while ($row = mysql_fetch_assoc($result)) {
-			$result_array[] = $row["skill_id"];
-		}
-		return $result_array;
+		
+		$result = $this->master_db->select("`character_id`,`skill_id`,`star`,`skill_point`", $this->master_db->character_skill, $where, "star asc");
+		return $result;
+		//$result = $this->master_db->select("`skill_id`,`star`,`skill_point`", $this->master_db->character_skill, $where, "star asc", null, Database_Result::TYPE_DEFAULT);
+		//$result_array = array();
+		//while ($row = mysql_fetch_assoc($result)) {
+		//	$result_array[] = $row["skill_id"];
+		//}
+		//return $result_array;
 	}
 	public function get_master_avatar(){
 		$select = "`id`,`move_arms`,`arms`,`clothes`,`avatar_action`,`avatar_action_index`,`avatar_property`,`animation_index`,`position_x`,`position_y`,`sibling`,`scale_x`,`scale_y`";
@@ -174,7 +177,7 @@ class Master_model extends MY_Model
 		return $result;
 	}
 	function get_master_items(){
-		$select = "`id`,`name`,`type`,`child_id`,`price`,`explanation`";
+		$select = "`id`,`name`,`item_type`,`child_id`,`price`,`content_value`,`explanation`";
 		$table = $this->master_db->item;
 		$order_by = "id asc";
 		$result = $this->master_db->select($select, $table, null, $order_by);

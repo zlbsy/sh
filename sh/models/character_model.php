@@ -26,7 +26,7 @@ class Character_model extends MY_Model
 		return $result;
 	}
 	function get_character_skills($user_id, $character_id){
-		$select = "id as Id, skill_id as SkillId, level as Level";
+		$select = "id as Id, character_id as CharacterId, skill_id as SkillId, level as Level";
 		$table = $this->user_db->character_skill;
 		$where = array();
 		$where[] = "user_id = {$user_id}";

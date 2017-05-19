@@ -69,6 +69,17 @@ class Base_Database {
 		}
 		return $result_select;
 	}
+	public function delete($table, $where){
+		$sql = "DELETE FROM " . $table;
+		$sql .= " WHERE " . implode(" AND ", $where);
+		
+		if(isset($_GET["debug"])){
+			echo $sql;
+		}
+		$this->last_sql = $sql;
+		$result = mysql_query($sql, $this->connect);
+		return $result;
+	}
 	public function updateSQL($sql){
 		$result = mysql_query($sql, $this->connect);
 		return $result;
