@@ -11,6 +11,5 @@ namespace App.ViewModel
         public VMProperty<int> Id = new VMProperty<int>();
         public VMProperty<int> ItemId = new VMProperty<int>();
         public VMProperty<int> Cnt = new VMProperty<int>();
-        public VMProperty<string> Name = new VMProperty<string>();
 	}
 }

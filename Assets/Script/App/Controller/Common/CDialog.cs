@@ -65,12 +65,12 @@ namespace App.Controller.Common{
             {
                 RectTransform trans = panel as RectTransform;
                 _savePosition = trans.anchoredPosition;
-                trans.anchoredPosition = new Vector2(trans.anchoredPosition.x, trans.sizeDelta.y * -0.5f);
+                trans.anchoredPosition = new Vector2(trans.anchoredPosition.x, Camera.main.pixelHeight * -1f);
             }else if (opentype == OpenType.Up)
             {
                 RectTransform trans = panel as RectTransform;
                 _savePosition = trans.anchoredPosition;
-                trans.anchoredPosition = new Vector2(trans.anchoredPosition.x, trans.sizeDelta.y * 0.5f);
+                trans.anchoredPosition = new Vector2(trans.anchoredPosition.x, Camera.main.pixelHeight * 1f);
             }else if (opentype == OpenType.Fade)
             {
                 CanvasGroup canvasGroup = panel.gameObject.GetComponent<CanvasGroup>();
@@ -127,7 +127,7 @@ namespace App.Controller.Common{
             _isClose = false;
             yield return 0;
         }
-        public void Close(){
+        public virtual void Close(){
             if (_isClose)
             {
                 return;
@@ -148,12 +148,12 @@ namespace App.Controller.Common{
             else if (opentype == OpenType.Down)
             {
                 RectTransform trans = panel as RectTransform;
-                HOTween.To(panel as RectTransform, 0.3f, new TweenParms().Prop("anchoredPosition", new Vector2(trans.anchoredPosition.x, trans.sizeDelta.y * -0.5f)).OnComplete(Delete));
+                HOTween.To(panel as RectTransform, 0.3f, new TweenParms().Prop("anchoredPosition", new Vector2(trans.anchoredPosition.x, Camera.main.pixelHeight * -1f)).OnComplete(Delete));
             }
             else if (opentype == OpenType.Up)
             {
                 RectTransform trans = panel as RectTransform;
-                HOTween.To(panel as RectTransform, 0.3f, new TweenParms().Prop("anchoredPosition", new Vector2(trans.anchoredPosition.x, trans.sizeDelta.y * 0.5f)).OnComplete(Delete));
+                HOTween.To(panel as RectTransform, 0.3f, new TweenParms().Prop("anchoredPosition", new Vector2(trans.anchoredPosition.x, Camera.main.pixelHeight * 1f)).OnComplete(Delete));
             }
             else if (opentype == OpenType.Fade)
             {

@@ -13,6 +13,7 @@ namespace App.Controller{
     public class CItemListDialog : CDialog {
         [SerializeField]private Transform content;
         [SerializeField]private GameObject childItem;
+        [SerializeField]private VItemDetail itemDetail; 
         public override IEnumerator OnLoad( Request request ) 
         {  
             yield return StartCoroutine(base.OnLoad(request));
@@ -25,8 +26,18 @@ namespace App.Controller{
             ScrollViewSets(content, childItem, Global.SUser.self.items);
             yield return 0;
         }
-        public void ItemIconClick(int itemId){
-
+        public void ItemIconClick(int id){Debug.LogError("ItemIconClick");
+            App.Model.MItem mItem = System.Array.Find(Global.SUser.self.items, i=>i.Id == id);
+            itemDetail.BindingContext = mItem.ViewModel;
+            itemDetail.UpdateView();
+        }
+        public void ClickSaleItem(int id){
+        }
+        public void ClickUseItem(int id){
+        }
+        public override void Close(){
+            itemDetail.Close();
+            base.Close();
         }
 	}
 }

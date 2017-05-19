@@ -39,9 +39,8 @@ namespace App.View.Item{
             CntChanged(0, ViewModel.Cnt.Value);
         }
         #endregion
-        public void ClickChild(){
-            this.Controller.SendMessage("ItemIconClick", ViewModel.Id.Value);
-            //this.Controller.SendMessage("EquipmentIconClick", 1);
+        public void ClickChild(){Debug.LogError("ClickChild");
+            this.Controller.SendMessage("ItemIconClick", ViewModel.Id.Value, SendMessageOptions.DontRequireReceiver);
         }
     }
 }

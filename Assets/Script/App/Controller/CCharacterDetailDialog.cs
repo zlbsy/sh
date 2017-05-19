@@ -88,14 +88,33 @@ namespace App.Controller{
             mSkill.Update(sSkill.skill);
         }
         public void SkillUnlock(int skill_id){
-            StartCoroutine(SkillUnlockRun(skill_id));
-            //App.Model.Master.MCharacterSkill[] skills = CharacterCacher.Instance.Get(character.CharacterId).skills;
-            //System.Array.Find(skills, s => s.skill_id == skill_id);
+            App.Model.Master.MCharacterSkill[] skills = CharacterCacher.Instance.Get(character.CharacterId).skills;
+            App.Model.Master.MCharacterSkill skill = System.Array.Find(skills, s => s.skill_id == skill_id);
+            CConfirmDialog.Show("解锁新技能",string.Format("此技能需要消耗{0}个技能书！继续解锁吗？", skill.skill_point),()=>{
+                StartCoroutine(SkillUnlockRun(skill_id));
+            });
         }
         private IEnumerator SkillUnlockRun(int skill_id){
+            App.Model.Master.MCharacterSkill[] skills = CharacterCacher.Instance.Get(character.CharacterId).skills;
+            App.Model.Master.MCharacterSkill skill = System.Array.Find(skills, s => s.skill_id == skill_id);
+            if (Global.SUser.self.items == null)
+            {
+                SItem sItem = new SItem();
+                yield return StartCoroutine(sItem.RequestList());
+                Global.SUser.self.items = sItem.items;
+            }
+            App.Model.MItem mItem = System.Array.Find(Global.SUser.self.items, i=>i.Master.item_type == App.Model.Master.MItem.ItemType.skillPoint);
+            if (mItem == null || skill.skill_point > mItem.Cnt)
+            {
+                CConfirmDialog.Show("确认","没有足够的技能书，无法解锁新技能！要购买技能书吗？",()=>{
+                    
+                });
+                yield break;
+            }
             SSkill sSkill = new SSkill();
             yield return StartCoroutine(sSkill.RequestUnlock(character.CharacterId, skill_id));
             character.Skills = sSkill.skills;
+            Global.SUser.self.items = sSkill.items;
         }
         public void ChangeContent(){
             int index = System.Array.FindIndex(contents, _=>_.gameObject.name == currentContent.name) + 1;

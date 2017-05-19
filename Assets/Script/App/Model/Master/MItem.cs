@@ -6,12 +6,16 @@ namespace App.Model.Master{
     public class MItem : MBase {
         public enum ItemType
         {
-            ap
+            exp,
+            skillPoint
         }
         public MItem(){
         }
         public string name;//
-        /*public ItemType type;*/
-        //public int price;
+        public ItemType item_type;
+        public int price;
+        public int child_id;
+        public int content_value;
+        public string explanation;
 	}
 }

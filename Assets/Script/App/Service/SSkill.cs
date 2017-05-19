@@ -11,6 +11,7 @@ namespace App.Service{
     */
     public class SSkill : SBase {
         public MSkill[] skills;
+        public MItem[] items;
         public MSkill skill;
         public SSkill(){
         }
@@ -21,6 +22,7 @@ namespace App.Service{
         public class ResponseUnlock : ResponseBase
         {
             public MSkill[] skills;
+            public MItem[] items;
         }
         public IEnumerator RequestLevelUp(int id)
         {
@@ -42,6 +44,7 @@ namespace App.Service{
             yield return App.Util.SceneManager.CurrentScene.StartCoroutine(client.Send( url, form ));
             ResponseUnlock response = client.Deserialize<ResponseUnlock>();
             this.skills = response.skills;
+            this.items = response.items;
         }
 	}
 }
