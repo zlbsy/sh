@@ -43,7 +43,7 @@ namespace App.View.Common{
             }
         }
         private void SetCharacter(MContent mContent){
-            App.Model.MCharacter character = new MCharacter();
+            MCharacter character = new MCharacter();
             character.CharacterId = mContent.content_id;
             character.Level = 0;
             vCharacterIcon.gameObject.SetActive(true);
@@ -51,7 +51,7 @@ namespace App.View.Common{
             vCharacterIcon.UpdateView();
         }
         private void SetEquipment(MContent mContent){
-            App.Model.MEquipment equipment = new MEquipment();
+            MEquipment equipment = new MEquipment();
             equipment.EquipmentId = mContent.content_id;
             equipment.EquipmentType = (App.Model.Master.MEquipment.EquipmentType)System.Enum.Parse(typeof(App.Model.Master.MEquipment.EquipmentType), mContent.type.ToString(), true);
             vEquipmentIcon.gameObject.SetActive(true);
@@ -59,7 +59,7 @@ namespace App.View.Common{
             vEquipmentIcon.UpdateView();
         }
         private void SetItem(MContent mContent){
-            App.Model.MItem item = new MItem();
+            MItem item = new MItem();
             item.ItemId = mContent.content_id;
             item.Cnt = 1;
             vItemIcon.gameObject.SetActive(true);

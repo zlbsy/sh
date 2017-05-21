@@ -66,7 +66,7 @@ namespace App.Util{
             {
                 dialog.gameObject.SetActive(true);
             }
-            yield return CurrentScene.StartCoroutine(dialog.OnLoad(req));
+            yield return CurrentScene.StartCoroutine(dialog.OnLoad(req == null ? new Request() : req));
         }
         public GameObject LoadPrefab(string prefabName)
         {

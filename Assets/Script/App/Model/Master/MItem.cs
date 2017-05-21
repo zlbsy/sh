@@ -7,7 +7,8 @@ namespace App.Model.Master{
         public enum ItemType
         {
             exp,
-            skillPoint
+            skillPoint,
+            skillBook
         }
         public MItem(){
         }

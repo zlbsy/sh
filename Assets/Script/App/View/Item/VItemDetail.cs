@@ -15,6 +15,17 @@ namespace App.View.Item{
         [SerializeField]private Text name;
         [SerializeField]private Text explanation;
         [SerializeField]private CanvasGroup canvasGroup;
+        [SerializeField]private GameObject listButtons;
+        [SerializeField]private GameObject useButtons;
+        public bool UseOnly{
+            get{ 
+                return useButtons.activeSelf;
+            }
+            set{ 
+                useButtons.SetActive(value);
+                listButtons.SetActive(!value);
+            }
+        }
         #region VM处理
         public VMItem ViewModel { get { return (VMItem)BindingContext; } }
         protected override void OnBindingContextChanged(VMBase oldViewModel, VMBase newViewModel)
@@ -49,6 +60,9 @@ namespace App.View.Item{
             }
         }
         #endregion
+        void OnEnable(){
+            canvasGroup.alpha = 0;
+        }
         public void ClickSaleItem(){
             this.Controller.SendMessage("ClickSaleItem", ViewModel.Id.Value);
         }

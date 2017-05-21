@@ -12,7 +12,8 @@ namespace App.Model.Master{
             item,
             weapon,
             horse,
-            clothes
+            clothes,
+            character
         }
         public MGachaChild(){
         }

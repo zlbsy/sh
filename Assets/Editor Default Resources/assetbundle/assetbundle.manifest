@@ -1,7 +1,7 @@
 ManifestFileVersion: 0
-CRC: 3138154700
+CRC: 1240745046
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
-      Name: itemasset.unity3d
+      Name: characterasset.unity3d
       Dependencies: {}

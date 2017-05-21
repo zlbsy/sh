@@ -116,6 +116,22 @@ namespace App.Controller{
             character.Skills = sSkill.skills;
             Global.SUser.self.items = sSkill.items;
         }
+        public void SkillLearn(){
+            System.Action<int> useItemEvent = (id) =>
+            {
+                StartCoroutine(SkillLearnRun(id));
+            };
+            Request req = Request.Create("itemType", App.Model.Master.MItem.ItemType.skillBook, "useOnly", true, "useItemEvent", useItemEvent);
+            this.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.ItemListDialog, req));
+        }
+        private IEnumerator SkillLearnRun(int id){
+            SSkill sSkill = new SSkill();
+            yield return StartCoroutine(sSkill.RequestLeran(character.CharacterId, id));
+            character.Skills = sSkill.skills;
+            Global.SUser.self.items = sSkill.items;
+            CDialog cDialog = Global.SceneManager.FindDialog(SceneManager.Prefabs.ItemListDialog);
+            cDialog.Close();
+        }
         public void ChangeContent(){
             int index = System.Array.FindIndex(contents, _=>_.gameObject.name == currentContent.name) + 1;
             ShowContentFromIndex(index);

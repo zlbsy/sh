@@ -10,8 +10,8 @@ namespace App.Model.Master{
         public MGacha(){
         }
         public string name;//
-		public int gold;
-		public int silver;
+		//public int gold;
+		//public int silver;
 		public string from_time;
         public string to_time;
         public DateTime fromTime{

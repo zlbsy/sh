@@ -55,7 +55,7 @@ namespace App.View.Gacha{
         public override void UpdateView(){
             icon.sprite = App.Model.Master.MGacha.GetIcon(ViewModel.GachaId.Value);
             App.Model.Master.MGacha gachaMaster = GachaCacher.Instance.Get(ViewModel.GachaId.Value);
-            gachaName.text = Language.Get(gachaMaster.name);
+            gachaName.text = gachaMaster.name;
             UpdateGachaButtons();
         }
         #endregion

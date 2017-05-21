@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 3417446511
+CRC: 2251025748
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: e83ca02762791db0881e63876773c1a5
+    Hash: cc439f0249f9c5bb2d9564c1570d7d63
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 4d24bf54f46935ed9e6cf78ac481bb9d
+    Hash: 4774d6da9b606debf00b5a5d61c4487c
 HashAppended: 0
 ClassTypes:
 - Class: 28
@@ -14,8 +14,9 @@ ClassTypes:
 - Class: 213
   Script: {instanceID: 0}
 Assets:
-- Assets/Atlas/item/item_2.png
-- Assets/Atlas/item/item_1.png
-- Assets/Atlas/item/item_3.png
-- Assets/Atlas/item/item_4.png
+- Assets/Atlas/itemicon/item_2.png
+- Assets/Atlas/itemicon/item_5.png
+- Assets/Atlas/itemicon/item_1.png
+- Assets/Atlas/itemicon/item_3.png
+- Assets/Atlas/itemicon/item_4.png
 Dependencies: []

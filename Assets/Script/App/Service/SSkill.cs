@@ -46,5 +46,17 @@ namespace App.Service{
             this.skills = response.skills;
             this.items = response.items;
         }
+        public IEnumerator RequestLeran(int character_id, int item_id)
+        {
+            var url = "skill/learn";
+            WWWForm form = new WWWForm();
+            form.AddField("character_id", character_id);
+            form.AddField("item_id", item_id);
+            HttpClient client = new HttpClient();
+            yield return App.Util.SceneManager.CurrentScene.StartCoroutine(client.Send( url, form ));
+            ResponseUnlock response = client.Deserialize<ResponseUnlock>();
+            this.skills = response.skills;
+            this.items = response.items;
+        }
 	}
 }
