@@ -85,10 +85,6 @@ class Gacha_model extends MY_Model
 				}
 			}
 		}else{
-			$cnt = $args["cnt"];
-			if($cnt == 10){
-				$cnt = 9;
-			}
 			$price_type = $gachaPrice["price_type"];
 			if($price_type == PriceType::gold){
 				$gold = $gachaPrice["price"];
@@ -136,31 +132,128 @@ class Gacha_model extends MY_Model
 			$this->error("update money error");
 		}
 		//奖品
-		$item_model = new Item_model();
-		$equipment_model = new Equipment_model();
+		$equipment_model = null;
+		$item_model = null;
+		$character_model = null;
+		$contents = array();
 		for($i=0;$i<count($slot_list);$i++){
 			$gacha_child = $slot_list[$i];
 			switch($gacha_child["type"]){
 				case "item":
-					$gacha_get = $item_model->set_item($user["id"], $gacha_child["child_id"]);
+					$items = $this->get_item_master($gacha_child["child_id"], $gacha_child["child_type"], $gacha_child["qualification"]);
+					$item = $items[rand(0, count($items) - 1)];
+					$item_model = $item_model == null ? new Item_model() : $item_model;
+					$gacha_get = $item_model->set_item($user["id"], $item["id"]);
+					$contents[] = array("type"=>$gacha_child["type"], "content_id"=>$item["id"]);
 					break;
 				case "horse":
 				case "weapon":
 				case "clothes":
-					$gacha_get = $equipment_model->set_equipment($user["id"], $gacha_child["child_id"], $gacha_child["type"]);
+					$equipments = $this->get_equipment_master($gacha_child["type"], $gacha_child["child_id"], $gacha_child["child_type"], $gacha_child["qualification"]);
+					$equipment = $equipments[rand(0, count($equipments) - 1)];
+					$equipment_model = $equipment_model == null ? new Equipment_model() : $equipment_model;
+					$gacha_get = $equipment_model->set_equipment($user["id"], $equipment["id"], $gacha_child["type"]);
+					$contents[] = array("type"=>$gacha_child["type"], "content_id"=>$equipment["id"]);
+					break;
+				case "character":
+					$characters = $this->get_character_master($gacha_child["child_id"], $gacha_child["child_type"], $gacha_child["qualification"]);
+					$character = $characters[rand(0, count($characters) - 1)];
+					$character_model = $character_model == null ? new Character_model() : $character_model;
+					$character_values = array();
+					$character_values['user_id'] = $user["id"];
+					$character_values['character_id'] = $character["id"];
+					//$character_values['star'] = $character["Star"];
+					//$character_values['weapon_type'] = "'".$character["WeaponType"]."'";
+					//$character_values['move_type'] = "'".$character["MoveType"]."'";
+					$character_values['horse'] = $character["horse"];
+					$character_values['clothes'] = $character["clothes"];
+					$character_values['weapon'] = $character["weapon"];
+					$character_values['register_time'] = "'{$now}'";
+					$gacha_get = $character_model->character_insert($character_values);
+		
+					//$gacha_get = $item_model->set_item($user["id"], $item["id"]);
+					$contents[] = array("type"=>$gacha_child["type"], "content_id"=>$character["id"]);
 					break;
 			}
 			if(!$gacha_get){
 			    $this->user_db->trans_rollback();
-				$this->error("get present error");
+				$this->error("get present error ".$gacha_child["type"].$this->user_db->last_sql);
 			}
 		}
 		$this->user_db->trans_commit();
-		$contents = array();
+		/*$contents = array();
 		foreach ($slot_list as $slot) {
 			$contents[] = array("type"=>$slot["type"], "content_id"=>$slot["child_id"]);
-		}
+		}*/
 		return $contents;
+	}
+	function get_gacha_character_ids($child_type){
+		$select = "character_id, probability";
+		$where = array("gacha_type='{$child_type}'");
+		$result = $this->master_db->select($select, $this->master_db->gacha_characters, $where);
+		return $result;
+	}
+	function get_character_master($id = 0, $child_type = null, $qualification = null){
+		$select = "*";
+		$where = array();
+		if($id > 0){
+			$where[] = "id={$id}";
+		}
+		if(!is_null($child_type)){
+			$id_array = $this->get_gacha_character_ids($child_type);
+			$probability_sum = 0;
+			foreach($id_array as $character){
+				$probability_sum += $character["probability"];
+			}
+			$rand_value = rand(0, $probability_sum);
+			$probability = 0;
+			$character_id = 0;
+			foreach($id_array as $character){
+				$probability += $character["probability"];
+				if($rand_value <= $probability){
+					$character_id = $character["character_id"];
+					break;
+				}
+			}
+			if($character_id > 0){
+				$where[] = "id = {$character_id} ";
+			}
+		}
+		if($qualification > 0){
+			$where[] = "qualification={$qualification}";
+		}
+		$result = $this->master_db->select($select, $this->master_db->base_character, $where);
+		return $result;
+	}
+	function get_item_master($id = 0, $item_type = null, $qualification = null){
+		$select = "*";
+		$where = array();
+		if($id > 0){
+			$where[] = "id={$id}";
+		}
+		if(!is_null($item_type)){
+			$where[] = "item_type='{$item_type}'";
+		}
+		if($qualification > 0){
+			$where[] = "qualification={$qualification}";
+		}
+		$result = $this->master_db->select($select, $this->master_db->item, $where);
+		return $result;
+	}
+	function get_equipment_master($table, $id = 0, $child_type = null, $qualification = null){
+		$select = "*";
+		$where = array();
+		if($id > 0){
+			$where[] = "id={$id}";
+		}
+		if(!is_null($child_type) && !empty($child_type)){
+			$where[] = "child_type='{$child_type}'";
+		}
+		if($qualification > 0){
+			$where[] = "qualification={$qualification}";
+		}
+		$result = $this->master_db->select($select, $this->master_db->$table, $where);
+		return $result;
 	}
 	function get_gacha_masters($id = null){
 		$select = "id, gold, silver, from_time, to_time, free_time,free_count";
@@ -176,7 +269,7 @@ class Gacha_model extends MY_Model
 		return $result;
 	}
 	function get_gacha_childs($gacha_id){
-		$select = "id, gacha_id, type, child_id, probability";
+		$select = "id, gacha_id, type, child_id, child_type, probability";
 		$table = $this->master_db->gacha_child;
 		$where = array();
 		$where[] = "gacha_id={$gacha_id}";

@@ -5,7 +5,7 @@ class Master_model extends MY_Model
 		parent::__construct();
 	}
 	public function get_master_character(){
-		$select = "`id`,`name`,`nickname`,`head`,`hat`,`weapon`,`clothes`,`horse`,`shoe`,`qualification`,
+		$select = "`id`,`name`,`nickname`,`head`,`hat`,`weapon`,`clothes`,`horse`,`qualification`,
 		`power`,`knowledge`,`trick`,`endurance`,`speed`,`moving_power`,`riding`,`walker`,`pike`,`sword`,
 		`long_knife`,`knife`,`long_ax`,`ax`,`sticks`,`fist`,`archery`,`hidden_weapons`,`dual_wield`, `start_star` ";
 		$table = $this->master_db->base_character;
@@ -79,6 +79,8 @@ class Master_model extends MY_Model
 		while ($row = mysql_fetch_assoc($result)) {
 			if($row["name"] == "female_heads"){
 				$result_array[$row["name"]] = explode(",", $row["val"]);
+			}else if($row["name"] == "user_characters"){
+				$result_array[$row["name"]] = json_decode($row["val"]);
 			}else{
 				$result_array[$row["name"]] = $row["val"];
 			}
@@ -141,21 +143,21 @@ class Master_model extends MY_Model
 		return $result;
 	}
 	function get_master_horse($language = "cn"){
-		$select = "`id`,`name_{$language}` as `name`,`move_type`,`move_power`,`image_index`,`saddle`,`hp`,`speed`";
+		$select = "`id`,`name_{$language}` as `name`,`child_type` as `move_type`,`move_power`,`image_index`,`saddle`,`hp`,`speed`";
 		$table = $this->master_db->horse;
 		$order_by = "id asc";
 		$result = $this->master_db->select($select, $table, null, $order_by);
 		return $result;
 	}
 	function get_master_weapon($language = "cn"){
-		$select = "`id`,`name_{$language}` as `name`,`weapon_type`,`physical_attack`,`magic_attack`,`power`";
+		$select = "`id`,`name_{$language}` as `name`,`child_type` as `weapon_type`,`physical_attack`,`magic_attack`,`power`";
 		$table = $this->master_db->weapon;
 		$order_by = "id asc";
 		$result = $this->master_db->select($select, $table, null, $order_by);
 		return $result;
 	}
 	function get_master_clothes($language = "cn"){
-		$select = "`id`,`name_{$language}` as `name`,`clothes_type`,`physical_defense`,`magic_defense`,`hp`";
+		$select = "`id`,`name_{$language}` as `name`,`child_type` as `clothes_type`,`physical_defense`,`magic_defense`,`hp`";
 		$table = $this->master_db->clothes;
 		$order_by = "id asc";
 		$result = $this->master_db->select($select, $table, null, $order_by);
@@ -176,11 +178,15 @@ class Master_model extends MY_Model
 		}
 		return $result;
 	}
-	function get_master_items(){
-		$select = "`id`,`name`,`item_type`,`child_id`,`price`,`content_value`,`explanation`";
+	function get_master_items($language = "cn", $id = null){
+		$select = "`id`,`name_{$language}` as `name`,`item_type`,`child_id`,`price`,`content_value`,`explanation`";
 		$table = $this->master_db->item;
+		$where = null;
+		if(!is_null($id)){
+			$where = array("id = {$id}");
+		}
 		$order_by = "id asc";
-		$result = $this->master_db->select($select, $table, null, $order_by);
+		$result = $this->master_db->select($select, $table, $where, $order_by);
 		return $result;
 	}
 	function get_master_words($language = "cn"){

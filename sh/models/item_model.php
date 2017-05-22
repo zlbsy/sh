@@ -37,6 +37,14 @@ class Item_model extends MY_Model
 			return $this->user_db->update($values, $this->user_db->item, $where);
 		}
 	}
+	function get_item_from_id($id){
+		$select = 'id, user_id, item_id, cnt';
+		$table = $this->user_db->item;
+		$where = array();
+		$where[] = "id={$id}";
+		$result = $this->user_db->select($select, $table, $where, null, null, Database_Result::TYPE_ROW);
+		return $result;
+	}
 	function get_item($user_id, $item_id){
 		$select = 'id, item_id, cnt';
 		$table = $this->user_db->item;

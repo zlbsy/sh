@@ -17,6 +17,7 @@ class Gacha extends MY_Controller {
 	}
 	public function slot()
 	{
+		load_model(array('character_model'));
 		$user = $this->getSessionData("user");
 		$user_id = $user["id"];
 		$gacha_id = $this->args["gacha_id"];
@@ -26,7 +27,7 @@ class Gacha extends MY_Controller {
 		$logs = $gacha_model->get_free_logs($gacha_id);
 		$gacha = $logs[0];
 		$user_model = new User_model();
-		$user = $user_model->get();
+		$user = $user_model->get($user_id);
 		if($contents){
 			$this->out(array("contents"=>$contents, "gacha"=>$gacha, "user"=>$user));
 		}else{

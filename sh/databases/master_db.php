@@ -11,6 +11,7 @@ class Master_DB extends Base_Database {
 	var $weapon = "fsyy_master_lufylegend.weapon";
 	var $clothes = "fsyy_master_lufylegend.clothes";
 	var $gacha = "fsyy_master_lufylegend.gacha";
+	var $gacha_characters = "fsyy_master_lufylegend.gacha_characters";
 	var $gacha_child = "fsyy_master_lufylegend.gacha_child";
 	var $gacha_price = "fsyy_master_lufylegend.gacha_price";
 	var $skill = "fsyy_master_lufylegend.skill";

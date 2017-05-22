@@ -36,9 +36,9 @@ class User_model extends MY_Model
 		$character_values = array();
 		$character_values['user_id'] = $user_id;
 		$character_values['character_id'] = $character_id;
-		$character_values['star'] = $character["Star"];
-		$character_values['weapon_type'] = "'".$character["WeaponType"]."'";
-		$character_values['move_type'] = "'".$character["MoveType"]."'";
+		//$character_values['star'] = $character["Star"];
+		//$character_values['weapon_type'] = "'".$character["WeaponType"]."'";
+		//$character_values['move_type'] = "'".$character["MoveType"]."'";
 		$character_values['horse'] = $character["Horse"];
 		$character_values['clothes'] = $character["Clothes"];
 		$character_values['weapon'] = $character["Weapon"];

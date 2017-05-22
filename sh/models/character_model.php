@@ -5,7 +5,7 @@ class Character_model extends MY_Model
 		parent::__construct();
 	}
 	function get_character_list($user_id, $chara_id = null){
-		$select = "`id` as Id,`user_id` as UserId, `character_id` as `CharacterId`, `exp` as `Exp`, `star` as `Star`, `level` as `Level`, `horse` as `Horse`, `clothes` as `Clothes`, `weapon` as `Weapon`";
+		$select = "`id` as Id,`user_id` as UserId, `character_id` as `CharacterId`, `exp` as `Exp`,`fragment` as `Fragment`, `star` as `Star`, `level` as `Level`, `horse` as `Horse`, `clothes` as `Clothes`, `weapon` as `Weapon`";
 		$table = $this->user_db->characters;
 		$where = array();
 		$where[] = "user_id = {$user_id}";
@@ -36,7 +36,12 @@ class Character_model extends MY_Model
 		return $result;
 	}
 	function character_insert($values){
-		$res = $this->user_db->insert($values, $this->user_db->characters);
+		$characters = $this->get_character_list($values["user_id"], $values["character_id"]);
+		if(count($characters) > 0){
+			$res = $this->update_character($values["user_id"], $values["character_id"], array("fragment"=>$characters[0]["Fragment"] + 1));
+		}else{
+			$res = $this->user_db->insert($values, $this->user_db->characters);
+		}
 		return $res;
 	}
 	function character_skill_insert($values){
