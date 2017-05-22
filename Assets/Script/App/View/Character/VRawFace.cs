@@ -23,12 +23,26 @@ namespace App.View.Character{
 			{
 				icon = this.GetComponent<RawImage>();
 			}
-            string url = string.Format(App.Model.Scriptable.FaceAsset.FaceUrl, characterId);
-            yield return this.StartCoroutine(Global.SUser.Download(url, App.Util.Global.versions.face, (AssetBundle assetbundle)=>{
-                App.Model.Scriptable.FaceAsset.assetbundle = assetbundle;
-                App.Model.Scriptable.MFace mFace = App.Model.Scriptable.FaceAsset.Data.face;
+            while (FaceCacher.Instance.IsLoadingId(characterId))
+            {
+                yield return new WaitForEndOfFrame();
+            }
+            App.Model.Scriptable.MFace mFace = FaceCacher.Instance.Get(characterId);
+            if (mFace != null)
+            {
                 icon.texture = mFace.image as Texture;
                 icon.uvRect = mFace.rect;
+                yield break;
+            }
+            string url = string.Format(App.Model.Scriptable.FaceAsset.FaceUrl, characterId);
+            FaceCacher.Instance.LoadingId(characterId);
+            yield return this.StartCoroutine(Global.SUser.Download(url, App.Util.Global.versions.face, (AssetBundle assetbundle)=>{
+                App.Model.Scriptable.FaceAsset.assetbundle = assetbundle;
+                mFace = App.Model.Scriptable.FaceAsset.Data.face;
+                icon.texture = mFace.image as Texture;
+                icon.uvRect = mFace.rect;
+                mFace.id = characterId;
+                FaceCacher.Instance.Set(mFace);
             }));
         }
 

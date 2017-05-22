@@ -10,6 +10,7 @@ using App.Controller;
 
 namespace App.View.Character{
     public class VCharacterIcon : VBase {
+        [SerializeField]private Image background;
         [SerializeField]private App.View.Character.VRawFace faceIcon;
         [SerializeField]private GameObject[] stars;
         [SerializeField]private Text level;
@@ -57,11 +58,7 @@ namespace App.View.Character{
         private void CharacterIdChanged(int oldvalue, int newvalue)
         {
             faceIcon.CharacterId = newvalue;
-            //StartCoroutine(LoadFaceIcon(newvalue));
-            /*return;
-            App.Model.Master.MCharacter mCharacter = CharacterCacher.Instance.Get(newvalue);
-
-            icon.uvRect = mCharacter.FaceRect;*/
+            background.color = App.Model.MCharacter.GetColor(ViewModel.CharacterId.Value);
         }
         public override void UpdateView(){
             LevelChanged(0, ViewModel.Level.Value);

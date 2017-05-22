@@ -22,11 +22,11 @@ namespace App.Controller{
         private RectTransform down;
         public override IEnumerator OnLoad( Request request ) 
 		{  
-            icon = rect.FindChild("Icon") as RectTransform;
-            left = rect.FindChild("Left") as RectTransform;
-            right = rect.FindChild("Right") as RectTransform;
-            up = rect.FindChild("Up") as RectTransform;
-            down = rect.FindChild("Down") as RectTransform;
+            icon = rect.Find("Icon") as RectTransform;
+            left = rect.Find("Left") as RectTransform;
+            right = rect.Find("Right") as RectTransform;
+            up = rect.Find("Up") as RectTransform;
+            down = rect.Find("Down") as RectTransform;
             HideFocus();
             yield return StartCoroutine(base.OnLoad(request));
         }

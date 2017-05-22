@@ -31,7 +31,7 @@ namespace App.Controller.Common{
             int index = 1;
             while (index < scriptWaitPaths.Length)
             {
-                Transform tran = target.FindChild(scriptWaitPaths[index]);
+                Transform tran = target.Find(scriptWaitPaths[index]);
                 if (tran == null)
                 {
                     App.Util.SceneManager.CurrentScene.StartCoroutine(WaitScriptContinue());

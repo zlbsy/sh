@@ -14,6 +14,7 @@ using App.Controller.Common;
 
 namespace App.Controller{
     public class CCharacterDetailDialog : CDialog {
+        [SerializeField]private VCard vCard;
         [SerializeField]private App.View.Character.VCharacterDetail characterDetail;
         [SerializeField]private App.View.Character.VCharacter vCharacter;
         [SerializeField]private VCharacterStatus vCharacterStatus;
@@ -35,6 +36,8 @@ namespace App.Controller{
             character.StatusInit();
             characterDetail.BindingContext = character.ViewModel;
             characterDetail.UpdateView();
+            vCard.BindingContext = character.ViewModel;
+            vCard.UpdateView();
             vCharacter.BindingContext = character.ViewModel;
             vCharacter.UpdateView();
             vCharacterStatus.BindingContext = character.ViewModel;

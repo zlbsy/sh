@@ -23,7 +23,7 @@ namespace App.Util.LSharp{
             int index = 1;
             while (index < paths.Length)
             {
-                Transform tran = target.FindChild(paths[index]);
+                Transform tran = target.Find(paths[index]);
                 if (tran == null)
                 {
                     LSharpScript.Instance.Analysis();
@@ -45,7 +45,7 @@ namespace App.Util.LSharp{
             int index = 1;
             while (index < paths.Length)
             {
-                Transform tran = target.FindChild(paths[index]);
+                Transform tran = target.Find(paths[index]);
                 if (tran == null)
                 {
                     LSharpScript.Instance.Analysis();
@@ -74,7 +74,7 @@ namespace App.Util.LSharp{
             int index = 1;
             while (index < paths.Length)
             {
-                Transform tran = target.FindChild(paths[index]);
+                Transform tran = target.Find(paths[index]);
                 if (tran == null)
                 {
                     LSharpScript.Instance.Analysis();

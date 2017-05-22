@@ -116,6 +116,22 @@ namespace App.Model{
             mCharacter.WeaponType = (WeaponType)System.Enum.Parse(typeof(WeaponType), npc.weapon_type, true);
             return mCharacter;
         }
+        public static Color GetColor(int character_id){
+            int qualification = CharacterCacher.Instance.Get(character_id).qualification;
+            switch (qualification)
+            {
+                case 2:
+                    return new Color32(0, 191, 255, 255);
+                    break;
+                case 3:
+                    return new Color32(138, 43, 226, 255);
+                    break;
+                case 4:
+                    return new Color32(255, 165, 0, 255);
+                    break;
+            }
+            return Color.white;
+        }
         public VMCharacter ViewModel { get { return (VMCharacter)viewModel; } }
         /// <summary>
         /// 枪剑类兵器
@@ -241,8 +257,17 @@ namespace App.Model{
         public int CharacterId{
             set{
                 App.Model.Master.MCharacter master = CharacterCacher.Instance.Get(value);
-                this.ViewModel.Name.Value = master.name;
-                this.ViewModel.Nickname.Value = master.nickname;
+                if (value >= App.Util.Global.Constant.user_characters[0] && value <= App.Util.Global.Constant.user_characters[1])
+                {
+                    MUser mUser = UserCacher.Instance.Get(this.UserId);
+                    this.ViewModel.Name.Value = mUser.name;
+                    this.ViewModel.Nickname.Value = mUser.Nickname;
+                }
+                else
+                {
+                    this.ViewModel.Name.Value = master.name;
+                    this.ViewModel.Nickname.Value = master.nickname;
+                }
                 this.ViewModel.Head.Value = master.head;
                 this.ViewModel.Hat.Value = master.hat;
                 this.ViewModel.CharacterId.Value = value;
@@ -329,6 +354,14 @@ namespace App.Model{
             }
             get{ 
                 return this.ViewModel.Star.Value;
+            }
+        }
+        public int Fragment{
+            set{
+                this.ViewModel.Fragment.Value = value;
+            }
+            get{ 
+                return this.ViewModel.Fragment.Value;
             }
         }
         public Belong Belong{

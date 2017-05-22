@@ -42,7 +42,7 @@ namespace App.Controller.Common{
         }
         public virtual void OnEnable(){
             if (panel == null){
-                panel = this.transform.FindChild("Panel");
+                panel = this.transform.Find("Panel");
                 if (!noBackground)
                 {
                     GameObject backgroundObj = App.Util.Global.SceneManager.LoadPrefab("DialogBackground");

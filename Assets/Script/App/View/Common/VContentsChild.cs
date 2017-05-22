@@ -14,15 +14,7 @@ namespace App.View.Common{
         [SerializeField]private VItemIcon vItemIcon;
         [SerializeField]private VEquipmentIcon vEquipmentIcon;
         [SerializeField]private VCharacterIcon vCharacterIcon;
-        private bool _showComplete = false;
-        public bool showComplete{
-            get{ 
-                return _showComplete;
-            }
-            set{ 
-                _showComplete = value;
-            }
-        }
+        public bool showComplete{ get; set;}
         public void UpdateView(MContent mContent){
             vItemIcon.gameObject.SetActive(false);
             vEquipmentIcon.gameObject.SetActive(false);

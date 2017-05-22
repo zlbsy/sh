@@ -9,10 +9,13 @@ using App.Util.Cacher;
 using App.Controller;
 
 namespace App.View.Character{
-    public class VCharacterDetail : VBase {
+    public class VCard : VBase {
+        [SerializeField]private Image background;
+        [SerializeField]private VFace faceIcon;
         [SerializeField]private Text txtName;
         [SerializeField]private Text txtNickname;
         [SerializeField]private GameObject[] stars;
+        [SerializeField]private bool hideName = false;
         #region VM处理
         public VMCharacter ViewModel { get { return (VMCharacter)BindingContext; } }
         protected override void OnBindingContextChanged(VMBase oldViewModel, VMBase newViewModel)
@@ -34,8 +37,20 @@ namespace App.View.Character{
         }
         private void CharacterIdChanged(int oldvalue, int newvalue)
         {
-            txtName.text = ViewModel.Name.Value;
-            txtNickname.text = ViewModel.Nickname.Value;
+            if (hideName)
+            {
+                txtName.gameObject.SetActive(false);
+                txtNickname.gameObject.SetActive(false);
+            }
+            else
+            {
+                txtName.gameObject.SetActive(true);
+                txtNickname.gameObject.SetActive(true);
+                txtName.text = ViewModel.Name.Value;
+                txtNickname.text = ViewModel.Nickname.Value;
+            }
+            faceIcon.CharacterId = ViewModel.CharacterId.Value;
+            background.color = App.Model.MCharacter.GetColor(ViewModel.CharacterId.Value);
         }
         private void StarChanged(int oldvalue, int newvalue)
         {
@@ -51,18 +66,5 @@ namespace App.View.Character{
             StarChanged(0, ViewModel.Star.Value);
         }
         #endregion
-        public void ClickLeft(){
-            
-        }
-        /*public IEnumerator LoadFaceIcon(int characterId)
-        {
-            string url = string.Format(App.Model.Scriptable.FaceAsset.FaceUrl, characterId);
-            yield return this.StartCoroutine(Global.SUser.Download(url, App.Util.Global.SUser.versions.face, (AssetBundle assetbundle)=>{
-                App.Model.Scriptable.FaceAsset.assetbundle = assetbundle;
-                App.Model.Scriptable.MFace mFace = App.Model.Scriptable.FaceAsset.Data.face;
-                characterIcon.sprite = Sprite.Create(mFace.image, new Rect (0, 0, mFace.image.width, mFace.image.height), Vector2.zero);
-            }));
-        }*/
-
     }
 }
