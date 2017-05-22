@@ -1,10 +1,12 @@
 ty generated #
 # =============== #
-Temp/
-Obj/
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Bb]uild/
+/[Bb]uilds/
+/Assets/AssetStoreTools*
 UnityGenerated/
-/Library/
-
 # ===================================== #
 # Visual Studio / MonoDevelop generated #
 # ===================================== #
