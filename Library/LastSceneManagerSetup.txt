@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Dialog/Avatar.unity
+- path: Assets/Scene/Logo.unity
   isLoaded: 1
   isActive: 1
