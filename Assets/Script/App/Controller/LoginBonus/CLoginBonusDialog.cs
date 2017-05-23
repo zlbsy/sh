@@ -17,16 +17,18 @@ namespace App.Controller.LoginBonus{
         {  
             yield return StartCoroutine(base.OnLoad(request));
             App.Model.Master.MLoginBonus[] loginBonusesList = App.Util.Cacher.LoginBonusCacher.Instance.GetAll();
-            Debug.LogError("loginBonusesList="+loginBonusesList.Length);
+            //Debug.LogError("loginBonusesList="+loginBonusesList.Length);
             SLoginBonus sLoginBonus = new SLoginBonus();
             yield return StartCoroutine(sLoginBonus.RequestLogCount());
             List<MLoginBonus> loginBonuses = new List<MLoginBonus>();
             int count = 0;
+            int day = 1;
             foreach(App.Model.Master.MLoginBonus model in loginBonusesList){
                 MLoginBonus mLoginBonus = new MLoginBonus();
                 mLoginBonus.Id = model.id;
                 mLoginBonus.Contents = model.contents;
-                if (count++ < sLoginBonus.count)
+                mLoginBonus.Day = day++;
+                if (count++ < Global.SUser.self.Loginbonus_cnt)
                 {
                     mLoginBonus.Received = true;
                 }

@@ -13,6 +13,7 @@ namespace App.View.Item{
         [SerializeField]private Image background;
         [SerializeField]private Image icon;
         [SerializeField]private Text cnt;
+        [SerializeField]private bool hideCount;
         #region VM处理
         public VMItem ViewModel { get { return (VMItem)BindingContext; } }
         protected override void OnBindingContextChanged(VMBase oldViewModel, VMBase newViewModel)
@@ -37,6 +38,7 @@ namespace App.View.Item{
         public override void UpdateView(){
             icon.sprite = ImageAssetBundleManager.GetItemIcon(ViewModel.ItemId.Value);
             CntChanged(0, ViewModel.Cnt.Value);
+            cnt.gameObject.SetActive(!hideCount);
         }
         #endregion
         public void ClickChild(){Debug.LogError("ClickChild");

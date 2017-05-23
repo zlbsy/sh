@@ -64,6 +64,8 @@ namespace App.Model{
                 this.ViewModel.Nickname.Value = value;
             }
         }
+        public int Loginbonus_cnt;
+        public int Loginbonus_received;
         public int Face{
             get{ 
                 return this.ViewModel.Face.Value;

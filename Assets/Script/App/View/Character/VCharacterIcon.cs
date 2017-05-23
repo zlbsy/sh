@@ -15,6 +15,7 @@ namespace App.View.Character{
         [SerializeField]private GameObject[] stars;
         [SerializeField]private Text level;
         [SerializeField]private GameObject selectIcon;
+        [SerializeField]private bool hideLevel;
         [SerializeField]private bool clickDisabled = false;
         #region VM处理
         public VMCharacter ViewModel { get { return (VMCharacter)BindingContext; } }
@@ -64,6 +65,7 @@ namespace App.View.Character{
             LevelChanged(0, ViewModel.Level.Value);
             StarChanged(0, ViewModel.Star.Value);
             CharacterIdChanged(0, ViewModel.CharacterId.Value);
+            level.transform.parent.gameObject.SetActive(!hideLevel);
         }
         #endregion
         public void ClickChild(){

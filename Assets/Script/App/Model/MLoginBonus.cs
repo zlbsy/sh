@@ -18,6 +18,14 @@ namespace App.Model{
                 return ViewModel.Id.Value;
             }
         }
+        public int Day{
+            set{ 
+                ViewModel.Day.Value = value;
+            }
+            get{ 
+                return ViewModel.Day.Value;
+            }
+        }
         public MContent[] Contents{
             set{ 
                 ViewModel.Contents.Value = value;

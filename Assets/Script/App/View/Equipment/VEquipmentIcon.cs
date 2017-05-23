@@ -13,6 +13,7 @@ namespace App.View.Equipment{
         [SerializeField]protected Image icon;
         [SerializeField]protected GameObject[] stars;
         [SerializeField]protected Text level;
+        [SerializeField]private bool hideLevel;
         #region VM处理
         public VMEquipment ViewModel { get { return (VMEquipment)BindingContext; } }
         protected override void OnBindingContextChanged(VMBase oldViewModel, VMBase newViewModel)
@@ -52,6 +53,7 @@ namespace App.View.Equipment{
                 stars[0].transform.parent.gameObject.SetActive(true);
                 icon.sprite = ImageAssetBundleManager.GetEquipmentIcon(string.Format("{0}_{1}", ViewModel.EquipmentType.Value, ViewModel.EquipmentId.Value));
                 LevelChanged(0, ViewModel.Level.Value);
+                level.transform.parent.gameObject.SetActive(!hideLevel);
             }
         }
         #endregion
