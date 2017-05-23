@@ -58,6 +58,7 @@ namespace App.Controller{
                     apis.Add("npc", CreateScriptableObjectMasterNpcRun());
                     apis.Add("npc_equip", CreateScriptableObjectMasterNpcEquipmentRun());
                     apis.Add("avatar", CreateScriptableObjectMasterAvatarRun());
+                    apis.Add("loginbonus", CreateScriptableObjectMasterLoginBonusRun());
                     apiKeys = apis.Keys.ToArray();
 
                     assets.Add("face", CreateScriptableObjectFaceAssetRun());
@@ -119,6 +120,16 @@ namespace App.Controller{
                     this.StartCoroutine(apis[key]);
                 }
             }
+        }
+        IEnumerator CreateScriptableObjectMasterLoginBonusRun()
+        {
+            var asset = ScriptableObject.CreateInstance<App.Model.Scriptable.LoginBonusAsset>();
+
+            SEditorMaster sMaster = new SEditorMaster();
+            yield return StartCoroutine (sMaster.RequestAll("loginbonus"));
+            asset.loginbonuses = sMaster.responseAll.loginbonus;
+            UnityEditor.AssetDatabase.CreateAsset(asset, string.Format("Assets/Editor Default Resources/ScriptableObject/{0}.asset", App.Model.Scriptable.LoginBonusAsset.Name));
+            UnityEditor.AssetDatabase.Refresh();
         }
         IEnumerator CreateScriptableObjectMasterAvatarRun()
         {

@@ -194,5 +194,8 @@ namespace App.Controller{
         public void OpenItemList(){
             this.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.ItemListDialog));
         }
+        public void OpenLoginBonus(){
+            this.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.LoginBonusDialog));
+        }
 	}
 }

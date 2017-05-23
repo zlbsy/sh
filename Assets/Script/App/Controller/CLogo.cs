@@ -190,6 +190,11 @@ namespace App.Controller{
                 TileCacher.Instance.Reset(TileAsset.Data.tiles);
                 TileAsset.Clear();
             }));
+            list.Add(sUser.Download(LoginBonusAsset.Url, versions.loginbonus, (AssetBundle assetbundle)=>{
+                LoginBonusAsset.assetbundle = assetbundle;
+                LoginBonusCacher.Instance.Reset(LoginBonusAsset.Data.loginbonuses);
+                LoginBonusAsset.Clear();
+            }));
             list.Add(sUser.Download(App.Model.Avatar.AvatarAsset.Url, versions.tile, (AssetBundle assetbundle)=>{
                 App.Model.Avatar.AvatarAsset.assetbundle = assetbundle;
             }));

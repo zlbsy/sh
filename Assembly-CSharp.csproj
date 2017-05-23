@@ -103,6 +103,7 @@
      <Compile Include="Assets\Script\App\Controller\Common\CScene.cs" />
      <Compile Include="Assets\Script\App\Controller\Common\CSingleDialog.cs" />
      <Compile Include="Assets\Script\App\Controller\Common\Request.cs" />
+     <Compile Include="Assets\Script\App\Controller\LoginBonus\CLoginBonusDialog.cs" />
      <Compile Include="Assets\Script\App\Controller\Register\CRegister.cs" />
      <Compile Include="Assets\Script\App\Controller\Register\CRegisterConfirmDialog.cs" />
      <Compile Include="Assets\Script\App\Model\Avatar\Arms.cs" />
@@ -122,6 +123,7 @@
      <Compile Include="Assets\Script\App\Model\MEquipment.cs" />
      <Compile Include="Assets\Script\App\Model\MGacha.cs" />
      <Compile Include="Assets\Script\App\Model\MItem.cs" />
+     <Compile Include="Assets\Script\App\Model\MLoginBonus.cs" />
      <Compile Include="Assets\Script\App\Model\MPrice.cs" />
      <Compile Include="Assets\Script\App\Model\MSkill.cs" />
      <Compile Include="Assets\Script\App\Model\MTile.cs" />
@@ -143,6 +145,7 @@
      <Compile Include="Assets\Script\App\Model\Master\MGachaChild.cs" />
      <Compile Include="Assets\Script\App\Model\Master\MGachaPrice.cs" />
      <Compile Include="Assets\Script\App\Model\Master\MItem.cs" />
+     <Compile Include="Assets\Script\App\Model\Master\MLoginBonus.cs" />
      <Compile Include="Assets\Script\App\Model\Master\MNpc.cs" />
      <Compile Include="Assets\Script\App\Model\Master\MNpcEquipment.cs" />
      <Compile Include="Assets\Script\App\Model\Master\MSkill.cs" />
@@ -164,6 +167,7 @@
      <Compile Include="Assets\Script\App\Model\Scriptable\HorseAsset.cs" />
      <Compile Include="Assets\Script\App\Model\Scriptable\ItemAsset.cs" />
      <Compile Include="Assets\Script\App\Model\Scriptable\LanguageAsset.cs" />
+     <Compile Include="Assets\Script\App\Model\Scriptable\LoginBonusAsset.cs" />
      <Compile Include="Assets\Script\App\Model\Scriptable\NpcAsset.cs" />
      <Compile Include="Assets\Script\App\Model\Scriptable\NpcEquipmentAsset.cs" />
      <Compile Include="Assets\Script\App\Model\Scriptable\PromptMessageAsset.cs" />
@@ -182,6 +186,7 @@
      <Compile Include="Assets\Script\App\Service\SEquipment.cs" />
      <Compile Include="Assets\Script\App\Service\SGacha.cs" />
      <Compile Include="Assets\Script\App\Service\SItem.cs" />
+     <Compile Include="Assets\Script\App\Service\SLoginBonus.cs" />
      <Compile Include="Assets\Script\App\Service\SMaster.cs" />
      <Compile Include="Assets\Script\App\Service\SRegister.cs" />
      <Compile Include="Assets\Script\App\Service\SShop.cs" />
@@ -205,6 +210,7 @@
      <Compile Include="Assets\Script\App\Util\Cacher\FaceCacher.cs" />
      <Compile Include="Assets\Script\App\Util\Cacher\GachaCacher.cs" />
      <Compile Include="Assets\Script\App\Util\Cacher\ItemCacher.cs" />
+     <Compile Include="Assets\Script\App\Util\Cacher\LoginBonusCacher.cs" />
      <Compile Include="Assets\Script\App\Util\Cacher\NpcCacher.cs" />
      <Compile Include="Assets\Script\App\Util\Cacher\NpcEquipmentCacher.cs" />
      <Compile Include="Assets\Script\App\Util\Cacher\SkillCacher.cs" />
@@ -260,6 +266,7 @@
      <Compile Include="Assets\Script\App\View\Gacha\VGachaChild.cs" />
      <Compile Include="Assets\Script\App\View\Item\VItemDetail.cs" />
      <Compile Include="Assets\Script\App\View\Item\VItemIcon.cs" />
+     <Compile Include="Assets\Script\App\View\LoginBonus\VLoginBonusChild.cs" />
      <Compile Include="Assets\Script\App\View\Skill\VSkillChild.cs" />
      <Compile Include="Assets\Script\App\View\Top\VBuildingMenu.cs" />
      <Compile Include="Assets\Script\App\View\Top\VHeaderTop.cs" />
@@ -285,6 +292,7 @@
      <Compile Include="Assets\Script\App\ViewModel\VMGacha.cs" />
      <Compile Include="Assets\Script\App\ViewModel\VMGachaButton.cs" />
      <Compile Include="Assets\Script\App\ViewModel\VMItem.cs" />
+     <Compile Include="Assets\Script\App\ViewModel\VMLoginBonus.cs" />
      <Compile Include="Assets\Script\App\ViewModel\VMProperty.cs" />
      <Compile Include="Assets\Script\App\ViewModel\VMSkill.cs" />
      <Compile Include="Assets\Script\App\ViewModel\VMTopMap.cs" />

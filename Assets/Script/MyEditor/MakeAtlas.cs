@@ -156,6 +156,11 @@ namespace MyEditor
             BuildAssetBundleWorld();
             BuildAssetBundleArea();
         }
+        [MenuItem("SH/Build Assetbundle/Master/LoginBonus")]
+        static private void BuildAssetBundleLoginBonus()
+        {
+            BuildAssetBundleMaster(App.Model.Scriptable.LoginBonusAsset.Name);
+        }
         [MenuItem("SH/Build Assetbundle/Master/Gacha")]
         static private void BuildAssetBundleGacha()
         {

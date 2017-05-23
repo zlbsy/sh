@@ -1,7 +1,7 @@
 ManifestFileVersion: 0
-CRC: 3764077785
+CRC: 1818443357
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
-      Name: constantasset.unity3d
+      Name: loginbonusasset.unity3d
       Dependencies: {}

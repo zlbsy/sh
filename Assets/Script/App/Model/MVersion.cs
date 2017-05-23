@@ -14,6 +14,7 @@ namespace App.Model{
         public int constant;
         public int world;
         public int word;
+        public int loginbonus;
         public int characterword;
         public int area;
         public int stage;

@@ -4,6 +4,7 @@ using App.ViewModel;
 
 
 namespace App.Model{
+    [System.Serializable]
     public enum ContentType{
         clothes,
         horse,
@@ -11,6 +12,7 @@ namespace App.Model{
         item,
         character
     }
+    [System.Serializable]
 	public class MContent : MBase {
         public MContent(){
             
