@@ -177,7 +177,7 @@ class Gacha_model extends MY_Model
 			}
 			if(!$gacha_get){
 			    $this->user_db->trans_rollback();
-				$this->error("get present error ".$gacha_child["type"].$this->user_db->last_sql);
+				$this->error("get present error ");
 			}
 		}
 		$this->user_db->trans_commit();

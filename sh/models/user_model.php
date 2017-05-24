@@ -179,4 +179,95 @@ class User_model extends MY_Model
 		$result = $this->user_db->update($values, $table, $where);
 		return $result;
 	}
+	function set_contents($user_id, $contents){
+		$item_update = false;
+		$equipment_update = false;
+		$character_update = false;
+		$user_update = false;
+		foreach($contents as $content){  
+			$content_res = $this->set_content($user_id,$content,$item_update,$equipment_update,$character_update,$user_update);
+			if(!$content_res){
+				return false;
+			}
+		}
+		$user = $this->getSessionData("user");
+		if($item_update){
+			$item_model = new Item_model();
+			$items = $item_model->get_item_list($user["id"]);
+			$user["items"] = $items;
+		}
+		if($equipment_update){
+			$equipment_model = new Equipment_model();
+			$equipments = $equipment_model->get_list($user["id"]);
+			$user["equipments"] = $equipments;
+		}
+		if($character_update){
+			$character_model = new Character_model();
+			$characters = $character_model->get_character_list($user_id);
+			$user["characters"] = $characters;
+		}
+		if($user_update){
+			$new_user = $this->get($user_id,false,true);
+			$user["Gold"] = $new_user["Gold"];
+			$user["Silver"] = $new_user["Silver"];
+			$user["Ap"] = $new_user["Ap"];
+		}
+		$this->setSessionData("user",$user);
+		return true;
+	}
+	function set_content($user_id, $content, &$item_update, &$equipment_update, &$character_update,&$user_update){
+		$res_get = false;
+		switch($content["type"]){
+			case "item":
+				$item_model = new Item_model();
+				$res_get = $item_model->set_item($user_id, $content["content_id"]);
+				$item_update = true;
+				break;
+			case "horse":
+			case "weapon":
+			case "clothes":
+				$equipment_model = new Equipment_model();
+				$res_get = $equipment_model->set_equipment($user_id, $content["content_id"], $content["type"]);
+				$equipment_update = true;
+				break;
+			case "character":
+				$now = date("Y-m-d H:i:s");
+				$character_values = array();
+				$character_values['user_id'] = $user_id;
+				$character_values['character_id'] = $content["content_id"];
+				$character_values['register_time'] = "'{$now}'";
+				$character_model = new Character_model();
+				$res_get = $character_model->character_insert($character_values);
+				$character_update = true;
+				break;
+			case "gold":
+				$get_type = isset($content["get_type"]) ? $content["get_type"] : "";
+				$content_id = isset($content["content_id"]) ? $content["content_id"] : 0;
+				$res_get = $this->set_money_log($user_id,$get_type,$content_id,$content["value"],0);
+				$this->update_money();
+				$user_update = true;
+				break;
+			case "silver":
+				$get_type = isset($content["get_type"]) ? $content["get_type"] : "";
+				$content_id = isset($content["content_id"]) ? $content["content_id"] : 0;
+				$res_get = $this->set_money_log($user_id,$get_type,$content_id,0,$content["value"]);
+				$this->update_money();
+				$user_update = true;
+				break;
+			case "ap":
+				break;
+		}
+		return $res_get;
+	}
+	function set_money_log($user_id, $type,$child_id, $gold, $silver){
+		$values = array();
+		$values['user_id'] = $user_id;
+		$values['type'] = "'{$type}'";
+		$values['child_id'] = $child_id;
+		$values['gold'] = $gold;
+		$values['silver'] = $silver;
+		$values["register_time"] = "'".date("Y-m-d H:i:s",time())."'";
+		$res = $this->user_db->insert($values, $this->user_db->bankbook);
+		return $res;
+	}
 }

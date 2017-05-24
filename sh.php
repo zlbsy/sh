@@ -7,6 +7,7 @@ $method = $_GET["method"];
 $class = ucfirst($controller_p);
 
 date_default_timezone_set('PRC');
+error_reporting(E_ALL ^ E_NOTICE);
 define('TIME_INIT', '2000-1-1 00:00:00');
 define('DAY_START', date("Y-m-d 05:00:00", date("H",time()) > "05" ? time() : strtotime("-1 day")));
 

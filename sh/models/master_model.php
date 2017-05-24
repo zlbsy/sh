@@ -288,5 +288,17 @@ class Master_model extends MY_Model
 		$result = $this->master_db->select($select, $table, null, $order_by);
 		return $result;
 	}
+	function get_master_loginbonus(){
+		$select = "`id`,`year`,`month`,`contents`";
+		$table = $this->master_db->login_bonus;
+		$order_by = "id asc";
+		$result = $this->master_db->select($select, $table, null, $order_by, null, Database_Result::TYPE_DEFAULT);
+		$result_array = array();
+		while ($row = mysql_fetch_assoc($result)) {
+			$row["contents"] = json_decode($row["contents"]);
+			$result_array[] = $row;
+		}
+		return $result_array;
+	}
 }
 ?>

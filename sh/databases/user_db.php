@@ -13,6 +13,7 @@ class User_DB extends Base_Database {
 	var $gacha_free_log = "fsyy_lufylegend.gacha_free_log";
 	var $battle_list = "fsyy_lufylegend.battle_list";
 	var $story_progress = "fsyy_lufylegend.story_progress";
+	var $login_bonus = "fsyy_lufylegend.login_bonus";
 	function __construct() {
 		parent::__construct();
 		$db = mysql_select_db('fsyy_lufylegend', $this->connect);

@@ -27,6 +27,7 @@ class Master_DB extends Base_Database {
 	var $character_skill = "fsyy_master_lufylegend.character_skill";
 	var $tutorial = "fsyy_master_lufylegend.tutorial";
 	var $avatar_setting = "fsyy_master_lufylegend.avatar_setting";
+	var $login_bonus = "fsyy_master_lufylegend.login_bonus";
 	function __construct() {
 		parent::__construct();
 		$db = mysql_select_db('fsyy_master_lufylegend', $this->connect);

@@ -78,6 +78,10 @@ class Master extends MY_Controller {
 			$master_npc = $master_model->get_master_npcs();
 			$result["npcs"]=$master_npc;
 		}
+		if($args["loginbonus"]){
+			$master_loginbonus = $master_model->get_master_loginbonus();
+			$result["loginbonus"]=$master_loginbonus;
+		}
 		if($args["npc_equipment"]){
 			$master_npc_equipment = $master_model->get_master_npc_equipments();
 			$result["npc_equipments"]=$master_npc_equipment;

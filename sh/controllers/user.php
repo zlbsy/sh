@@ -2,7 +2,7 @@
 class User extends MY_Controller {
 	function __construct() {
 		parent::__construct();
-		load_model(array('user_model', 'character_model', 'item_model', 'version_model'));
+		load_model(array('user_model', 'character_model', 'item_model', 'version_model', 'loginbonus_model'));
 	}
 	public function register()
 	{
@@ -47,6 +47,11 @@ class User extends MY_Controller {
 		if(is_null($user["progress"])){
 			$user_model = is_null($user_model) ? new User_model() : $user_model;
 			$user["progress"] = $user_model->get_story_progress($user["id"]);
+		}
+		if(!isset($user["loginbonus_received"])){
+			$loginbonus_model = new Loginbonus_model();
+			$user["loginbonus_cnt"] = $loginbonus_model->get_log_count($user["id"]);
+			$user["loginbonus_received"] = $loginbonus_model->received_loginbonus($user["id"]);
 		}
 		$this->setSessionData("user", $user);
 		$this->out(array("user"=>$user));
