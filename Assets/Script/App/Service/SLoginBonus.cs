@@ -16,16 +16,20 @@ namespace App.Service{
         public class ResponseLog : ResponseBase
 		{
             public int count;
-		}
+        }
         public IEnumerator RequestLogCount()
 		{
             var url = "loginbonus/log_count";
-            //WWWForm form = new WWWForm();
-            //form.AddField("user_id", userId);
             HttpClient client = new HttpClient();
             yield return App.Util.SceneManager.CurrentScene.StartCoroutine(client.Send( url ));
             ResponseLog response = client.Deserialize<ResponseLog>();
             this.count = response.count;
+        }
+        public IEnumerator RequestGet()
+        {
+            var url = "loginbonus/get_bonus";
+            HttpClient client = new HttpClient();
+            yield return App.Util.SceneManager.CurrentScene.StartCoroutine(client.Send( url ));
         }
 	}
 }

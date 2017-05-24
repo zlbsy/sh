@@ -41,8 +41,8 @@ namespace App.Controller{
             ScrollViewSets(content, childItem, items);
             yield return 0;
         }
-        public void ItemIconClick(int id){
-            App.Model.MItem mItem = System.Array.Find(items, i=>i.Id == id);
+        public void ItemIconClick(VItemIcon icon){
+            App.Model.MItem mItem = System.Array.Find(items, i=>i.Id == icon.ViewModel.Id.Value);
             itemDetail.BindingContext = mItem.ViewModel;
             itemDetail.UpdateView();
         }

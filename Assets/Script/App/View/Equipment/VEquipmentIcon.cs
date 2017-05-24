@@ -58,7 +58,7 @@ namespace App.View.Equipment{
         }
         #endregion
         public void ClickChild(){
-            this.Controller.SendMessage("EquipmentIconClick", ViewModel.Id.Value);
+            this.Controller.SendMessage("EquipmentIconClick", this);
         }
     }
 }

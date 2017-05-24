@@ -10,7 +10,10 @@ namespace App.Model{
         horse,
         weapon,
         item,
-        character
+        character,
+        gold,
+        silver,
+        ap
     }
     [System.Serializable]
 	public class MContent : MBase {
@@ -19,5 +22,6 @@ namespace App.Model{
         }
         public ContentType type;
         public int content_id;
+        public int value;
 	}
 }

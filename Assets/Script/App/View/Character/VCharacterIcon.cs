@@ -73,7 +73,7 @@ namespace App.View.Character{
             {
                 return;
             }
-            this.Controller.SendMessage("ClickCharacterIcon", this);
+            this.Controller.SendMessage("CharacterIconClick", this);
             //(this.Controller as CCharacterListDialog).ShowCharacter(ViewModel.CharacterId.Value);
         }
         public bool isSelected{

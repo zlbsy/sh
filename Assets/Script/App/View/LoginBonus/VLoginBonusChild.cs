@@ -22,5 +22,8 @@ namespace App.View.LoginBonus{
             receivedIcon.gameObject.SetActive(ViewModel.Received.Value);
             day.text = string.Format("第{0}天", ViewModel.Day.Value);
         }
+        public void ClickChild(){
+            this.Controller.SendMessage("ContentClick", this, SendMessageOptions.DontRequireReceiver);
+        }
     }
 }

@@ -64,8 +64,8 @@ namespace App.Model{
                 this.ViewModel.Nickname.Value = value;
             }
         }
-        public int Loginbonus_cnt;
-        public int Loginbonus_received;
+        public int loginbonus_cnt;
+        public bool loginbonus_received;
         public int Face{
             get{ 
                 return this.ViewModel.Face.Value;
@@ -176,6 +176,21 @@ namespace App.Model{
             }
             if(user.TopMap != null){
                 this.TopMap = user.TopMap;
+            }
+            if(user.items != null){
+                this.items = user.items;
+            }
+            if(user.equipments != null){
+                this.equipments = user.equipments;
+            }
+            if(user.characters != null){
+                this.characters = user.characters;
+            }
+            if(user.loginbonus_cnt != null){
+                this.loginbonus_cnt = user.loginbonus_cnt;
+            }
+            if(user.loginbonus_received != null){
+                this.loginbonus_received = user.loginbonus_received;
             }
             if(user.progress != null){
                 this.Progress.Clear();

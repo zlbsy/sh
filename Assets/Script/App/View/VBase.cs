@@ -40,6 +40,9 @@ namespace App.View{
         public virtual void UpdateView(){
         
         }
+        public virtual void UpdateView(App.Model.MBase model){
+
+        }
         public virtual void OnDestroy(){
             BindingContext = null;
         }

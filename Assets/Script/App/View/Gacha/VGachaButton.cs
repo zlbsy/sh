@@ -15,7 +15,8 @@ namespace App.View.Gacha{
         [SerializeField]public Text labelFree;
         [SerializeField]public Text timeFree;
         private App.Model.Master.MGachaPrice gachaPrice;
-        public void UpdateView(App.Model.Master.MGachaPrice gachaPrice){
+        public override void UpdateView(App.Model.MBase model){
+            App.Model.Master.MGachaPrice gachaPrice = model as App.Model.Master.MGachaPrice;
             this.gachaPrice = gachaPrice;
             buttonName.text = string.Format(Language.Get("gacha_button_label"), gachaPrice.cnt);
             price.gameObject.SetActive(true);

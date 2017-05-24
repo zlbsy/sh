@@ -27,7 +27,7 @@ namespace App.Controller{
             ScrollViewSets(content, childItem, Global.SUser.self.characters);
 			yield return 0;
 		}
-        public void ClickCharacterIcon(VCharacterIcon vCharacterIcon){
+        public void CharacterIconClick(VCharacterIcon vCharacterIcon){
             Request req = Request.Create("character_id", vCharacterIcon.ViewModel.CharacterId.Value);
             this.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.CharacterDetailDialog, req));
         }

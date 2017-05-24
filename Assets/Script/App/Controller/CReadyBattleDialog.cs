@@ -46,7 +46,7 @@ namespace App.Controller{
         private void BaseCharacterList(){
             ScrollViewSets(characterContent, characterIcon, App.Util.Global.SUser.self.characters);
         }
-        public void ClickCharacterIcon(VCharacterIcon vCharacterIcon){
+        public void CharacterIconClick(VCharacterIcon vCharacterIcon){
             if (!vCharacterIcon.isSelected && selectCharacterContent.childCount >= selectShadowContent.childCount)
             {
                 CAlertDialog.Show("人数满了");

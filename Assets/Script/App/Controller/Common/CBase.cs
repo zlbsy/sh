@@ -32,8 +32,15 @@ namespace App.Controller.Common{
             obj.SetActive(true);
             obj.transform.localScale = Vector3.one;
             App.View.VBase view = obj.GetComponent<App.View.VBase>();
-            view.BindingContext = model.VM;
-            view.UpdateView();
+            if (model.VM == null)
+            {
+                view.UpdateView(model);
+            }
+            else
+            {
+                view.BindingContext = model.VM;
+                view.UpdateView();
+            }
             return obj;
         }
 	}

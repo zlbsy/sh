@@ -14,11 +14,14 @@ namespace App.View.Common{
         [SerializeField]private VItemIcon vItemIcon;
         [SerializeField]private VEquipmentIcon vEquipmentIcon;
         [SerializeField]private VCharacterIcon vCharacterIcon;
+        [SerializeField]private GameObject contentChild;
         public bool showComplete{ get; set;}
-        public void UpdateView(MContent mContent){
+        public override void UpdateView(MBase model){
+            MContent mContent = model as MContent;
             vItemIcon.gameObject.SetActive(false);
             vEquipmentIcon.gameObject.SetActive(false);
             vCharacterIcon.gameObject.SetActive(false);
+            contentChild.SetActive(false);
             switch (mContent.type)
             {
                 case ContentType.item:
@@ -31,6 +34,9 @@ namespace App.View.Common{
                     break;
                 case ContentType.character:
                     SetCharacter(mContent);
+                    break;
+                default:
+                    SetContent(mContent);
                     break;
             }
         }
@@ -57,6 +63,16 @@ namespace App.View.Common{
             vItemIcon.gameObject.SetActive(true);
             vItemIcon.BindingContext = item.ViewModel;
             vItemIcon.UpdateView();
+        }
+        private void SetContent(MContent mContent){
+            contentChild.SetActive(true);
+            Image[] icons = contentChild.transform.Find("Icon").GetComponentsInChildren<Image>(true);
+            foreach (Image icon in icons)
+            {
+                icon.gameObject.SetActive(icon.name == mContent.type.ToString());
+            }
+            Text num = contentChild.GetComponentInChildren<Text>();
+            num.text = mContent.value.ToString();
         }
     }
 }

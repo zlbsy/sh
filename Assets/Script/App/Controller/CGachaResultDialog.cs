@@ -121,10 +121,10 @@ namespace App.Controller{
             }
             this.Close();
         }
-        public void EquipmentIconClick(int equipmentId){
+        public void EquipmentIconClick(App.View.Equipment.VEquipmentIcon icon){
             BackgroundClick();
         }
-        public void ClickCharacterIcon(App.View.Character.VCharacterIcon vCharacterIcon){
+        public void CharacterIconClick(App.View.Character.VCharacterIcon vCharacterIcon){
             BackgroundClick();
         }
 	}

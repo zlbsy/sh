@@ -41,8 +41,8 @@ namespace App.View.Item{
             cnt.gameObject.SetActive(!hideCount);
         }
         #endregion
-        public void ClickChild(){Debug.LogError("ClickChild");
-            this.Controller.SendMessage("ItemIconClick", ViewModel.Id.Value, SendMessageOptions.DontRequireReceiver);
+        public void ClickChild(){
+            this.Controller.SendMessage("ItemIconClick", this, SendMessageOptions.DontRequireReceiver);
         }
     }
 }

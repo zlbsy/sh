@@ -48,10 +48,10 @@ namespace App.Controller{
             }
 			yield return 0;
         }
-        public void EquipmentIconClick(int id){
+        public void EquipmentIconClick(VEquipmentIcon icon){
             if (selectEvent != null)
             {
-                selectEvent(id);
+                selectEvent(icon.ViewModel.Id.Value);
             }
             this.Close();
         }

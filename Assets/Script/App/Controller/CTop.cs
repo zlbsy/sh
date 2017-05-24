@@ -30,13 +30,23 @@ namespace App.Controller{
             yield return StartCoroutine(OnLoadEnd());
         }
         private IEnumerator OnLoadEnd(){
-            TutorialStart();
+            bool isTutorial = TutorialStart();
+            if (!isTutorial && !Global.SUser.self.loginbonus_received)
+            {
+                App.Model.Master.MLoginBonus[] loginBonusesList = App.Util.Cacher.LoginBonusCacher.Instance.GetAll();
+                App.Model.Master.MLoginBonus loginBonuses = loginBonusesList[Global.SUser.self.loginbonus_cnt];
+                SLoginBonus sLoginBonus = new SLoginBonus();
+                yield return StartCoroutine(sLoginBonus.RequestGet());
+                Request req = Request.Create("loginBonuses", loginBonuses);
+                this.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.LoginBonusDialog, req));
+
+            }
             yield break;
         }
-        private void TutorialStart(){
+        private bool TutorialStart(){
             if (Global.SUser.self.GetValue("tutorial") >= Global.Constant.tutorial_end)
             {
-                return;
+                return false;
             }
             SUser sUser = Global.SUser;
             int tutorial = sUser.self.GetValue("tutorial");
@@ -128,6 +138,7 @@ namespace App.Controller{
                 script.Add("Tutorial.close();");
                 App.Util.LSharp.LSharpScript.Instance.Analysis(script);
             }));
+            return true;
         }
         private void InitHeader(){
             MUser mUser = App.Util.Global.SUser.self;

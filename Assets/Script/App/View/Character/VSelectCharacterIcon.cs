@@ -12,7 +12,8 @@ using App.View.Character;
 namespace App.View.Character{
     public class VSelectCharacterIcon : VBase {
         [SerializeField]private VCharacterIcon vCharacterIcon;
-        public void UpdateView(MCharacter mCharacter){
+        public override void UpdateView(MBase model){
+            MCharacter mCharacter = model as MCharacter;
             vCharacterIcon.gameObject.SetActive(mCharacter != null);
             if (mCharacter != null)
             {
