@@ -208,5 +208,11 @@ namespace App.Controller{
         public void OpenLoginBonus(){
             this.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.LoginBonusDialog));
         }
+        public void OpenPresentBox(){
+            this.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.PresentBoxDialog));
+        }
+        public void OpenMission(){
+            this.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.MissionDialog));
+        }
 	}
 }

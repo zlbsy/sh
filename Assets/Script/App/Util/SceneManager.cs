@@ -24,6 +24,8 @@ namespace App.Util{
             ItemListDialog,
             LoginBonusDialog,
             LoginBonusGetDialog,
+            PresentBoxDialog,
+            MissionDialog,
             CharacterDetailDialog,
             EquipmentListDialog,
             TalkDialog,
