@@ -26,6 +26,7 @@ namespace App.Service{
             public App.Model.Master.MEquipment[] clothes;
             public App.Model.Master.MSkill[] skills;
             public App.Model.Master.MItem[] items;
+            public App.Model.Master.MShopItem[] shop_items;
             public App.Model.Master.MGacha[] gachas;
             public App.Model.Master.MConstant constant;
             public App.Model.Master.MWord[] words;

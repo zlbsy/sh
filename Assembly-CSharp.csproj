@@ -152,6 +152,7 @@
      <Compile Include="Assets\Script\App\Model\Master\MLoginBonus.cs" />
      <Compile Include="Assets\Script\App\Model\Master\MNpc.cs" />
      <Compile Include="Assets\Script\App\Model\Master\MNpcEquipment.cs" />
+     <Compile Include="Assets\Script\App\Model\Master\MShopItem.cs" />
      <Compile Include="Assets\Script\App\Model\Master\MSkill.cs" />
      <Compile Include="Assets\Script\App\Model\Master\MTile.cs" />
      <Compile Include="Assets\Script\App\Model\Master\MWord.cs" />
@@ -176,12 +177,14 @@
      <Compile Include="Assets\Script\App\Model\Scriptable\NpcEquipmentAsset.cs" />
      <Compile Include="Assets\Script\App\Model\Scriptable\PromptMessageAsset.cs" />
      <Compile Include="Assets\Script\App\Model\Scriptable\ScenarioAsset.cs" />
+     <Compile Include="Assets\Script\App\Model\Scriptable\ShopAsset.cs" />
      <Compile Include="Assets\Script\App\Model\Scriptable\SkillAsset.cs" />
      <Compile Include="Assets\Script\App\Model\Scriptable\TileAsset.cs" />
      <Compile Include="Assets\Script\App\Model\Scriptable\TutorialAsset.cs" />
      <Compile Include="Assets\Script\App\Model\Scriptable\WeaponAsset.cs" />
      <Compile Include="Assets\Script\App\Model\Scriptable\WordAsset.cs" />
      <Compile Include="Assets\Script\App\Model\Scriptable\WorldAsset.cs" />
+     <Compile Include="Assets\Script\App\Model\Shop\MShopItem.cs" />
      <Compile Include="Assets\Script\App\Service\HttpClient.cs" />
      <Compile Include="Assets\Script\App\Service\ResponseBase.cs" />
      <Compile Include="Assets\Script\App\Service\SBase.cs" />
@@ -218,6 +221,7 @@
      <Compile Include="Assets\Script\App\Util\Cacher\LoginBonusCacher.cs" />
      <Compile Include="Assets\Script\App\Util\Cacher\NpcCacher.cs" />
      <Compile Include="Assets\Script\App\Util\Cacher\NpcEquipmentCacher.cs" />
+     <Compile Include="Assets\Script\App\Util\Cacher\ShopItemCacher.cs" />
      <Compile Include="Assets\Script\App\Util\Cacher\SkillCacher.cs" />
      <Compile Include="Assets\Script\App\Util\Cacher\TileCacher.cs" />
      <Compile Include="Assets\Script\App\Util\Cacher\UserCacher.cs" />
