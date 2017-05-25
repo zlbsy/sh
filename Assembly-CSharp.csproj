@@ -273,6 +273,7 @@
      <Compile Include="Assets\Script\App\View\Item\VItemIcon.cs" />
      <Compile Include="Assets\Script\App\View\LoginBonus\VLoginBonusChild.cs" />
      <Compile Include="Assets\Script\App\View\Present\VPresentChild.cs" />
+     <Compile Include="Assets\Script\App\View\Shop\VShopItemChild.cs" />
      <Compile Include="Assets\Script\App\View\Skill\VSkillChild.cs" />
      <Compile Include="Assets\Script\App\View\Top\VBuildingMenu.cs" />
      <Compile Include="Assets\Script\App\View\Top\VHeaderTop.cs" />

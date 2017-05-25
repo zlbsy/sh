@@ -10,7 +10,7 @@ using App.Controller.Common;
 
 
 namespace App.Controller.shop{
-    public class CPresentBoxDialog : CDialog {
+    public class CShopDialog : CDialog {
         [SerializeField]private Transform content;
         [SerializeField]private GameObject childItem;
         public override IEnumerator OnLoad( Request request ) 
