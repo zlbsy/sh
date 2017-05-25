@@ -1,21 +1,8 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Script/App/Controller/LoginBonus/CLoginBonusGetDialog.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/UniWebView/Script/UniWebView.cs">
     <Files>
-      <File FileName="Assets/Script/App/Model/MUser.cs" Line="68" Column="40" />
-      <File FileName="Assets/Script/App/Controller/CTop.cs" Line="6" Column="16" />
-      <File FileName="Assets/Script/App/Controller/LoginBonus/CLoginBonusDialog.cs" Line="58" Column="53" />
-      <File FileName="Assets/Script/App/View/Character/VCharacterIcon.cs" Line="76" Column="60" />
-      <File FileName="Assets/Script/App/View/Equipment/VEquipmentIcon.cs" Line="12" Column="32" />
-      <File FileName="Assets/Script/App/Controller/CGachaResultDialog.cs" Line="127" Column="39" />
-      <File FileName="Assets/Script/App/Controller/CEquipmentListDialog.cs" Line="57" Column="10" />
-      <File FileName="Assets/Script/App/Controller/CCharacterDetailDialog.cs" Line="53" Column="21" />
-      <File FileName="Assets/Script/App/View/Item/VItemIcon.cs" Line="12" Column="27" />
-      <File FileName="Assets/Script/App/Controller/CItemListDialog.cs" Line="44" Column="49" />
-      <File FileName="Assets/Script/App/Controller/CCharacterListDialog.cs" Line="30" Column="39" />
-      <File FileName="Assets/Script/App/Controller/CReadyBattleDialog.cs" Line="49" Column="39" />
-      <File FileName="Assets/Script/App/View/LoginBonus/VLoginBonusChild.cs" Line="11" Column="34" />
-      <File FileName="Assets/Script/App/Controller/LoginBonus/CLoginBonusGetDialog.cs" Line="25" Column="5" />
+      <File FileName="Assets/UniWebView/Script/UniWebView.cs" Line="131" Column="25" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

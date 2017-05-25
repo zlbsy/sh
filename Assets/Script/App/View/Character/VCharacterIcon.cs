@@ -59,7 +59,10 @@ namespace App.View.Character{
         private void CharacterIdChanged(int oldvalue, int newvalue)
         {
             faceIcon.CharacterId = newvalue;
-            background.color = App.Model.MCharacter.GetColor(ViewModel.CharacterId.Value);
+            if (background.enabled)
+            {
+                background.color = App.Model.MCharacter.GetColor(ViewModel.CharacterId.Value);
+            }
         }
         public override void UpdateView(){
             LevelChanged(0, ViewModel.Level.Value);

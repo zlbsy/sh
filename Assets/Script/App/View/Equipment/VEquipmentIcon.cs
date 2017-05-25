@@ -14,6 +14,7 @@ namespace App.View.Equipment{
         [SerializeField]protected GameObject[] stars;
         [SerializeField]protected Text level;
         [SerializeField]private bool hideLevel;
+        [SerializeField]private bool clickDisabled = false;
         #region VM处理
         public VMEquipment ViewModel { get { return (VMEquipment)BindingContext; } }
         protected override void OnBindingContextChanged(VMBase oldViewModel, VMBase newViewModel)
@@ -58,6 +59,10 @@ namespace App.View.Equipment{
         }
         #endregion
         public void ClickChild(){
+            if (clickDisabled)
+            {
+                return;
+            }
             this.Controller.SendMessage("EquipmentIconClick", this);
         }
     }

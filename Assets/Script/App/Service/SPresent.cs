@@ -10,67 +10,31 @@ namespace App.Service{
      * 
     */
 	public class SPresent : SBase {
-        public MUser self;
+        public MPresent[] presents;
+        public ResponseBase responseReceive;
         public SPresent(){
         }
-        public class ResponseAll : ResponseBase
+        public class ResponseList : ResponseBase
 		{
-            public string ssid;
-            public MVersion versions;
+            public MPresent[] presents;
 		}
-        public IEnumerator RequestLogin(string account, string pass)
+        public IEnumerator RequestList()
 		{
-            var url = "user/login";
-            WWWForm form = new WWWForm();
-            form.AddField("account", account);
-            form.AddField("pass", pass);
+            var url = "present/present_list";
+            //WWWForm form = new WWWForm();
             HttpClient client = new HttpClient();
-            yield return App.Util.SceneManager.CurrentScene.StartCoroutine(client.Send( url, form));
-            ResponseAll response = client.Deserialize<ResponseAll>();
-            if (response.result)
-            {
-                this.self = App.Util.Cacher.UserCacher.Instance.Get(response.user.id);
-                App.Util.Global.ssid = response.ssid;
-                PlayerPrefs.SetString("account", account);
-                PlayerPrefs.SetString("password", pass);
-                PlayerPrefs.Save();
-            }
+            yield return App.Util.SceneManager.CurrentScene.StartCoroutine(client.Send( url));
+            ResponseList response = client.Deserialize<ResponseList>();
+            presents = response.presents;
         }
-        public IEnumerator RequestGet(int id)
+        public IEnumerator RequestReceive(int id)
         {
-            var url = "user/get";
+            var url = "present/receive";
             HttpClient client = new HttpClient();
             WWWForm form = new WWWForm();
-            form.AddField("id", id);
+            form.AddField("present_id", id);
             yield return App.Util.SceneManager.CurrentScene.StartCoroutine(client.Send( url, form));
-        }
-        public IEnumerator RequestGet()
-        {
-            yield return App.Util.SceneManager.CurrentScene.StartCoroutine(RequestGet( this.self.id ));
-        }
-        public IEnumerator RequestProgress(string key, int value, System.Action callback = null)
-        {
-            Debug.LogError("SUser RequestProgress,"+this.self.id+","+key+","+value);
-            var url = "user/progress";
-            WWWForm form = new WWWForm();
-            form.AddField("user_id", this.self.id);
-            form.AddField("k", key);
-            form.AddField("v", value);
-            HttpClient client = new HttpClient();
-            yield return App.Util.SceneManager.CurrentScene.StartCoroutine(client.Send( url, form));
-            App.Util.LSharp.LSharpVarlable.SetVarlable(key, value.ToString());
-            if (this.self.Progress.ContainsKey(key))
-            {
-                this.self.Progress[key] = value;
-            }
-            else
-            {
-                this.self.Progress.Add(key, value);
-            }
-            if (callback != null)
-            {
-                callback();
-            }
+            responseReceive = client.Deserialize<ResponseBase>();
         }
 	}
 }

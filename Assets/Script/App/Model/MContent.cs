@@ -23,5 +23,6 @@ namespace App.Model{
         public ContentType type;
         public int content_id;
         public int value;
+        public string message;
 	}
 }

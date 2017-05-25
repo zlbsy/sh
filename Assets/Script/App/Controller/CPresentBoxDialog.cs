@@ -13,54 +13,27 @@ namespace App.Controller{
     public class CPresentBoxDialog : CDialog {
         [SerializeField]private Transform content;
         [SerializeField]private GameObject childItem;
-        [SerializeField]private VItemDetail itemDetail; 
-        private App.Model.MItem[] items;
-        private App.Model.Master.MItem.ItemType itemType;
-        private System.Action<int> useItemEvent;
         public override IEnumerator OnLoad( Request request ) 
         {  
             yield return StartCoroutine(base.OnLoad(request));
-            if (Global.SUser.self.items == null)
-            {
-                SItem sItem = new SItem();
-                yield return StartCoroutine(sItem.RequestList());
-                Global.SUser.self.items = sItem.items;
-            }
-            items = Global.SUser.self.items;
-            useItemEvent = null;
-            if (request.Has("useItemEvent"))
-            {
-                useItemEvent = request.Get<System.Action<int>>("useItemEvent");
-            }
-            if (request.Has("itemType"))
-            {
-                itemType = request.Get<App.Model.Master.MItem.ItemType>("itemType");
-                items = System.Array.FindAll(items, i=>i.Master.item_type == itemType);
-            }
-            itemDetail.UseOnly = request.Has("useOnly") && request.Get<bool>("useOnly");
-            ScrollViewSets(content, childItem, items);
+            SPresent sPresent = new SPresent();
+            yield return StartCoroutine(sPresent.RequestList());
+
+            ScrollViewSets(content, childItem, sPresent.presents);
             yield return 0;
         }
-        public void ItemIconClick(VItemIcon icon){
-            App.Model.MItem mItem = System.Array.Find(items, i=>i.Id == icon.ViewModel.Id.Value);
-            itemDetail.BindingContext = mItem.ViewModel;
-            itemDetail.UpdateView();
+        public void ClickReceive(App.View.Present.VPresentChild child){
+            StartCoroutine(Receive(child));
         }
-        public void ClickSaleItem(int id){
-            Debug.LogError("ClickSaleItem");
-        }
-        public void ClickUseItem(int id){
-            if (useItemEvent == null)
+        public IEnumerator Receive(App.View.Present.VPresentChild child){
+            SPresent sPresent = new SPresent();
+            yield return StartCoroutine(sPresent.RequestReceive(child.ViewModel.Id.Value));
+            if (sPresent.responseReceive.result)
             {
-                return;
+                GameObject.Destroy(child.gameObject);
             }
-            App.Model.MItem mItem = System.Array.Find(items, i=>i.Id == id);
-            CConfirmDialog.Show("确认",string.Format("物品使用后会消失，要使用 <color=\"#FF0000FF\">{0}</color> 吗？", mItem.Master.name),()=>{
-                useItemEvent(id);
-            });
         }
         public override void Close(){
-            itemDetail.Close();
             base.Close();
         }
 	}

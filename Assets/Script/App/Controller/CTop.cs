@@ -214,5 +214,8 @@ namespace App.Controller{
         public void OpenMission(){
             this.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.MissionDialog));
         }
+        public void OpenNews(){
+            this.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.MissionDialog));
+        }
 	}
 }

@@ -16,6 +16,7 @@ namespace App.View.Common{
         [SerializeField]private VCharacterIcon vCharacterIcon;
         [SerializeField]private GameObject contentChild;
         public bool showComplete{ get; set;}
+        public string ContentName{ get; set;}
         public override void UpdateView(MBase model){
             MContent mContent = model as MContent;
             vItemIcon.gameObject.SetActive(false);
@@ -47,6 +48,7 @@ namespace App.View.Common{
             vCharacterIcon.gameObject.SetActive(true);
             vCharacterIcon.BindingContext = character.ViewModel;
             vCharacterIcon.UpdateView();
+            ContentName = character.Master.name;
         }
         private void SetEquipment(MContent mContent){
             MEquipment equipment = new MEquipment();
@@ -55,6 +57,7 @@ namespace App.View.Common{
             vEquipmentIcon.gameObject.SetActive(true);
             vEquipmentIcon.BindingContext = equipment.ViewModel;
             vEquipmentIcon.UpdateView();
+            ContentName = equipment.Master.name;
         }
         private void SetItem(MContent mContent){
             MItem item = new MItem();
@@ -63,6 +66,7 @@ namespace App.View.Common{
             vItemIcon.gameObject.SetActive(true);
             vItemIcon.BindingContext = item.ViewModel;
             vItemIcon.UpdateView();
+            ContentName = item.Master.name;
         }
         private void SetContent(MContent mContent){
             contentChild.SetActive(true);
@@ -73,6 +77,7 @@ namespace App.View.Common{
             }
             Text num = contentChild.GetComponentInChildren<Text>();
             num.text = mContent.value.ToString();
+            ContentName = Language.Get(mContent.type.ToString());
         }
     }
 }

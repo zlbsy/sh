@@ -14,6 +14,7 @@ namespace App.View.Item{
         [SerializeField]private Image icon;
         [SerializeField]private Text cnt;
         [SerializeField]private bool hideCount;
+        [SerializeField]private bool clickDisabled = false;
         #region VM处理
         public VMItem ViewModel { get { return (VMItem)BindingContext; } }
         protected override void OnBindingContextChanged(VMBase oldViewModel, VMBase newViewModel)
@@ -42,6 +43,10 @@ namespace App.View.Item{
         }
         #endregion
         public void ClickChild(){
+            if (clickDisabled)
+            {
+                return;
+            }
             this.Controller.SendMessage("ItemIconClick", this, SendMessageOptions.DontRequireReceiver);
         }
     }
