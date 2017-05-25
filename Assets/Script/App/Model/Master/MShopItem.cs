@@ -16,6 +16,6 @@ namespace App.Model.Master{
         public int gold;
         public int silver;
         public int money;
-        public System.DateTime limit_time;
+        public string limit_time;
 	}
 }

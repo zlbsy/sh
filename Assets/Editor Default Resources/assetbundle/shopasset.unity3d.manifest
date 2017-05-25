@@ -1,0 +1,18 @@
+ManifestFileVersion: 0
+CRC: 1430226448
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 79cb85d31e255ef711e701463e20d59d
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 1d9fc5566764d659f26acf35bd921deb
+HashAppended: 0
+ClassTypes:
+- Class: 114
+  Script: {fileID: 11500000, guid: 520ecdb6c5330440abc59c097cae652f, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+Assets:
+- Assets/Editor Default Resources/ScriptableObject/shopasset.asset
+Dependencies: []
