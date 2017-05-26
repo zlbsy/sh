@@ -4,6 +4,51 @@ class Shop_model extends MY_Model
 	function __construct(){
 		parent::__construct();
 	}
+	function buy_item($shop_id){
+		$user = $this->getSessionData("user");
+		$user_id = $user["id"]; 
+		$master = $this->get_master($shop_id);
+		if(is_null($master) || $master["money"] > 0){
+			return false;
+		}
+		if($user["Gold"] < $master["gold"] || $user["Silver"] < $master["silver"]){
+			return false;
+		}
+		$this->user_db->trans_begin();
+		//购买记录(消费)
+		$setlog = $this->set_buy_item_log($user["id"],$shop_id,$master["gold"],$master["silver"]);
+		if(!$setlog){
+			$this->user_db->trans_rollback();
+			$this->error("set buy log error");
+		}
+		$up_result = false;
+		if($master["gold"] > 0){
+			$up_result = $user_model->update_gold();
+		}else if($master["silver"] > 0){
+			$up_result = $user_model->update_silver();
+		}
+		if(!$up_result){
+			$this->user_db->trans_rollback();
+			$this->error("money update error");
+		}
+		$user_model = new User_model();
+		$content = json_decode($master["shop_content"], true);
+		$contents_res = $user_model->set_contents($user_id,array($content));
+		if(!$contents_res){
+			$this->user_db->trans_rollback();
+			$this->error("set contents error ");
+		}
+		$this->user_db->trans_commit();
+		return true;
+	}
+	function get_master($shop_id){
+		$now = date("Y-m-d H:i:s",time());
+		$select = "`id`,`type`,`shop_content`,`gold`,`silver`,`money`";
+		$table = $this->master_db->shop;
+		$where = array("id={$shop_id}","limit_time>='{$now}'");
+		$result = $this->user_db->select($select, $table, $where, null, null, Database_Result::TYPE_ROW);
+		return $result;
+	}
 	function buy_building($master_building, $x, $y){
 		$user = $this->getSessionData("user");
 		$price_type = $master_building["price_type"];
@@ -49,9 +94,15 @@ class Shop_model extends MY_Model
 		return true;
 	}
 	function set_building_log($user_id, $child_id, $gold, $silver){
+		return $this->set_buy_log($user_id, "'buy_building'",$child_id, $gold, $silver);
+	}
+	function set_buy_item_log($user_id, $child_id, $gold, $silver){
+		return $this->set_buy_log($user_id, "'buy_item'",$child_id, $gold, $silver);
+	}
+	function set_buy_log($user_id, $type, $child_id, $gold, $silver){
 		$values = array();
 		$values['user_id'] = $user_id;
-		$values['type'] = "'buy_building'";
+		$values['type'] = $type;
 		$values['child_id'] = $child_id;
 		$values['gold'] = -$gold;
 		$values['silver'] = -$silver;

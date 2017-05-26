@@ -10,6 +10,20 @@ class Shop extends MY_Controller {
 		$shop_type = $this->args["shop_type"];
 		if($shop_type == "building"){
 			$this->buy_building();
+		}else if($shop_type == "item"){
+			$this->buy_item();
+		}
+	}
+	private function buy_item()
+	{
+		$shop_id = $this->args["child_id"];
+		$shop_model = new Shop_model();
+		$result = $shop_model->buy_item($shop_id);
+		if($result){
+			$user = $this->getSessionData("user");
+			$this->out(array("user"=>$user));
+		}else{
+			$this->error("Shop buy_item failed");
 		}
 	}
 	private function buy_building()
@@ -50,7 +64,7 @@ class Shop extends MY_Controller {
 			$this->setSessionData("user", $user);
 			$this->out(array("user"=>$user));
 		}else{
-			$this->error("Login failed");
+			$this->error("Shop buy_building failed");
 		}
 	}
 }
