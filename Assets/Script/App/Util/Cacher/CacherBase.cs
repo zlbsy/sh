@@ -24,5 +24,8 @@ namespace App.Util.Cacher{
         public virtual TValue[] GetAll(){
             return datas;
         }
+        public virtual void Clear(){
+            datas = null;
+        }
 	}
 }

@@ -15,35 +15,22 @@ namespace App.View.Shop{
         [SerializeField]private Text lblName;
         [SerializeField]private Text lblMessage;
         [SerializeField]private Text lblPrice;
-        #region VM处理
-        public VMPresent ViewModel { get { return (VMPresent)BindingContext; } }
-        /*protected override void OnBindingContextChanged(VMBase oldViewModel, VMBase newViewModel)
-        {
-
-            base.OnBindingContextChanged(oldViewModel, newViewModel);
-
-            VMPresent oldVm = oldViewModel as VMItem;
-            if (oldVm != null)
-            {
-                oldVm.Cnt.OnValueChanged -= CntChanged;
-            }
-            if (ViewModel!=null)
-            {
-                ViewModel.Cnt.OnValueChanged += CntChanged;
-            }
-        }
-        private void CntChanged(int oldvalue, int newvalue)
-        {
-            cnt.text = newvalue.ToString();
-        }*/
-        public override void UpdateView(){
-            vContentsChild.UpdateView(ViewModel.Content.Value);
+        [SerializeField]private GameObject[] units;
+        private App.Model.Master.MShopItem mShopItem;
+        public override void UpdateView(App.Model.MBase model){
+            mShopItem = model as App.Model.Master.MShopItem;
+            vContentsChild.UpdateView(mShopItem.shop_content);
             lblName.text = vContentsChild.ContentName;
-            lblMessage.text = ViewModel.Content.Value.message;
+            lblMessage.text = mShopItem.shop_content.message;
+            lblPrice.text = mShopItem.price.ToString();
+            string priceType = mShopItem.priceType;
+            foreach (GameObject unit in units)
+            {
+                unit.SetActive(unit.name == priceType);
+            }
         }
-        #endregion
-        public void ClickReceive(){
-            this.Controller.SendMessage("ClickReceive", this);
+        public void ClickBuy(){
+            this.Controller.SendMessage("ClickBuy", mShopItem);
         }
     }
 }

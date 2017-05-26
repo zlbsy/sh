@@ -82,5 +82,11 @@ namespace App.View.Top{
             int apSeconds = Global.Constant.recover_ap_time - totalSeconds % Global.Constant.recover_ap_time;
             ap.text = string.Format("{0}  <color=\"#FFFFFFFF\">{1}:{2}</color>", ap.text, (int)(apSeconds / 60), (apSeconds % 60).ToString("00"));
         }
+        public void OpenMoneyShop(){
+            App.Controller.shop.CShopDialog.Show();
+        }
+        public void OpenItemShop(){
+            App.Controller.shop.CShopDialog.Show(App.Model.Master.MShopItem.ShopType.item);
+        }
     }
 }

@@ -17,5 +17,22 @@ namespace App.Model.Master{
         public int silver;
         public int money;
         public string limit_time;
+        public int price{
+            get{ 
+                return gold + silver + money;
+            }
+        }
+        public string priceType{
+            get{ 
+                if (gold > 0)
+                {
+                    return "gold";
+                }else if (money > 0)
+                {
+                    return "money";
+                }
+                return "silver";
+            }
+        }
 	}
 }

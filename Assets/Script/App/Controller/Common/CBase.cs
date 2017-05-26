@@ -22,6 +22,7 @@ namespace App.Controller.Common{
             }
         }
         public void ScrollViewSets(Transform parentContent, GameObject content, App.Model.MBase[] models){
+            App.Util.Global.ClearChild(parentContent.gameObject);
             foreach(App.Model.MBase model in models){
                 ScrollViewSetChild(parentContent, content, model);
             }
