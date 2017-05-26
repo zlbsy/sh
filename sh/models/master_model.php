@@ -300,5 +300,17 @@ class Master_model extends MY_Model
 		}
 		return $result_array;
 	}
+	function get_master_shops(){
+		$select = "`id`,`type`,`shop_content`,`gold`,`silver`,`money`,`limit_time`";
+		$table = $this->master_db->shop;
+		$order_by = "id asc";
+		$result = $this->master_db->select($select, $table, null, $order_by, null, Database_Result::TYPE_DEFAULT);
+		$result_array = array();
+		while ($row = mysql_fetch_assoc($result)) {
+			$row["shop_content"] = json_decode($row["shop_content"]);
+			$result_array[] = $row;
+		}
+		return $result_array;
+	}
 }
 ?>

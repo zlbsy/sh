@@ -90,6 +90,10 @@ class Master extends MY_Controller {
 			$master_battlefield = $master_model->get_master_battlefields();
 			$result["battlefields"]=$master_battlefield;
 		}
+		if($args["shop"]){
+			$master_shop = $master_model->get_master_shops();
+			$result["shop_items"]=$master_shop;
+		}
 		
 		return $result;
 	}

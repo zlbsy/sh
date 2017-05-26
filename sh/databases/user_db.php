@@ -1,22 +1,23 @@
 <?php 
 class User_DB extends Base_Database {
-	var $player = "fsyy_lufylegend.player";
-	var $top_map = "fsyy_lufylegend.top_map";
-	var $item = "fsyy_lufylegend.item";
-	var $characters = "fsyy_lufylegend.characters";
-	var $character_skill = "fsyy_lufylegend.character_skill";
-	var $bankbook = "fsyy_lufylegend.bankbook";
-	var $world = "fsyy_lufylegend.world";
-	var $area = "fsyy_lufylegend.area";
-	var $stage = "fsyy_lufylegend.stage";
-	var $equipment = "fsyy_lufylegend.equipment";
-	var $gacha_free_log = "fsyy_lufylegend.gacha_free_log";
-	var $battle_list = "fsyy_lufylegend.battle_list";
-	var $story_progress = "fsyy_lufylegend.story_progress";
-	var $login_bonus = "fsyy_lufylegend.login_bonus";
+	var $player = "sh109_user.player";
+	var $top_map = "sh109_user.top_map";
+	var $item = "sh109_user.item";
+	var $characters = "sh109_user.characters";
+	var $character_skill = "sh109_user.character_skill";
+	var $bankbook = "sh109_user.bankbook";
+	var $world = "sh109_user.world";
+	var $area = "sh109_user.area";
+	var $stage = "sh109_user.stage";
+	var $equipment = "sh109_user.equipment";
+	var $gacha_free_log = "sh109_user.gacha_free_log";
+	var $battle_list = "sh109_user.battle_list";
+	var $story_progress = "sh109_user.story_progress";
+	var $login_bonus = "sh109_user.login_bonus";
+	var $present= "sh109_user.present";
 	function __construct() {
 		parent::__construct();
-		$db = mysql_select_db('fsyy_lufylegend', $this->connect);
+		$db = mysql_select_db('sh109_user', $this->connect);
 		if (!$db){
 			throw new Exception('' + mysql_error());
 			die('');
