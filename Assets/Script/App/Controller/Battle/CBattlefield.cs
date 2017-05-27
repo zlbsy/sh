@@ -92,7 +92,7 @@ namespace App.Controller.Battle{
             vBaseMap.transform.parent.localScale = Vector3.one;
             vBaseMap.MoveToPosition();
             base.InitMap();
-            characters.ForEach(character=>character.Action = ActionType.move);
+            characters.ForEach(character=>character.Action = ActionType.idle);
             battlefieldMaster.script.Add("Battle.boutwave(self);");
             App.Util.LSharp.LSharpScript.Instance.Analysis(battlefieldMaster.script);
         }

@@ -203,10 +203,12 @@ namespace App.Model{
             }
         }
         public void StatusInit(){
+            Debug.LogError("this.CharacterId = " + this.CharacterId + ", " + this.WeaponType+", " + this.Skills);
             if (this.CurrentSkill == null)
             {
-                this.CurrentSkill = this.Skills == null ? null : System.Array.Find(this.Skills, _=>System.Array.IndexOf(_.Master.weapon_types, this.WeaponType) >= 0);
+                this.CurrentSkill = this.Skills == null ? null : System.Array.Find(this.Skills, s=>(System.Array.IndexOf(s.Master.weapon_types, this.WeaponType) >= 0));
             }
+
             if (this.Ability == null)
             {
                 this.Ability = MCharacterAbility.Create(this);
@@ -436,7 +438,6 @@ namespace App.Model{
                     mEquipment = EquipmentCacher.Instance.GetEquipment(value, App.Model.Master.MEquipment.EquipmentType.weapon);
                 }
                 this.WeaponType = mEquipment.weapon_type;
-                Debug.LogError("this.WeaponType = " + this.WeaponType);
                 this.ViewModel.Weapon.Value = value;
             }
             get{ 

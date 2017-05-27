@@ -11,7 +11,7 @@ using App.View.Character;
 using App.Controller.Common;
 
 
-namespace App.Controller{
+namespace App.Controller.Character{
     public class CCharacterListDialog : CDialog {
         [SerializeField]private Transform content;
         [SerializeField]private GameObject childItem;

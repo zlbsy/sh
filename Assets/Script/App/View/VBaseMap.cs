@@ -78,7 +78,8 @@ namespace App.View{
                     obj.transform.localPosition = vTile.transform.localPosition;
                     mCharacter.X = obj.transform.localPosition.x;
                     mCharacter.Y = obj.transform.localPosition.y;
-
+                    mCharacter.Action = App.Model.ActionType.idle;
+                    obj.GetComponent<VCharacter>().UpdateView();
                 }
                 else
                 {

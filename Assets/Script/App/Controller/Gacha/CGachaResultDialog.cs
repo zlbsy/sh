@@ -13,7 +13,7 @@ using Holoville.HOTween;
 using App.Controller.Common;
 
 
-namespace App.Controller{
+namespace App.Controller.Gacha{
     public class CGachaResultDialog : CDialog {
         [SerializeField]private Transform[] positions;
         [SerializeField]private GameObject contentsChild;

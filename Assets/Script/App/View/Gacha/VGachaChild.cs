@@ -60,7 +60,7 @@ namespace App.View.Gacha{
         }
         #endregion
         public void OnClickGacha(int priceId, int cnt, bool free_gacha){
-            (this.Controller as CGachaDialog).OnClickGacha(ViewModel.GachaId.Value, priceId, cnt, cnt == 1 && free_gacha);
+            (this.Controller as App.Controller.Gacha.CGachaDialog).OnClickGacha(ViewModel.GachaId.Value, priceId, cnt, cnt == 1 && free_gacha);
         }
     }
 }

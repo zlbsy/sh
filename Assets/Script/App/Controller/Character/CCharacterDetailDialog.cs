@@ -12,7 +12,7 @@ using App.View.Character;
 using App.Controller.Common;
 
 
-namespace App.Controller{
+namespace App.Controller.Character{
     public class CCharacterDetailDialog : CDialog {
         [SerializeField]private VCard vCard;
         [SerializeField]private App.View.Character.VCharacterDetail characterDetail;
@@ -147,6 +147,20 @@ namespace App.Controller{
             }
             currentContent = contents[index].gameObject;
             currentContent.SetActive(true);
+        }
+        public void ChangeCharacterAction(){
+            switch (character.Action)
+            {
+                case ActionType.idle:
+                    character.Action = ActionType.move;
+                    break;
+                case ActionType.move:
+                    character.Action = ActionType.attack;
+                    break;
+                case ActionType.attack:
+                    character.Action = ActionType.idle;
+                    break;
+            }
         }
 	}
 }

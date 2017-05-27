@@ -223,7 +223,13 @@ namespace App.View.Character{
         }
         private void ActionChanged(App.Model.ActionType oldvalue, App.Model.ActionType newvalue)
         {
+            /*this.StartCoroutine(ActionChanged(newvalue));
+        }
+        private IEnumerator ActionChanged(App.Model.ActionType newvalue)
+        {
+            yield return new WaitForEndOfFrame();*/
             string animatorName = string.Format("{0}_{1}_{2}", ViewModel.MoveType.ToString(), App.Util.WeaponManager.GetWeaponTypeAction(ViewModel.WeaponType.Value), newvalue.ToString());
+            Debug.LogError(ViewModel.CharacterId.Value + " = " + animatorName);
             animator.Play(animatorName);
             animationIndex = 0;
             if (newvalue == App.Model.ActionType.idle || newvalue == App.Model.ActionType.move)
@@ -355,7 +361,7 @@ namespace App.View.Character{
                 this.Controller.SendMessage("OnHeal", this, SendMessageOptions.DontRequireReceiver);
             }
         }
-        public void ChangeAction(App.Model.ActionType type){
+        public void ChangeAction(App.Model.ActionType type){return;
             animationIndex = 0;
             ViewModel.Action.Value = type;
         }

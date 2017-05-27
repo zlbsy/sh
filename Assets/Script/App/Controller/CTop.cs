@@ -217,5 +217,8 @@ namespace App.Controller{
         public void OpenNews(){
             this.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.MissionDialog));
         }
+        public void OpenShop(){
+            App.Controller.shop.CShopDialog.Show();
+        }
 	}
 }

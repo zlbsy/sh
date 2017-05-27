@@ -11,7 +11,7 @@ using App.View.Equipment;
 using App.Controller.Common;
 
 
-namespace App.Controller{
+namespace App.Controller.Equipment{
     public class CEquipmentListDialog : CDialog {
         [SerializeField]private Transform content;
         [SerializeField]private GameObject childItem;

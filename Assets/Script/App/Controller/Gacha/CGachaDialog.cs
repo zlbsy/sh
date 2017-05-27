@@ -12,7 +12,7 @@ using App.View.Gacha;
 using App.Controller.Common;
 
 
-namespace App.Controller{
+namespace App.Controller.Gacha{
     public class CGachaDialog : CDialog {
         [SerializeField]private Transform content;
         [SerializeField]private GameObject childItem;
