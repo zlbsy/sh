@@ -69,10 +69,10 @@ namespace App.Controller.Battle{
                 mCharacter.CoordinateY = mBattleOwn.y;
                 CharacterInit(mCharacter);
                 characters.Add(mCharacter);
-                if (i == 0)
+                /*if (i == 0)
                 {
                     mCharacter.Hp = 1;
-                }
+                }*/
             }
             foreach(App.Model.Master.MBattleNpc battleNpc in battlefieldMaster.enemys){
                 MCharacter mCharacter = NpcCacher.Instance.GetFromBattleNpc(battleNpc);

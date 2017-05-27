@@ -53,19 +53,25 @@ namespace App.View.Battlefield{
         {
             txtName.text = ViewModel.Name.Value;
 
-
-            App.Model.SkillType type = ViewModel.CurrentSkill.Value.Master.type;
-            if (type == App.Model.SkillType.attack)
+            if (ViewModel.CurrentSkill.Value == null)
             {
-                attack.text = string.Format("{0} {1}", Language.Get("physical_attack"), ViewModel.Ability.Value.PhysicalAttack);
+                attack.text = "--";
             }
-            else if (type == App.Model.SkillType.magic)
+            else
             {
-                attack.text = string.Format("{0} {1}", Language.Get("magic_attack"), ViewModel.Ability.Value.MagicAttack);
-            }
-            else if (type == App.Model.SkillType.heal)
-            {
-                attack.text = string.Format("{0} {1}", Language.Get("heal"), ViewModel.Ability.Value.MagicAttack);
+                App.Model.SkillType type = ViewModel.CurrentSkill.Value.Master.type;
+                if (type == App.Model.SkillType.attack)
+                {
+                    attack.text = string.Format("{0} {1}", Language.Get("physical_attack"), ViewModel.Ability.Value.PhysicalAttack);
+                }
+                else if (type == App.Model.SkillType.magic)
+                {
+                    attack.text = string.Format("{0} {1}", Language.Get("magic_attack"), ViewModel.Ability.Value.MagicAttack);
+                }
+                else if (type == App.Model.SkillType.heal)
+                {
+                    attack.text = string.Format("{0} {1}", Language.Get("heal"), ViewModel.Ability.Value.MagicAttack);
+                }
             }
             physicalDefense.text = string.Format("{0} {1}", Language.Get("physical_defense"), ViewModel.Ability.Value.PhysicalDefense);
             magicDefense.text = string.Format("{0} {1}", Language.Get("magic_defense"), ViewModel.Ability.Value.MagicDefense);
@@ -73,7 +79,14 @@ namespace App.View.Battlefield{
         }
         private void CurrentSkillChanged(App.Model.MSkill oldvalue, App.Model.MSkill newvalue)
         {
-            skillname.text = newvalue.Master.name;
+            if (newvalue == null)
+            {
+                skillname.text = "--";
+            }
+            else
+            {
+                skillname.text = newvalue.Master.name;
+            }
         }
         public override void UpdateView()
         {

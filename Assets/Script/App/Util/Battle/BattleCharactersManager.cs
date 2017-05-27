@@ -116,7 +116,7 @@ namespace App.Util.Battle{
                 if (character.ActionOver)
                 {
                     character.ActionOver = false;
-                    character.Action = ActionType.move;
+                    character.Action = ActionType.idle;
                 }
             }
         }

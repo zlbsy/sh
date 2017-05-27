@@ -33,10 +33,14 @@ namespace App.Util.Battle{
             cBattlefield.battleMode = CBattlefield.BattleMode.show_move_tiles;
         }
         public void ShowCharacterSkillArea(MCharacter mCharacter){
-            int[] distance = mCharacter.CurrentSkill.Master.distance;
+            int[] distance = mCharacter.CurrentSkill == null ? new int[]{0,0} : mCharacter.CurrentSkill.Master.distance;
             currentAttackTiles = cBattlefield.breadthFirst.Search(mCharacter, distance[1]);
             VTile characterTile = currentAttackTiles.Find(_=>_.CoordinateX == mCharacter.CoordinateX && _.CoordinateY == mCharacter.CoordinateY);
             currentAttackTiles = currentAttackTiles.FindAll(_=>cBattlefield.mapSearch.GetDistance(_, characterTile) >= distance[0]);
+            if (mCharacter.CurrentSkill == null)
+            {
+                return;
+            }
             vBaseMap.ShowAttackTiles(currentAttackTiles);
             if (mCharacter.Belong == Belong.self && !mCharacter.ActionOver)
             {

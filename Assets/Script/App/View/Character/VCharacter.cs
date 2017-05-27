@@ -164,6 +164,8 @@ namespace App.View.Character{
         private void ActionOverChanged(bool oldvalue, bool newvalue)
         {
             Gray = newvalue;
+            Debug.LogError("animator.speed="+animator.speed);
+            animator.speed = newvalue ? 0 : 1;
         }
         private void HpChanged(int oldvalue, int newvalue)
         {
@@ -229,7 +231,7 @@ namespace App.View.Character{
         {
             yield return new WaitForEndOfFrame();*/
             string animatorName = string.Format("{0}_{1}_{2}", ViewModel.MoveType.ToString(), App.Util.WeaponManager.GetWeaponTypeAction(ViewModel.WeaponType.Value), newvalue.ToString());
-            Debug.LogError(ViewModel.CharacterId.Value + " = " + animatorName);
+            //Debug.LogError(ViewModel.CharacterId.Value + " = " + animatorName);
             animator.Play(animatorName);
             animationIndex = 0;
             if (newvalue == App.Model.ActionType.idle || newvalue == App.Model.ActionType.move)
@@ -361,12 +363,13 @@ namespace App.View.Character{
                 this.Controller.SendMessage("OnHeal", this, SendMessageOptions.DontRequireReceiver);
             }
         }
-        public void ChangeAction(App.Model.ActionType type){return;
+        public void ChangeAction(App.Model.ActionType type){
             animationIndex = 0;
             ViewModel.Action.Value = type;
         }
         public void ActionEnd(){
-            ChangeAction(ViewModel.ActionOver.Value ? App.Model.ActionType.idle : App.Model.ActionType.move);
+            ChangeAction(App.Model.ActionType.idle);
+            //ChangeAction(ViewModel.ActionOver.Value ? App.Model.ActionType.idle : App.Model.ActionType.move);
         }
         public void ChangeAnimationIdex(int index){
             animationIndex = index;

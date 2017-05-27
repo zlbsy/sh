@@ -254,6 +254,7 @@
      <Compile Include="Assets\Script\App\View\Character\VAvatar.cs" />
      <Compile Include="Assets\Script\App\View\Character\VCard.cs" />
      <Compile Include="Assets\Script\App\View\Character\VCharacter.cs" />
+     <Compile Include="Assets\Script\App\View\Character\VCharacterAnimation.cs" />
      <Compile Include="Assets\Script\App\View\Character\VCharacterBattlefieldEvent.cs" />
      <Compile Include="Assets\Script\App\View\Character\VCharacterDetail.cs" />
      <Compile Include="Assets\Script\App\View\Character\VCharacterIcon.cs" />

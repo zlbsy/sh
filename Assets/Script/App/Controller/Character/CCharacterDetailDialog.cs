@@ -158,6 +158,12 @@ namespace App.Controller.Character{
                     character.Action = ActionType.attack;
                     break;
                 case ActionType.attack:
+                    character.Action = ActionType.block;
+                    break;
+                case ActionType.block:
+                    character.Action = ActionType.hert;
+                    break;
+                case ActionType.hert:
                     character.Action = ActionType.idle;
                     break;
             }
