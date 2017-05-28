@@ -34,6 +34,7 @@ namespace App.View.Character{
         [SerializeField]Anima2D.SpriteMeshInstance horseSaddle;
         [SerializeField]Anima2D.SpriteMeshInstance legLeft;
         [SerializeField]Anima2D.SpriteMeshInstance legRight;
+        private Dictionary<string,Anima2D.SpriteMeshInstance> meshs = new Dictionary<string, Anima2D.SpriteMeshInstance>();
         private Anima2D.SpriteMeshInstance Weapon{
             get{ 
                 return weapon.gameObject.activeSelf ? weapon : weaponArchery;
@@ -85,6 +86,32 @@ namespace App.View.Character{
                 return;
             }
             init = true;
+            if (meshs.Count == 0)
+            {
+                meshs.Add("head", head);
+                meshs.Add("hat", hat);
+                meshs.Add("weapon", weapon);
+                meshs.Add("weaponRight", weaponRight);
+                meshs.Add("weaponArchery", weaponArchery);
+                meshs.Add("weaponString", weaponString);
+                meshs.Add("weaponArrow", weaponArrow);
+                meshs.Add("clothesUpShort", clothesUpShort);
+                meshs.Add("clothesDownShort", clothesDownShort);
+                meshs.Add("clothesUpLong", clothesUpLong);
+                meshs.Add("clothesDownLong", clothesDownLong);
+                meshs.Add("armLeftShort", armLeftShort);
+                meshs.Add("armRightShort", armRightShort);
+                meshs.Add("armLeftLong", armLeftLong);
+                meshs.Add("armRightLong", armRightLong);
+                meshs.Add("horseBody", horseBody);
+                meshs.Add("horseFrontLegLeft", horseFrontLegLeft);
+                meshs.Add("horseFrontLegRight", horseFrontLegRight);
+                meshs.Add("horseHindLegLeft", horseHindLegLeft);
+                meshs.Add("horseHindLegRight", horseHindLegRight);
+                meshs.Add("horseSaddle", horseSaddle);
+                meshs.Add("legLeft", legLeft);
+                meshs.Add("legRight", legRight);
+            }
             if (hpMaterials == null)
             {
                 materialGray = Resources.Load("Material/GrayMaterial") as Material;
@@ -381,6 +408,12 @@ namespace App.View.Character{
         public void ActionEnd(){
             ChangeAction(App.Model.ActionType.idle);
             //ChangeAction(ViewModel.ActionOver.Value ? App.Model.ActionType.idle : App.Model.ActionType.move);
+        }
+        public void SetOrders(Dictionary<string,int> meshOrders){
+            foreach(string key in meshOrders.Keys){
+                meshs[key].sortingOrder = meshOrders[key];
+                Debug.LogError("SetOrders : " + key + " = " + meshs[key].sortingOrder);
+            }
         }
         public void ChangeAnimationIdex(int index){
             animationIndex = index;

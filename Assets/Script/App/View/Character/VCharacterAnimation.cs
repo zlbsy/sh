@@ -17,6 +17,10 @@ namespace App.View.Character{
         }
         public void ActionEnd(){
             vCharacter.ActionEnd();
-        }
+		}
+        public void SetOrders(string jsons){Debug.LogError("jsons = " + jsons);
+            Dictionary<string,int> meshs = App.Service.HttpClient.Deserialize<Dictionary<string,int>>(jsons);
+            vCharacter.SetOrders(meshs);
+		}
     }
 }
