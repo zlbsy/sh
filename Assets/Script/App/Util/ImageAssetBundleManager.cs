@@ -66,6 +66,14 @@ namespace App.Util{
             string name = string.Format("weapon_{0}", id);
             return System.Array.Find(weapon, _=>_.name == name);
         }
+        public static Anima2D.SpriteMesh GetLeftWeaponMesh(int id){
+            string name = string.Format("weapon_{0}_left", id);
+            return System.Array.Find(weapon, _=>_.name == name);
+        }
+        public static Anima2D.SpriteMesh GetRightWeaponMesh(int id){
+            string name = string.Format("weapon_{0}_right", id);
+            return System.Array.Find(weapon, _=>_.name == name);
+        }
         public static Anima2D.SpriteMesh GetHorseBodyMesh(int id){
             string name = string.Format("horse_body_{0}", id);
             return System.Array.Find(horse, _=>_.name == name);

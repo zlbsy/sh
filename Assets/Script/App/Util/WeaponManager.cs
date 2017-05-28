@@ -35,6 +35,12 @@ namespace App.Util{
             return weaponType == WeaponType.shortKnife || weaponType == WeaponType.ax || weaponType == WeaponType.sword || weaponType == WeaponType.fist;
         }
         /// <summary>
+        /// 双兵器
+        /// </summary>
+        public static bool IsDualWeapon(WeaponType weaponType){
+            return weaponType == WeaponType.dualWield;
+        }
+        /// <summary>
         /// 远程类兵器
         /// </summary>
         public static bool IsArcheryWeapon(WeaponType weaponType){
@@ -42,17 +48,29 @@ namespace App.Util{
         }
 
 
-        public static string GetWeaponTypeAction(WeaponType weaponType){
+        public static string GetWeaponTypeAction(WeaponType weaponType, App.Model.ActionType actionType){
             if (IsArcheryWeapon(weaponType))
             {
                 return "archery";
             }
             else if (IsLongWeapon(weaponType))
             {
+                if (IsPike(weaponType) && actionType == ActionType.attack)
+                {
+                    return "pike";
+                }
                 return "long";
+            }
+            else if (IsDualWeapon(weaponType))
+            {
+                return "dual";
             }
             else
             {
+                if (IsPike(weaponType) && actionType == ActionType.attack)
+                {
+                    return "pike";
+                }
                 return "short";
             }
         }

@@ -14,6 +14,7 @@ namespace App.View.Character{
         [SerializeField]Anima2D.SpriteMeshInstance head;
         [SerializeField]Anima2D.SpriteMeshInstance hat;
         [SerializeField]Anima2D.SpriteMeshInstance weapon;
+        [SerializeField]Anima2D.SpriteMeshInstance weaponRight;
         [SerializeField]Anima2D.SpriteMeshInstance weaponArchery;
         [SerializeField]Anima2D.SpriteMeshInstance weaponString;
         [SerializeField]Anima2D.SpriteMeshInstance weaponArrow;
@@ -230,7 +231,7 @@ namespace App.View.Character{
         private IEnumerator ActionChanged(App.Model.ActionType newvalue)
         {
             yield return new WaitForEndOfFrame();*/
-            string animatorName = string.Format("{0}_{1}_{2}", ViewModel.MoveType.ToString(), App.Util.WeaponManager.GetWeaponTypeAction(ViewModel.WeaponType.Value), newvalue.ToString());
+            string animatorName = string.Format("{0}_{1}_{2}", ViewModel.MoveType.ToString(), App.Util.WeaponManager.GetWeaponTypeAction(ViewModel.WeaponType.Value, newvalue), newvalue.ToString());
             //Debug.LogError(ViewModel.CharacterId.Value + " = " + animatorName);
             animator.Play(animatorName);
             animationIndex = 0;
@@ -296,7 +297,17 @@ namespace App.View.Character{
             bool isArchery = (mEquipment.weapon_type == App.Model.WeaponType.archery);
             weapon.gameObject.SetActive(!isArchery);
             weaponArchery.gameObject.SetActive(isArchery);
-            this.Weapon.spriteMesh = ImageAssetBundleManager.GetWeaponMesh(newvalue);
+            if (mEquipment.weapon_type == App.Model.WeaponType.dualWield)
+            {
+                //this.weaponRight.gameObject.SetActive(true);
+                this.Weapon.spriteMesh = ImageAssetBundleManager.GetLeftWeaponMesh(newvalue);
+                this.weaponRight.spriteMesh = ImageAssetBundleManager.GetRightWeaponMesh(newvalue);
+            }
+            else
+            {
+                //this.weaponRight.gameObject.SetActive(false);
+                this.Weapon.spriteMesh = ImageAssetBundleManager.GetWeaponMesh(newvalue);
+            }
         }
         private void HorseChanged(int oldvalue, int newvalue)
         {

@@ -32,6 +32,7 @@ namespace App.Model.Master{
         public MEquipment(){
 		}
         public string name;//
+        public int qualification;//品质
         public WeaponType weapon_type;//武器类型
         public MoveType move_type;//移动类型
         public ClothesType clothes_type;//衣服类型
