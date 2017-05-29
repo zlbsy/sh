@@ -109,8 +109,8 @@ class Master_model extends MY_Model
 		}
 		return $result;
 	}
-	function get_master_tile(){
-		$select = "`id`,`name`,`strategy`,`heal`,`boat`";
+	function get_master_tile($language="cn"){
+		$select = "`id`,`name_{$language}` as `name`,`strategy`,`heal`,`boat`";
 		$table = $this->master_db->tile;
 		$order_by = "id asc";
 		$result = $this->master_db->select($select, $table, null, $order_by);

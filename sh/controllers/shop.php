@@ -16,6 +16,7 @@ class Shop extends MY_Controller {
 	}
 	private function buy_item()
 	{
+		load_model(array('item_model','equipment_model'));
 		$shop_id = $this->args["child_id"];
 		$shop_model = new Shop_model();
 		$result = $shop_model->buy_item($shop_id);

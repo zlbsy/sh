@@ -19,4 +19,36 @@ class Battle extends MY_Controller {
 			$this->error("Battle->battle_list error");
 		}
 	}
+	public function start()
+	{
+		$battlefield_id = $this->args["battlefield_id"];
+		$user = $this->getSessionData("user");
+		if($user["BattlingId"] > 0 || $battlefield_id == 0 || !is_numeric($battlefield_id)){
+			$this->error("Battle->start error");
+		}
+		$battle_model = new Battle_model();
+		$result_start = $battle_model->start($user["id"], $battlefield_id);
+		if($result_start){
+			//$result = array();
+			$this->out(array());
+		}else{
+			$this->error("Battle->start error");
+		}
+	}
+	public function battle_end()
+	{
+		$battlefield_id = $this->args["battlefield_id"];
+		$user = $this->getSessionData("user");
+		if($user["BattlingId"] == 0){
+			$this->error("Battle->battle_end error");
+		}
+		$battle_model = new Battle_model();
+		$battle_list = $battle_model->get_list($user["id"]);
+		if(!is_null($battle_list)){
+			$result = array("battlelist"=>$battle_list);
+			$this->out($result);
+		}else{
+			$this->error("Battle->battle_list error");
+		}
+	}
 }

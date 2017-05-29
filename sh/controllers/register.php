@@ -26,6 +26,7 @@ class Register extends MY_Controller {
 			$this->error("account is exist");
 		}	
 		$password = $this->args["password"];
+		$password = md5($password);
 		$name = $this->args["name"];
 		$character_id = $this->args["character_id"];
 		$id = $user_model->register($account, $password, $name, $character_id);

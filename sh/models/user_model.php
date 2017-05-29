@@ -4,7 +4,7 @@ class User_model extends MY_Model
 	function __construct(){
 		parent::__construct();
 	}
-	var $_select_clums = 'id, name, nickname as Nickname, face as Face, level as Level, gold as Gold, silver as Silver, ap as Ap, map_id as MapId, last_ap_date as LastApDate';
+	var $_select_clums = 'id, name, nickname as Nickname, face as Face, level as Level, battling_id BattlingId, gold as Gold, silver as Silver, ap as Ap, map_id as MapId, last_ap_date as LastApDate';
 	var $_select_other_clums = 'id, name, nickname as Nickname, face as Face, level as Level, gold as Gold, silver as Silver, ap as Ap, map_id as MapId, last_ap_date as LastApDate';
 	function register($account, $password, $name, $character_id){
 		$character_model = new Character_model();

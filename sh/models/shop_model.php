@@ -22,6 +22,7 @@ class Shop_model extends MY_Model
 			$this->error("set buy log error");
 		}
 		$up_result = false;
+		$user_model = new User_model();
 		if($master["gold"] > 0){
 			$up_result = $user_model->update_gold();
 		}else if($master["silver"] > 0){
@@ -32,6 +33,13 @@ class Shop_model extends MY_Model
 			$this->error("money update error");
 		}
 		$user_model = new User_model();
+		
+		$new_user = $user_model->get($user_id, true);
+		$user = $this->getSessionData("user");
+		$user["Gold"] = $new_user["Gold"];
+		$user["Silver"] = $new_user["Silver"];
+		$this->setSessionData("user", $user);
+		
 		$content = json_decode($master["shop_content"], true);
 		$contents_res = $user_model->set_contents($user_id,array($content));
 		if(!$contents_res){
@@ -90,6 +98,11 @@ class Shop_model extends MY_Model
 			$this->user_db->trans_rollback();
 			$this->error("no money");
 		}
+		/*$new_user = $user_model->get($user_id, true);
+		$user = $this->getSessionData("user");
+		$user["Gold"] = $new_user["Gold"];
+		$user["Silver"] = $new_user["Silver"];
+		$this->setSessionData("user", $user);*/
 		$this->user_db->trans_commit();
 		return true;
 	}

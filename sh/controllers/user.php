@@ -16,6 +16,7 @@ class User extends MY_Controller {
 	public function login()
 	{
 		$user_model = new User_model();
+		$this->args["pass"] = md5($this->args["pass"]);
 		$user = $user_model->login($this->args);
 		if($user){
 			$version_model = new Version_model();
