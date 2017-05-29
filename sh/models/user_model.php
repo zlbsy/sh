@@ -4,7 +4,7 @@ class User_model extends MY_Model
 	function __construct(){
 		parent::__construct();
 	}
-	var $_select_clums = 'id, name, nickname as Nickname, face as Face, level as Level, battling_id BattlingId, gold as Gold, silver as Silver, ap as Ap, map_id as MapId, last_ap_date as LastApDate';
+	var $_select_clums = 'id, name, nickname as Nickname, face as Face, level as Level, battling_id as BattlingId, gold as Gold, silver as Silver, ap as Ap, map_id as MapId, last_ap_date as LastApDate';
 	var $_select_other_clums = 'id, name, nickname as Nickname, face as Face, level as Level, gold as Gold, silver as Silver, ap as Ap, map_id as MapId, last_ap_date as LastApDate';
 	function register($account, $password, $name, $character_id){
 		$character_model = new Character_model();
@@ -152,6 +152,14 @@ class User_model extends MY_Model
 		$where = array("user_id={$user_id}");
 		$result = $this->user_db->select($select, $table, $where);
 		return $result;
+	}
+	function has_progress($key,$progress) {
+	    foreach($progress as $child) {
+	        if($child["k"] == $key){
+	        	return $child["v"] == 1;
+	        }
+	    }
+	    return false;
 	}
 	function get_story_progress($user_id, $k=null){
 		$select = "k, v";

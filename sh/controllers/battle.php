@@ -19,15 +19,15 @@ class Battle extends MY_Controller {
 			$this->error("Battle->battle_list error");
 		}
 	}
-	public function start()
+	public function battle_start()
 	{
 		$battlefield_id = $this->args["battlefield_id"];
 		$user = $this->getSessionData("user");
-		if($user["BattlingId"] > 0 || $battlefield_id == 0 || !is_numeric($battlefield_id)){
+		if(/*$user["BattlingId"] > 0 || */$battlefield_id == 0 || !is_numeric($battlefield_id)){
 			$this->error("Battle->start error");
 		}
 		$battle_model = new Battle_model();
-		$result_start = $battle_model->start($user["id"], $battlefield_id);
+		$result_start = $battle_model->battle_start($battlefield_id);
 		if($result_start){
 			//$result = array();
 			$this->out(array());
@@ -37,18 +37,39 @@ class Battle extends MY_Controller {
 	}
 	public function battle_end()
 	{
-		$battlefield_id = $this->args["battlefield_id"];
+		$this->checkParam(array("character_ids", "star"));
+		$character_ids = $this->args["character_ids"];
+		$star = $this->args["star"];
 		$user = $this->getSessionData("user");
 		if($user["BattlingId"] == 0){
 			$this->error("Battle->battle_end error");
 		}
+		load_model(array('character_model', 'item_model', 'equipment_model'));
 		$battle_model = new Battle_model();
-		$battle_list = $battle_model->get_list($user["id"]);
-		if(!is_null($battle_list)){
-			$result = array("battlelist"=>$battle_list);
+		$battle_rewards = $battle_model->battle_end($user["BattlingId"], $character_ids, $star);
+		if(!is_null($battle_rewards)){
+			$user = $this->getSessionData("user");
+			$result = array("battle_rewards"=>$battle_rewards, "user"=>$user);
 			$this->out($result);
 		}else{
 			$this->error("Battle->battle_list error");
+		}
+	}
+	public function battle_reset()
+	{
+		$user = $this->getSessionData("user");
+		if($user["BattlingId"] == 0){
+			$this->out(array());
+		}
+		$user_model = new User_model();
+		$res = $user_model->update(array("id"=>$user["id"], "battling_id"=>0));
+		if($res){
+			$user["BattlingId"] = 0;
+			$this->setSessionData("user", $user);
+			$result = array("user"=>$user);
+			$this->out($result);
+		}else{
+			$this->error("Battle->battle_reset error");
 		}
 	}
 }

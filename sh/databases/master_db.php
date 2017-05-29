@@ -29,6 +29,8 @@ class Master_DB extends Base_Database {
 	var $avatar_setting = "sh109_master.avatar_setting";
 	var $login_bonus = "sh109_master.login_bonus";
 	var $shop = "sh109_master.shop";
+	var $battlefield_reward = "sh109_master.battlefield_reward";
+	var $exp = "sh109_master.exp";
 	function __construct() {
 		parent::__construct();
 		$db = mysql_select_db('sh109_master', $this->connect);
