@@ -251,6 +251,17 @@ namespace App.View.Character{
             VTile vTile = vBaseMap.tileUnits[i];
             ViewModel.Y.Value = vTile.transform.localPosition.y;
         }
+        public float alpha{
+            set{ 
+                foreach (Anima2D.SpriteMeshInstance sprite in allSprites)
+                {
+                    sprite.color = new Color(sprite.color.r,sprite.color.g,sprite.color.b,value);
+                }
+            }
+            get{ 
+                return allSprites[0].color.a;
+            }
+        }
         private void ActionChanged(App.Model.ActionType oldvalue, App.Model.ActionType newvalue)
         {
             /*this.StartCoroutine(ActionChanged(newvalue));
@@ -262,12 +273,13 @@ namespace App.View.Character{
             //Debug.LogError(ViewModel.CharacterId.Value + " = " + animatorName);
             animator.Play(animatorName);
             animationIndex = 0;
-            if (newvalue == App.Model.ActionType.idle || newvalue == App.Model.ActionType.move)
+            if (newvalue == App.Model.ActionType.idle)
             {
                 if (ViewModel.Hp.Value == 0)
                 {
-                    Holoville.HOTween.HOTween.To(this.transform, 1f, new Holoville.HOTween.TweenParms().Prop("localPosition", this.transform.localPosition).OnComplete(()=>{
+                    Holoville.HOTween.HOTween.To(this, 1f, new Holoville.HOTween.TweenParms().Prop("alpha", 0f).OnComplete(()=>{
                         this.gameObject.SetActive(false);
+                        this.alpha = 1f;
                         if(App.Util.SceneManager.CurrentScene != null){
                             App.Util.SceneManager.CurrentScene.StartCoroutine(RemoveDynamicCharacter());
                         }
