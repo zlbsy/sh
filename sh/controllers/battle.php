@@ -38,7 +38,7 @@ class Battle extends MY_Controller {
 	public function battle_end()
 	{
 		$this->checkParam(array("character_ids", "star"));
-		$character_ids = $this->args["character_ids"];
+		$character_ids = explode(",",$this->args["character_ids"]);
 		$star = $this->args["star"];
 		$user = $this->getSessionData("user");
 		if($user["BattlingId"] == 0){

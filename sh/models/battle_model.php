@@ -99,8 +99,14 @@ class Battle_model extends MY_Model
 		$character_model = new Character_model();
 		$characters = $character_model->get_character_list($user_id);
 		foreach ($characterIds as $characterId) {
-			$key = array_search($characterId, array_column($characters, 'CharacterId'));
-			if(is_null($key)){
+			$has_character = false;
+			foreach($characters as $character){
+				if($character["CharacterId"] == $characterId){
+					$has_character = true;
+					break;
+				}
+			}
+			if(!$has_character){
 				return null;
 			}
 		}
@@ -122,7 +128,7 @@ class Battle_model extends MY_Model
 			}
 			$probability = $battlefield_reward["probability"];
 			if(rand(0,100) <= $probability){
-				$contents[] = $content;
+				$contents[] = json_decode($content, true);
 			}
 		}
 		$npcs = $this->get_master_battlefield_npcs($battlefield_id);
@@ -149,11 +155,16 @@ class Battle_model extends MY_Model
 		}
 		$user_level = 0;
 		foreach ($characterIds as $characterId) {
-			$key = array_search($characterId, array_column($characters, 'CharacterId'));
-			$charater = $characters[$key];
+			$character = null;
+			foreach($characters as $child){
+				if($child["CharacterId"] == $characterId){
+					$character = $child;
+					break;
+				}
+			}
 			$exp = $this->get_character_exp($charater["Level"], $level, $battlefield_master["exp"]);
-			$character_level = $this->get_character_level($charater["Exp"] + $exp);
-			$character_args = array("exp"=>$exp, "level"=>$character_level);
+			$character_level = $this->get_character_level($character["Exp"] + $exp);
+			$character_args = array("exp"=>$exp + $character["Exp"], "level"=>$character_level);
 			$res_update_character = $character_model->update_character($user_id, $characterId, $character_args);
 			if(!$res_update_character){
 				$this->user_db->trans_rollback();
@@ -197,15 +208,15 @@ class Battle_model extends MY_Model
 		$result = $this->user_db->select($select, $table, $where, null, null, Database_Result::TYPE_ROW);
 		return $result;
 	}
-	function get_character_level($exp){
+	function get_character_level($sum_exp){
 		if($this->exp_master == null){
 			$select = "`exp_type`,`level`,`value`";
 			$table = $this->master_db->exp;
 			$order_by = "level desc";
 			$this->exp_master = $this->master_db->select($select, $table, null, $order_by);
 		}
-		foreach ($$this->exp_master as $child) {
-			if($child["value"] >= $exp){
+		foreach ($this->exp_master as $child) {
+			if($child["value"] <= $sum_exp){
 				return $child["level"];
 			}
 		}
@@ -223,7 +234,7 @@ class Battle_model extends MY_Model
 		return $result;
 	}
 	function get_rewards_master($battlefield_id){
-		$select = "`id`,`map_id`,`conditions`, `max_num`, `ap`";
+		$select = "`id`,`battlefield_id`,`content`, `probability`, `is_first`";
 		$table = $this->master_db->battlefield_reward;
 		$where = array();
 		$where[] = "id={$battlefield_id}";
