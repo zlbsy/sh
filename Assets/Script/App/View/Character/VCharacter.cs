@@ -86,6 +86,7 @@ namespace App.View.Character{
                 return;
             }
             init = true;
+            allSprites = this.GetComponentsInChildren<Anima2D.SpriteMeshInstance>(true);
             if (meshs.Count == 0)
             {
                 meshs.Add("head", head);
@@ -129,7 +130,6 @@ namespace App.View.Character{
         private bool Gray{
             set{
                 Material material = value ? materialGray : materialDefault;
-                allSprites = (allSprites == null ? this.GetComponentsInChildren<Anima2D.SpriteMeshInstance>(true) : allSprites);
                 foreach (Anima2D.SpriteMeshInstance sprite in allSprites)
                 {
                     sprite.sharedMaterial = material;

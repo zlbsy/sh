@@ -168,7 +168,19 @@ namespace App.Util.Battle{
             cBattlefield.battleMode = CBattlefield.BattleMode.none;
             Belong belong = this.mCharacter.Belong;
             this.mCharacter = null;
-            if (!System.Array.Exists(mBaseMap.Characters, _ => _.Belong == belong && !_.ActionOver))
+            if (!System.Array.Exists(mBaseMap.Characters, _ => _.Hp > 0 && _.Belong == Belong.enemy))
+            {
+                //敌军全灭
+                Debug.LogError("敌军全灭");
+                return;
+            }else if (!System.Array.Exists(mBaseMap.Characters, _ => _.Hp > 0 && _.Belong == Belong.self))
+            {
+                //我军全灭
+                Debug.LogError("我军全灭");
+                cBattlefield.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.BattleFailDialog));
+                return;
+            }
+            if (!System.Array.Exists(mBaseMap.Characters, _ => _.Hp > 0 && _.Belong == belong && !_.ActionOver))
             {
                 ChangeBelong(belong);
             }
@@ -180,7 +192,7 @@ namespace App.Util.Battle{
         public void ChangeBelong(Belong belong){
             if (belong == Belong.self)
             {
-                if (System.Array.Exists(mBaseMap.Characters, _ => _.Belong == Belong.friend && !_.ActionOver))
+                if (System.Array.Exists(mBaseMap.Characters, _ => _.Hp > 0 && _.Belong == Belong.friend && !_.ActionOver))
                 {
                     cBattlefield.BoutWave(Belong.friend);
                 }
