@@ -26,6 +26,10 @@ namespace App.Controller.Battle{
 
         }
         public void BattleOver(){
+            this.StartCoroutine(BattleOverRun());
+        }
+        public IEnumerator BattleOverRun(){
+            yield return this.StartCoroutine(App.Util.Global.SBattlefield.RequestBattleReset());
             (App.Util.SceneManager.CurrentScene as CBattlefield).BattleEnd();
         }
         public void GoldRelive(){

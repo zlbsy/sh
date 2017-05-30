@@ -12,6 +12,10 @@ namespace App.Controller.Battle{
         public override IEnumerator OnLoad( Request request ) 
         {  
             buttonContents.SetActive(false);
+            int[] characterIds = request.Get<int[]>("characterIds");
+            int[] dieIds = request.Get<int[]>("dieIds");
+            int star = request.Get<int>("star");
+            yield return this.StartCoroutine(App.Util.Global.SBattlefield.RequestBattleEnd(characterIds, dieIds, star));
             yield return StartCoroutine(base.OnLoad(request));
 
         }

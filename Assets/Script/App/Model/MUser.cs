@@ -17,6 +17,7 @@ namespace App.Model{
         public string name;
         public string password;
         public int lastStageId;
+        public int BattlingId;
         public int lastAreaId{
             get{ 
                 if (lastStageId == 0)

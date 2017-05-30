@@ -50,6 +50,11 @@ namespace App.Controller.Battle{
 
             fromScene = request.Get<App.Util.SceneManager.Scenes>("fromScene");
             fromRequest = request.Get<Request>("fromRequest");
+            if (Global.SUser.self.BattlingId > 0)
+            {
+                yield return this.StartCoroutine(App.Util.Global.SBattlefield.RequestBattleReset());
+            }
+            yield return this.StartCoroutine(Global.SBattlefield.RequestBattleStart(battlefieldId));
             yield return this.StartCoroutine(base.OnLoad(request));
         }
         protected override void InitMap(){

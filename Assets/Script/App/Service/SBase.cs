@@ -45,5 +45,15 @@ namespace App.Service{
             }
             yield return 0;*/
         }
+        protected string ImplodeList(object[] objs){
+            string res = "";
+            string plus = "";
+            foreach (object obj in objs)
+            {
+                res = res + plus + obj.ToString();
+                plus = ",";
+            }
+            return res;
+        }
 	}
 }
