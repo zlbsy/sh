@@ -156,6 +156,11 @@ namespace MyEditor
             BuildAssetBundleWorld();
             BuildAssetBundleArea();
         }
+        [MenuItem("SH/Build Assetbundle/Master/Exp")]
+        static private void BuildAssetBundleExp()
+        {
+            BuildAssetBundleMaster(App.Model.Scriptable.ExpAsset.Name);
+        }
         [MenuItem("SH/Build Assetbundle/Master/Shop")]
         static private void BuildAssetBundleShop()
         {

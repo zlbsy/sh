@@ -21,6 +21,11 @@ namespace App.Controller.Battle{
             List<int> characterIds = request.Get<List<int>>("characterIds");
             List<int> dieIds = request.Get<List<int>>("dieIds");
             int star = request.Get<int>("star");
+            for (int i = 0; i < stars.Length; i++)
+            {
+                Image starImg = stars[i];
+                starImg.color = i < star ? Color.yellow : Color.white;
+            }
             List<App.Model.MBase> expCharacters = new List<App.Model.MBase>();
             foreach (int characterId in characterIds)
             {

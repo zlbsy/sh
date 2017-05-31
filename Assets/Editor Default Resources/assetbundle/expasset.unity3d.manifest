@@ -1,0 +1,18 @@
+ManifestFileVersion: 0
+CRC: 2182230183
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: f0e6e50dd9bc77c2963dc79eb4b777d8
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 49d43284905ea94fae51a8a27970993c
+HashAppended: 0
+ClassTypes:
+- Class: 114
+  Script: {fileID: 11500000, guid: ad48b18ba74e44c61b8916a371a8cc9c, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+Assets:
+- Assets/Editor Default Resources/ScriptableObject/expasset.asset
+Dependencies: []

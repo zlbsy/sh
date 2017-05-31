@@ -22,13 +22,16 @@ namespace App.View.Character{
             MExpCharacter mExpCharacter = model as MExpCharacter;
             characterIcon.BindingContext = System.Array.Find(Global.SUser.self.characters, c=>c.CharacterId == mExpCharacter.id).ViewModel;
             characterIcon.UpdateView();
-            txtExp.text = mExpCharacter.toExp.ToString();
+            int fromExp = ExpCacher.Instance.MaxExp(mExpCharacter.toLevel);
+            int toExp = ExpCacher.Instance.MaxExp(mExpCharacter.toLevel + 1);
+            int exp = mExpCharacter.toExp - fromExp;
+            int maxExp = toExp - fromExp;
+            txtExp.text = string.Format("{0}/{1}", exp, maxExp);
             if (mExpCharacter.toLevel > mExpCharacter.fromLevel)
             {
                 ShowLevelUp();
             }
-            //float width = 120f * mExpCharacter.toExp
-            imgExp.rectTransform.sizeDelta = new Vector2(-120f*0.7f, imgExp.rectTransform.sizeDelta.y);
+            imgExp.rectTransform.sizeDelta = new Vector2(-120f * exp / maxExp, imgExp.rectTransform.sizeDelta.y);
             imgExp.rectTransform.anchoredPosition = new Vector2(imgExp.rectTransform.sizeDelta.x * 0.5f, imgExp.rectTransform.anchoredPosition.y);
         }
         private void ShowLevelUp(){
@@ -36,9 +39,7 @@ namespace App.View.Character{
             levelUp.transform.localScale = Vector3.zero;
             Sequence seqHp = new Sequence ();
             seqHp.Insert (0f, HOTween.To (levelUp.transform, 0.2f, new TweenParms().Prop("localScale", Vector3.one * 2f, false).Ease(EaseType.EaseInQuart)));
-            seqHp.Insert (0.2f, HOTween.To (levelUp.transform, 0.3f, new TweenParms().Prop("localScale", Vector3.one, false).OnComplete(()=>{
-                levelUp.gameObject.SetActive(false);
-            })));
+            seqHp.Insert (0.2f, HOTween.To (levelUp.transform, 0.3f, new TweenParms().Prop("localScale", Vector3.one, false).Ease(EaseType.EaseInQuart)));
             seqHp.Play ();
         }
     }

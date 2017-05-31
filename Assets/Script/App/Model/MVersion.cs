@@ -20,6 +20,7 @@ namespace App.Model{
         public int stage;
         public int item;
         public int skill;
+        public int exp;
         public int hat;
         public int map;
         public int horse_img;

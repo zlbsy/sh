@@ -165,6 +165,11 @@ namespace App.Controller{
                 SkillCacher.Instance.Reset(SkillAsset.Data.skills);
                 SkillAsset.Clear();
             }));
+            list.Add(sUser.Download(ExpAsset.Url, versions.exp, (AssetBundle assetbundle)=>{
+                ExpAsset.assetbundle = assetbundle;
+                ExpCacher.Instance.Reset(ExpAsset.Data.exps);
+                ExpAsset.Clear();
+            }));
             list.Add(sUser.Download(BattlefieldAsset.Url, versions.stage, (AssetBundle assetbundle)=>{
                 BattlefieldAsset.assetbundle = assetbundle;
                 BattlefieldCacher.Instance.Reset(BattlefieldAsset.Data.battlefields);
