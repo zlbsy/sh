@@ -4,30 +4,44 @@ using UnityEngine.UI;
 using UnityEngine;
 using App.Controller.Common;
 using Holoville.HOTween;
+using App.Util;
+using App.Model.Battle;
 
 
 namespace App.Controller.Battle{
     public class CBattleWinDialog : CDialog {
-        [SerializeField]private GameObject buttonContents;
+        [SerializeField]private Transform expContent;
+        [SerializeField]private GameObject expChildItem;
+        [SerializeField]private Transform content;
+        [SerializeField]private GameObject childItem;
+        [SerializeField]private Image[] stars;
         public override IEnumerator OnLoad( Request request ) 
         {  
-            buttonContents.SetActive(false);
-            int[] characterIds = request.Get<int[]>("characterIds");
-            int[] dieIds = request.Get<int[]>("dieIds");
-            int star = request.Get<int>("star");
-            yield return this.StartCoroutine(App.Util.Global.SBattlefield.RequestBattleEnd(characterIds, dieIds, star));
             yield return StartCoroutine(base.OnLoad(request));
-
-        }
-        public void ButtonContentsShow(){
-            if (buttonContents.activeSelf)
+            List<int> characterIds = request.Get<List<int>>("characterIds");
+            List<int> dieIds = request.Get<List<int>>("dieIds");
+            int star = request.Get<int>("star");
+            List<App.Model.MBase> expCharacters = new List<App.Model.MBase>();
+            foreach (int characterId in characterIds)
             {
-                return;
+                App.Model.MCharacter mCharacter = System.Array.Find(Global.SUser.self.characters, c=>c.CharacterId == characterId);
+                MExpCharacter expCharacter = new MExpCharacter();
+                expCharacter.id = characterId;
+                expCharacter.fromExp = mCharacter.Exp;
+                expCharacter.fromLevel = mCharacter.Level;
+                expCharacters.Add(expCharacter);
             }
-            buttonContents.SetActive(true);
-            buttonContents.transform.localScale = Vector3.zero;
-            HOTween.To(buttonContents.transform, 0.3f, new TweenParms().Prop("localScale", Vector3.one).Ease(EaseType.EaseInQuart));
+            yield return this.StartCoroutine(Global.SBattlefield.RequestBattleEnd(characterIds, dieIds, star));
+            App.Model.MContent[] battleRewards = Global.SBattlefield.battleRewards;
+            ScrollViewSets(content, childItem, battleRewards);
 
+            foreach (MExpCharacter expCharacter in expCharacters)
+            {
+                App.Model.MCharacter mCharacter = System.Array.Find(Global.SUser.self.characters, c=>c.CharacterId == expCharacter.id);
+                expCharacter.toExp = mCharacter.Exp;
+                expCharacter.toLevel = mCharacter.Level;
+            }
+            ScrollViewSets(expContent, expChildItem, expCharacters);
         }
         public void BattleOver(){
             (App.Util.SceneManager.CurrentScene as CBattlefield).BattleEnd();

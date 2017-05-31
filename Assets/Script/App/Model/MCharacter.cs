@@ -256,6 +256,14 @@ namespace App.Model{
                 return this.ViewModel.UserId.Value;
             }
         }
+        public int Exp{
+            set{
+                this.ViewModel.Exp.Value = value;
+            }
+            get{ 
+                return this.ViewModel.Exp.Value;
+            }
+        }
         public int CharacterId{
             set{
                 App.Model.Master.MCharacter master = CharacterCacher.Instance.Get(value);

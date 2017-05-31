@@ -7,36 +7,39 @@ using App.Util;
 using App.Model.Avatar;
 using App.Util.Cacher;
 using App.Controller;
+using App.Model.Battle;
+using Holoville.HOTween;
 
 namespace App.View.Character{
     public class VExpCharacterIcon : VBase {
         [SerializeField]private VCharacterIcon characterIcon;
         [SerializeField]private Text txtExp;
         [SerializeField]private Image imgExp;
-        #region VM处理
-        public VMCharacter ViewModel { get { return (VMCharacter)BindingContext; } }
-        protected override void OnBindingContextChanged(VMBase oldViewModel, VMBase newViewModel)
+        [SerializeField]private Text levelUp;
+        public override void UpdateView(App.Model.MBase model)
         {
-
-            base.OnBindingContextChanged(oldViewModel, newViewModel);
-
-            VMCharacter oldVm = oldViewModel as VMCharacter;
-            if (oldVm != null)
+            levelUp.gameObject.SetActive(false);
+            MExpCharacter mExpCharacter = model as MExpCharacter;
+            characterIcon.BindingContext = System.Array.Find(Global.SUser.self.characters, c=>c.CharacterId == mExpCharacter.id).ViewModel;
+            characterIcon.UpdateView();
+            txtExp.text = mExpCharacter.toExp.ToString();
+            if (mExpCharacter.toLevel > mExpCharacter.fromLevel)
             {
-                oldVm.CharacterId.OnValueChanged -= CharacterIdChanged;
+                ShowLevelUp();
             }
-            if (ViewModel!=null)
-            {
-                ViewModel.CharacterId.OnValueChanged += CharacterIdChanged;
-            }
+            //float width = 120f * mExpCharacter.toExp
+            imgExp.rectTransform.sizeDelta = new Vector2(-120f*0.7f, imgExp.rectTransform.sizeDelta.y);
+            imgExp.rectTransform.anchoredPosition = new Vector2(imgExp.rectTransform.sizeDelta.x * 0.5f, imgExp.rectTransform.anchoredPosition.y);
         }
-        private void CharacterIdChanged(int oldvalue, int newvalue)
-        {
+        private void ShowLevelUp(){
+            levelUp.gameObject.SetActive(true);
+            levelUp.transform.localScale = Vector3.zero;
+            Sequence seqHp = new Sequence ();
+            seqHp.Insert (0f, HOTween.To (levelUp.transform, 0.2f, new TweenParms().Prop("localScale", Vector3.one * 2f, false).Ease(EaseType.EaseInQuart)));
+            seqHp.Insert (0.2f, HOTween.To (levelUp.transform, 0.3f, new TweenParms().Prop("localScale", Vector3.one, false).OnComplete(()=>{
+                levelUp.gameObject.SetActive(false);
+            })));
+            seqHp.Play ();
         }
-        public override void UpdateView()
-        {
-            CharacterIdChanged(0, ViewModel.CharacterId.Value);
-        }
-        #endregion
     }
 }

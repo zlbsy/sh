@@ -234,6 +234,17 @@ namespace App.Controller.Battle{
         public void BattleEnd(){
             App.Util.SceneManager.LoadScene( this.fromScene.ToString(), this.fromRequest );
         }
+        /// <summary>
+        /// 结束胜利
+        /// </summary>
+        public void BattleWin(){
+            MCharacter[] characters = App.Util.Global.SUser.self.characters;
+            Request req = Request.Create("characterIds", characterIds, 
+                "dieIds", characterIds.FindAll(id=>System.Array.Exists(characters, m=>m.Id == id && m.Hp == 0)),
+                "star", 2
+            );
+            this.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.BattleWinDialog, req));
+        }
         #region 行动中武将
         /// <summary>
         /// 行动中武将挂起

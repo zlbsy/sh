@@ -38,6 +38,7 @@ namespace App.Util{
             BattleMenuDialog,
             BoutWaveDialog,
             BattleFailDialog,
+            BattleWinDialog,
             RegisterConfirmDialog,
             TutorialDialog,
         }

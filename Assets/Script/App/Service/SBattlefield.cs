@@ -6,7 +6,7 @@ using App.Model;
 
 namespace App.Service{
 	public class SBattlefield : SBase {
-        //public MBattleChild[] battlelist;
+        public MContent[] battleRewards;
 		public SBattlefield(){
 			
 		}
@@ -41,15 +41,17 @@ namespace App.Service{
             HttpClient client = new HttpClient();
             yield return App.Util.SceneManager.CurrentScene.StartCoroutine(client.Send( url ));
         }
-        public IEnumerator RequestBattleEnd(int[] character_ids, int[] die_ids, int star)
+        public IEnumerator RequestBattleEnd(List<int> character_ids, List<int> die_ids, int star)
         {
             var url = "battle/battle_end";
             WWWForm form = new WWWForm();
-            form.AddField("character_ids", ImplodeList(character_ids));
-            form.AddField("die_ids", ImplodeList(die_ids));
+            form.AddField("character_ids", ImplodeList<int>(character_ids));
+            form.AddField("die_ids", ImplodeList<int>(die_ids));
             form.AddField("star", star);
             HttpClient client = new HttpClient();
             yield return App.Util.SceneManager.CurrentScene.StartCoroutine(client.Send( url, form ));
+            ResponseBattleEnd response = client.Deserialize<ResponseBattleEnd>();
+            this.battleRewards = response.battle_rewards;
         }
 	}
 }

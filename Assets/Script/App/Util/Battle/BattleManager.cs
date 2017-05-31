@@ -172,6 +172,7 @@ namespace App.Util.Battle{
             {
                 //敌军全灭
                 Debug.LogError("敌军全灭");
+                cBattlefield.BattleWin();
                 return;
             }else if (!System.Array.Exists(mBaseMap.Characters, _ => _.Hp > 0 && _.Belong == Belong.self))
             {
