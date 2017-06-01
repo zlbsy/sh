@@ -215,7 +215,7 @@ namespace App.Controller{
             this.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.MissionDialog));
         }
         public void OpenNews(){
-            this.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.MissionDialog));
+            this.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.WebviewDialog));
         }
         public void OpenShop(){
             App.Controller.shop.CShopDialog.Show();

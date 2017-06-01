@@ -40,6 +40,7 @@ namespace App.Util{
             BattleFailDialog,
             BattleWinDialog,
             RegisterConfirmDialog,
+            WebviewDialog,
             TutorialDialog,
         }
         public static CScene CurrentScene;

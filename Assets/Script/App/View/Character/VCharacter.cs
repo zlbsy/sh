@@ -125,7 +125,7 @@ namespace App.View.Character{
             }
             num.GetComponent<MeshRenderer>().sortingOrder = clothesDownLong.sortingOrder + 10;
             num.gameObject.SetActive(false);
-            BelongChanged(ViewModel.Belong.Value, ViewModel.Belong.Value);
+            BelongChanged(ViewModel.Belong.Value, ViewModel.Belong.Value);this.alpha = 0.2f;
         }
         private bool Gray{
             set{
