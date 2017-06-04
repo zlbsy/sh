@@ -17,12 +17,12 @@ namespace App.Model{
         public int loginbonus;
         public int characterword;
         public int area;
-        public int stage;
+        public int battlefield;
         public int item;
         public int skill;
         public int exp;
-        public int hat;
         public int map;
+        public int head_img;
         public int horse_img;
         public int clothes_img;
         public int weapon_img;
@@ -30,6 +30,8 @@ namespace App.Model{
         public int gacha;
         public int item_icon;
         public int skill_icon;
+        public int npc;
+        public int npc_equipment;
         public int horse;
         public int clothes;
         public int weapon;

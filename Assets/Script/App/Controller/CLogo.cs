@@ -96,16 +96,11 @@ namespace App.Controller{
                 Language.Reset(LanguageAsset.Data.words);
                 LanguageAsset.Clear();
             }));
-            /*list.Add(sUser.Download(LanguageAsset.CHARACTER_WORD_URL, versions.characterword, (AssetBundle assetbundle)=>{
-                LanguageAsset.assetbundle = assetbundle;
-                Language.ResetCharacterWord(LanguageAsset.Data.words);
-                LanguageAsset.Clear();
-            }));*/
             list.Add(sUser.Download(ImageAssetBundleManager.horseUrl, versions.horse_img, (AssetBundle assetbundle)=>{
                 AvatarSpriteAsset.assetbundle = assetbundle;
                 ImageAssetBundleManager.horse = AvatarSpriteAsset.Data.meshs;
             }));
-            list.Add(sUser.Download(ImageAssetBundleManager.headUrl, versions.hat, (AssetBundle assetbundle)=>{
+            list.Add(sUser.Download(ImageAssetBundleManager.headUrl, versions.head_img, (AssetBundle assetbundle)=>{
                 AvatarSpriteAsset.assetbundle = assetbundle;
                 ImageAssetBundleManager.head = AvatarSpriteAsset.Data.meshs;
             }));
@@ -125,30 +120,15 @@ namespace App.Controller{
                 ConstantAsset.assetbundle = assetbundle;
                 Global.Constant = ConstantAsset.Data.constant;
             }));
-            list.Add(sUser.Download(NpcAsset.Url, versions.world, (AssetBundle assetbundle)=>{
+            list.Add(sUser.Download(NpcAsset.Url, versions.npc, (AssetBundle assetbundle)=>{
                 NpcAsset.assetbundle = assetbundle;
                 NpcCacher.Instance.Reset(NpcAsset.Data.npcs);
                 NpcAsset.Clear();
             }));
-            list.Add(sUser.Download(NpcEquipmentAsset.Url, versions.world, (AssetBundle assetbundle)=>{
+            list.Add(sUser.Download(NpcEquipmentAsset.Url, versions.npc_equipment, (AssetBundle assetbundle)=>{
                 NpcEquipmentAsset.assetbundle = assetbundle;
                 NpcEquipmentCacher.Instance.Reset(NpcEquipmentAsset.Data.npc_equipments);
                 NpcEquipmentAsset.Clear();
-            }));
-            list.Add(sUser.Download(HorseAsset.Url, versions.horse, (AssetBundle assetbundle)=>{
-                HorseAsset.assetbundle = assetbundle;
-                EquipmentCacher.Instance.ResetHorse(HorseAsset.Data.equipments);
-                HorseAsset.Clear();
-            }));
-            list.Add(sUser.Download(WeaponAsset.Url, versions.weapon, (AssetBundle assetbundle)=>{
-                WeaponAsset.assetbundle = assetbundle;
-                EquipmentCacher.Instance.ResetWeapon(WeaponAsset.Data.equipments);
-                WeaponAsset.Clear();
-            }));
-            list.Add(sUser.Download(ClothesAsset.Url, versions.clothes, (AssetBundle assetbundle)=>{
-                ClothesAsset.assetbundle = assetbundle;
-                EquipmentCacher.Instance.ResetClothes(ClothesAsset.Data.equipments);
-                ClothesAsset.Clear();
             }));
             list.Add(sUser.Download(AreaAsset.Url, versions.area, (AssetBundle assetbundle)=>{
                 AreaAsset.assetbundle = assetbundle;
@@ -170,7 +150,7 @@ namespace App.Controller{
                 ExpCacher.Instance.Reset(ExpAsset.Data.exps);
                 ExpAsset.Clear();
             }));
-            list.Add(sUser.Download(BattlefieldAsset.Url, versions.stage, (AssetBundle assetbundle)=>{
+            list.Add(sUser.Download(BattlefieldAsset.Url, versions.battlefield, (AssetBundle assetbundle)=>{
                 BattlefieldAsset.assetbundle = assetbundle;
                 BattlefieldCacher.Instance.Reset(BattlefieldAsset.Data.battlefields);
                 BattlefieldAsset.Clear();
@@ -200,15 +180,6 @@ namespace App.Controller{
                 LoginBonusCacher.Instance.Reset(LoginBonusAsset.Data.loginbonuses);
                 LoginBonusAsset.Clear();
             }));
-            list.Add(sUser.Download(App.Model.Avatar.AvatarAsset.Url, versions.tile, (AssetBundle assetbundle)=>{
-                App.Model.Avatar.AvatarAsset.assetbundle = assetbundle;
-            }));
-            list.Add(sUser.Download(ImageAssetBundleManager.avatarUrl, versions.avatar, (AssetBundle assetbundle)=>{
-                ImageAssetBundleManager.avatar = assetbundle;
-            }, false));
-            list.Add(sUser.Download(ImageAssetBundleManager.hatUrl, versions.hat, (AssetBundle assetbundle)=>{
-                ImageAssetBundleManager.hat = assetbundle;
-            }, false));
             list.Add(sUser.Download(ImageAssetBundleManager.mapUrl, versions.map, (AssetBundle assetbundle)=>{
                 ImageAssetBundleManager.map = assetbundle;
             }, false));
@@ -221,7 +192,21 @@ namespace App.Controller{
             list.Add(sUser.Download(ImageAssetBundleManager.skillIconUrl, versions.skill_icon, (AssetBundle assetbundle)=>{
                 ImageAssetBundleManager.skillIcon = assetbundle;
             }, false));
-
+            list.Add(sUser.Download(HorseAsset.Url, versions.horse, (AssetBundle assetbundle)=>{
+                HorseAsset.assetbundle = assetbundle;
+                EquipmentCacher.Instance.ResetHorse(HorseAsset.Data.equipments);
+                HorseAsset.Clear();
+            }));
+            list.Add(sUser.Download(WeaponAsset.Url, versions.weapon, (AssetBundle assetbundle)=>{
+                WeaponAsset.assetbundle = assetbundle;
+                EquipmentCacher.Instance.ResetWeapon(WeaponAsset.Data.equipments);
+                WeaponAsset.Clear();
+            }));
+            list.Add(sUser.Download(ClothesAsset.Url, versions.clothes, (AssetBundle assetbundle)=>{
+                ClothesAsset.assetbundle = assetbundle;
+                EquipmentCacher.Instance.ResetClothes(ClothesAsset.Data.equipments);
+                ClothesAsset.Clear();
+            }));
             if (App.Util.Global.SUser.self != null)
             {
                 list.Add(sUser.RequestGet());

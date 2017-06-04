@@ -23,13 +23,6 @@ namespace App.Util{
         //public static string clothesUrl{ get{ return HttpClient.assetBandleURL + "clothesimage.unity3d";} }
         public static Anima2D.SpriteMesh[] clothes;
 
-        private static AssetBundle _avatar = null;
-        public static string avatarUrl{ get{ return HttpClient.assetBandleURL + "charaimage.unity3d";} }
-        public static AssetBundle avatar{ set{ _avatar = value; } }
-        private static AssetBundle _hat = null;
-        public static string hatUrl{ get{ return HttpClient.assetBandleURL + "hatimage.unity3d";} }
-        public static AssetBundle hat{ set{ _hat = value; } }
-
         private static AssetBundle _map = null;
         public static string mapUrl{ get{ return HttpClient.assetBandleURL + "mapimage.unity3d";} }
         public static AssetBundle map{ set{ _map = value; } }
@@ -107,27 +100,6 @@ namespace App.Util{
             return System.Array.Find(horse, _=>_.name == name);
         }
 
-		public static Sprite GetAvatarBody(string name){
-			return GetAvatarSprite(name);
-		}
-		public static Sprite GetAvatarHead(int id){
-            return GetAvatarSprite("head_" + id);
-		}
-		public static Sprite GetAvatarSprite(string name){
-			return _avatar.LoadAsset<Sprite>(name);
-		}
-		public static Sprite GetClothes(string name){
-            return _clothes.LoadAsset<Sprite>(name);
-		}
-		public static Sprite GetWeapon(string name){
-            return _weapon.LoadAsset<Sprite>(name);
-		}
-		public static Sprite GetHorse(string name){
-			return _horse.LoadAsset<Sprite>(name);
-		}
-        public static Sprite GetAvatarHat(int id){
-            return _hat.LoadAsset<Sprite>("hat_" + id);
-		}
 
 		public static Sprite GetMapTile(string name){
 			return _map.LoadAsset<Sprite>(name);
