@@ -9,6 +9,12 @@ namespace App.Service{
         //public IEnumerator Download (string url, string path)
         public IEnumerator Download (string url, int ver, System.Action<AssetBundle> handle, bool destory = true)
         {
+            bool showConnecting = false;
+            if (App.Util.Global.SceneManager != null && !App.Util.Global.SceneManager.DialogIsShow(App.Util.SceneManager.Prefabs.ConnectingDialog) && !App.Util.Global.SceneManager.DialogIsShow(App.Util.SceneManager.Prefabs.LoadingDialog))
+            {
+                showConnecting = true;
+                App.Controller.CConnectingDialog.ToShow();
+            }
             var www = WWW.LoadFromCacheOrDownload(url, ver);
             while (!www.isDone)
             {
@@ -23,6 +29,10 @@ namespace App.Service{
                     break;
                 }
                 yield return null;
+            }
+            if (showConnecting)
+            {
+                App.Controller.CConnectingDialog.ToClose();
             }
             //yield return www;
             if(!string.IsNullOrEmpty(www.error))

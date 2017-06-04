@@ -215,7 +215,9 @@ namespace App.Controller{
             this.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.MissionDialog));
         }
         public void OpenNews(){
-            this.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.WebviewDialog));
+            string url = string.Format("{0}webview/news/index.php", HttpClient.docmainBase);
+            Request req = Request.Create("url", url);
+            this.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.WebviewDialog, req));
         }
         public void OpenShop(){
             App.Controller.shop.CShopDialog.Show();

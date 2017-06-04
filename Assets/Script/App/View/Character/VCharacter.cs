@@ -125,7 +125,7 @@ namespace App.View.Character{
             }
             num.GetComponent<MeshRenderer>().sortingOrder = clothesDownLong.sortingOrder + 10;
             num.gameObject.SetActive(false);
-            BelongChanged(ViewModel.Belong.Value, ViewModel.Belong.Value);this.alpha = 0.2f;
+            BelongChanged(ViewModel.Belong.Value, ViewModel.Belong.Value);
         }
         private bool Gray{
             set{
@@ -192,7 +192,6 @@ namespace App.View.Character{
         private void ActionOverChanged(bool oldvalue, bool newvalue)
         {
             Gray = newvalue;
-            Debug.LogError("animator.speed="+animator.speed);
             animator.speed = newvalue ? 0 : 1;
         }
         private void HpChanged(int oldvalue, int newvalue)

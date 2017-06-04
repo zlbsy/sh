@@ -62,5 +62,8 @@ namespace App.View.Gacha{
         public void OnClickGacha(int priceId, int cnt, bool free_gacha){
             (this.Controller as App.Controller.Gacha.CGachaDialog).OnClickGacha(ViewModel.GachaId.Value, priceId, cnt, cnt == 1 && free_gacha);
         }
+        public void OnClickDetail(){
+            (this.Controller as App.Controller.Gacha.CGachaDialog).OnClickDetail(ViewModel.GachaId.Value);
+        }
     }
 }

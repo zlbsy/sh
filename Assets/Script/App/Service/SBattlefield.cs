@@ -7,6 +7,7 @@ using App.Model;
 namespace App.Service{
 	public class SBattlefield : SBase {
         public MContent[] battleRewards;
+        public ResponseBase battleStartResponse;
 		public SBattlefield(){
 			
 		}
@@ -34,6 +35,7 @@ namespace App.Service{
             form.AddField("battlefield_id", battlefield_id);
             HttpClient client = new HttpClient();
             yield return App.Util.SceneManager.CurrentScene.StartCoroutine(client.Send( url, form ));
+            battleStartResponse = client.Deserialize<ResponseBase>();
         }
         public IEnumerator RequestBattleReset()
         {

@@ -51,5 +51,10 @@ namespace App.Controller.Gacha{
             Request req = Request.Create("contents", Global.SGacha.contents);
             this.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.GachaResultDialog, req));
         }
+        public void OnClickDetail(int gachaId){
+            string url = string.Format("{0}webview/gacha/{1}.php", HttpClient.docmainBase, gachaId.ToString());
+            Request req = Request.Create("url", url);
+            this.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.WebviewDialog, req));
+        }
 	}
 }

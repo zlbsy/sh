@@ -12,6 +12,7 @@ namespace App.Model.Master{
         public MBattleOwn[] owns;
         public int[][] own_positions;
         public int map_id;
+        public int ap;
         public List<string> script;
         public App.Model.MTile[] tiles;
 	}

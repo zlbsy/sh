@@ -1,20 +1,13 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Script/App/View/Character/VExpCharacterIcon.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Script/App/Controller/CReadyBattleDialog.cs">
     <Files>
-      <File FileName="Assets/Script/App/Controller/Battle/CBattlefield.cs" Line="57" Column="93" />
-      <File FileName="Assets/Script/App/Controller/CTop.cs" Line="218" Column="91" />
-      <File FileName="Assets/Script/App/Util/SceneManager.cs" Line="41" Column="22" />
-      <File FileName="Assets/Script/App/Model/MUser.cs" Line="42" Column="39" />
-      <File FileName="Assets/Script/App/Controller/Battle/CBattleWinDialog.cs" Line="1" Column="1" />
-      <File FileName="Assets/Script/App/Service/SBattlefield.cs" Line="9" Column="41" />
-      <File FileName="Assets/Script/App/Service/SBase.cs" Line="48" Column="55" />
-      <File FileName="Assets/Script/App/Controller/CPresentBoxDialog.cs" Line="13" Column="47" />
-      <File FileName="Assets/Script/App/Model/Battle/MExpCharacter.cs" Line="7" Column="5" />
-      <File FileName="Assets/Script/App/Controller/Common/CBase.cs" Line="19" Column="81" />
-      <File FileName="Assets/Script/App/View/Character/VCharacter.cs" Line="106" Column="57" />
-      <File FileName="Assets/Script/App/View/Character/VExpCharacterIcon.cs" Line="25" Column="31" />
-      <File FileName="Assets/Script/App/View/Character/VCharacterBattlefieldEvent.cs" Line="6" Column="37" />
+      <File FileName="Assets/Script/App/Controller/CReadyBattleDialog.cs" Line="29" Column="74" />
+      <File FileName="Assets/Script/App/Controller/Battle/CBattlefield.cs" Line="52" Column="63" />
+      <File FileName="Assets/Script/App/Service/SBattlefield.cs" Line="37" Column="85" />
+      <File FileName="Assets/Script/App/Service/HttpClient.cs" Line="128" Column="9" />
+      <File FileName="Assets/Script/App/Model/Master/MBattlefield.cs" Line="16" Column="36" />
+      <File FileName="Assets/Script/App/Model/MUser.cs" Line="122" Column="92" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

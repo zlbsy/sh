@@ -14,6 +14,7 @@ using App.Controller.Common;
 namespace App.Controller{
     public class CReadyBattleDialog : CDialog {
         [SerializeField]private Text title;
+        [SerializeField]private Text labelAp;
         [SerializeField]private Transform selectCharacterContent;
         [SerializeField]private Transform selectShadowContent;
         [SerializeField]private GameObject selectShadow;
@@ -25,6 +26,7 @@ namespace App.Controller{
             int battleId = request.Get<int>("battleId");
             battleFieldMaster = BattlefieldCacher.Instance.Get(battleId);
             title.text = battleFieldMaster.name;
+            labelAp.text = string.Format("Ap:{0}", battleFieldMaster.ap);
             SelectCharacterContentInit();
             yield return this.StartCoroutine(base.OnLoad(request));
             if (App.Util.Global.SUser.self.characters == null)
@@ -77,12 +79,31 @@ namespace App.Controller{
             }
         }
         public void BattleStart(){
-            List<int> characterIds = new List<int>();
+            if (battleFieldMaster.ap > Global.SUser.self.GetCurrentAp(App.Service.HttpClient.Now))
+            {
+                CAlertDialog.Show("Ap不足");
+                return;
+            }
             VCharacterIcon[] icons = selectCharacterContent.GetComponentsInChildren<VCharacterIcon>();
             if (icons.Length == 0)
             {
+                CAlertDialog.Show("请选择出战人员");
                 return;
             }
+            this.StartCoroutine(BattleStartRun(icons));
+        }
+        public IEnumerator BattleStartRun(VCharacterIcon[] icons){
+            if (Global.SUser.self.BattlingId > 0)
+            {
+                yield return this.StartCoroutine(App.Util.Global.SBattlefield.RequestBattleReset());
+            }
+            yield return this.StartCoroutine(Global.SBattlefield.RequestBattleStart(battleFieldMaster.id));
+            if (!Global.SBattlefield.battleStartResponse.result)
+            {
+                yield break;
+            }
+
+            List<int> characterIds = new List<int>();
             foreach (VCharacterIcon icon in icons)
             {
                 characterIds.Add(icon.ViewModel.CharacterId.Value);

@@ -17,10 +17,11 @@ namespace App.Controller.Webview{
         public override IEnumerator OnLoad( Request request ) 
         {  
             yield return StartCoroutine(base.OnLoad(request));
-            Show();
+            string url = request.Get<string>("url");
+            Show(url);
 		}
 
-        public void Show( System.Action complete = null )
+        public void Show( string url )
         {
             /*if(WebView == null) {
                 if(complete != null)complete();
@@ -41,13 +42,13 @@ namespace App.Controller.Webview{
             UniWebView.zoomEnable = false; // iOSの ズームを無効化
             string userAgent = "Mozilla /5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B5110e Safari/601.1 ";
             UniWebView.SetUserAgent( userAgent );
-            /*
-            UniWebView.insets.left   = 10;
-            UniWebView.insets.top    = 20;
-            UniWebView.insets.right  = 30;
-            UniWebView.insets.bottom = 40;
-            */
-            RequestLoad("http://sgj.lufylegend.com/");
+
+            /*UniWebView.insets.left   = 0;
+            UniWebView.insets.top    = 10;
+            UniWebView.insets.right  = 0;*/
+            UniWebView.insets.bottom = 106;
+
+            RequestLoad(url);
             //if(complete != null)complete();
         }
         private void RequestLoad(string url)
@@ -56,6 +57,10 @@ namespace App.Controller.Webview{
                 UniWebView.url = url;
                 UniWebView.Load();
             }
+        }
+        public override void Close(){
+            GameObject.Destroy(UniWebView);
+            base.Close();
         }
         private void OnLoadCompleteEvent(UniWebView webView, bool success, string errorMessage)
         {

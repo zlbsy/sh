@@ -15,7 +15,7 @@ namespace MyEditor
     public class CharacterTest : App.Controller.Common.CBase
     {
         [SerializeField]GameObject characterPrefab;
-        [SerializeField]Canvas layer;
+        [SerializeField]GameObject layer;
         private bool loadComplete = false;
         // Use this for initialization
         // Update is called once per frame
