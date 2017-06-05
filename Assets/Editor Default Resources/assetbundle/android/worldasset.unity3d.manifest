@@ -1,0 +1,18 @@
+ManifestFileVersion: 0
+CRC: 4010861239
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 1ccf7e7322ae0be06d3ddfc64f710aa5
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 2cc16e9312fefb65649634a38e485457
+HashAppended: 0
+ClassTypes:
+- Class: 114
+  Script: {fileID: 11500000, guid: 0f0946cbb83264d109687ecbec3592fb, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+Assets:
+- Assets/Editor Default Resources/ScriptableObject/worldasset.asset
+Dependencies: []

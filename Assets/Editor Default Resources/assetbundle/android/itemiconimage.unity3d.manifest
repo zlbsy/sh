@@ -1,0 +1,22 @@
+ManifestFileVersion: 0
+CRC: 3481907573
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 825efa7c09b4a4b1bef45fd7fd347626
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 4774d6da9b606debf00b5a5d61c4487c
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+Assets:
+- Assets/Atlas/itemicon/item_2.png
+- Assets/Atlas/itemicon/item_5.png
+- Assets/Atlas/itemicon/item_1.png
+- Assets/Atlas/itemicon/item_3.png
+- Assets/Atlas/itemicon/item_4.png
+Dependencies: []

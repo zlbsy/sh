@@ -1,0 +1,7 @@
+ManifestFileVersion: 0
+CRC: 3223324256
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: skillasset.unity3d
+      Dependencies: {}

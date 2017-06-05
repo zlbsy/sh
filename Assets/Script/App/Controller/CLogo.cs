@@ -15,7 +15,10 @@ namespace App.Controller{
     public class CLogo : CScene {
         [SerializeField]private InputField account;
         [SerializeField]private InputField password;
-        [SerializeField]private Transform loginWindow;
+        [SerializeField]private Transform loginWindow;void Awake () 
+        {
+            Camera.main.orthographicSize = Screen.height / 2;
+        }
         public override IEnumerator Start()
         {
             Global.Initialize();

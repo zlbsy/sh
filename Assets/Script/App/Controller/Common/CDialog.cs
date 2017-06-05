@@ -50,6 +50,7 @@ namespace App.Controller.Common{
                     RectTransform rect = backgroundObj.GetComponent<RectTransform>();
                     rect.offsetMin = new Vector2(0f, 0f);
                     rect.offsetMax = new Vector2(0f, 0f);
+                    rect.localScale = new Vector3(1.1f, 1.1f, 1f);
                     background = backgroundObj.GetComponent<UnityEngine.UI.Image>();
                 }
             }

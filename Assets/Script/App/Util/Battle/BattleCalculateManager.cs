@@ -101,18 +101,16 @@ namespace App.Util.Battle{
                 targetTile = cBattlefield.mapSearch.GetTile(targetCharacter.CoordinateX, targetCharacter.CoordinateY);
             }
             float attack = skillMaster.type == SkillType.attack ? attackCharacter.Ability.PhysicalAttack : attackCharacter.Ability.MagicAttack;
-            attack *= skill.Master.power;
+            //attack *= skill.Master.power;
             if (attackCharacter.IsPike && targetCharacter.IsKnife)
             {
                 //枪剑类克制刀类
                 attack *= 1.2f;
-            }
-            if (attackCharacter.IsKnife && targetCharacter.IsAx)
+            }else if (attackCharacter.IsKnife && targetCharacter.IsAx)
             {
                 //刀类克制斧类
                 attack *= 1.2f;
-            }
-            if (attackCharacter.IsAx && targetCharacter.IsPike)
+            }else if (attackCharacter.IsAx && targetCharacter.IsPike)
             {
                 //斧类克制枪剑类
                 attack *= 1.2f;
@@ -122,29 +120,26 @@ namespace App.Util.Battle{
             {
                 //长兵器克制短兵器
                 defense *= 0.8f;
-            }
-            if (attackCharacter.IsShortWeapon && targetCharacter.IsArcheryWeapon)
+            }else if (attackCharacter.IsShortWeapon && targetCharacter.IsArcheryWeapon)
             {
                 //短兵器克制远程兵器
                 defense *= 0.8f;
-            }
-            if (attackCharacter.IsArcheryWeapon && targetCharacter.IsLongWeapon)
+            }else if (attackCharacter.IsArcheryWeapon && targetCharacter.IsLongWeapon)
             {
                 //远程类兵器克制长兵器
                 defense *= 0.8f;
             }
-            float result = (attackCharacter.Level - targetCharacter.Level) * 5 + (attack - defense) * 0.5f;
+            Debug.LogError("skill.Master.strength="+skill.Master.strength + ", attack=" + attack+", defense="+defense);
+            float result = skill.Master.strength * 0.3f + attack - defense * 2f;
             if (attackCharacter.MoveType == MoveType.cavalry && targetCharacter.MoveType == MoveType.infantry && !targetCharacter.IsArcheryWeapon)
             {
                 //骑兵克制近身步兵
                 result *= 1.2f;
-            }
-            if (attackCharacter.IsArcheryWeapon && targetCharacter.MoveType == MoveType.cavalry && !targetCharacter.IsArcheryWeapon)
+            }else if (attackCharacter.IsArcheryWeapon && targetCharacter.MoveType == MoveType.cavalry && !targetCharacter.IsArcheryWeapon)
             {
                 //远程类克制近身类骑兵
                 result *= 1.2f;
-            }
-            if (attackCharacter.MoveType == MoveType.infantry && targetCharacter.WeaponType != WeaponType.archery && targetCharacter.IsArcheryWeapon)
+            }else if (attackCharacter.MoveType == MoveType.infantry && targetCharacter.WeaponType != WeaponType.archery && targetCharacter.IsArcheryWeapon)
             {
                 //近身步兵克制远程类
                 result *= 1.2f;

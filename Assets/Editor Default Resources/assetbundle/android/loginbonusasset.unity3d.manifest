@@ -1,0 +1,18 @@
+ManifestFileVersion: 0
+CRC: 1716122756
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 27deb2aeee7bddf29a8138c93a3273a3
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: f802c0fe39c44bbbda97e6d5cb134399
+HashAppended: 0
+ClassTypes:
+- Class: 114
+  Script: {fileID: 11500000, guid: 1080a9997c1bf44d49e4a8ea86e6babf, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+Assets:
+- Assets/Editor Default Resources/ScriptableObject/loginbonusasset.asset
+Dependencies: []

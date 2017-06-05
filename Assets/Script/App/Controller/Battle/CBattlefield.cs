@@ -79,7 +79,7 @@ namespace App.Controller.Battle{
                 mCharacter.Belong = Belong.enemy;
                 CharacterInit(mCharacter);
                 characters.Add(mCharacter);
-                mCharacter.Hp = 1;
+                //mCharacter.Hp = 1;
             }
             foreach(App.Model.Master.MBattleNpc battleNpc in battlefieldMaster.friends){
                 MCharacter mCharacter = NpcCacher.Instance.GetFromBattleNpc(battleNpc);

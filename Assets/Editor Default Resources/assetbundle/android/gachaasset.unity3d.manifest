@@ -1,0 +1,18 @@
+ManifestFileVersion: 0
+CRC: 3641084738
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 5b3eab9c949a4d29844e6c9aaa35d81f
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 2522f788d72afb2321faad030e328e17
+HashAppended: 0
+ClassTypes:
+- Class: 114
+  Script: {fileID: 11500000, guid: 3186f49c36f0d48bc81c47a3796603ce, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+Assets:
+- Assets/Editor Default Resources/ScriptableObject/gachaasset.asset
+Dependencies: []

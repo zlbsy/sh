@@ -1,0 +1,18 @@
+ManifestFileVersion: 0
+CRC: 3726953533
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 7effaf1642cd8257911596cc730615a7
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 18bd51c0bd95476f2a17294ebe528c24
+HashAppended: 0
+ClassTypes:
+- Class: 114
+  Script: {fileID: 11500000, guid: 248c1e93a7d644de5b7135f00606c9be, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+Assets:
+- Assets/Editor Default Resources/ScriptableObject/areaasset.asset
+Dependencies: []

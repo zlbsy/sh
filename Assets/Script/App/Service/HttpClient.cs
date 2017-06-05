@@ -89,7 +89,16 @@ namespace App.Service{
         }
         public static string assetBandleURL{
             get{ 
-                return docmain + "download/assetbundle/";
+                #if UNITY_STANDALONE
+                string target = "windows";
+                #elif UNITY_IPHONE
+                string target = "ios";
+                #elif UNITY_ANDROID
+                string target = "android";
+                #else
+                string target = "web";
+                #endif
+                return docmain + "download/assetbundle/" + target + "/";
             }
         }
         public static T Deserialize<T>(string text)

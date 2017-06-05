@@ -1,0 +1,18 @@
+ManifestFileVersion: 0
+CRC: 1727591945
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: d0d4775da620a75824102e4dcec59abb
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 097d683c51bafe798c2e59d013b96761
+HashAppended: 0
+ClassTypes:
+- Class: 114
+  Script: {fileID: 11500000, guid: 9f53ae2e488544d498580e677cf5bece, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+Assets:
+- Assets/Editor Default Resources/ScriptableObject/buildingasset.asset
+Dependencies: []

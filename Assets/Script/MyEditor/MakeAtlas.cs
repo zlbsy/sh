@@ -10,6 +10,15 @@ namespace MyEditor
     public class MakeAtlas : MonoBehaviour
     {
 
+        #if UNITY_STANDALONE
+        static private string target = "windows";
+        #elif UNITY_IPHONE
+        static private string target = "ios";
+        #elif UNITY_ANDROID
+        static private string target = "android";
+        #else
+        static private string target = "web";
+        #endif
         // Use this for initialization
         void Start()
         {
@@ -83,26 +92,6 @@ namespace MyEditor
         {
             BuildImageAssetBundle("chara");
         }
-        [MenuItem("SH/Build Assetbundle/Image/Clothes")]
-        static private void BuildAssetBundleImageClothes()
-        {
-            BuildImageAssetBundle("clothes");
-        }
-        [MenuItem("SH/Build Assetbundle/Image/Hat")]
-        static private void BuildAssetBundleImageHat()
-        {
-            BuildImageAssetBundle("hat");
-        }
-        [MenuItem("SH/Build Assetbundle/Image/Horse")]
-        static private void BuildAssetBundleImageHorse()
-        {
-            BuildImageAssetBundle("horse");
-        }
-        [MenuItem("SH/Build Assetbundle/Image/Weapon")]
-        static private void BuildAssetBundleImageWeapon()
-        {
-            BuildImageAssetBundle("weapon");
-        }
         [MenuItem("SH/Build Assetbundle/Image/EquipmentIcon")]
         static private void BuildAssetBundleImageEquipmentIcon()
         {
@@ -138,6 +127,14 @@ namespace MyEditor
         {
             BuildAssetBundleSpriteMesh("Horse");
         }
+        [MenuItem("SH/Build Assetbundle/SpriteMesh/All")]
+        static private void BuildAssetBundleSpriteMeshAll()
+        {
+            BuildAssetBundleSpriteMesh("Head");
+            BuildAssetBundleSpriteMesh("Clothes");
+            BuildAssetBundleSpriteMesh("Weapon");
+            BuildAssetBundleSpriteMesh("Horse");
+        }
         [MenuItem("SH/Build Assetbundle/Image/All")]
         static private void BuildAssetBundleImageAll()
         {
@@ -147,14 +144,29 @@ namespace MyEditor
         [MenuItem("SH/Build Assetbundle/Master/All")]
         static private void BuildAssetBundleMasterAll()
         {
+            BuildAssetBundleExp();
+            BuildAssetBundleShop();
+            BuildAssetBundleLoginBonus();
+            BuildAssetBundleGacha();
             BuildAssetBundleAvatar();
             BuildAssetBundleConstant();
+            BuildAssetBundleSkill();
+            BuildAssetBundleItem();
             BuildAssetBundleTile();
+            BuildAssetBundleWorld();
             BuildAssetBundleBaseMap();
             BuildAssetBundleBuilding();
             BuildAssetBundlePromptMessage();
             BuildAssetBundleWorld();
             BuildAssetBundleArea();
+            BuildAssetBundleCharacter();
+            BuildAssetBundleWord();
+            BuildAssetBundleMasterHorse();
+            BuildAssetBundleMasterClothes();
+            BuildAssetBundleMasterWeapon();
+            BuildAssetBundleMasterNpcEquipment();
+            BuildAssetBundleMasterNpc();
+            BuildAssetBundleMasterBattlefield();
         }
         [MenuItem("SH/Build Assetbundle/Master/Exp")]
         static private void BuildAssetBundleExp()
@@ -236,11 +248,6 @@ namespace MyEditor
         {
             BuildAssetBundleMaster("wordasset");
         }
-        [MenuItem("SH/Build Assetbundle/Master/CharacterWord")]
-        static private void BuildAssetBundleCharacterWord()
-        {
-            BuildAssetBundleMaster("characterwordasset");
-        }
         [MenuItem("SH/Build Assetbundle/Master/Horse")]
         static private void BuildAssetBundleMasterHorse()
         {
@@ -281,7 +288,7 @@ namespace MyEditor
             }
             /*List<ScriptableObject> assets = new List<ScriptableObject>();
             assets.Add(asset);*/
-            string dir = "Editor Default Resources/assetbundle/";
+            string dir = "Editor Default Resources/assetbundle/"+target+"/";
             /*
             if (!Directory.Exists(dir))
             {
@@ -328,7 +335,7 @@ namespace MyEditor
         }
         static private void BuildImageAssetBundle(string atlasName)
         {
-            /*string dir = Application.dataPath + "/Editor Default Resources/assetbundle/";
+            /*string dir = Application.dataPath + "/Editor Default Resources/assetbundle/"+target+"/";
 
             if (!Directory.Exists(dir))
             {
@@ -361,7 +368,7 @@ namespace MyEditor
                 }*/
                 Debug.LogError("BuildAssetBundle success : "+dirInfo.Name);
             } 
-            string path = "Assets/Editor Default Resources/assetbundle/";
+            string path = "Assets/Editor Default Resources/assetbundle/"+target+"/";
             BuildPipeline.BuildAssetBundles(path,builds.ToArray(),
                 BuildAssetBundleOptions.ChunkBasedCompression
                 ,GetBuildTarget()
@@ -431,7 +438,7 @@ namespace MyEditor
         }
         static private void BuildAssetBundleChilds(string name, string child, ScriptableObject asset)
         {
-            string path = "Assets/Editor Default Resources/assetbundle/"+child+"/";
+            string path = "Assets/Editor Default Resources/assetbundle/"+target+"/"+child+"/";
             string assetPath = string.Format("Assets/Editor Default Resources/ScriptableObject/{0}/{1}.asset", child, name);
             AssetBundleBuild[] builds = new AssetBundleBuild[1];
             builds[0].assetBundleName = child + "_"+name + ".unity3d";
@@ -461,7 +468,7 @@ namespace MyEditor
         }
         static private void BuildAssetBundleFace(int index, ScriptableObject asset)
         {
-            string path = "Assets/Editor Default Resources/assetbundle/face/";
+            string path = "Assets/Editor Default Resources/assetbundle/"+target+"/face/";
             string assetPath = string.Format("Assets/Editor Default Resources/ScriptableObject/face/{0}.asset", index);
             AssetBundleBuild[] builds = new AssetBundleBuild[1];
             builds[0].assetBundleName = "face_"+index + ".unity3d";

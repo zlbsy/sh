@@ -75,9 +75,9 @@ namespace App.Model{
             }
             this.HpMax = mCharacter.Level * 2 + master.hp + this.Endurance + hp;
             this.MpMax = mCharacter.Level + master.mp + this.Knowledge + mp;
-            this.PhysicalAttack = Mathf.FloorToInt(mCharacter.Level + (this.Power * 2 + this.Knowledge) * (mCharacter.MoveType == MoveType.cavalry ? this.Riding : this.Walker) * 0.01f);
+            this.PhysicalAttack = Mathf.FloorToInt((this.Power * 2 + this.Knowledge) * (0.5f + (mCharacter.MoveType == MoveType.cavalry ? this.Riding : this.Walker) * 0.5f * 0.01f) * (1f + mCharacter.Level * 0.01f));
             this.MagicAttack = Mathf.FloorToInt(mCharacter.Level + (this.Trick * 2 + this.Knowledge) * (mCharacter.MoveType == MoveType.cavalry ? this.Riding : this.Walker) * 0.01f);
-            this.PhysicalDefense = mCharacter.Level + this.Power + this.Knowledge;
+            this.PhysicalDefense = Mathf.FloorToInt((this.Power + this.Knowledge * 0.5f) * (1f + mCharacter.Level * 0.01f));
             this.MagicDefense = mCharacter.Level + this.Trick + this.Knowledge;
         }
         /// <summary>

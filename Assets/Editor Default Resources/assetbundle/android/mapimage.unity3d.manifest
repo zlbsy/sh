@@ -1,0 +1,35 @@
+ManifestFileVersion: 0
+CRC: 1708108606
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 7d34f9f649d8c3c7581f2f4fd9034bf5
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 4774d6da9b606debf00b5a5d61c4487c
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+Assets:
+- Assets/Atlas/map/tile_6.png
+- Assets/Atlas/map/tile_attack.png
+- Assets/Atlas/map/tile_3.png
+- Assets/Atlas/map/tile_4.png
+- Assets/Atlas/map/tile_2001.png
+- Assets/Atlas/map/tile_moving_enemy.png
+- Assets/Atlas/map/tile_moving_friend.png
+- Assets/Atlas/map/tile_2002.png
+- Assets/Atlas/map/tile_7.png
+- Assets/Atlas/map/tile_3001.png
+- Assets/Atlas/map/tile_3004.png
+- Assets/Atlas/map/tile_1.png
+- Assets/Atlas/map/tile_moving_self.png
+- Assets/Atlas/map/tile_2.png
+- Assets/Atlas/map/tile_0.png
+- Assets/Atlas/map/tile_5.png
+- Assets/Atlas/map/tile_3003.png
+- Assets/Atlas/map/tile_3002.png
+Dependencies: []

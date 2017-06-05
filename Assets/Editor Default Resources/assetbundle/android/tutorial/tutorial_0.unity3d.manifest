@@ -1,0 +1,18 @@
+ManifestFileVersion: 0
+CRC: 3348677121
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: e9ab2e02f120a9d3aa98fcfd7d59db86
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 8c1870e0bc4c20b59153d395b570bc45
+HashAppended: 0
+ClassTypes:
+- Class: 114
+  Script: {fileID: 11500000, guid: 6dd2cacb4cfdd4083981eac203e97f3d, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+Assets:
+- Assets/Editor Default Resources/ScriptableObject/tutorial/0.asset
+Dependencies: []
