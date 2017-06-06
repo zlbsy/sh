@@ -267,7 +267,7 @@ namespace App.Model{
         public int CharacterId{
             set{
                 App.Model.Master.MCharacter master = CharacterCacher.Instance.Get(value);
-                if (value >= App.Util.Global.Constant.user_characters[0] && value <= App.Util.Global.Constant.user_characters[1])
+                if (value >= App.Util.Global.Constant.user_characters[0] && value <= App.Util.Global.Constant.user_characters[1] && this.UserId > 0)
                 {
                     MUser mUser = UserCacher.Instance.Get(this.UserId);
                     this.ViewModel.Name.Value = mUser.name;

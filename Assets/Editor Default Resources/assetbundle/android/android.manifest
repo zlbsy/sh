@@ -1,7 +1,7 @@
 ManifestFileVersion: 0
-CRC: 2756727493
+CRC: 1712858016
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
-      Name: horsemesh.unity3d
+      Name: weaponasset.unity3d
       Dependencies: {}
