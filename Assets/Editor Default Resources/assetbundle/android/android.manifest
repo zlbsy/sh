@@ -1,7 +1,7 @@
 ManifestFileVersion: 0
-CRC: 1712858016
+CRC: 576656954
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
-      Name: weaponasset.unity3d
+      Name: headmesh.unity3d
       Dependencies: {}

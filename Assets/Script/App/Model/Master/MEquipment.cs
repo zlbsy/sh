@@ -34,6 +34,11 @@ namespace App.Model.Master{
         public string name;//
         public int qualification;//品质
         public WeaponType weapon_type;//武器类型
+        /// <summary>
+        /// 武器相性
+        /// 大于0时需要跟武将相性相同才能装备
+        /// </summary>
+        public int compatibility;
         public MoveType move_type;//移动类型
         public ClothesType clothes_type;//衣服类型
         public int physical_attack;//物理攻击

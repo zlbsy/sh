@@ -61,7 +61,7 @@ namespace App.Model{
         /// <summary>
         /// 法宝
         /// </summary>
-        magicWeapon,
+        magic,
     }
     public enum ActionType{
         idle,
