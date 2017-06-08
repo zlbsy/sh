@@ -78,10 +78,8 @@ namespace MyEditor
             {
                 this.StartCoroutine(ChangeAction(ActionType.attack));
             }
-            if (GUI.Button(new Rect(100, 140, 100, 30), "ChangeHead"))
+            if (GUI.Button(new Rect(0, 140, 100, 30), "ChangeHead >"))
             {
-                Debug.LogError("model = " + model);
-                Debug.LogError("model.Head = " + model.Head);
                 if (ImageAssetBundleManager.GetHeadMesh(model.Head + 1) == null)
                 {
                     model.Head = 1;
@@ -91,7 +89,14 @@ namespace MyEditor
                     model.Head += 1;
                 }
             }
-            if (GUI.Button(new Rect(220, 140, 100, 30), "ChangeHat"))
+            if (GUI.Button(new Rect(110, 140, 30, 30), "<"))
+            {
+                if (ImageAssetBundleManager.GetHeadMesh(model.Head - 1) != null)
+                {
+                    model.Head -= 1;
+                }
+            }
+            if (GUI.Button(new Rect(220, 140, 100, 30), "ChangeHat >"))
             {
                 if (ImageAssetBundleManager.GetHatMesh(model.Hat + 1) == null)
                 {
@@ -100,6 +105,27 @@ namespace MyEditor
                 else
                 {
                     model.Hat += 1;
+                }
+            }
+            if (GUI.Button(new Rect(330, 140, 30, 30), ">>"))
+            {
+                if (ImageAssetBundleManager.GetHatMesh(model.Hat + 10) != null)
+                {
+                    model.Hat += 10;
+                }
+            }
+            if (GUI.Button(new Rect(370, 140, 30, 30), "<"))
+            {
+                if (ImageAssetBundleManager.GetHatMesh(model.Hat - 1) == null)
+                {
+                    model.Hat -= 1;
+                }
+            }
+            if (GUI.Button(new Rect(410, 140, 30, 30), "<<"))
+            {
+                if (ImageAssetBundleManager.GetHatMesh(model.Hat - 1) == null)
+                {
+                    model.Hat -= 10;
                 }
             }
             if (GUI.Button(new Rect(200, 180, 100, 30), "ChangeHorse"))
