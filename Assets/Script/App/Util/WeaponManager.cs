@@ -26,13 +26,13 @@ namespace App.Util{
         /// 长兵器
         /// </summary>
         public static bool IsLongWeapon(WeaponType weaponType){
-            return weaponType == WeaponType.longKnife || weaponType == WeaponType.longAx || weaponType == WeaponType.pike || weaponType == WeaponType.sticks;
+            return weaponType == WeaponType.longKnife || weaponType == WeaponType.longAx || weaponType == WeaponType.pike || weaponType == WeaponType.longSticks;
         }
         /// <summary>
         /// 短兵器
         /// </summary>
         public static bool IsShortWeapon(WeaponType weaponType){
-            return weaponType == WeaponType.shortKnife || weaponType == WeaponType.ax || weaponType == WeaponType.sword || weaponType == WeaponType.fist;
+            return weaponType == WeaponType.shortKnife || weaponType == WeaponType.ax || weaponType == WeaponType.sword || weaponType == WeaponType.sticks;
         }
         /// <summary>
         /// 双兵器
@@ -67,10 +67,10 @@ namespace App.Util{
             }
             else
             {
-                if (IsPike(weaponType) && actionType == ActionType.attack)
+                /*if (IsPike(weaponType) && actionType == ActionType.attack)
                 {
                     return "pike";
-                }
+                }*/
                 return "short";
             }
         }

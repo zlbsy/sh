@@ -1,13 +1,32 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Script/App/Controller/CReadyBattleDialog.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Script/App/View/VBaseMap.cs">
     <Files>
-      <File FileName="Assets/Script/App/Controller/CReadyBattleDialog.cs" Line="29" Column="74" />
-      <File FileName="Assets/Script/App/Controller/Battle/CBattlefield.cs" Line="52" Column="63" />
-      <File FileName="Assets/Script/App/Service/SBattlefield.cs" Line="37" Column="85" />
-      <File FileName="Assets/Script/App/Service/HttpClient.cs" Line="128" Column="9" />
-      <File FileName="Assets/Script/App/Model/Master/MBattlefield.cs" Line="16" Column="36" />
-      <File FileName="Assets/Script/App/Model/MUser.cs" Line="122" Column="92" />
+      <File FileName="Assets/Script/App/View/Character/VExpCharacterIcon.cs" Line="1" Column="1" />
+      <File FileName="Assets/Script/App/Controller/Battle/CBattlefield.cs" Line="82" Column="19" />
+      <File FileName="Assets/Script/App/Controller/CTop.cs" Line="1" Column="1" />
+      <File FileName="Assets/Script/App/Util/SceneManager.cs" Line="84" Column="9" />
+      <File FileName="Assets/Script/App/Controller/Battle/CBattleWinDialog.cs" Line="1" Column="1" />
+      <File FileName="Assets/Script/App/Service/SBattlefield.cs" Line="1" Column="1" />
+      <File FileName="Assets/Script/App/Service/SBase.cs" Line="10" Column="32" />
+      <File FileName="Assets/Script/App/Controller/CPresentBoxDialog.cs" Line="1" Column="1" />
+      <File FileName="Assets/Script/App/Model/Battle/MExpCharacter.cs" Line="1" Column="1" />
+      <File FileName="Assets/Script/App/View/Character/VCharacter.cs" Line="1" Column="1" />
+      <File FileName="Assets/Script/App/View/Character/VCharacterBattlefieldEvent.cs" Line="1" Column="1" />
+      <File FileName="Assets/Script/App/Controller/CLogo.cs" Line="94" Column="57" />
+      <File FileName="Assets/Script/App/Controller/Gacha/CGachaDialog.cs" Line="1" Column="1" />
+      <File FileName="Assets/Script/App/Model/MCharacter.cs" Line="218" Column="32" />
+      <File FileName="Assets/Script/App/Model/MCharacterAbility.cs" Line="80" Column="88" />
+      <File FileName="Assets/Script/App/Util/Battle/BattleCalculateManager.cs" Line="132" Column="98" />
+      <File FileName="Assets/Script/App/View/VBindText.cs" Line="1" Column="1" />
+      <File FileName="Assets/Script/App/View/VBaseMap.cs" Line="279" Column="145" />
+      <File FileName="Assets/Script/App/Controller/Common/CScene.cs" Line="14" Column="29" />
+      <File FileName="Assets/Script/App/Controller/Common/CBase.cs" Line="7" Column="2" />
+      <File FileName="Assets/Script/MyEditor/MakeAtlas.cs" Line="21" Column="15" />
+      <File FileName="Assets/Script/App/Service/HttpClient.cs" Line="101" Column="71" />
+      <File FileName="Assets/Script/App/Model/Scriptable/AssetBase.cs" Line="43" Column="43" />
+      <File FileName="Assets/Script/App/Controller/CAlertDialog.cs" Line="18" Column="37" />
+      <File FileName="Assets/Script/App/Controller/Common/CDialog.cs" Line="53" Column="64" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

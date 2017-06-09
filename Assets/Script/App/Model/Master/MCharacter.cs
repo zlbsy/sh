@@ -40,8 +40,8 @@ namespace App.Model.Master{
         public int knife;//短刀
         public int long_ax;//长斧
         public int ax;//短斧
-        public int sticks;//棍棒
-        public int fist;//拳脚
+        public int long_sticks;//长棍棒
+        public int sticks;//短棍棒
         public int archery;//箭术
         public int hidden_weapons;//暗器
         public int dual_wield;//双手

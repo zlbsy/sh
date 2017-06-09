@@ -37,8 +37,8 @@ namespace App.Model{
             this.Knife = master.knife;
             this.LongAx = master.long_ax;
             this.Ax = master.ax;
+            this.LongSticks = master.long_sticks;
             this.Sticks = master.sticks;
-            this.Fist = master.fist;
             this.Archery = master.archery;
             this.HiddenWeapons = master.hidden_weapons;
             this.DualWield = master.dual_wield;
@@ -67,8 +67,8 @@ namespace App.Model{
                 this.Knife += skillMaster.knife;
                 this.LongAx += skillMaster.long_ax;
                 this.Ax += skillMaster.ax;
-                this.Sticks += skillMaster.sticks;
-                this.Fist += skillMaster.fist;
+                this.LongSticks += skillMaster.sticks;
+                this.Sticks += skillMaster.fist;
                 this.Archery += skillMaster.archery;
                 this.HiddenWeapons += skillMaster.hidden_weapons;
                 this.DualWield += skillMaster.dual_wield;
@@ -279,7 +279,18 @@ namespace App.Model{
             }
         }
         /// <summary>
-        /// 棍棒 = 初始 + 技能
+        /// 长棍棒 = 初始 + 技能
+        /// </summary>
+        public int LongSticks{
+            set{
+                this.ViewModel.LongSticks.Value = value;
+            }
+            get{ 
+                return this.ViewModel.LongSticks.Value;
+            }
+        }
+        /// <summary>
+        /// 短棍棒 = 初始 + 技能
         /// </summary>
         public int Sticks{
             set{
@@ -287,17 +298,6 @@ namespace App.Model{
             }
             get{ 
                 return this.ViewModel.Sticks.Value;
-            }
-        }
-        /// <summary>
-        /// 拳脚 = 初始 + 技能
-        /// </summary>
-        public int Fist{
-            set{
-                this.ViewModel.Fist.Value = value;
-            }
-            get{ 
-                return this.ViewModel.Fist.Value;
             }
         }
         /// <summary>

@@ -47,13 +47,13 @@ namespace App.Model{
         /// </summary>
         archery,
         /// <summary>
-        /// 棍棒
+        /// 长棍棒
+        /// </summary>
+        longSticks,
+        /// <summary>
+        /// 短棍棒
         /// </summary>
         sticks,
-        /// <summary>
-        /// 拳脚
-        /// </summary>
-        fist,
         /// <summary>
         /// 双手
         /// </summary>

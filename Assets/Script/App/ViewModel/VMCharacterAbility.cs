@@ -29,8 +29,8 @@ namespace App.ViewModel
         public VMProperty<int> Knife = new VMProperty<int>();
         public VMProperty<int> LongAx = new VMProperty<int>();
         public VMProperty<int> Ax = new VMProperty<int>();
+        public VMProperty<int> LongSticks = new VMProperty<int>();
         public VMProperty<int> Sticks = new VMProperty<int>();
-        public VMProperty<int> Fist = new VMProperty<int>();
         public VMProperty<int> Archery = new VMProperty<int>();
         public VMProperty<int> HiddenWeapons = new VMProperty<int>();
         public VMProperty<int> DualWield = new VMProperty<int>();

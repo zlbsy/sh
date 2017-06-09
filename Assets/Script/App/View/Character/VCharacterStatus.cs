@@ -67,8 +67,8 @@ namespace App.View.Character{
             statusList.Add("短刀",ability.Knife.ToString());
             statusList.Add("长斧",ability.LongAx.ToString());
             statusList.Add("短斧",ability.Ax.ToString());
-            statusList.Add("棍棒",ability.Sticks.ToString());
-            statusList.Add("拳脚",ability.Fist.ToString());
+            statusList.Add("棍棒",ability.LongSticks.ToString());
+            statusList.Add("拳脚",ability.Sticks.ToString());
             statusList.Add("箭术",ability.Archery.ToString());
             statusList.Add("暗器",ability.HiddenWeapons.ToString());
             statusList.Add("双手",ability.DualWield.ToString());
