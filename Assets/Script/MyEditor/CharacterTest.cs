@@ -116,14 +116,14 @@ namespace MyEditor
             }
             if (GUI.Button(new Rect(370, 140, 30, 30), "<"))
             {
-                if (ImageAssetBundleManager.GetHatMesh(model.Hat - 1) == null)
+                if (ImageAssetBundleManager.GetHatMesh(model.Hat - 1) != null)
                 {
                     model.Hat -= 1;
                 }
             }
             if (GUI.Button(new Rect(410, 140, 30, 30), "<<"))
             {
-                if (ImageAssetBundleManager.GetHatMesh(model.Hat - 1) == null)
+                if (ImageAssetBundleManager.GetHatMesh(model.Hat - 1) != null)
                 {
                     model.Hat -= 10;
                 }
