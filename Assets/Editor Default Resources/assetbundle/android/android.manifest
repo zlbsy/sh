@@ -1,7 +1,7 @@
 ManifestFileVersion: 0
-CRC: 226519434
+CRC: 2920707695
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
-      Name: headmesh.unity3d
+      Name: skillasset.unity3d
       Dependencies: {}
