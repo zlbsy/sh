@@ -69,7 +69,6 @@ namespace App.View.Character{
         private static Dictionary<App.Model.Belong, Material> hpMaterials;
         private Anima2D.SpriteMeshInstance[] allSprites;
         private bool init = false;
-        private int animationIndex = 0;
         private Animator _animator;
         private Animator animator{
             get{ 
@@ -271,7 +270,6 @@ namespace App.View.Character{
             string animatorName = string.Format("{0}_{1}_{2}", ViewModel.MoveType.ToString(), App.Util.WeaponManager.GetWeaponTypeAction(ViewModel.WeaponType.Value, newvalue), newvalue.ToString());
             //Debug.LogError(ViewModel.CharacterId.Value + " = " + animatorName);
             animator.Play(animatorName);
-            animationIndex = 0;
             if (newvalue == App.Model.ActionType.idle)
             {
                 if (ViewModel.Hp.Value == 0)
@@ -413,7 +411,6 @@ namespace App.View.Character{
             }
         }
         public void ChangeAction(App.Model.ActionType type){
-            animationIndex = 0;
             ViewModel.Action.Value = type;
         }
         public void ActionEnd(){
@@ -425,10 +422,6 @@ namespace App.View.Character{
                 meshs[key].sortingOrder = meshOrders[key];
                 Debug.LogError("SetOrders : " + key + " = " + meshs[key].sortingOrder);
             }
-        }
-        public void ChangeAnimationIdex(int index){
-            animationIndex = index;
-            //UpdateView ();
         }
         /// <summary>
         /// Empties the action.

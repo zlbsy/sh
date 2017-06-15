@@ -129,6 +129,8 @@ namespace App.Model{
                 case 4:
                     return new Color32(255, 165, 0, 255);
                     break;
+                default:
+                    return Color.white;
             }
             return Color.white;
         }

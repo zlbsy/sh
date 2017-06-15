@@ -899,11 +899,10 @@ public class UniWebView : MonoBehaviour {
                                             (int)(pos.x - _webViewRect.x), (int)(pos.y - _webViewRect.y), deltaY,
                                             down, press, release, keyPress, keyCode, keyChars,
                                             id);
-#if UNITY_5
-                GL.IssuePluginEvent(_webViewId);
-#else
-                
+#if UNITY_5_6_OR_NEWER
                 GL.IssuePluginEvent(UniWebViewPlugin.GetRenderEventFunc(), _webViewId);
+#else
+                GL.IssuePluginEvent(_webViewId);
 #endif
                 Matrix4x4 m = GUI.matrix;
                 GUI.matrix = Matrix4x4.TRS(new Vector3(0, Screen.height, 0),

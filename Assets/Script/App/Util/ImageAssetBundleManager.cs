@@ -7,20 +7,13 @@ using App.Service;
 
 namespace App.Util{
     public class ImageAssetBundleManager {
-        private static AssetBundle _weapon = null;
         public static string weaponUrl{ get{ return HttpClient.assetBandleURL + "weaponmesh.unity3d";} }
-        //public static string weaponUrl{ get{ return HttpClient.assetBandleURL + "weaponimage.unity3d";} }
         public static Anima2D.SpriteMesh[] weapon;
-        private static AssetBundle _head = null;
         public static string headUrl{ get{ return HttpClient.assetBandleURL + "headmesh.unity3d";} }
         public static Anima2D.SpriteMesh[] head;
-        private static AssetBundle _horse = null;
         public static string horseUrl{ get{ return HttpClient.assetBandleURL + "horsemesh.unity3d";} }
-        //public static string horseUrl{ get{ return HttpClient.assetBandleURL + "horseimage.unity3d";} }
         public static Anima2D.SpriteMesh[] horse;
-        private static AssetBundle _clothes = null;
         public static string clothesUrl{ get{ return HttpClient.assetBandleURL + "clothesmesh.unity3d";} }
-        //public static string clothesUrl{ get{ return HttpClient.assetBandleURL + "clothesimage.unity3d";} }
         public static Anima2D.SpriteMesh[] clothes;
 
         private static AssetBundle _map = null;

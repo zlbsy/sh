@@ -98,6 +98,10 @@ namespace App.Controller{
             {
                 SubGUI(assetsKeys);
             }
+            else if (type == "scenarios")
+            {
+                SubGUI(scenarioKeys);
+            }
         }
         void SubGUI(string[] keys)
         {

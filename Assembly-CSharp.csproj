@@ -233,6 +233,7 @@
      <Compile Include="Assets\Script\App\Util\Cacher\NpcEquipmentCacher.cs" />
      <Compile Include="Assets\Script\App\Util\Cacher\ShopCacher.cs" />
      <Compile Include="Assets\Script\App\Util\Cacher\SkillCacher.cs" />
+     <Compile Include="Assets\Script\App\Util\Cacher\StrategyCacher.cs" />
      <Compile Include="Assets\Script\App\Util\Cacher\TileCacher.cs" />
      <Compile Include="Assets\Script\App\Util\Cacher\UserCacher.cs" />
      <Compile Include="Assets\Script\App\Util\FullScreen.cs" />
