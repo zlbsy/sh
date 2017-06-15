@@ -100,7 +100,7 @@ namespace App.Util.Battle{
             {
                 targetTile = cBattlefield.mapSearch.GetTile(targetCharacter.CoordinateX, targetCharacter.CoordinateY);
             }
-            float attack = skillMaster.type == SkillType.attack ? attackCharacter.Ability.PhysicalAttack : attackCharacter.Ability.MagicAttack;
+            float attack = System.Array.Exists(skillMaster.types, s=>s==SkillType.attack) ? attackCharacter.Ability.PhysicalAttack : attackCharacter.Ability.MagicAttack;
             //attack *= skill.Master.power;
             if (attackCharacter.IsPike && targetCharacter.IsKnife)
             {
@@ -115,7 +115,7 @@ namespace App.Util.Battle{
                 //斧类克制枪剑类
                 attack *= 1.2f;
             }
-            float defense = skillMaster.type == SkillType.attack ? targetCharacter.Ability.PhysicalDefense : targetCharacter.Ability.MagicDefense;
+            float defense = System.Array.Exists(skillMaster.types, s=>s==SkillType.attack) ? targetCharacter.Ability.PhysicalDefense : targetCharacter.Ability.MagicDefense;
             if (attackCharacter.IsLongWeapon && targetCharacter.IsShortWeapon)
             {
                 //长兵器克制短兵器

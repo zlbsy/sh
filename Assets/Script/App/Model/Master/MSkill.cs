@@ -8,7 +8,7 @@ namespace App.Model.Master{
         }
         public int level;
         public string name;//
-        public SkillType type;//
+        public SkillType[] types;//
         public int price;//升级所需费用
         public int character_level;//升级所需英雄等级
         public WeaponType[] weapon_types;
@@ -19,7 +19,7 @@ namespace App.Model.Master{
         /// </summary>
         public RadiusType radius_type;
         public int radius;
-
+        public MSkillEffects effect;
 
         //SkillType为ability时下列数据有效
         public int hp;//
@@ -39,8 +39,8 @@ namespace App.Model.Master{
         public int knife;//短刀
         public int long_ax;//长斧
         public int ax;//短斧
+        public int long_sticks;//棍棒
         public int sticks;//棍棒
-        public int fist;//拳脚
         public int archery;//箭术
         public int hidden_weapons;//暗器
         public int dual_wield;//双手

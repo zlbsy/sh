@@ -47,7 +47,7 @@ namespace App.Model{
             foreach (App.Model.MSkill skill in skills)
             {
                 App.Model.Master.MSkill skillMaster = skill.Master;
-                if (skillMaster.type != SkillType.ability)
+                if (!System.Array.Exists(skillMaster.types, s=>s==SkillType.ability))
                 {
                     continue;
                 }
@@ -67,8 +67,8 @@ namespace App.Model{
                 this.Knife += skillMaster.knife;
                 this.LongAx += skillMaster.long_ax;
                 this.Ax += skillMaster.ax;
-                this.LongSticks += skillMaster.sticks;
-                this.Sticks += skillMaster.fist;
+                this.LongSticks += skillMaster.long_sticks;
+                this.Sticks += skillMaster.sticks;
                 this.Archery += skillMaster.archery;
                 this.HiddenWeapons += skillMaster.hidden_weapons;
                 this.DualWield += skillMaster.dual_wield;

@@ -37,7 +37,7 @@ namespace App.Util.Battle{
             mCharacter = System.Array.Find(mBaseMap.Characters, _=>_.Belong == this.belong && !_.ActionOver);
             MSkill attackSkill = System.Array.Find(mCharacter.Skills, delegate(MSkill skill){
                 App.Model.Master.MSkill skillMaster = skill.Master;
-                return (skillMaster.type == SkillType.attack || skillMaster.type == SkillType.magic) 
+                return System.Array.Exists(skillMaster.types, s=>(s==SkillType.attack || s==SkillType.magic)) 
                     && System.Array.IndexOf(skillMaster.weapon_types, mCharacter.WeaponType) >= 0;
             });
             mCharacter.CurrentSkill = attackSkill;
@@ -60,7 +60,8 @@ namespace App.Util.Battle{
                 bool needHeal = false;
                 MSkill healSkill = System.Array.Find(mCharacter.Skills, delegate(MSkill skill){
                     App.Model.Master.MSkill skillMaster = skill.Master;
-                    return skillMaster.type == SkillType.heal && System.Array.IndexOf(skillMaster.weapon_types, mCharacter.WeaponType) >= 0;
+                    return System.Array.Exists(skillMaster.types, s=>s==SkillType.heal) 
+                        && System.Array.IndexOf(skillMaster.weapon_types, mCharacter.WeaponType) >= 0;
                 });
                 if (healSkill != null)
                 {

@@ -59,16 +59,16 @@ namespace App.View.Battlefield{
             }
             else
             {
-                App.Model.SkillType type = ViewModel.CurrentSkill.Value.Master.type;
-                if (type == App.Model.SkillType.attack)
+                App.Model.SkillType[] types = ViewModel.CurrentSkill.Value.Master.types;
+                if (System.Array.Exists(types, s=>s==App.Model.SkillType.attack))
                 {
                     attack.text = string.Format("{0} {1}", Language.Get("physical_attack"), ViewModel.Ability.Value.PhysicalAttack);
                 }
-                else if (type == App.Model.SkillType.magic)
+                else if (System.Array.Exists(types, s=>s==App.Model.SkillType.magic))
                 {
                     attack.text = string.Format("{0} {1}", Language.Get("magic_attack"), ViewModel.Ability.Value.MagicAttack);
                 }
-                else if (type == App.Model.SkillType.heal)
+                else if (System.Array.Exists(types, s=>s==App.Model.SkillType.heal))
                 {
                     attack.text = string.Format("{0} {1}", Language.Get("heal"), ViewModel.Ability.Value.MagicAttack);
                 }

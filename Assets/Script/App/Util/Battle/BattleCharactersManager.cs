@@ -55,15 +55,13 @@ namespace App.Util.Battle{
                 return result;
             }
             List<VCharacter> characters;
-            switch (skill.type)
+            if (System.Array.Exists(skill.types, s => s == SkillType.heal))
             {
-                case SkillType.heal:
-                    characters = vBaseMap.Characters.FindAll(_=>this.IsSameBelong(_.ViewModel.Belong.Value, vCharacter.ViewModel.Belong.Value));
-                    break;
-                case SkillType.attack:
-                default:
-                    characters = vBaseMap.Characters.FindAll(_=>this.IsSameBelong(_.ViewModel.Belong.Value, targetView.ViewModel.Belong.Value));
-                    break;
+                characters = vBaseMap.Characters.FindAll(_=>this.IsSameBelong(_.ViewModel.Belong.Value, vCharacter.ViewModel.Belong.Value));
+            }
+            else/* if (System.Array.Exists(skill.types, s => s == SkillType.attack))*/
+            {
+                characters = vBaseMap.Characters.FindAll(_=>this.IsSameBelong(_.ViewModel.Belong.Value, targetView.ViewModel.Belong.Value));
             }
             VTile targetTile = cBattlefield.mapSearch.GetTile(targetView.ViewModel.CoordinateX.Value, targetView.ViewModel.CoordinateY.Value);
             if (skill.radius_type == RadiusType.range)

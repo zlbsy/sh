@@ -62,7 +62,7 @@ namespace App.Model{
         public bool UseToEnemy{
             get{ 
                 App.Model.Master.MSkill master = Master;
-                if (master.type == SkillType.attack || master.type == SkillType.magic)
+                if(System.Array.Exists(master.types, s=>(s==SkillType.attack || s==SkillType.magic)))
                 {
                     return true;
                 }
