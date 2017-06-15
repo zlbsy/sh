@@ -184,7 +184,7 @@ namespace MyEditor
             Global.Initialize();
             characterPrefab.SetActive(false);
             yield return StartCoroutine (base.Start());
-            SEditorMaster sMaster = new SEditorMaster();
+            //SEditorMaster sMaster = new SEditorMaster();
             MVersion versions = new MVersion();
             SUser sUser = Global.SUser;
             List<IEnumerator> list = new List<IEnumerator>();

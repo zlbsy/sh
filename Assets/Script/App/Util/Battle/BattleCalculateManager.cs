@@ -15,12 +15,12 @@ namespace App.Util.Battle{
     /// </summary>
     public class BattleCalculateManager{
         private CBattlefield cBattlefield;
-        private MBaseMap mBaseMap;
-        private VBaseMap vBaseMap;
+        //private MBaseMap mBaseMap;
+        //private VBaseMap vBaseMap;
         public BattleCalculateManager(CBattlefield controller, MBaseMap model, VBaseMap view){
             cBattlefield = controller;
-            mBaseMap = model;
-            vBaseMap = view;
+            //mBaseMap = model;
+            //vBaseMap = view;
         }
         /// <summary>
         /// 是否可反击

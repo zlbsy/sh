@@ -187,10 +187,10 @@ namespace App.Model{
             if(user.characters != null){
                 this.characters = user.characters;
             }
-            if(user.loginbonus_cnt != null){
+            if(user.loginbonus_cnt != this.loginbonus_cnt){
                 this.loginbonus_cnt = user.loginbonus_cnt;
             }
-            if(user.loginbonus_received != null){
+            if(user.loginbonus_received != this.loginbonus_received){
                 this.loginbonus_received = user.loginbonus_received;
             }
             if(user.progress != null){

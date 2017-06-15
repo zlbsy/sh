@@ -14,18 +14,18 @@ namespace App.Util.Battle{
     /// </summary>
     public class BattleTilesManager{
         private CBattlefield cBattlefield;
-        private MBaseMap mBaseMap;
+        //private MBaseMap mBaseMap;
         private VBaseMap vBaseMap;
-        private App.Model.Master.MBaseMap baseMapMaster;
+        //private App.Model.Master.MBaseMap baseMapMaster;
         private List<VTile> currentMovingTiles;
         private List<VTile> currentAttackTiles;
         private List<GameObject> attackIcons = new List<GameObject>();
         public List<VTile> CurrentMovingTiles{get{ return currentMovingTiles;}}
         public BattleTilesManager(CBattlefield controller, MBaseMap model, VBaseMap view){
             cBattlefield = controller;
-            mBaseMap = model;
+            //mBaseMap = model;
             vBaseMap = view;
-            baseMapMaster = BaseMapCacher.Instance.Get(mBaseMap.MapId);
+            //baseMapMaster = BaseMapCacher.Instance.Get(mBaseMap.MapId);
         }
         public void ShowCharacterMovingArea(MCharacter mCharacter){
             currentMovingTiles = cBattlefield.breadthFirst.Search(mCharacter, 0, true);

@@ -122,17 +122,13 @@ namespace App.Model{
             {
                 case 2:
                     return new Color32(0, 191, 255, 255);
-                    break;
                 case 3:
                     return new Color32(138, 43, 226, 255);
-                    break;
                 case 4:
                     return new Color32(255, 165, 0, 255);
-                    break;
                 default:
                     return Color.white;
             }
-            return Color.white;
         }
         public VMCharacter ViewModel { get { return (VMCharacter)viewModel; } }
         /// <summary>

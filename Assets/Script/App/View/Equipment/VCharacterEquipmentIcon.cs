@@ -14,7 +14,7 @@ namespace App.View.Equipment{
         public App.Model.Master.MEquipment.EquipmentType equipmentType;
         public App.Model.MoveType moveType;
         #region VM处理
-        public VMEquipment ViewModel { get { return (VMEquipment)BindingContext; } }
+        //public VMEquipment ViewModel { get { return (VMEquipment)BindingContext; } }
         protected override void OnBindingContextChanged(VMBase oldViewModel, VMBase newViewModel)
         {
             base.OnBindingContextChanged(oldViewModel, newViewModel);
@@ -36,8 +36,8 @@ namespace App.View.Equipment{
                 equipmentTypeView.gameObject.SetActive(true);
             }
         }
-        public void ClickChild(){
+        /*public void ClickChild(){
             this.Controller.SendMessage("EquipmentIconClick", this);
-        }
+        }*/
     }
 }

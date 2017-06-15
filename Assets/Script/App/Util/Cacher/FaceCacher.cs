@@ -25,7 +25,7 @@ namespace App.Util.Cacher{
             faces.Add(face);
             loadingIds.Remove(face.id);
         }
-        public virtual App.Model.Scriptable.MFace Get(int id){
+        public override App.Model.Scriptable.MFace Get(int id){
             return faces.Find(f=>f.id == id);
         }
     }

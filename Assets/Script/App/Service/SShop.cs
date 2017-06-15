@@ -15,6 +15,7 @@ namespace App.Service{
         public class ResponseBuy : ResponseBase
         {
         }
+        /*
         public IEnumerator RequestList(int buildingId, int x, int y)
         {
             var url = "shop/shop_list";
@@ -22,6 +23,7 @@ namespace App.Service{
             yield return App.Util.SceneManager.CurrentScene.StartCoroutine(client.Send( url));
             ResponseList response = client.Deserialize<ResponseList>();
         }
+        */
         public IEnumerator RequestBuyBuild(int buildingId, int x, int y)
         {
             WWWForm form = new WWWForm();

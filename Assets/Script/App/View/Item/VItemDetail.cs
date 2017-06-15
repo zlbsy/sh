@@ -12,7 +12,7 @@ using Holoville.HOTween;
 namespace App.View.Item{
     public class VItemDetail : VBase {
         [SerializeField]private VItemIcon itemIcon;
-        [SerializeField]private Text name;
+        [SerializeField]private Text itemName;
         [SerializeField]private Text explanation;
         [SerializeField]private CanvasGroup canvasGroup;
         [SerializeField]private GameObject listButtons;
@@ -46,7 +46,7 @@ namespace App.View.Item{
         private void ItemIdChanged(int oldvalue, int newvalue)
         {
             App.Model.Master.MItem mItem = ItemCacher.Instance.Get(newvalue);
-            name.text = mItem.name;
+            itemName.text = mItem.name;
             explanation.text = mItem.explanation;
         }
         public override void UpdateView(){

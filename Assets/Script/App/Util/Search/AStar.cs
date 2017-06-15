@@ -12,17 +12,17 @@ namespace App.Util.Search{
     /// </summary>
     public class AStar{
         private CBaseMap cBaseMap;
-        private MBaseMap mBaseMap;
+        //private MBaseMap mBaseMap;
         private VBaseMap vBaseMap;
-        private App.Model.Master.MBaseMap baseMapMaster;
+        //private App.Model.Master.MBaseMap baseMapMaster;
         private List<VTile> path = new List<VTile>();
         private List<VTile> open = new List<VTile>();
         private VTile endNode;
         public AStar(CBaseMap controller, MBaseMap model, VBaseMap view){
             cBaseMap = controller;
-            mBaseMap = model;
+            //mBaseMap = model;
             vBaseMap = view;
-            baseMapMaster = BaseMapCacher.Instance.Get(mBaseMap.MapId);
+            //baseMapMaster = BaseMapCacher.Instance.Get(mBaseMap.MapId);
         }
         private void init(){
             foreach(VTile tile in vBaseMap.tileUnits){

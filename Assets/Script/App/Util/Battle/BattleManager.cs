@@ -18,15 +18,15 @@ namespace App.Util.Battle{
         private CBattlefield cBattlefield;
         private MCharacter mCharacter;
         private MBaseMap mBaseMap;
-        private VBaseMap vBaseMap;
-        private App.Model.Master.MBaseMap baseMapMaster;
+        //private VBaseMap vBaseMap;
+        //private App.Model.Master.MBaseMap baseMapMaster;
         private System.Action returnAction;
         private List<MCharacter> actionCharacterList = new List<MCharacter>();
         public BattleManager(CBattlefield controller, MBaseMap model, VBaseMap view){
             cBattlefield = controller;
             mBaseMap = model;
-            vBaseMap = view;
-            baseMapMaster = BaseMapCacher.Instance.Get(mBaseMap.MapId);
+            //vBaseMap = view;
+            //baseMapMaster = BaseMapCacher.Instance.Get(mBaseMap.MapId);
         }
         public MCharacter CurrentCharacter{
             get{ 

@@ -16,8 +16,8 @@ namespace App.Util.Battle{
     public class CharacterAI{
         private CBattlefield cBattlefield;
         private MBaseMap mBaseMap;
-        private VBaseMap vBaseMap;
-        private App.Model.Master.MBaseMap baseMapMaster;
+        //private VBaseMap vBaseMap;
+        //private App.Model.Master.MBaseMap baseMapMaster;
         private Belong belong;
         private MCharacter mCharacter;
         private MCharacter attackTarget = null;
@@ -25,8 +25,8 @@ namespace App.Util.Battle{
         public CharacterAI(CBattlefield controller, MBaseMap model, VBaseMap view){
             cBattlefield = controller;
             mBaseMap = model;
-            vBaseMap = view;
-            baseMapMaster = BaseMapCacher.Instance.Get(mBaseMap.MapId);
+            //vBaseMap = view;
+            //baseMapMaster = BaseMapCacher.Instance.Get(mBaseMap.MapId);
         }
         public void Execute(Belong belong){
             this.belong = belong;
