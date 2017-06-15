@@ -8,6 +8,7 @@ using App.Util.Cacher;
 using App.View;
 using Holoville.HOTween;
 using App.Controller.Battle;
+using System.Linq;
 
 namespace App.Util.Battle{
     /// <summary>
@@ -161,6 +162,40 @@ namespace App.Util.Battle{
             return false;
         }
         public void ActionOver(){
+            MSkill skill = this.mCharacter.CurrentSkill;
+            List<App.Model.Master.MSkillEffect> skillEffects = new List<App.Model.Master.MSkillEffect>();
+            if (skill.Master.effect.enemy.time == App.Model.Master.SkillEffectBegin.attack_end)
+            {
+                skillEffects.Add(skill.Master.effect.enemy);
+            }else if (skill.Master.effect.self.time == App.Model.Master.SkillEffectBegin.attack_end)
+            {
+                skillEffects.Add(skill.Master.effect.self);
+            }
+            if (skillEffects.Count > 0)
+            {
+                List<App.Model.Master.MStrategy> strategys = new List<App.Model.Master.MStrategy>();
+                foreach (App.Model.Master.MSkillEffect skillEffect in skillEffects)
+                {
+                    List<int> aids = skillEffect.aids.ToList();
+                    int index = 0;
+                    while (index++ < skillEffect.count)
+                    {
+                        int i = Random.Range(0, aids.Count - 1);
+                        App.Model.Master.MStrategy strategy = StrategyCacher.Instance.Get(aids[i]);
+                        aids.RemoveAt(i);
+                        strategys.Add(strategy);
+                    }
+                }
+                foreach (App.Model.Master.MStrategy strategy in strategys)
+                {
+                    //TODO::特效
+                }
+            }
+            if (this.mCharacter.Target != null)
+            {
+                this.mCharacter.Target.Target = null;
+                this.mCharacter.Target = null;
+            }
             this.mCharacter.ActionOver = true;
             cBattlefield.tilesManager.ClearCurrentTiles();
             cBattlefield.CloseOperatingMenu();
