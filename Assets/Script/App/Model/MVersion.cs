@@ -20,6 +20,7 @@ namespace App.Model{
         public int battlefield;
         public int item;
         public int skill;
+        public int strategy;
         public int exp;
         public int map;
         public int head_img;

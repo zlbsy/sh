@@ -163,6 +163,7 @@ namespace App.View.Character{
                 oldVm.Direction.OnValueChanged -= DirectionChanged;
                 oldVm.Hp.OnValueChanged -= HpChanged;
                 oldVm.ActionOver.OnValueChanged -= ActionOverChanged;
+                oldVm.Aids.OnValueChanged -= AidsChanged;
             }
             if (ViewModel!=null)
             {
@@ -181,12 +182,17 @@ namespace App.View.Character{
                 ViewModel.Direction.OnValueChanged += DirectionChanged;
                 ViewModel.Hp.OnValueChanged += HpChanged;
                 ViewModel.ActionOver.OnValueChanged += ActionOverChanged;
+                ViewModel.Aids.OnValueChanged += AidsChanged;
             }
         }
         private App.Controller.CBaseMap cBaseMap{
             get{
                 return this.Controller as App.Controller.CBaseMap;
             }
+        }
+        private void AidsChanged(List<App.Model.MBase> oldvalue, List<App.Model.MBase> newvalue)
+        {
+            
         }
         private void ActionOverChanged(bool oldvalue, bool newvalue)
         {

@@ -167,6 +167,7 @@ namespace MyEditor
             BuildAssetBundleMasterNpcEquipment();
             BuildAssetBundleMasterNpc();
             BuildAssetBundleMasterBattlefield();
+            BuildAssetBundleMasterStrategy();
         }
         [MenuItem("SH/Build Assetbundle/Master/Exp")]
         static private void BuildAssetBundleExp()
@@ -277,6 +278,11 @@ namespace MyEditor
         static private void BuildAssetBundleMasterBattlefield()
         {
             BuildAssetBundleMaster(App.Model.Scriptable.BattlefieldAsset.Name);
+        }
+        [MenuItem("SH/Build Assetbundle/Master/Strategy")]
+        static private void BuildAssetBundleMasterStrategy()
+        {
+            BuildAssetBundleMaster(App.Model.Scriptable.StrategyAsset.Name);
         }
         static private void BuildAssetBundleMaster(string name)
         {

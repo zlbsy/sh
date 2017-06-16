@@ -104,6 +104,7 @@ namespace App.Model{
     public class MCharacter : MBase {
         public MCharacter(){
             viewModel = new VMCharacter ();
+            this.ViewModel.Aids.Value = new List<App.Model.MBase>();
         }
         public static MCharacter Create(App.Model.Master.MNpc npc){
             MCharacter mCharacter = new MCharacter();
@@ -497,6 +498,19 @@ namespace App.Model{
             get{ 
                 return this.ViewModel.Ability.Value;
             }
+        }
+        public List<App.Model.MBase> Aids{
+            get{ 
+                return this.ViewModel.Aids.Value;
+            }
+        }
+        public void AddAid(App.Model.Master.MStrategy aid){
+            this.ViewModel.Aids.Value.Add(aid);
+            this.ViewModel.Aids.OnValueChanged(null, this.ViewModel.Aids.Value);
+        }
+        public void RemoveAid(App.Model.Master.MStrategy aid){
+            this.ViewModel.Aids.Value.Remove(aid);
+            this.ViewModel.Aids.OnValueChanged(null, this.ViewModel.Aids.Value);
         }
     }
 }

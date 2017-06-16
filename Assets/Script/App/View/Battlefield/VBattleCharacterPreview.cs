@@ -18,6 +18,8 @@ namespace App.View.Battlefield{
         [SerializeField]private Text physicalDefense;
         [SerializeField]private Text magicDefense;
         [SerializeField]private Text movePower;
+        [SerializeField]private Transform aidContent;
+        [SerializeField]private GameObject aidItem;
         #region VM处理
         public VMCharacter ViewModel { get { return (VMCharacter)BindingContext; } }
         protected override void OnBindingContextChanged(VMBase oldViewModel, VMBase newViewModel)
@@ -32,6 +34,7 @@ namespace App.View.Battlefield{
                 oldVm.CurrentSkill.OnValueChanged -= CurrentSkillChanged;
                 oldVm.Hp.OnValueChanged -= HpChanged;
                 oldVm.Mp.OnValueChanged -= MpChanged;
+                oldVm.Aids.OnValueChanged -= AidsChanged;
             }
             if (ViewModel!=null)
             {
@@ -39,6 +42,7 @@ namespace App.View.Battlefield{
                 ViewModel.CurrentSkill.OnValueChanged += CurrentSkillChanged;
                 ViewModel.Hp.OnValueChanged += HpChanged;
                 ViewModel.Mp.OnValueChanged += MpChanged;
+                ViewModel.Aids.OnValueChanged += AidsChanged;
             }
         }
         private void HpChanged(int oldvalue, int newvalue)
@@ -48,6 +52,10 @@ namespace App.View.Battlefield{
         private void MpChanged(int oldvalue, int newvalue)
         {
             mp.text = string.Format("MP <color=\"#ff0000\">{0}</color>/{1}", newvalue, ViewModel.Ability.Value.MpMax);
+        }
+        private void AidsChanged(List<App.Model.MBase> oldvalue, List<App.Model.MBase> newvalue)
+        {
+            this.Controller.ScrollViewSets(aidContent, aidItem, newvalue);
         }
         private void CharacterIdChanged(int oldvalue, int newvalue)
         {
@@ -94,6 +102,7 @@ namespace App.View.Battlefield{
             CurrentSkillChanged(null, ViewModel.CurrentSkill.Value);
             HpChanged(0, ViewModel.Hp.Value);
             MpChanged(0, ViewModel.Mp.Value);
+            AidsChanged(null, ViewModel.Aids.Value);
         }
         #endregion
         public void ClickLeft(){

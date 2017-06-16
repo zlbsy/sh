@@ -164,10 +164,27 @@ namespace App.Util.Battle{
         public void ActionOver(){
             MSkill skill = this.mCharacter.CurrentSkill;
             List<App.Model.Master.MSkillEffect> skillEffects = new List<App.Model.Master.MSkillEffect>();
-            if (skill.Master.effect.enemy.time == App.Model.Master.SkillEffectBegin.attack_end)
+            if (skill.Master.effect.enemy.count > 0 && skill.Master.effect.enemy.time == App.Model.Master.SkillEffectBegin.attack_end)
             {
-                skillEffects.Add(skill.Master.effect.enemy);
-            }else if (skill.Master.effect.self.time == App.Model.Master.SkillEffectBegin.attack_end)
+                //skillEffects.Add(skill.Master.effect.enemy);
+                List<int> aids = skill.Master.effect.enemy.aids.ToList();
+                int index = 0;
+                List<App.Model.Master.MStrategy> strategys = new List<App.Model.Master.MStrategy>();
+                while (index++ < skill.Master.effect.enemy.count)
+                {
+                    int i = Random.Range(0, aids.Count - 1);
+                    App.Model.Master.MStrategy strategy = StrategyCacher.Instance.Get(aids[i]);
+                    aids.RemoveAt(i);
+                    strategys.Add(strategy);
+                }
+                foreach (App.Model.Master.MStrategy strategy in strategys)
+                {
+                    //TODO::特效
+                    if(strategy.effect_type == App.Model.Master.StrategyEffectType.aid){
+                        this.mCharacter.Target.AddAid(strategy);
+                    }
+                }
+            }else if (skill.Master.effect.self.count > 0 && skill.Master.effect.self.time == App.Model.Master.SkillEffectBegin.attack_end)
             {
                 skillEffects.Add(skill.Master.effect.self);
             }
@@ -185,10 +202,6 @@ namespace App.Util.Battle{
                         aids.RemoveAt(i);
                         strategys.Add(strategy);
                     }
-                }
-                foreach (App.Model.Master.MStrategy strategy in strategys)
-                {
-                    //TODO::特效
                 }
             }
             if (this.mCharacter.Target != null)

@@ -1,0 +1,18 @@
+ManifestFileVersion: 0
+CRC: 2825795915
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 990832c3f7b55492db07dc3f05f4dfc4
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: db7d5e206056d2f013cb9771ef5ca7e8
+HashAppended: 0
+ClassTypes:
+- Class: 114
+  Script: {fileID: 11500000, guid: 3b800f85934f945688dca6986671874c, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+Assets:
+- Assets/Editor Default Resources/ScriptableObject/strategyasset.asset
+Dependencies: []

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace App.Model.Master{
     [System.Serializable]
-    public enum StrategyType{
+    public enum AidType{
         physicalAttack,
         magicAttack,
         physicalDefense,
@@ -16,7 +16,7 @@ namespace App.Model.Master{
     public class MStrategy : MBase {
         public MStrategy(){
         }
-        public StrategyType type;
+        public AidType type;
         public StrategyEffectType effect_type;
         public float hert;
 	}

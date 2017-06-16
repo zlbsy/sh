@@ -37,6 +37,7 @@ namespace App.ViewModel
         public VMProperty<Belong> Belong = new VMProperty<Belong>();
         public VMProperty<MSkill[]> Skills = new VMProperty<MSkill[]>();
         public VMProperty<MCharacter> Target = new VMProperty<MCharacter>();
+        public VMProperty<List<App.Model.MBase>> Aids = new VMProperty<List<App.Model.MBase>>();
         public VMProperty<MCharacterAbility> Ability = new VMProperty<MCharacterAbility>();
         public VMProperty<bool> ActionOver = new VMProperty<bool>();
 	}
