@@ -9,7 +9,7 @@ using App.View.Character;
 using UnityEngine.UI;
 using App.Util;
 using App.Controller.Common;
-
+using App.Model.Scriptable;
 
 namespace App.Controller{
     public class CReadyBattleDialog : CDialog {
@@ -102,7 +102,11 @@ namespace App.Controller{
             {
                 yield break;
             }
-
+            yield return this.StartCoroutine(Global.SUser.Download(EffectAsset.Url, Global.versions.effect, (AssetBundle assetbundle)=>{
+                EffectAsset.assetbundle = assetbundle;
+                App.Controller.Battle.CBattlefield.effectAnimation = EffectAsset.Data.effectAnimation;
+                App.Model.Scriptable.EffectAsset.Clear();
+            }));
             List<int> characterIds = new List<int>();
             foreach (VCharacterIcon icon in icons)
             {

@@ -13,6 +13,7 @@ namespace App.Model.Master{
         public int[][] own_positions;
         public int map_id;
         public int ap;
+        public int max_bout;
         public List<string> script;
         public App.Model.MTile[] tiles;
 	}

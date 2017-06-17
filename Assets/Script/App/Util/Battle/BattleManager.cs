@@ -182,6 +182,8 @@ namespace App.Util.Battle{
                     //TODO::特效
                     if(strategy.effect_type == App.Model.Master.StrategyEffectType.aid){
                         this.mCharacter.Target.AddAid(strategy);
+                        VTile vTile = this.cBattlefield.mapSearch.GetTile(this.mCharacter.Target.CoordinateX, this.mCharacter.Target.CoordinateY);
+                        this.cBattlefield.CreateEffect(strategy.hert > 0 ? "effect_up" : "effect_down", vTile.transform);
                     }
                 }
             }else if (skill.Master.effect.self.count > 0 && skill.Master.effect.self.time == App.Model.Master.SkillEffectBegin.attack_end)

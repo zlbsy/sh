@@ -11,6 +11,7 @@ using App.View.Common;
 using App.View.Character;
 using App.Util;
 using App.Controller.Common;
+using App.View.Effect;
 
 
 namespace App.Controller.Battle{
@@ -20,6 +21,9 @@ namespace App.Controller.Battle{
         [SerializeField]CBattleCharacterPreviewDialog battleCharacterPreview;
         [SerializeField]GameObject attackTween;
         [SerializeField]VBottomMenu battleMenu;
+
+        public static VEffectAnimation effectAnimation;
+
         private int battlefieldId;
         List<int> characterIds;
         private List<VCharacter> dynamicCharacters = new List<VCharacter>();
@@ -42,6 +46,7 @@ namespace App.Controller.Battle{
         private App.Util.SceneManager.Scenes fromScene;
         private Request fromRequest;
         private int boutCount = 0;
+        private int maxBout = 0;
         public override IEnumerator OnLoad( Request request ) 
         {  
             battleCharacterPreview.gameObject.SetActive(false);
@@ -52,8 +57,20 @@ namespace App.Controller.Battle{
             fromRequest = request.Get<Request>("fromRequest");
             yield return this.StartCoroutine(base.OnLoad(request));
         }
+        public GameObject CreateEffect(string name, Transform trans){
+            GameObject obj = Instantiate(CBattlefield.effectAnimation.gameObject);
+            obj.transform.SetParent(trans);
+            obj.transform.localScale = new Vector3(2f, 2f, 2f);
+            obj.transform.localPosition = new Vector3(0f, 0.3f, 0f);
+            obj.transform.localEulerAngles = new Vector3(-30f, 0f, 0f);
+
+            VEffectAnimation effect = obj.GetComponent<VEffectAnimation>();
+            effect.animator.Play(name);
+            return obj;
+        }
         protected override void InitMap(){
             App.Model.Master.MBattlefield battlefieldMaster = App.Util.Cacher.BattlefieldCacher.Instance.Get(battlefieldId);
+            maxBout = battlefieldMaster.max_bout;
             title.text = battlefieldMaster.name;
             mBaseMap = new MBaseMap();
             mBaseMap.MapId = battlefieldMaster.map_id;
@@ -116,7 +133,7 @@ namespace App.Controller.Battle{
             {
                 closeEvent = CloseOperatingMenu;
             }
-            Request req = Request.Create("belong", belong, "bout", boutCount, "maxBout", 20, "closeEvent", closeEvent);
+            Request req = Request.Create("belong", belong, "bout", boutCount, "maxBout", maxBout, "closeEvent", closeEvent);
             this.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.BoutWaveDialog, req));
         }
         /// <summary>
@@ -214,7 +231,7 @@ namespace App.Controller.Battle{
             this.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.BattleSkillListDialog, req));
         }
         public void OpenBattleMenu(){
-            Request req = Request.Create("title", title.text, "bout", "5/20");
+            Request req = Request.Create("title", title.text, "bout", string.Format("{0}/{1}", boutCount, maxBout));
             this.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.BattleMenuDialog, req));
         }
         /// <summary>
@@ -239,6 +256,10 @@ namespace App.Controller.Battle{
                 "star", 2
             );
             this.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.BattleWinDialog, req));
+        }
+        public override void OnDestroy(){
+            CBattlefield.effectAnimation = null;
+            base.OnDestroy();
         }
         #region 行动中武将
         /// <summary>

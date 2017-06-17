@@ -284,6 +284,11 @@ namespace MyEditor
         {
             BuildAssetBundleMaster(App.Model.Scriptable.StrategyAsset.Name);
         }
+        [MenuItem("SH/Build Assetbundle/Prefab/Effect")]
+        static private void BuildAssetBundlePrefabEffect()
+        {
+            BuildAssetBundleMaster(App.Model.Scriptable.EffectAsset.Name);
+        }
         static private void BuildAssetBundleMaster(string name)
         {
             string assetPath = string.Format("ScriptableObject/{0}.asset", name);

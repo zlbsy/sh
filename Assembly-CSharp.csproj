@@ -175,6 +175,7 @@
      <Compile Include="Assets\Script\App\Model\Scriptable\CharacterAsset.cs" />
      <Compile Include="Assets\Script\App\Model\Scriptable\ClothesAsset.cs" />
      <Compile Include="Assets\Script\App\Model\Scriptable\ConstantAsset.cs" />
+     <Compile Include="Assets\Script\App\Model\Scriptable\EffectAsset.cs" />
      <Compile Include="Assets\Script\App\Model\Scriptable\ExpAsset.cs" />
      <Compile Include="Assets\Script\App\Model\Scriptable\FaceAsset.cs" />
      <Compile Include="Assets\Script\App\Model\Scriptable\GachaAsset.cs" />
@@ -283,6 +284,7 @@
      <Compile Include="Assets\Script\App\View\Common\VContentsChild.cs" />
      <Compile Include="Assets\Script\App\View\Common\VTweenAlpha.cs" />
      <Compile Include="Assets\Script\App\View\Common\VTweenPosition.cs" />
+     <Compile Include="Assets\Script\App\View\Effect\VEffectAnimation.cs" />
      <Compile Include="Assets\Script\App\View\Equipment\VCharacterEquipmentIcon.cs" />
      <Compile Include="Assets\Script\App\View\Equipment\VEquipmentIcon.cs" />
      <Compile Include="Assets\Script\App\View\Equipment\VEquipments.cs" />

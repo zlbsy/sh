@@ -67,6 +67,7 @@ namespace App.Controller{
                     assets.Add("face", CreateScriptableObjectFaceAssetRun());
                     assets.Add("Prompt", CreateScriptableObjectPromptAssetRun());
                     assets.Add("Language", CreateScriptableObjectLanguageAssetRun());
+                    assets.Add("Effect", CreateScriptableObjectEffectAssetRun());
                     assetsKeys = assets.Keys.ToArray();
 
                     scenarioKeys = scenarios.Keys.ToArray();
@@ -124,7 +125,13 @@ namespace App.Controller{
 
                 if (GUI.Button(new Rect(50, 100 + (i - page * 10) * 50, 200, 30), key))
                 {
-                    this.StartCoroutine(apis[key]);
+                    if (type == "apis")
+                    {
+                        this.StartCoroutine(apis[key]);
+                    }else if (type == "assets")
+                    {
+                        this.StartCoroutine(assets[key]);
+                    }
                 }
             }
         }
@@ -171,6 +178,13 @@ namespace App.Controller{
         {
             var promptMessageAsset = ScriptableObject.CreateInstance<App.Model.Scriptable.PromptMessageAsset>();
             UnityEditor.AssetDatabase.CreateAsset(promptMessageAsset, string.Format("Assets/Editor Default Resources/ScriptableObject/{0}.asset", App.Model.Scriptable.PromptMessageAsset.Name));
+            UnityEditor.AssetDatabase.Refresh();
+            yield break;
+        }
+        IEnumerator CreateScriptableObjectEffectAssetRun()
+        {
+            var effectAsset = ScriptableObject.CreateInstance<App.Model.Scriptable.EffectAsset>();
+            UnityEditor.AssetDatabase.CreateAsset(effectAsset, string.Format("Assets/Editor Default Resources/ScriptableObject/{0}.asset", App.Model.Scriptable.EffectAsset.Name));
             UnityEditor.AssetDatabase.Refresh();
             yield break;
         }
