@@ -76,6 +76,7 @@ namespace App.View{
                     VTile vTile = tileUnits[i];
                     obj.transform.eulerAngles = new Vector3(-30f, 0f, 0f);
                     obj.transform.localPosition = vTile.transform.localPosition;
+                    obj.transform.localScale = new Vector3(0.6f, 0.6f, 1f);
                     mCharacter.X = obj.transform.localPosition.x;
                     mCharacter.Y = obj.transform.localPosition.y;
                     mCharacter.Action = App.Model.ActionType.idle;

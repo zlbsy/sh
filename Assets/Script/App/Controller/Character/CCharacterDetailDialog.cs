@@ -10,6 +10,7 @@ using System.Linq;
 using App.View.Equipment;
 using App.View.Character;
 using App.Controller.Common;
+using UnityEngine.UI;
 
 
 namespace App.Controller.Character{
@@ -20,12 +21,14 @@ namespace App.Controller.Character{
         [SerializeField]private VCharacterStatus vCharacterStatus;
         [SerializeField]private VEquipments vEquipment;
         [SerializeField]private VCharacterSkill vCharacterSkill;
+        [SerializeField]private GameObject skillPreview;
         private GameObject currentContent;
         private VBase[] contents;
         App.Model.MCharacter character;
         SEquipment sEquipment = new SEquipment();
         public override IEnumerator OnLoad( Request request ) 
         {  
+            HideSkillDetail();
             int characterId = request.Get<int>("character_id");
             if (Global.SUser.self.equipments == null)
             {
@@ -167,6 +170,24 @@ namespace App.Controller.Character{
                     character.Action = ActionType.idle;
                     break;
             }
+        }
+        public void ShowSkillDetail(int skillId){
+            skillPreview.SetActive(true);
+            App.Model.Master.MSkill skillMaster = App.Util.Cacher.SkillCacher.Instance.Get(skillId);
+            RectTransform trans = skillPreview.GetComponent<RectTransform>();
+            trans.position = new Vector3(trans.position.x, Input.mousePosition.y, 0f);
+            skillPreview.SetActive(true);
+            skillPreview.transform.Find("Name").GetComponent<Text>().text = skillMaster.name;
+            skillPreview.transform.Find("Detailed").GetComponent<Text>().text = skillMaster.explanation;
+            this.StopAllCoroutines();
+            this.StartCoroutine(WaitForHideSkillDetail());
+        }
+        private IEnumerator WaitForHideSkillDetail(){
+            yield return new WaitForSeconds(1f);
+            HideSkillDetail();
+        }
+        public void HideSkillDetail(){
+            skillPreview.SetActive(false);
         }
 	}
 }

@@ -43,6 +43,7 @@ namespace App.Controller{
                 GameObject obj = Instantiate(selectShadow);
                 obj.SetActive(true);
                 obj.transform.SetParent(selectShadowContent);
+                obj.transform.localScale = Vector3.one;
             }
         }
         private void BaseCharacterList(){
@@ -64,9 +65,11 @@ namespace App.Controller{
                 GameObject shadowObj = Instantiate(selectShadow);
                 shadowObj.SetActive(true);
                 shadowObj.transform.SetParent(selectCharacterContent);
+                shadowObj.transform.localScale = Vector3.one;
                 GameObject obj = Instantiate(characterIcon);
                 obj.transform.SetParent(shadowObj.transform);
-                obj.transform.localScale = Vector3.one * 0.65f;
+                //obj.transform.localScale = Vector3.one * 0.65f;
+                obj.transform.localScale = Vector3.one;
                 VCharacterIcon vCharacterIcon = obj.GetComponent<VCharacterIcon>();
                 vCharacterIcon.BindingContext = character.ViewModel;
                 vCharacterIcon.UpdateView();

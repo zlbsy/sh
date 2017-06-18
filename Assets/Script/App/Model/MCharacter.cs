@@ -113,8 +113,9 @@ namespace App.Model{
             mCharacter.Horse = npc.horse;
             mCharacter.Clothes = npc.clothes;
             mCharacter.Weapon = npc.weapon;
-            mCharacter.MoveType = (MoveType)System.Enum.Parse(typeof(MoveType), npc.move_type, true);
-            mCharacter.WeaponType = (WeaponType)System.Enum.Parse(typeof(WeaponType), npc.weapon_type, true);
+            mCharacter.Star = npc.star;
+            //mCharacter.MoveType = (MoveType)System.Enum.Parse(typeof(MoveType), npc.move_type, true);
+            //mCharacter.WeaponType = (WeaponType)System.Enum.Parse(typeof(WeaponType), npc.weapon_type, true);
             return mCharacter;
         }
         public static Color GetColor(int character_id){

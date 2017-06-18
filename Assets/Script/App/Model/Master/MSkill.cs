@@ -20,6 +20,7 @@ namespace App.Model.Master{
         public RadiusType radius_type;
         public int radius;
         public MSkillEffects effect;
+        public string explanation;
 
         //SkillType为ability时下列数据有效
         public int hp;//

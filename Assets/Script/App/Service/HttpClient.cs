@@ -120,7 +120,7 @@ namespace App.Service{
 			}
 			catch (Exception e)
 			{
-				Debug.Log(json);
+                Debug.Log("Deserialize Exception : " + json);
 				throw e;
 			}
 

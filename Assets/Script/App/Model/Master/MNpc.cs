@@ -8,8 +8,8 @@ namespace App.Model.Master{
         public int horse;//NpcEquipmentCacher id
         public int clothes;//NpcEquipmentCacher id
         public int weapon;//NpcEquipmentCacher id
-        public string move_type;
-        public string weapon_type;
+        //public string move_type;
+        //public string weapon_type;
         public int star;
 	}
 }

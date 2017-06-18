@@ -25,7 +25,7 @@ namespace App.Model.Master{
         /// 每个英雄都有一个技能空位，可以学习新技能
         /// </summary>
         public int qualification;
-        public int introduction;
+        public string introduction;
         public int power;//力量
         public int knowledge;//技巧
         public int speed;//速度

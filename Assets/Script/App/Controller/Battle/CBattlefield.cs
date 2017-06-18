@@ -60,8 +60,8 @@ namespace App.Controller.Battle{
         public GameObject CreateEffect(string name, Transform trans){
             GameObject obj = Instantiate(CBattlefield.effectAnimation.gameObject);
             obj.transform.SetParent(trans);
-            obj.transform.localScale = new Vector3(2f, 2f, 2f);
-            obj.transform.localPosition = new Vector3(0f, 0.3f, 0f);
+            obj.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
+            obj.transform.localPosition = new Vector3(0f, 0.2f, 0f);
             obj.transform.localEulerAngles = new Vector3(-30f, 0f, 0f);
 
             VEffectAnimation effect = obj.GetComponent<VEffectAnimation>();

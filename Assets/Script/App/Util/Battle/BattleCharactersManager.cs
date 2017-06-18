@@ -37,6 +37,7 @@ namespace App.Util.Battle{
         /// </summary>
         public bool IsInSkillDistance(int CoordinateX, int CoordinateY, int targetX, int targetY, MCharacter distanceCharacter){
             MSkill targetSkill = distanceCharacter.CurrentSkill;
+            Debug.LogError("targetSkill="+targetSkill);
             App.Model.Master.MSkill targetSkillMaster = targetSkill.Master;
             int distance = cBattlefield.mapSearch.GetDistance(CoordinateX, CoordinateY, targetX, targetY);
             return distance >= targetSkillMaster.distance[0] && distance <= targetSkillMaster.distance[1];

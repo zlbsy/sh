@@ -71,6 +71,9 @@ namespace App.View.Character{
             background.color = learnedColor;
             LevelChanged(0, ViewModel.Level.Value);
         }
+        public void ShowDetail(){
+            this.Controller.SendMessage("ShowSkillDetail", ViewModel.SkillId.Value);
+        }
         public void LevelUp(){
             this.Controller.SendMessage("SkillLevelUp", ViewModel.Id.Value);
         }

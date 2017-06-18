@@ -95,7 +95,6 @@ namespace App.Util.Battle{
             {
                 SetActionCharacterList(this.mCharacter, mCharacter, false);
             }
-
             cBattlefield.tilesManager.ClearCurrentTiles();
             cBattlefield.CloseOperatingMenu();
             cBattlefield.HideBattleCharacterPreviewDialog();
@@ -104,21 +103,27 @@ namespace App.Util.Battle{
             OnActionComplete();
         }
         private void SetActionCharacterList(MCharacter actionCharacter, MCharacter targetCharacter, bool canCounter){
-            //Debug.LogError("attackCharacter="+attackCharacter.Belong+", "+attackCharacter.Id);
-            //Debug.LogError("targetCharacter="+targetCharacter.Belong+", "+targetCharacter.Id);
             int count = cBattlefield.calculateManager.SkillCount(actionCharacter, targetCharacter);
+            int countBack = count;
             while(count-- > 0){
                 actionCharacterList.Add(actionCharacter);
             }
-            if (canCounter && cBattlefield.calculateManager.CanCounterAttack(actionCharacter, targetCharacter, actionCharacter.CoordinateX, actionCharacter.CoordinateY, targetCharacter.CoordinateX, targetCharacter.CoordinateY))
+            if (!canCounter || !cBattlefield.calculateManager.CanCounterAttack(actionCharacter, targetCharacter, actionCharacter.CoordinateX, actionCharacter.CoordinateY, targetCharacter.CoordinateX, targetCharacter.CoordinateY))
             {
-                count = cBattlefield.calculateManager.CounterAttackCount(actionCharacter, targetCharacter);
-                while (count-- > 0)
-                {
-                    actionCharacterList.Add(targetCharacter);
+                return;
+            }
+            count = cBattlefield.calculateManager.CounterAttackCount(actionCharacter, targetCharacter);
+            while (count-- > 0)
+            {
+                actionCharacterList.Add(targetCharacter);
+            }
+            //反击后反击
+            if (actionCharacter.CurrentSkill.Master.effect.special == App.Model.Master.SkillEffectSpecial.attack_back_attack)
+            {
+                while(countBack-- > 0){
+                    actionCharacterList.Add(actionCharacter);
                 }
             }
-            //Debug.LogError("attackCharacterList.Count="+attackCharacterList.Count);
         }
         public void OnActionComplete(){
             if (actionCharacterList.Count > 0)
@@ -146,11 +151,22 @@ namespace App.Util.Battle{
             {
                 return true;
             }
-            bool continueAttack = false;
-            //TODO::是否引导攻击
+            //是否引导攻击
+            bool continueAttack = (this.mCharacter.CurrentSkill.Master.effect.special == App.Model.Master.SkillEffectSpecial.continue_attack);
             if (continueAttack)
             {
-                MCharacter mCharacter = null;
+                VTile vTile = cBattlefield.mapSearch.GetTile(this.mCharacter.CoordinateX, this.mCharacter.CoordinateY);
+                MCharacter mCharacter = System.Array.Find(mBaseMap.Characters, (c)=>{
+                    if(c.Hp == 0){
+                        return false;
+                    }
+                    if (cBattlefield.charactersManager.IsSameBelong(this.mCharacter.Belong, c.Belong))
+                    {
+                        return false;
+                    }
+                    bool canAttack = cBattlefield.charactersManager.IsInSkillDistance(c.CoordinateX, c.CoordinateY, vTile.CoordinateX, vTile.CoordinateY, this.mCharacter);
+                    return canAttack;
+                });
                 if (mCharacter != null)
                 {
                     cBattlefield.ActionEndHandler -= OnActionComplete;
