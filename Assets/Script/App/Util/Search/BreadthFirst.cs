@@ -83,7 +83,7 @@ namespace App.Util.Search{
             }
             foreach (MCharacter character in mBaseMap.Characters)
             {
-                if (cBattlefield.charactersManager.IsSameCharacter(mCharacter, character))
+                if (character.Hp == 0 || cBattlefield.charactersManager.IsSameCharacter(mCharacter, character))
                 {
                     continue;
                 }

@@ -31,7 +31,6 @@ namespace App.Controller.Battle{
             ActionEnd();
         }
         public void OnDamage(VCharacter vCharacter){
-            //UnityEngine.Debug.LogError("OnDamage");
             MCharacter mCharacter = this.GetCharacterModel(vCharacter);
             MCharacter targetModel = vCharacter.ViewModel.Target.Value;
             VCharacter target = this.GetCharacterView(targetModel);

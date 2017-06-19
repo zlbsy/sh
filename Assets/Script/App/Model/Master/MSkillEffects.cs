@@ -33,6 +33,10 @@ namespace App.Model.Master{
         /// 反击不受任何限制
         /// </summary>
         force_back_attack,
+        /// <summary>
+        /// 必中
+        /// </summary>
+        force_hit,
     }
     [System.Serializable]
 	public class MSkillEffects : MBase {

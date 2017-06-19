@@ -258,11 +258,23 @@ namespace App.Model{
                 return this.ViewModel.CurrentSkill.Value;
             }
         }
-        public List<int[]> SkillDistances{
+        public bool IsForceBackAttack{
             get{ 
-                MSkill[] skills = this.Skills;
+                foreach (MSkill skill in this.Skills)
+                {
+                    if (skill.Master.effect.special != App.Model.Master.SkillEffectSpecial.force_back_attack)
+                    {
+                        continue;
+                    }
+                    return true;
+                }
+                return false;
+            }
+        }
+        public List<int[]> SkillDistances{
+            get{
                 List<int[]> arr = new List<int[]>();
-                foreach (MSkill skill in skills)
+                foreach (MSkill skill in this.Skills)
                 {
                     if (skill.Master.effect.special != App.Model.Master.SkillEffectSpecial.attack_distance)
                     {

@@ -23,11 +23,41 @@ namespace App.Util.Battle{
             //vBaseMap = view;
         }
         /// <summary>
+        /// 攻击命中
+        /// 技巧+速度*2
+        /// </summary>
+        /// <returns><c>true</c>, if hitrate was attacked, <c>false</c> otherwise.</returns>
+        /// <param name="attackCharacter">Attack character.</param>
+        /// <param name="targetCharacter">Target character.</param>
+        public bool AttackHitrate(MCharacter attackCharacter, MCharacter targetCharacter){
+            int attackValue = attackCharacter.Ability.Knowledge + attackCharacter.Ability.Speed * 2;
+            int targetValue = targetCharacter.Ability.Knowledge + targetCharacter.Ability.Speed * 2;
+            int r;
+            if(attackValue > 2*targetValue){
+                r = 100;
+            }else if(attackValue > targetValue){
+                r=(attackValue-targetValue)*10/targetValue+90;
+            }else if(attackValue > targetValue * 0.5){
+                r=(attackValue-targetValue/2)*30/(targetValue/2)+60;
+            }else{
+                r=(attackValue-targetValue/3)*30/(targetValue/3)+30;
+            }
+            if (Random.Range(0, 100) <= r)
+            {
+                return true;
+            }
+            return true;
+        }
+        /// <summary>
         /// 是否可反击
         /// </summary>
         /// <param name="attackCharacter">Attack character.</param>
         /// <param name="targetCharacter">Target character.</param>
         public bool CanCounterAttack(MCharacter attackCharacter, MCharacter targetCharacter, int CoordinateX, int CoordinateY, int targetX, int targetY){
+            if (targetCharacter.IsForceBackAttack)
+            {
+                return true;
+            }
             if (!cBattlefield.charactersManager.IsInSkillDistance(CoordinateX, CoordinateY, targetX, targetY, targetCharacter))
             {
                 //不在攻击范围内
