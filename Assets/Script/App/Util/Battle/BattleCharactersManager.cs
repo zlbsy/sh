@@ -28,8 +28,8 @@ namespace App.Util.Battle{
         /// 是否在攻击范围内
         /// </summary>
         public bool IsInSkillDistance(MCharacter checkCharacter, MCharacter distanceCharacter){
-            Debug.LogError("checkCharacter = " + checkCharacter);
-            Debug.LogError("distanceCharacter = " + distanceCharacter);
+            //Debug.LogError("checkCharacter = " + checkCharacter);
+            //Debug.LogError("distanceCharacter = " + distanceCharacter);
             return IsInSkillDistance(checkCharacter.CoordinateX, checkCharacter.CoordinateY, distanceCharacter.CoordinateX, distanceCharacter.CoordinateY, distanceCharacter);
         }
         /// <summary>
@@ -37,10 +37,26 @@ namespace App.Util.Battle{
         /// </summary>
         public bool IsInSkillDistance(int CoordinateX, int CoordinateY, int targetX, int targetY, MCharacter distanceCharacter){
             MSkill targetSkill = distanceCharacter.CurrentSkill;
-            Debug.LogError("targetSkill="+targetSkill);
             App.Model.Master.MSkill targetSkillMaster = targetSkill.Master;
             int distance = cBattlefield.mapSearch.GetDistance(CoordinateX, CoordinateY, targetX, targetY);
-            return distance >= targetSkillMaster.distance[0] && distance <= targetSkillMaster.distance[1];
+            if (distance >= targetSkillMaster.distance[0] && distance <= targetSkillMaster.distance[1])
+            {
+                return true;
+            }
+            //技能攻击扩展范围
+            List<int[]> distances = distanceCharacter.SkillDistances;
+            if (distances.Count == 0)
+            {
+                return false;
+            }
+            foreach (int[] child in distances)
+            {
+                if (distance >= child[0] && distance <= child[1])
+                {
+                    return true;
+                }
+            }
+            return false;
         }
         /// <summary>
         /// 获取攻击到的所有敌人
@@ -58,11 +74,11 @@ namespace App.Util.Battle{
             List<VCharacter> characters;
             if (System.Array.Exists(skill.types, s => s == SkillType.heal))
             {
-                characters = vBaseMap.Characters.FindAll(_=>this.IsSameBelong(_.ViewModel.Belong.Value, vCharacter.ViewModel.Belong.Value));
+                characters = vBaseMap.Characters.FindAll(c=>c.ViewModel.Hp.Value > 0 && this.IsSameBelong(c.ViewModel.Belong.Value, vCharacter.ViewModel.Belong.Value));
             }
             else/* if (System.Array.Exists(skill.types, s => s == SkillType.attack))*/
             {
-                characters = vBaseMap.Characters.FindAll(_=>this.IsSameBelong(_.ViewModel.Belong.Value, targetView.ViewModel.Belong.Value));
+                characters = vBaseMap.Characters.FindAll(c=>c.ViewModel.Hp.Value > 0 && this.IsSameBelong(c.ViewModel.Belong.Value, targetView.ViewModel.Belong.Value));
             }
             VTile targetTile = cBattlefield.mapSearch.GetTile(targetView.ViewModel.CoordinateX.Value, targetView.ViewModel.CoordinateY.Value);
             if (skill.radius_type == RadiusType.range)

@@ -17,6 +17,22 @@ namespace App.Model.Master{
         /// 先手攻击
         /// </summary>
         force_first,
+        /// <summary>
+        /// 吸血
+        /// </summary>
+        vampire,
+        /// <summary>
+        /// 能力变化
+        /// </summary>
+        aid,
+        /// <summary>
+        /// 攻击范围扩大
+        /// </summary>
+        attack_distance,
+        /// <summary>
+        /// 反击不受任何限制
+        /// </summary>
+        force_back_attack,
     }
     [System.Serializable]
 	public class MSkillEffects : MBase {

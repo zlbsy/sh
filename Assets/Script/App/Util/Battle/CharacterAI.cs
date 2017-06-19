@@ -34,7 +34,7 @@ namespace App.Util.Battle{
         }
         public IEnumerator Execute(){
             //TODO::行动顺序
-            mCharacter = System.Array.Find(mBaseMap.Characters, _=>_.Belong == this.belong && !_.ActionOver);
+            mCharacter = System.Array.Find(mBaseMap.Characters, c=>c.Belong == this.belong && c.Hp > 0 && !c.ActionOver);
             MSkill attackSkill = System.Array.Find(mCharacter.Skills, delegate(MSkill skill){
                 App.Model.Master.MSkill skillMaster = skill.Master;
                 return System.Array.Exists(skillMaster.types, s=>(s==SkillType.attack || s==SkillType.magic)) 
@@ -151,6 +151,10 @@ namespace App.Util.Battle{
             targetTile = null;
             foreach (MCharacter character in mBaseMap.Characters)
             {
+                if (character.Hp == 0)
+                {
+                    continue;
+                }
                 if (cBattlefield.charactersManager.IsSameBelong(mCharacter.Belong, character.Belong))
                 {
                     continue;

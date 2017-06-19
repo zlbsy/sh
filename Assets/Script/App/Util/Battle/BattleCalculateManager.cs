@@ -129,7 +129,7 @@ namespace App.Util.Battle{
                 //远程类兵器克制长兵器
                 defense *= 0.8f;
             }
-            Debug.LogError("skill.Master.strength="+skill.Master.strength + ", attack=" + attack+", defense="+defense);
+            //Debug.LogError("skill.Master.strength="+skill.Master.strength + ", attack=" + attack+", defense="+defense);
             float result = skill.Master.strength * 0.3f + attack - defense * 2f;
             if (attackCharacter.MoveType == MoveType.cavalry && targetCharacter.MoveType == MoveType.infantry && !targetCharacter.IsArcheryWeapon)
             {

@@ -203,7 +203,7 @@ namespace App.Model{
             }
         }
         public void StatusInit(){
-            Debug.LogError("this.CharacterId = " + this.CharacterId + ", " + this.WeaponType+", " + this.Skills);
+            //Debug.LogError("this.CharacterId = " + this.CharacterId + ", " + this.WeaponType+", " + this.Skills);
             if (this.CurrentSkill == null)
             {
                 this.CurrentSkill = this.Skills == null ? null : System.Array.Find(this.Skills, s=>(System.Array.IndexOf(s.Master.weapon_types, this.WeaponType) >= 0));
@@ -219,6 +219,16 @@ namespace App.Model{
             }
             this.Hp = this.Ability.HpMax;
             this.Mp = this.Ability.MpMax;
+        }
+        public int HpMax{
+            get{ 
+                return this.Ability.HpMax;
+            }
+        }
+        public int MpMax{
+            get{ 
+                return this.Ability.MpMax;
+            }
         }
         public int Id{
             set{
@@ -246,6 +256,21 @@ namespace App.Model{
             }
             get{ 
                 return this.ViewModel.CurrentSkill.Value;
+            }
+        }
+        public List<int[]> SkillDistances{
+            get{ 
+                MSkill[] skills = this.Skills;
+                List<int[]> arr = new List<int[]>();
+                foreach (MSkill skill in skills)
+                {
+                    if (skill.Master.effect.special != App.Model.Master.SkillEffectSpecial.attack_distance)
+                    {
+                        continue;
+                    }
+                    arr.Add(skill.Master.distance);
+                }
+                return arr;
             }
         }
         public int UserId{
@@ -336,6 +361,10 @@ namespace App.Model{
         }
         public int Hp{
             set{
+                if (value > this.HpMax)
+                {
+                    value = this.HpMax;
+                }
                 this.ViewModel.Hp.Value = value;
             }
             get{ 
@@ -344,6 +373,10 @@ namespace App.Model{
         }
         public int Mp{
             set{
+                if (value > this.MpMax)
+                {
+                    value = this.MpMax;
+                }
                 this.ViewModel.Mp.Value = value;
             }
             get{ 
@@ -411,7 +444,6 @@ namespace App.Model{
                 {
                     mEquipment = EquipmentCacher.Instance.GetEquipment(value, App.Model.Master.MEquipment.EquipmentType.horse);
                 }
-                Debug.LogError(mEquipment.name+", " + mEquipment.move_type);
                 this.MoveType = mEquipment.move_type;
                 this.ViewModel.Horse.Value = value;
             }

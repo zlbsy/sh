@@ -12,7 +12,7 @@ namespace App.View.Battlefield{
         public override void UpdateView(App.Model.MBase model)
         {
             App.Model.Master.MStrategy mStrategy = model as App.Model.Master.MStrategy;
-            string iconName = string.Format("{0}_{1}", mStrategy.type.ToString(), mStrategy.hert > 0 ? "up" : "down");
+            string iconName = string.Format("{0}_{1}", mStrategy.aid_type.ToString(), mStrategy.hert > 0 ? "up" : "down");
             Debug.LogError("VStatusIcon iconName = " + iconName);
             foreach (GameObject icon in icons)
             {

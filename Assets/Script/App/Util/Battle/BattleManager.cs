@@ -80,7 +80,7 @@ namespace App.Util.Battle{
             //attackCharacterList.Clear();
             if (useToEnemy)
             {
-                bool forceFirst = false;
+                bool forceFirst = (mCharacter.CurrentSkill.Master.effect.special == App.Model.Master.SkillEffectSpecial.force_first);
                 if (forceFirst && cBattlefield.charactersManager.IsInSkillDistance(this.mCharacter, mCharacter))
                 {
                     //先手攻击
@@ -125,6 +125,9 @@ namespace App.Util.Battle{
                 }
             }
         }
+        /// <summary>
+        /// 动作结束时，判断是否继续进行
+        /// </summary>
         public void OnActionComplete(){
             if (actionCharacterList.Count > 0)
             {
@@ -139,9 +142,19 @@ namespace App.Util.Battle{
             cBattlefield.ActionEndHandler -= OnActionComplete;
             ActionOver();
         }
+        /// <summary>
+        /// 开始动作
+        /// </summary>
+        /// <returns><c>true</c>, if start was actioned, <c>false</c> otherwise.</returns>
+        /// <param name="currentCharacter">Current character.</param>
         private bool ActionStart(MCharacter currentCharacter){
             if (currentCharacter.Hp > 0)
             {
+                //目标已死
+                if (currentCharacter.Target.Hp == 0)
+                {
+                    return false;
+                }
                 currentCharacter.Direction = (currentCharacter.X > currentCharacter.Target.X ? Direction.left : Direction.right);
                 currentCharacter.Action = ActionType.attack;
                 return true;
@@ -177,13 +190,15 @@ namespace App.Util.Battle{
             }
             return false;
         }
+        /// <summary>
+        /// 动作结束后处理
+        /// </summary>
         public void ActionOver(){
             MSkill skill = this.mCharacter.CurrentSkill;
             List<App.Model.Master.MSkillEffect> skillEffects = new List<App.Model.Master.MSkillEffect>();
-            if (skill.Master.effect.enemy.count > 0 && skill.Master.effect.enemy.time == App.Model.Master.SkillEffectBegin.attack_end)
+            if (skill.Master.effect.special == App.Model.Master.SkillEffectSpecial.aid && skill.Master.effect.enemy.time == App.Model.Master.SkillEffectBegin.attack_end)
             {
-                //skillEffects.Add(skill.Master.effect.enemy);
-                List<int> aids = skill.Master.effect.enemy.aids.ToList();
+                List<int> aids = skill.Master.effect.enemy.strategys.ToList();
                 int index = 0;
                 List<App.Model.Master.MStrategy> strategys = new List<App.Model.Master.MStrategy>();
                 while (index++ < skill.Master.effect.enemy.count)
@@ -195,7 +210,7 @@ namespace App.Util.Battle{
                 }
                 foreach (App.Model.Master.MStrategy strategy in strategys)
                 {
-                    //TODO::特效
+                    //特效
                     if(strategy.effect_type == App.Model.Master.StrategyEffectType.aid){
                         this.mCharacter.Target.AddAid(strategy);
                         VTile vTile = this.cBattlefield.mapSearch.GetTile(this.mCharacter.Target.CoordinateX, this.mCharacter.Target.CoordinateY);
@@ -211,7 +226,7 @@ namespace App.Util.Battle{
                 List<App.Model.Master.MStrategy> strategys = new List<App.Model.Master.MStrategy>();
                 foreach (App.Model.Master.MSkillEffect skillEffect in skillEffects)
                 {
-                    List<int> aids = skillEffect.aids.ToList();
+                    List<int> aids = skillEffect.strategys.ToList();
                     int index = 0;
                     while (index++ < skillEffect.count)
                     {
@@ -290,16 +305,10 @@ namespace App.Util.Battle{
                 {
                     ClickSkillNode(index);
                 }
-                /*if (!cBattlefield.charactersManager.IsSameBelong(this.mCharacter.Belong, mCharacter.Belong))
-                {
-                    ClickSkillNode(index);
-                }*/
                 return;
             }
-            //Debug.LogError("ClickMovingNode="+index+", " + cBattlefield.tilesManager.IsInMovingCurrentTiles(index));
             if (cBattlefield.tilesManager.IsInMovingCurrentTiles(index))
             {
-                //Vector2 vec = new Vector2(this.mCharacter.CoordinateX, this.mCharacter.CoordinateY);
                 VTile startTile = cBattlefield.mapSearch.GetTile(this.mCharacter.CoordinateX, this.mCharacter.CoordinateY);
                 VTile endTile = cBattlefield.mapSearch.GetTile(index);
 
@@ -347,7 +356,7 @@ namespace App.Util.Battle{
         public void CharacterReturnNone(){
             returnAction();
             this.mCharacter = null;
-            Debug.LogError("this.mCharacter = null;");
+            //Debug.LogError("this.mCharacter = null;");
             cBattlefield.tilesManager.ClearCurrentTiles();
             cBattlefield.CloseOperatingMenu();
             cBattlefield.HideBattleCharacterPreviewDialog();

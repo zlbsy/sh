@@ -1,32 +1,25 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Script/App/View/VBaseMap.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Script/App/Util/ImageAssetBundleManager.cs">
     <Files>
-      <File FileName="Assets/Script/App/View/Character/VExpCharacterIcon.cs" Line="1" Column="1" />
-      <File FileName="Assets/Script/App/Controller/Battle/CBattlefield.cs" Line="82" Column="19" />
-      <File FileName="Assets/Script/App/Controller/CTop.cs" Line="1" Column="1" />
-      <File FileName="Assets/Script/App/Util/SceneManager.cs" Line="84" Column="9" />
-      <File FileName="Assets/Script/App/Controller/Battle/CBattleWinDialog.cs" Line="1" Column="1" />
-      <File FileName="Assets/Script/App/Service/SBattlefield.cs" Line="1" Column="1" />
-      <File FileName="Assets/Script/App/Service/SBase.cs" Line="10" Column="32" />
-      <File FileName="Assets/Script/App/Controller/CPresentBoxDialog.cs" Line="1" Column="1" />
-      <File FileName="Assets/Script/App/Model/Battle/MExpCharacter.cs" Line="1" Column="1" />
-      <File FileName="Assets/Script/App/View/Character/VCharacter.cs" Line="1" Column="1" />
-      <File FileName="Assets/Script/App/View/Character/VCharacterBattlefieldEvent.cs" Line="1" Column="1" />
-      <File FileName="Assets/Script/App/Controller/CLogo.cs" Line="94" Column="57" />
-      <File FileName="Assets/Script/App/Controller/Gacha/CGachaDialog.cs" Line="1" Column="1" />
-      <File FileName="Assets/Script/App/Model/MCharacter.cs" Line="218" Column="32" />
-      <File FileName="Assets/Script/App/Model/MCharacterAbility.cs" Line="80" Column="88" />
-      <File FileName="Assets/Script/App/Util/Battle/BattleCalculateManager.cs" Line="132" Column="98" />
-      <File FileName="Assets/Script/App/View/VBindText.cs" Line="1" Column="1" />
-      <File FileName="Assets/Script/App/View/VBaseMap.cs" Line="279" Column="145" />
-      <File FileName="Assets/Script/App/Controller/Common/CScene.cs" Line="14" Column="29" />
-      <File FileName="Assets/Script/App/Controller/Common/CBase.cs" Line="7" Column="2" />
-      <File FileName="Assets/Script/MyEditor/MakeAtlas.cs" Line="21" Column="15" />
-      <File FileName="Assets/Script/App/Service/HttpClient.cs" Line="101" Column="71" />
-      <File FileName="Assets/Script/App/Model/Scriptable/AssetBase.cs" Line="43" Column="43" />
-      <File FileName="Assets/Script/App/Controller/CAlertDialog.cs" Line="18" Column="37" />
-      <File FileName="Assets/Script/App/Controller/Common/CDialog.cs" Line="53" Column="64" />
+      <File FileName="Assets/Script/App/Model/Master/MSkillEffect.cs" Line="7" Column="16" />
+      <File FileName="Assets/Script/App/Model/Master/MSkillEffects.cs" Line="1" Column="1" />
+      <File FileName="Assets/Script/App/Util/Battle/BattleManager.cs" Line="184" Column="47" />
+      <File FileName="Assets/Script/App/Model/MCharacter.cs" Line="502" Column="37" />
+      <File FileName="Assets/Script/App/ViewModel/VMCharacter.cs" Line="40" Column="48" />
+      <File FileName="Assets/Script/App/ViewModel/VMBase.cs" Line="9" Column="2" />
+      <File FileName="Assets/Script/App/View/Character/VCharacter.cs" Line="170" Column="62" />
+      <File FileName="Assets/Script/App/View/Battlefield/VBattleCharacterPreview.cs" Line="94" Column="17" />
+      <File FileName="Assets/Script/App/Controller/CItemListDialog.cs" Line="41" Column="22" />
+      <File FileName="Assets/Script/App/View/Battlefield/VStatusIcon.cs" Line="16" Column="66" />
+      <File FileName="Assets/Script/MyEditor/MakeAtlas.cs" Line="170" Column="46" />
+      <File FileName="Assets/Script/App/Model/Scriptable/StrategyAsset.cs" Line="8" Column="53" />
+      <File FileName="Assets/Script/App/Controller/CLogo.cs" Line="153" Column="75" />
+      <File FileName="Assets/Script/MyEditor/CMasterScene.cs" Line="282" Column="168" />
+      <File FileName="Assets/Script/App/View/Item/VItemIcon.cs" Line="40" Column="57" />
+      <File FileName="Assets/Script/App/Util/ImageAssetBundleManager.cs" Line="111" Column="10" />
+      <File FileName="Assets/Script/App/Model/Master/MStrategy.cs" Line="9" Column="24" />
+      <File FileName="Assets/Script/App/Controller/Common/CBase.cs" Line="20" Column="66" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

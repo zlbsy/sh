@@ -9,6 +9,7 @@ namespace App.Controller.Battle{
     public enum CharacterEvent{
         OnDamage,
         OnHeal,
+        OnHealWithoutAction,
     }
     public partial class CBattlefield{
         public delegate void EventHandler();
@@ -30,7 +31,7 @@ namespace App.Controller.Battle{
             ActionEnd();
         }
         public void OnDamage(VCharacter vCharacter){
-            UnityEngine.Debug.LogError("OnDamage");
+            //UnityEngine.Debug.LogError("OnDamage");
             MCharacter mCharacter = this.GetCharacterModel(vCharacter);
             MCharacter targetModel = vCharacter.ViewModel.Target.Value;
             VCharacter target = this.GetCharacterView(targetModel);
@@ -40,10 +41,22 @@ namespace App.Controller.Battle{
             {
                 App.Model.Battle.MDamageParam arg = new App.Model.Battle.MDamageParam(-this.calculateManager.Hert(mCharacter, this.GetCharacterModel(child), tile));
                 child.SendMessage(CharacterEvent.OnDamage.ToString(), arg);
+                if (child.ViewModel.CharacterId.Value == targetModel.CharacterId)
+                {
+                    if (mCharacter.CurrentSkill.Master.effect.special == App.Model.Master.SkillEffectSpecial.vampire && mCharacter.CurrentSkill.Master.effect.enemy.time == App.Model.Master.SkillEffectBegin.enemy_hert)
+                    {
+                        App.Model.Master.MStrategy strategy = App.Util.Cacher.StrategyCacher.Instance.Get(mCharacter.CurrentSkill.Master.effect.enemy.strategys[0]);
+                        VCharacter currentCharacter = this.GetCharacterView(mCharacter);
+
+                        int addHp = -UnityEngine.Mathf.FloorToInt(arg.value * strategy.hert * 0.01f);
+                        App.Model.Battle.MDamageParam arg2 = new App.Model.Battle.MDamageParam(addHp);
+                        currentCharacter.SendMessage(CharacterEvent.OnHealWithoutAction.ToString(), arg2);
+                    }
+                }
             }
         }
         public void OnHeal(VCharacter vCharacter){
-            UnityEngine.Debug.LogError("OnHeal");
+            //UnityEngine.Debug.LogError("OnHeal");
             MCharacter mCharacter = this.GetCharacterModel(vCharacter);
             MCharacter targetModel = vCharacter.ViewModel.Target.Value;
             VCharacter target = this.GetCharacterView(targetModel);

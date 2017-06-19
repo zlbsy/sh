@@ -86,10 +86,7 @@ namespace App.Controller.Battle{
                 mCharacter.CoordinateY = mBattleOwn.y;
                 CharacterInit(mCharacter);
                 characters.Add(mCharacter);
-                /*if (i == 0)
-                {
-                    mCharacter.Hp = 1;
-                }*/
+                mCharacter.Hp -= 50;
             }
             foreach(App.Model.Master.MBattleNpc battleNpc in battlefieldMaster.enemys){
                 MCharacter mCharacter = NpcCacher.Instance.GetFromBattleNpc(battleNpc);
@@ -185,8 +182,13 @@ namespace App.Controller.Battle{
         }
         public void CloseOperatingMenu(){
             operatingMenu.Close(null);
-            if (manager.CurrentCharacter == null)
+            if (manager.CurrentCharacter != null){
+                return;
+            }
+            if (currentBelong != Belong.self)
             {
+                ai.Execute(currentBelong);
+            }else{
                 battleMenu.Open();
             }
         }

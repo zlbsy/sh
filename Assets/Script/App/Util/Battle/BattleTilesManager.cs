@@ -33,10 +33,23 @@ namespace App.Util.Battle{
             cBattlefield.battleMode = CBattlefield.BattleMode.show_move_tiles;
         }
         public void ShowCharacterSkillArea(MCharacter mCharacter){
-            int[] distance = mCharacter.CurrentSkill == null ? new int[]{0,0} : mCharacter.CurrentSkill.Master.distance;
-            currentAttackTiles = cBattlefield.breadthFirst.Search(mCharacter, distance[1]);
-            VTile characterTile = currentAttackTiles.Find(_=>_.CoordinateX == mCharacter.CoordinateX && _.CoordinateY == mCharacter.CoordinateY);
-            currentAttackTiles = currentAttackTiles.FindAll(_=>cBattlefield.mapSearch.GetDistance(_, characterTile) >= distance[0]);
+            //技能攻击扩展范围
+            List<int[]> distances = mCharacter.SkillDistances;
+            distances.Add(mCharacter.CurrentSkill == null ? new int[]{0,0} : mCharacter.CurrentSkill.Master.distance);
+            //int[] distance = mCharacter.CurrentSkill == null ? new int[]{0,0} : mCharacter.CurrentSkill.Master.distance;
+            int maxDistance = 0;
+            foreach(int[] distance in distances){
+                if (distance[1] > maxDistance)
+                {
+                    maxDistance = distance[1];
+                }
+            }
+            currentAttackTiles = cBattlefield.breadthFirst.Search(mCharacter, maxDistance);
+            VTile characterTile = currentAttackTiles.Find(v=>v.CoordinateX == mCharacter.CoordinateX && v.CoordinateY == mCharacter.CoordinateY);
+            currentAttackTiles = currentAttackTiles.FindAll((tile)=>{
+                int length = cBattlefield.mapSearch.GetDistance(tile, characterTile);
+                return distances.Exists(d => length >= d[0] && length <= d[1]);
+            });
             if (mCharacter.CurrentSkill == null)
             {
                 return;
@@ -54,13 +67,13 @@ namespace App.Util.Battle{
                     continue;
                 }
                 MCharacter character = cBattlefield.charactersManager.GetCharacter(tile.Index);
-                if (character == null)
+                if (character == null || character.Hp == 0)
                 {
                     continue;
                 }
                 bool sameBelong = cBattlefield.charactersManager.IsSameBelong(character.Belong, mCharacter.Belong);
                 bool useToEnemy = mCharacter.CurrentSkill.UseToEnemy;
-                Debug.LogError("useToEnemy="+useToEnemy + ", sameBelong="+sameBelong);
+                //Debug.LogError("useToEnemy="+useToEnemy + ", sameBelong="+sameBelong);
                 if (useToEnemy ^ sameBelong)
                 {
                     GameObject attackTween = cBattlefield.CreateAttackTween();

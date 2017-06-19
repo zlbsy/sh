@@ -426,7 +426,7 @@ namespace App.View.Character{
         public void SetOrders(Dictionary<string,int> meshOrders){
             foreach(string key in meshOrders.Keys){
                 meshs[key].sortingOrder = meshOrders[key];
-                Debug.LogError("SetOrders : " + key + " = " + meshs[key].sortingOrder);
+                //Debug.LogError("SetOrders : " + key + " = " + meshs[key].sortingOrder);
             }
         }
         /// <summary>

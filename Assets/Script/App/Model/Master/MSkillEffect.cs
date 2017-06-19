@@ -4,13 +4,14 @@ using UnityEngine;
 namespace App.Model.Master{
     public enum SkillEffectBegin{
         attack_start,
-        attack_end
+        attack_end,
+        enemy_hert
     }
     [System.Serializable]
 	public class MSkillEffect : MBase {
         public MSkillEffect(){
         }
-        public int[] aids;
+        public int[] strategys;
         public int count;
         public SkillEffectBegin time;
 	}
