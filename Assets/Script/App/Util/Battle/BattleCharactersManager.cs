@@ -67,6 +67,7 @@ namespace App.Util.Battle{
         /// <param name="skill">Skill.</param>
         public List<VCharacter> GetTargetCharacters(VCharacter vCharacter, VCharacter targetView, App.Model.Master.MSkill skill){
             List<VCharacter> result = new List<VCharacter>(){ targetView };
+            Debug.LogError("skill.radius_type="+skill.radius_type+", "+skill.name);
             if (skill.radius_type == RadiusType.point)
             {
                 return result;
@@ -91,6 +92,7 @@ namespace App.Util.Battle{
                         result.Add(child);
                     }
                 }
+                Debug.LogError("skill.effect.special="+skill.effect.special+", "+result.Count);
                 bool quantity_plus = skill.effect.special == App.Model.Master.SkillEffectSpecial.quantity_plus;
                 if (quantity_plus && result.Count > 1)
                 {

@@ -33,6 +33,7 @@ namespace App.Controller.Battle{
         }
         public void OnDamage(VCharacter vCharacter){
             MCharacter mCharacter = this.GetCharacterModel(vCharacter);
+            UnityEngine.Debug.LogError("OnDamage vCharacter="+mCharacter.Master.name);
             MCharacter targetModel = vCharacter.ViewModel.Target.Value;
             VCharacter target = this.GetCharacterView(targetModel);
             bool hit = this.calculateManager.AttackHitrate(mCharacter, targetModel);
