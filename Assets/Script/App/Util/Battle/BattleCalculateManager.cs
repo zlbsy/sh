@@ -30,6 +30,10 @@ namespace App.Util.Battle{
         /// <param name="attackCharacter">Attack character.</param>
         /// <param name="targetCharacter">Target character.</param>
         public bool AttackHitrate(MCharacter attackCharacter, MCharacter targetCharacter){
+            if (attackCharacter.IsForceHit)
+            {
+                return true;
+            }
             int attackValue = attackCharacter.Ability.Knowledge + attackCharacter.Ability.Speed * 2;
             int targetValue = targetCharacter.Ability.Knowledge + targetCharacter.Ability.Speed * 2;
             int r;
@@ -42,11 +46,12 @@ namespace App.Util.Battle{
             }else{
                 r=(attackValue-targetValue/3)*30/(targetValue/3)+30;
             }
-            if (Random.Range(0, 100) <= r)
+            int randValue = Random.Range(0, 100);
+            if (randValue <= r)
             {
                 return true;
             }
-            return true;
+            return false;
         }
         /// <summary>
         /// 是否可反击

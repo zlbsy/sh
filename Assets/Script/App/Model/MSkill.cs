@@ -16,6 +16,7 @@ namespace App.Model{
         point,//点攻击
         range,//面攻击
         direction,//穿透攻击
+        sector,//扇形穿透
     }
     public class MSkill : MBase {
         public MSkill(){

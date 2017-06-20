@@ -271,6 +271,19 @@ namespace App.Model{
                 return false;
             }
         }
+        public bool IsForceHit{
+            get{ 
+                foreach (MSkill skill in this.Skills)
+                {
+                    if (skill.Master.effect.special != App.Model.Master.SkillEffectSpecial.force_hit)
+                    {
+                        continue;
+                    }
+                    return true;
+                }
+                return false;
+            }
+        }
         public List<int[]> SkillDistances{
             get{
                 List<int[]> arr = new List<int[]>();

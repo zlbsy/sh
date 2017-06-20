@@ -9,6 +9,7 @@ namespace App.Controller.Battle{
     public enum CharacterEvent{
         OnDamage,
         OnHeal,
+        OnBlock,
         OnHealWithoutAction,
     }
     public partial class CBattlefield{
@@ -34,6 +35,12 @@ namespace App.Controller.Battle{
             MCharacter mCharacter = this.GetCharacterModel(vCharacter);
             MCharacter targetModel = vCharacter.ViewModel.Target.Value;
             VCharacter target = this.GetCharacterView(targetModel);
+            bool hit = this.calculateManager.AttackHitrate(mCharacter, targetModel);
+            if (!hit)
+            {
+                target.SendMessage(CharacterEvent.OnBlock.ToString());
+                return;
+            }
             List<VCharacter> characters = this.charactersManager.GetTargetCharacters(vCharacter, target, vCharacter.ViewModel.CurrentSkill.Value.Master);
             App.View.VTile tile = mapSearch.GetTile(mCharacter.CoordinateX, mCharacter.CoordinateY);
             foreach (VCharacter child in characters)

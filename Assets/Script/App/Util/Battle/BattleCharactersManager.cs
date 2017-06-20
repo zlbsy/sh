@@ -91,6 +91,13 @@ namespace App.Util.Battle{
                         result.Add(child);
                     }
                 }
+                bool quantity_plus = skill.effect.special == App.Model.Master.SkillEffectSpecial.quantity_plus;
+                if (quantity_plus && result.Count > 1)
+                {
+                    int index = Random.Range(1, result.Count - 1);
+                    VCharacter plusView = result[index];
+                    return new List<VCharacter>(){ targetView, plusView };
+                }
             }else if (skill.radius_type == RadiusType.direction)
             {
                 VTile tile = cBattlefield.mapSearch.GetTile(vCharacter.ViewModel.CoordinateX.Value, vCharacter.ViewModel.CoordinateY.Value);

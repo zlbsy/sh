@@ -21,6 +21,9 @@ namespace App.View.Character{
             seqHp.Insert (0f, HOTween.To (this.ViewModel.Hp, 0.2f, new TweenParms().Prop("Value", this.ViewModel.Hp.Value + arg.value, false).Ease(EaseType.EaseInQuart)));
             seqHp.Play ();
         }
+        public void OnBlock(){
+            this.ChangeAction(ActionType.block);
+        }
         public void OnHeal(App.Model.Battle.MDamageParam arg){
             this.ChangeAction(ActionType.block);
             OnHealWithoutAction(arg);

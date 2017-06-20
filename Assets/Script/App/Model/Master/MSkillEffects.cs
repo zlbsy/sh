@@ -37,6 +37,10 @@ namespace App.Model.Master{
         /// 必中
         /// </summary>
         force_hit,
+        /// <summary>
+        /// 溅射一人
+        /// </summary>
+        quantity_plus,
     }
     [System.Serializable]
 	public class MSkillEffects : MBase {
