@@ -242,13 +242,6 @@ namespace App.Util.Battle{
                 this.mCharacter.Target.Target = null;
                 this.mCharacter.Target = null;
             }
-            this.mCharacter.ActionOver = true;
-            cBattlefield.tilesManager.ClearCurrentTiles();
-            cBattlefield.CloseOperatingMenu();
-            cBattlefield.HideBattleCharacterPreviewDialog();
-            cBattlefield.battleMode = CBattlefield.BattleMode.none;
-            Belong belong = this.mCharacter.Belong;
-            this.mCharacter = null;
             if (!System.Array.Exists(mBaseMap.Characters, _ => _.Hp > 0 && _.Belong == Belong.enemy))
             {
                 //敌军全灭
@@ -262,6 +255,19 @@ namespace App.Util.Battle{
                 cBattlefield.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.BattleFailDialog));
                 return;
             }
+            this.mCharacter.ActionOver = true;
+            cBattlefield.tilesManager.ClearCurrentTiles();
+            //cBattlefield.CloseOperatingMenu();
+            cBattlefield.HideBattleCharacterPreviewDialog();
+            cBattlefield.battleMode = CBattlefield.BattleMode.none;
+            ActionOverNext();
+        }
+        /// <summary>
+        /// 动作结束后处理
+        /// </summary>
+        public void ActionOverNext(){
+            Belong belong = this.mCharacter.Belong;
+            this.mCharacter = null;
             if (!System.Array.Exists(mBaseMap.Characters, _ => _.Hp > 0 && _.Belong == belong && !_.ActionOver))
             {
                 ChangeBelong(belong);
