@@ -67,7 +67,6 @@ namespace App.Util.Battle{
         /// <param name="skill">Skill.</param>
         public List<VCharacter> GetTargetCharacters(VCharacter vCharacter, VCharacter targetView, App.Model.Master.MSkill skill){
             List<VCharacter> result = new List<VCharacter>(){ targetView };
-            Debug.LogError("skill.radius_type="+skill.radius_type+", "+skill.name);
             if (skill.radius_type == RadiusType.point)
             {
                 return result;
@@ -92,13 +91,18 @@ namespace App.Util.Battle{
                         result.Add(child);
                     }
                 }
-                Debug.LogError("skill.effect.special="+skill.effect.special+", "+result.Count);
                 bool quantity_plus = skill.effect.special == App.Model.Master.SkillEffectSpecial.quantity_plus;
-                if (quantity_plus && result.Count > 1)
+                if (quantity_plus)
                 {
-                    int index = Random.Range(1, result.Count - 1);
-                    VCharacter plusView = result[index];
-                    return new List<VCharacter>(){ targetView, plusView };
+                    List<VCharacter> resultPlus = new List<VCharacter>(){ targetView };
+                    while (result.Count > 1 && resultPlus.Count - 1 < skill.effect.special_value)
+                    {
+                        int index = Random.Range(1, result.Count - 1);
+                        VCharacter plusView = result[index];
+                        resultPlus.Add(plusView);
+                        result.RemoveAt(index);
+                    }
+                    return resultPlus;
                 }
             }else if (skill.radius_type == RadiusType.direction)
             {

@@ -41,12 +41,30 @@ namespace App.Model.Master{
         /// 溅射一人
         /// </summary>
         quantity_plus,
+        /// <summary>
+        /// 对骑兵攻击加成
+        /// </summary>
+        horse_hert,
+        /// <summary>
+        /// 攻击后移动
+        /// </summary>
+        move_after_attack,
+        /// <summary>
+        /// 每回合固定伤害
+        /// </summary>
+        bout_fixed_damage,
+        /*
+        /// <summary>
+        /// 固定伤害攻击
+        /// </summary>
+        fixed_damage,*/
     }
     [System.Serializable]
 	public class MSkillEffects : MBase {
         public MSkillEffects(){
         }
         public SkillEffectSpecial special;
+        public int special_value;
         public MSkillEffect enemy;
         public MSkillEffect self;
 	}

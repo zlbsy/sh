@@ -258,30 +258,43 @@ namespace App.Model{
                 return this.ViewModel.CurrentSkill.Value;
             }
         }
+        private bool IsSkillEffectSpecial(App.Model.Master.SkillEffectSpecial special){
+            foreach (MSkill skill in this.Skills)
+            {
+                if (skill.Master.effect.special != special)
+                {
+                    continue;
+                }
+                return true;
+            }
+            return false;
+        }
         public bool IsForceBackAttack{
             get{ 
-                foreach (MSkill skill in this.Skills)
-                {
-                    if (skill.Master.effect.special != App.Model.Master.SkillEffectSpecial.force_back_attack)
-                    {
-                        continue;
-                    }
-                    return true;
-                }
-                return false;
+                return IsSkillEffectSpecial(App.Model.Master.SkillEffectSpecial.force_back_attack);
             }
         }
         public bool IsForceHit{
             get{ 
+                return IsSkillEffectSpecial(App.Model.Master.SkillEffectSpecial.force_hit);
+            }
+        }
+        public MSkill BoutFixedDamageSkill{
+            get{ 
                 foreach (MSkill skill in this.Skills)
                 {
-                    if (skill.Master.effect.special != App.Model.Master.SkillEffectSpecial.force_hit)
+                    if (skill.Master.effect.special != App.Model.Master.SkillEffectSpecial.bout_fixed_damage)
                     {
                         continue;
                     }
-                    return true;
+                    return skill;
                 }
-                return false;
+                return null;
+            }
+        }
+        public bool IsMoveAfterAttack{
+            get{ 
+                return IsSkillEffectSpecial(App.Model.Master.SkillEffectSpecial.move_after_attack);
             }
         }
         public List<int[]> SkillDistances{
@@ -289,11 +302,12 @@ namespace App.Model{
                 List<int[]> arr = new List<int[]>();
                 foreach (MSkill skill in this.Skills)
                 {
-                    if (skill.Master.effect.special != App.Model.Master.SkillEffectSpecial.attack_distance)
+                    App.Model.Master.MSkill skillMaster = skill.Master;
+                    if (skillMaster.effect.special != App.Model.Master.SkillEffectSpecial.attack_distance)
                     {
                         continue;
                     }
-                    arr.Add(skill.Master.distance);
+                    arr.Add(skillMaster.distance);
                 }
                 return arr;
             }
@@ -314,6 +328,7 @@ namespace App.Model{
                 return this.ViewModel.Exp.Value;
             }
         }
+        public bool boutEventComplete;
         public int CharacterId{
             set{
                 App.Model.Master.MCharacter master = CharacterCacher.Instance.Get(value);

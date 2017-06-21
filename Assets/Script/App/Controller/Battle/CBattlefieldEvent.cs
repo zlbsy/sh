@@ -31,9 +31,48 @@ namespace App.Controller.Battle{
             }
             ActionEnd();
         }
+        public IEnumerator OnBoutStart(){
+            while(true){
+                MCharacter mCharacter = System.Array.Find(mBaseMap.Characters, c=>c.Belong == this.currentBelong && c.Hp > 0 && !c.boutEventComplete);
+                if (mCharacter == null)
+                {
+                    break;
+                }
+                MSkill skill = mCharacter.BoutFixedDamageSkill;
+                if (skill != null)
+                {
+                    List<VCharacter> characters = vBaseMap.Characters.FindAll(c=>c.ViewModel.Hp.Value > 0 && !this.charactersManager.IsSameBelong(c.ViewModel.Belong.Value, currentBelong));
+                    yield return OnBoutFixedDamage(mCharacter, skill.Master, characters);
+                }
+                mCharacter.boutEventComplete = true;
+            }
+            if (currentBelong != Belong.self)
+            {
+                ai.Execute(currentBelong);
+            }
+            else
+            {
+                CloseOperatingMenu();
+            }
+        }
+        public IEnumerator OnBoutFixedDamage(MCharacter mCharacter, App.Model.Master.MSkill skill, List<VCharacter> characters){
+            App.View.VTile targetTile = this.mapSearch.GetTile(mCharacter.CoordinateX, mCharacter.CoordinateY);
+            foreach (VCharacter child in characters)
+            {
+                App.View.VTile tile = this.mapSearch.GetTile(child.ViewModel.CoordinateX.Value, child.ViewModel.CoordinateY.Value);
+                if (this.mapSearch.GetDistance(targetTile, tile) <= skill.radius)
+                {
+                    App.Model.Battle.MDamageParam arg = new App.Model.Battle.MDamageParam(-skill.strength);
+                    child.SendMessage(CharacterEvent.OnDamage.ToString(), arg);
+                }
+            }
+            while (HasDynamicCharacter())
+            {
+                yield return new UnityEngine.WaitForEndOfFrame();
+            }
+        }
         public void OnDamage(VCharacter vCharacter){
             MCharacter mCharacter = this.GetCharacterModel(vCharacter);
-            UnityEngine.Debug.LogError("OnDamage vCharacter="+mCharacter.Master.name);
             MCharacter targetModel = vCharacter.ViewModel.Target.Value;
             VCharacter target = this.GetCharacterView(targetModel);
             bool hit = this.calculateManager.AttackHitrate(mCharacter, targetModel);

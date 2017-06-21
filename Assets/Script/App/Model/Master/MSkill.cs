@@ -45,5 +45,11 @@ namespace App.Model.Master{
         public int archery;//箭术
         public int hidden_weapons;//暗器
         public int dual_wield;//双手
+        public static bool IsSkillType(MSkill skill, SkillType type){
+            return System.Array.Exists(skill.types, s => s == type);
+        }
+        public static bool IsWeaponType(MSkill skill, WeaponType type){
+            return System.Array.Exists(skill.weapon_types, s => s == type);
+        }
 	}
 }

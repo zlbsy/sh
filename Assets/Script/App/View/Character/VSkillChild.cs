@@ -10,6 +10,7 @@ namespace App.View.Character{
         [SerializeField]private Text skillName;
         [SerializeField]private Text skillLevel;
         [SerializeField]private Text money;
+        [SerializeField]private Text strength;
         [SerializeField]private Image icon;
         [SerializeField]private Image background;
         [SerializeField]private GameObject content;
@@ -45,6 +46,7 @@ namespace App.View.Character{
             skillLevel.text = string.Format("Lv.{0}", newvalue);
             money.text = skillMaster.character_level > 0 ? skillMaster.price.ToString() : "MAX";
             levelUpButton.SetActive(skillMaster.character_level > 0);
+            strength.text = string.Format("威力：{0}", skillMaster.strength);
         }
         #endregion
         public override void UpdateView()

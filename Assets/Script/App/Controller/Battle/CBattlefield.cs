@@ -118,17 +118,11 @@ namespace App.Controller.Battle{
                 boutCount++;
             }
             charactersManager.ActionRestore();
-            System.Action closeEvent = null;
-            if (belong != Belong.self)
-            {
-                closeEvent = () =>
-                {
-                    ai.Execute(belong);
-                };
-            }
-            else
-            {
-                closeEvent = CloseOperatingMenu;
+            System.Action closeEvent = ()=>{
+                this.StartCoroutine(OnBoutStart());
+            };
+            foreach(MCharacter mCharacter in mBaseMap.Characters){
+                mCharacter.boutEventComplete = false;
             }
             Request req = Request.Create("belong", belong, "bout", boutCount, "maxBout", maxBout, "closeEvent", closeEvent);
             this.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.BoutWaveDialog, req));

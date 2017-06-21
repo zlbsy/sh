@@ -120,7 +120,7 @@ namespace App.Util.Battle{
             return 1 + attackCharacter.Level + attackCharacter.Ability.MagicAttack * skillMaster.strength;
         }
         /// <summary>
-        /// 攻击伤害=攻击力-防御力
+        /// 攻击伤害=技能*0.3+攻击力-防御力*2
         /// </summary>
         /// <param name="attackCharacter">Attack character.</param>
         /// <param name="targetCharacter">Target character.</param>
@@ -164,8 +164,8 @@ namespace App.Util.Battle{
                 //远程类兵器克制长兵器
                 defense *= 0.8f;
             }
-            //Debug.LogError("skill.Master.strength="+skill.Master.strength + ", attack=" + attack+", defense="+defense);
-            float result = skill.Master.strength * 0.3f + attack - defense * 2f;
+            //Debug.LogError("skillMaster.strength="+skill.Master.strength + ", attack=" + attack+", defense="+defense);
+            float result = skillMaster.strength * 0.3f + attack - defense * 2f;
             if (attackCharacter.MoveType == MoveType.cavalry && targetCharacter.MoveType == MoveType.infantry && !targetCharacter.IsArcheryWeapon)
             {
                 //骑兵克制近身步兵
@@ -178,6 +178,11 @@ namespace App.Util.Battle{
             {
                 //近身步兵克制远程类
                 result *= 1.2f;
+            }
+            if (targetCharacter.MoveType == MoveType.cavalry && skillMaster.effect.special == App.Model.Master.SkillEffectSpecial.horse_hert)
+            {
+                //对骑兵技能伤害加成
+                result *= (1f + skillMaster.effect.special_value * 0.01f);
             }
             result = result > 1 ? result : 1;
             result = result > targetCharacter.Hp ? targetCharacter.Hp : result;

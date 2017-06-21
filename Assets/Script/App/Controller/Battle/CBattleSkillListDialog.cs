@@ -22,7 +22,15 @@ namespace App.Controller.Battle{
             yield return StartCoroutine(base.OnLoad(request));
             mCharacter = request.Get<MCharacter>("character");
             HidePreview();
-            ScrollViewSets(content, childItem, mCharacter.Skills);
+            ScrollViewSets(content, childItem, System.Array.FindAll(mCharacter.Skills, (s)=>{
+                App.Model.Master.MSkill skillMaster = s.Master;
+                bool isType = App.Model.Master.MSkill.IsSkillType(skillMaster, SkillType.attack) || App.Model.Master.MSkill.IsSkillType(skillMaster, SkillType.magic) || App.Model.Master.MSkill.IsSkillType(skillMaster, SkillType.heal);
+                if(!isType){
+                    return false;
+                }
+                bool isWeaponSkill = App.Model.Master.MSkill.IsWeaponType(skillMaster, mCharacter.WeaponType);
+                return isWeaponSkill;
+            }));
         }
         public void SkillIconClick(int skillId){
             mCharacter.CurrentSkill = System.Array.Find(mCharacter.Skills, _=>_.SkillId == skillId);

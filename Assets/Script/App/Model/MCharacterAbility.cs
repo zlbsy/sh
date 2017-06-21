@@ -73,6 +73,10 @@ namespace App.Model{
                 this.HiddenWeapons += skillMaster.hidden_weapons;
                 this.DualWield += skillMaster.dual_wield;
             }
+            if (mCharacter.MoveType == MoveType.cavalry)
+            {
+                this.MovingPower += 1;
+            }
             this.HpMax = mCharacter.Level * 2 + master.hp + this.Endurance + hp;
             this.MpMax = mCharacter.Level + master.mp + this.Knowledge + mp;
             this.PhysicalAttack = Mathf.FloorToInt((this.Power * 2 + this.Knowledge) * (0.5f + (mCharacter.MoveType == MoveType.cavalry ? this.Riding : this.Walker) * 0.5f * 0.01f) * (1f + mCharacter.Level * 0.01f));

@@ -10,6 +10,7 @@ namespace App.Model{
         magic,//法术攻击类
         heal,//回复类
         ability,//能力增强类
+        help,//战场辅助类
     }
     [System.Serializable]
     public enum RadiusType{
