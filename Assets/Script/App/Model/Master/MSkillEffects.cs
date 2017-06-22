@@ -53,6 +53,14 @@ namespace App.Model.Master{
         /// 每回合固定伤害
         /// </summary>
         bout_fixed_damage,
+        /// <summary>
+        /// 攻击次数
+        /// </summary>
+        attack_count,
+        /// <summary>
+        /// 反击次数
+        /// </summary>
+        counter_attack_count,
         /*
         /// <summary>
         /// 固定伤害攻击

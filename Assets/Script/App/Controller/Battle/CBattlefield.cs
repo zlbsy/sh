@@ -278,7 +278,7 @@ namespace App.Controller.Battle{
             {
                 return;
             }
-            //Debug.LogError("行动中武将 " + vCharacter.ViewModel.Action.Value + ","+vCharacter.ViewModel.Name.Value);
+            //Debug.LogError("行动中武将 " + vCharacter.ViewModel.Action.Value + ","+vCharacter.ViewModel.Name.Value + ","+vCharacter.ViewModel.Belong.Value);
             dynamicCharacters.Add(vCharacter);
         }
         /// <summary>
@@ -294,7 +294,6 @@ namespace App.Controller.Battle{
         /// <param name="vCharacter">V character.</param>
         public void RemoveDynamicCharacter(VCharacter vCharacter){
             dynamicCharacters.Remove(vCharacter);
-            //Debug.LogError("RemoveDynamicCharacter : "+vCharacter.ViewModel.Id.Value + ","+vCharacter.ViewModel.Name.Value + ", "+dynamicCharacters.Count);
             if (!HasDynamicCharacter())
             {
                 this.ActionEnd();

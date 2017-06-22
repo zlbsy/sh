@@ -137,6 +137,7 @@ namespace App.Util.Battle{
                 MCharacter currentCharacter = actionCharacterList[0];
                 actionCharacterList.RemoveAt(0);
                 bool isContinue = ActionStart(currentCharacter);
+                //Debug.LogError("isContinue" + isContinue + ", " + currentCharacter.Master.name);
                 if (isContinue)
                 {
                     return;
@@ -197,6 +198,7 @@ namespace App.Util.Battle{
         /// 动作结束后处理
         /// </summary>
         public void ActionOver(){
+            Debug.LogError("ActionOver" + this.mCharacter.Master.name);
             MSkill skill = this.mCharacter.CurrentSkill;
             List<App.Model.Master.MSkillEffect> skillEffects = new List<App.Model.Master.MSkillEffect>();
             if (skill.Master.effect.special == App.Model.Master.SkillEffectSpecial.aid && skill.Master.effect.enemy.time == App.Model.Master.SkillEffectBegin.attack_end)
@@ -260,6 +262,7 @@ namespace App.Util.Battle{
             }
             if (this.mCharacter.Hp > 0 && this.mCharacter.IsMoveAfterAttack && this.mCharacter.Ability.MovingPower - this.roadLength > 0)
             {
+                Debug.LogError("MoveAfterAttack");
                 cBattlefield.tilesManager.ShowCharacterMovingArea(this.mCharacter, this.mCharacter.Ability.MovingPower - this.roadLength);
                 cBattlefield.battleMode = CBattlefield.BattleMode.move_after_attack;
                 if (this.mCharacter.Belong != Belong.self)
@@ -269,6 +272,7 @@ namespace App.Util.Battle{
             }
             else
             {
+                Debug.LogError("ActionOverNext");
                 ActionOverNext();
             }
         }
@@ -276,6 +280,10 @@ namespace App.Util.Battle{
         /// 动作结束后处理
         /// </summary>
         public void ActionOverNext(){
+            if (cBattlefield.battleMode == CBattlefield.BattleMode.moving)
+            {
+                this.mCharacter.Action = ActionType.idle;
+            }
             this.mCharacter.ActionOver = true;
             cBattlefield.tilesManager.ClearCurrentTiles();
             cBattlefield.HideBattleCharacterPreviewDialog();
@@ -335,7 +343,12 @@ namespace App.Util.Battle{
                 Holoville.HOTween.Core.TweenDelegate.TweenCallback moveComplete;
                 if (cBattlefield.battleMode == CBattlefield.BattleMode.move_after_attack)
                 {
-                    moveComplete = ActionOverNext;
+                    moveComplete = () =>
+                        {
+                            this.mCharacter.CoordinateY = endTile.CoordinateY;
+                            this.mCharacter.CoordinateX = endTile.CoordinateX;
+                            ActionOverNext();
+                        };
                 }
                 else
                 {

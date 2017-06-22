@@ -81,16 +81,19 @@ namespace App.Util.Battle{
         /// <param name="attackCharacter">Attack character.</param>
         /// <param name="targetCharacter">Target character.</param>
         public int CounterAttackCount(MCharacter attackCharacter, MCharacter targetCharacter){
-            int attackCount = 1;
+            int count = 1;
             if (targetCharacter.WeaponType == WeaponType.dualWield)
             {
                 //双手兵器或者相关的技能可双击
-                attackCount = 2;
+                count = 2;
             }
-            //TODO::技能双击
-            //MSkill skill = attackCharacter.CurrentSkill;
-            //App.Model.Master.MSkill skillMaster = skill.Master;
-            return attackCount;
+            //技能反击次数
+            App.Model.Master.MSkill skillMaster = attackCharacter.CurrentSkill.Master;
+            if (skillMaster.effect.special == App.Model.Master.SkillEffectSpecial.counter_attack_count)
+            {
+                count = skillMaster.effect.special_value;
+            }
+            return count;
         }
         /// <summary>
         /// 获取主动次数
@@ -104,9 +107,12 @@ namespace App.Util.Battle{
                 //双手兵器或者相关的技能可双击
                 count = 2;
             }
-            //TODO::技能双击
-            //MSkill skill = attackCharacter.CurrentSkill;
-            //App.Model.Master.MSkill skillMaster = skill.Master;
+            //技能攻击次数
+            App.Model.Master.MSkill skillMaster = currentCharacter.CurrentSkill.Master;
+            if (skillMaster.effect.special == App.Model.Master.SkillEffectSpecial.attack_count)
+            {
+                count = skillMaster.effect.special_value;
+            }
             return count;
         }
         /// <summary>

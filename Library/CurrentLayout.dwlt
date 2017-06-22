@@ -20,7 +20,7 @@ MonoBehaviour:
   m_ShowMode: 4
   m_Title: 
   m_RootView: {fileID: 9}
-  m_MinSize: {x: 950, y: 300}
+  m_MinSize: {x: 950, y: 542}
   m_MaxSize: {x: 10000, y: 10000}
 --- !u!114 &2
 MonoBehaviour:
@@ -40,8 +40,8 @@ MonoBehaviour:
     y: 0
     width: 544
     height: 553
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 202, y: 221}
+  m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 21}
   m_Panes:
   - {fileID: 21}
@@ -120,7 +120,7 @@ MonoBehaviour:
   m_MinSize: {x: 336, y: 271}
   m_MaxSize: {x: 14006, y: 10021}
   vertical: 0
-  controlID: 93
+  controlID: 142
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -141,10 +141,10 @@ MonoBehaviour:
     y: 30
     width: 1920
     height: 910
-  m_MinSize: {x: 787, y: 492}
+  m_MinSize: {x: 783, y: 492}
   m_MaxSize: {x: 18008, y: 14042}
   vertical: 0
-  controlID: 45
+  controlID: 22
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -279,10 +279,10 @@ MonoBehaviour:
     y: 0
     width: 1447
     height: 910
-  m_MinSize: {x: 510, y: 492}
+  m_MinSize: {x: 506, y: 492}
   m_MaxSize: {x: 14006, y: 14042}
   vertical: 1
-  controlID: 46
+  controlID: 23
 --- !u!114 &13
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -304,10 +304,10 @@ MonoBehaviour:
     y: 0
     width: 1447
     height: 553
-  m_MinSize: {x: 510, y: 221}
-  m_MaxSize: {x: 12010, y: 4021}
+  m_MinSize: {x: 506, y: 221}
+  m_MaxSize: {x: 12006, y: 4021}
   vertical: 0
-  controlID: 47
+  controlID: 24
 --- !u!114 &14
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -326,8 +326,8 @@ MonoBehaviour:
     y: 0
     width: 510
     height: 553
-  m_MinSize: {x: 100, y: 100}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 104, y: 121}
+  m_MaxSize: {x: 4004, y: 4021}
   m_ActualView: {fileID: 15}
   m_Panes:
   - {fileID: 17}
@@ -396,9 +396,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 328.32004
+    m_Target: 998.88275
     speed: 2
-    m_Value: 328.32004
+    m_Value: 998.88275
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -534,10 +534,10 @@ MonoBehaviour:
   m_LastProjectPath: /Users/zhanglubin/git/sh
   m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 446.99683}
-    m_SelectedIDs: f62a0000
-    m_LastClickedID: 10998
-    m_ExpandedIDs: 0000000090280000ec28000032290000dc290000f8290000042a0000522a0000fa2a0000982b0000a42c0000ac2c0000482d0000642d0000142e0000de300000a8310000ba310000b23300001235000040400000424000004440000046400000484000004a40000000ca9a3bffffff7f
+    scrollPos: {x: 0, y: 401}
+    m_SelectedIDs: 9a350000
+    m_LastClickedID: 13722
+    m_ExpandedIDs: 000000006c330000c63300000834000098340000b4340000c0340000fe3400009e3500001a360000123700001a370000b4370000ce37000064380000d83a0000863b0000983b0000563d00009e3e0000524900005449000056490000584900005a4900005c49000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -565,7 +565,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 0000000090280000ec28000032290000dc290000f8290000042a0000522a0000fa2a0000982b0000a42c0000ac2c0000482d0000642d0000142e0000de300000a8310000ba310000b23300001235000040400000424000004440000046400000484000004a400000
+    m_ExpandedIDs: 000000006c330000c63300000834000098340000b4340000c0340000fe3400009e3500001a360000123700001a370000b4370000ce37000064380000d83a0000863b0000983b0000563d00009e3e0000524900005449000056490000584900005a4900005c490000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -596,18 +596,18 @@ MonoBehaviour:
     m_ExpandedInstanceIDs: 2825000002090000340bedff64250000d698e6ffbe26000074250000323700001c3700009ccc0000a0cc000098cc00008adf0000644c0200844c0200684c0200084c0200804c0200044c0200704c0200904c0200c2de0000604c02005c4c0200a6de0000744c02008c4c0200944c0200a4cd000000cf0000884c0200584c02000ecf0000784c02006c4c0200a2cc000054df0000984c02007c4c02001eb9020052b90200a6b902002ab9020072b90200aab9020026b902006eb90200a2b9020022b902006ab90200ceb9020046b902008ab90200d2b902005ab9020086b90200d6b902004ab90200cab9020056b9020092b90200dab90200d62c0000a8270000c4290000463400000a2a0000e0ec000044280000fc2a00001453f6ff3653f6ff50ba000086bb000050340000a42d00006838000000000000003200006c2d00003a3f0100bc2a00005e010000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: 
-      m_OriginalName: 
+      m_Name: Logo
+      m_OriginalName: Logo
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 0
+      m_UserData: 14014
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 11
+      m_OriginalEventType: 0
       m_IsRenamingFilename: 1
       m_ClientGUIView: {fileID: 8}
     m_CreateAssetUtility:
@@ -681,9 +681,9 @@ MonoBehaviour:
     height: 532
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 482c0000
+    m_SelectedIDs: be360000
     m_LastClickedID: 0
-    m_ExpandedIDs: 76f5f4ffb4fbf4ff44acfcff28b6fcffdafbffff00000000
+    m_ExpandedIDs: f855f7ff0e0af8ff9acaffff1ae8ffffcceaffff00000000ce490100244b0100a04b0100
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
