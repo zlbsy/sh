@@ -32,8 +32,7 @@ namespace App.Util.Search{
             tiles = new List<VTile>();
             if (movePower == 0)
             {
-                App.Model.Master.MCharacter characterMaster = mCharacter.Master;
-                movePower = characterMaster.moving_power;
+                movePower = mCharacter.Ability.MovingPower;
                 if (movePower == 0)
                 {
                     Debug.LogError("movePower = " + movePower);

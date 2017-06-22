@@ -6,6 +6,7 @@ namespace App.Model.Master{
     public class MBattleNpc : MBase {
         public int boss;
 		public int level;
+        public int npc_id;
 		/// <summary>
 		/// NpcEquipmentCacher id
 		/// 0表示使用MNpc的默认装备

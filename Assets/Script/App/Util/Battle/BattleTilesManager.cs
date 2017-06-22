@@ -27,8 +27,8 @@ namespace App.Util.Battle{
             vBaseMap = view;
             //baseMapMaster = BaseMapCacher.Instance.Get(mBaseMap.MapId);
         }
-        public void ShowCharacterMovingArea(MCharacter mCharacter){
-            currentMovingTiles = cBattlefield.breadthFirst.Search(mCharacter, 0, true);
+        public void ShowCharacterMovingArea(MCharacter mCharacter, int movingPower = 0){
+            currentMovingTiles = cBattlefield.breadthFirst.Search(mCharacter, movingPower, true);
             vBaseMap.ShowMovingTiles(currentMovingTiles, mCharacter.Belong);
             cBattlefield.battleMode = CBattlefield.BattleMode.show_move_tiles;
         }
@@ -73,7 +73,6 @@ namespace App.Util.Battle{
                 }
                 bool sameBelong = cBattlefield.charactersManager.IsSameBelong(character.Belong, mCharacter.Belong);
                 bool useToEnemy = mCharacter.CurrentSkill.UseToEnemy;
-                //Debug.LogError("useToEnemy="+useToEnemy + ", sameBelong="+sameBelong);
                 if (useToEnemy ^ sameBelong)
                 {
                     GameObject attackTween = cBattlefield.CreateAttackTween();

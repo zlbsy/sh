@@ -108,7 +108,7 @@ namespace App.Util.Battle{
                 }
                 VTile startTile = cBattlefield.mapSearch.GetTile(this.mCharacter.CoordinateX, this.mCharacter.CoordinateY);
                 VTile endTile = cBattlefield.mapSearch.GetTile(character.CoordinateX, character.CoordinateY);
-                List<VTile> tiles = cBattlefield.aStar.Search(startTile, endTile);
+                List<VTile> tiles = cBattlefield.aStar.Search(this.mCharacter, startTile, endTile);
                 if (tileList == null || tileList.Count > tiles.Count)
                 {
                     tileList = tiles;
@@ -121,7 +121,7 @@ namespace App.Util.Battle{
                 {
                     continue;
                 }
-                MCharacter character = System.Array.Find(mBaseMap.Characters, chara=>chara.CoordinateX == tile.CoordinateX && chara.CoordinateY == tile.CoordinateY);
+                MCharacter character = System.Array.Find(mBaseMap.Characters, chara=>chara.Hp > 0 && chara.CoordinateX == tile.CoordinateX && chara.CoordinateY == tile.CoordinateY);
                 if (character != null)
                 {
                     continue;
@@ -235,7 +235,7 @@ namespace App.Util.Battle{
                 return cBattlefield.tilesManager.CurrentMovingTiles[0];
             }
             tiles.Sort((a, b)=>{
-                bool aNotRoad = System.Array.Exists(mBaseMap.Characters, _=>_.CoordinateX == a.CoordinateX && _.CoordinateY == a.CoordinateY);
+                bool aNotRoad = System.Array.Exists(mBaseMap.Characters, c=>c.Hp > 0 && c.CoordinateX == a.CoordinateX && c.CoordinateY == a.CoordinateY);
                 if(aNotRoad){
                     return 1;
                 }
@@ -285,6 +285,30 @@ namespace App.Util.Battle{
             while (!mCharacter.ActionOver)
             {
                 yield return 0;
+            }
+        }
+        public void MoveAfterAttack(){
+            List<VTile> vTiles = cBattlefield.tilesManager.CurrentMovingTiles;
+            VTile vTile = cBattlefield.mapSearch.GetTile(mCharacter.CoordinateX, mCharacter.CoordinateY);
+            VTile fTile = cBattlefield.mapSearch.GetTile(cBattlefield.manager.oldCoordinate[0], cBattlefield.manager.oldCoordinate[1]);
+            vTiles.Sort((a, b)=>{
+                int vA = cBattlefield.mapSearch.GetDistance(a, vTile);
+                int vB = cBattlefield.mapSearch.GetDistance(b, vTile);
+                if(vA != vB){
+                    return vB - vA;
+                }
+                int fA = cBattlefield.mapSearch.GetDistance(a, fTile);
+                int fB = cBattlefield.mapSearch.GetDistance(b, fTile);
+                return fA - fB;
+            });
+            vTile = vTiles[0];
+            if (cBattlefield.charactersManager.GetCharacter(vTile.Index) == null)
+            {
+                cBattlefield.manager.ClickMovingNode(vTile.Index);
+            }
+            else
+            {
+                cBattlefield.manager.ActionOverNext();
             }
         }
     }

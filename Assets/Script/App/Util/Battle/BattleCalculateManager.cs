@@ -70,7 +70,7 @@ namespace App.Util.Battle{
             }
             if (attackCharacter.MoveType == MoveType.infantry && targetCharacter.MoveType == MoveType.cavalry)
             {
-                //步兵攻击骑兵不受反击
+                //步兵攻击骑兵时不受反击
                 return false;
             }
             return true;

@@ -31,7 +31,7 @@ namespace App.Util.Search{
             open.Clear();
         }
         private bool isWay(VTile checkPoint){
-            return true;
+            return checkPoint.IsRoad;
         }
         private void SetPath(VTile startNode){
             VTile pathNode = endNode;
@@ -165,15 +165,15 @@ namespace App.Util.Search{
             }
             return obj_note;
         }
-        public List<VTile> Search(VTile startTile, VTile endTile){
+        public List<VTile> Search(MCharacter mCharacter, VTile startTile, VTile endTile){
             path.Clear();
             if (startTile.Index == endTile.Index)
             {
                 return path;
             }
+            this.endNode = endTile;
             init();
             open.Add(null);
-            this.endNode = endTile;
             bool isOver = false;
             VTile thisPoint = startTile;
             while (!isOver)

@@ -21,6 +21,8 @@ namespace App.Util.Battle{
         //private VBaseMap vBaseMap;
         //private App.Model.Master.MBaseMap baseMapMaster;
         private System.Action returnAction;
+        private int roadLength = 0;
+        public int[] oldCoordinate = new int[]{0,0};
         private List<MCharacter> actionCharacterList = new List<MCharacter>();
         public BattleManager(CBattlefield controller, MBaseMap model, VBaseMap view){
             cBattlefield = controller;
@@ -38,11 +40,12 @@ namespace App.Util.Battle{
             if (mCharacter != null)
             {
                 this.mCharacter = mCharacter;
+                roadLength = 0;
                 cBattlefield.tilesManager.ShowCharacterMovingArea(mCharacter);
                 cBattlefield.tilesManager.ShowCharacterSkillArea(mCharacter);
                 cBattlefield.OpenBattleCharacterPreviewDialog(mCharacter);
-                int cx = mCharacter.CoordinateX;
-                int cy = mCharacter.CoordinateY;
+                oldCoordinate[0] = mCharacter.CoordinateX;
+                oldCoordinate[1] = mCharacter.CoordinateY;
                 ActionType action = mCharacter.Action;
                 float x = mCharacter.X;
                 Direction direction = mCharacter.Direction;
@@ -52,8 +55,8 @@ namespace App.Util.Battle{
                 }
                 returnAction = () =>
                     {
-                        this.mCharacter.CoordinateY = cy;
-                        this.mCharacter.CoordinateX = cx;
+                        this.mCharacter.CoordinateY = oldCoordinate[1];
+                        this.mCharacter.CoordinateX = oldCoordinate[0];
                         this.mCharacter.X = x;
                         this.mCharacter.Direction = direction;
                         this.mCharacter.Action = action;
@@ -255,17 +258,28 @@ namespace App.Util.Battle{
                 cBattlefield.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.BattleFailDialog));
                 return;
             }
-            this.mCharacter.ActionOver = true;
-            cBattlefield.tilesManager.ClearCurrentTiles();
-            //cBattlefield.CloseOperatingMenu();
-            cBattlefield.HideBattleCharacterPreviewDialog();
-            cBattlefield.battleMode = CBattlefield.BattleMode.none;
-            ActionOverNext();
+            if (this.mCharacter.Hp > 0 && this.mCharacter.IsMoveAfterAttack && this.mCharacter.Ability.MovingPower - this.roadLength > 0)
+            {
+                cBattlefield.tilesManager.ShowCharacterMovingArea(this.mCharacter, this.mCharacter.Ability.MovingPower - this.roadLength);
+                cBattlefield.battleMode = CBattlefield.BattleMode.move_after_attack;
+                if (this.mCharacter.Belong != Belong.self)
+                {
+                    cBattlefield.ai.MoveAfterAttack();
+                }
+            }
+            else
+            {
+                ActionOverNext();
+            }
         }
         /// <summary>
         /// 动作结束后处理
         /// </summary>
         public void ActionOverNext(){
+            this.mCharacter.ActionOver = true;
+            cBattlefield.tilesManager.ClearCurrentTiles();
+            cBattlefield.HideBattleCharacterPreviewDialog();
+            cBattlefield.battleMode = CBattlefield.BattleMode.none;
             Belong belong = this.mCharacter.Belong;
             this.mCharacter = null;
             if (!System.Array.Exists(mBaseMap.Characters, _ => _.Hp > 0 && _.Belong == belong && !_.ActionOver))
@@ -318,18 +332,27 @@ namespace App.Util.Battle{
                 VTile startTile = cBattlefield.mapSearch.GetTile(this.mCharacter.CoordinateX, this.mCharacter.CoordinateY);
                 VTile endTile = cBattlefield.mapSearch.GetTile(index);
 
-                Holoville.HOTween.Core.TweenDelegate.TweenCallback moveComplete = () =>
-                    {
-                        this.mCharacter.Action = ActionType.idle;
-                        cBattlefield.tilesManager.ClearCurrentTiles();
-                        cBattlefield.battleMode = CBattlefield.BattleMode.move_end;
-                        this.mCharacter.CoordinateY = endTile.CoordinateY;
-                        this.mCharacter.CoordinateX = endTile.CoordinateX;
-                        cBattlefield.tilesManager.ShowCharacterSkillArea(this.mCharacter);
-                        cBattlefield.OpenOperatingMenu();
-                    };
+                Holoville.HOTween.Core.TweenDelegate.TweenCallback moveComplete;
+                if (cBattlefield.battleMode == CBattlefield.BattleMode.move_after_attack)
+                {
+                    moveComplete = ActionOverNext;
+                }
+                else
+                {
+                    moveComplete = () =>
+                        {
+                            this.mCharacter.Action = ActionType.idle;
+                            cBattlefield.tilesManager.ClearCurrentTiles();
+                            cBattlefield.battleMode = CBattlefield.BattleMode.move_end;
+                            this.mCharacter.CoordinateY = endTile.CoordinateY;
+                            this.mCharacter.CoordinateX = endTile.CoordinateX;
+                            cBattlefield.tilesManager.ShowCharacterSkillArea(this.mCharacter);
+                            cBattlefield.OpenOperatingMenu();
+                        };
+                }
                 
-                List<VTile> tiles = cBattlefield.aStar.Search(startTile, endTile);
+                List<VTile> tiles = cBattlefield.aStar.Search(this.mCharacter, startTile, endTile);
+                roadLength = tiles.Count;
                 if (tiles.Count > 0)
                 {
                     cBattlefield.CloseOperatingMenu();
@@ -353,7 +376,7 @@ namespace App.Util.Battle{
                     moveComplete();
                 }
             }
-            else
+            else if(cBattlefield.battleMode != CBattlefield.BattleMode.move_after_attack)
             {
                 CharacterReturnNone();
             }

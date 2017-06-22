@@ -33,7 +33,8 @@ namespace App.Controller.Battle{
             show_move_tiles,
             moving,
             move_end,
-            actioning
+            actioning,
+            move_after_attack
 
         }
         public Belong currentBelong{ get; set;}
@@ -149,6 +150,9 @@ namespace App.Controller.Battle{
                     break;
                 case BattleMode.move_end:
                     manager.ClickSkillNode(index);
+                    break;
+                case BattleMode.move_after_attack:
+                    manager.ClickMovingNode(index);
                     break;
             }
         }

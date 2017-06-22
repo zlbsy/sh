@@ -33,6 +33,16 @@ namespace App.View{
 
         private GameObject attackTween;
         private VBaseMap vBaseMap;
+        private App.Controller.Battle.CBattlefield _cBattlefield;
+        private App.Controller.Battle.CBattlefield cBattlefield{
+            get{ 
+                if (_cBattlefield == null)
+                {
+                    _cBattlefield = this.Controller as App.Controller.Battle.CBattlefield;
+                }
+                return _cBattlefield;
+            }   
+        }
         public void SearchInit(){
             MovingPower = 0;
             IsChecked = false;

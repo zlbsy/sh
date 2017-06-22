@@ -10,7 +10,8 @@ namespace App.Util.Cacher{
             return GetFromNpc(npc);
         }
         public App.Model.MCharacter GetFromBattleNpc(App.Model.Master.MBattleNpc mBattleNpc){
-            App.Model.Master.MNpc npc = Get(mBattleNpc.id);
+            Debug.LogError("mBattleNpc.npc_id =" + mBattleNpc.npc_id);
+            App.Model.Master.MNpc npc = Get(mBattleNpc.npc_id);
             App.Model.MCharacter mCharacter = GetFromNpc(npc);
             if (mBattleNpc.horse > 0)
             {
