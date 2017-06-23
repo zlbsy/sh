@@ -63,6 +63,10 @@ namespace App.Util.Battle{
             {
                 return true;
             }
+            if (attackCharacter.IsNoBackAttack)
+            {
+                return false;
+            }
             if (!cBattlefield.charactersManager.IsInSkillDistance(CoordinateX, CoordinateY, targetX, targetY, targetCharacter))
             {
                 //不在攻击范围内

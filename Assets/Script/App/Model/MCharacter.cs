@@ -274,6 +274,11 @@ namespace App.Model{
                 return IsSkillEffectSpecial(App.Model.Master.SkillEffectSpecial.force_back_attack);
             }
         }
+        public bool IsNoBackAttack{
+            get{ 
+                return IsSkillEffectSpecial(App.Model.Master.SkillEffectSpecial.no_back_attack);
+            }
+        }
         public bool IsForceHit{
             get{ 
                 return IsSkillEffectSpecial(App.Model.Master.SkillEffectSpecial.force_hit);

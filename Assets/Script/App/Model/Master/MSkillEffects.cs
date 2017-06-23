@@ -34,11 +34,15 @@ namespace App.Model.Master{
         /// </summary>
         force_back_attack,
         /// <summary>
+        /// 无反攻击
+        /// </summary>
+        no_back_attack,
+        /// <summary>
         /// 必中
         /// </summary>
         force_hit,
         /// <summary>
-        /// 溅射一人
+        /// 溅射
         /// </summary>
         quantity_plus,
         /// <summary>
@@ -61,6 +65,14 @@ namespace App.Model.Master{
         /// 反击次数
         /// </summary>
         counter_attack_count,
+        /// <summary>
+        /// 对攻击范围内所有人进行攻击
+        /// </summary>
+        attack_all_near,
+        /// <summary>
+        /// 回马枪
+        /// </summary>
+        back_thrust,
         /*
         /// <summary>
         /// 固定伤害攻击

@@ -74,19 +74,27 @@ namespace App.Util.Battle{
             List<VCharacter> characters;
             if (System.Array.Exists(skill.types, s => s == SkillType.heal))
             {
-                characters = vBaseMap.Characters.FindAll(c=>c.ViewModel.Hp.Value > 0 && this.IsSameBelong(c.ViewModel.Belong.Value, vCharacter.ViewModel.Belong.Value));
+                characters = vBaseMap.Characters.FindAll(c=>c.ViewModel.Hp.Value > 0 && this.IsSameBelong(c.ViewModel.Belong.Value, vCharacter.ViewModel.Belong.Value) && !this.IsSameCharacter(targetView,c));
             }
             else/* if (System.Array.Exists(skill.types, s => s == SkillType.attack))*/
             {
-                characters = vBaseMap.Characters.FindAll(c=>c.ViewModel.Hp.Value > 0 && this.IsSameBelong(c.ViewModel.Belong.Value, targetView.ViewModel.Belong.Value));
+                characters = vBaseMap.Characters.FindAll(c=>c.ViewModel.Hp.Value > 0 && this.IsSameBelong(c.ViewModel.Belong.Value, targetView.ViewModel.Belong.Value) && !this.IsSameCharacter(targetView,c));
             }
-            VTile targetTile = cBattlefield.mapSearch.GetTile(targetView.ViewModel.CoordinateX.Value, targetView.ViewModel.CoordinateY.Value);
+            VTile targetTile;
+            if (skill.effect.special == App.Model.Master.SkillEffectSpecial.attack_all_near)
+            {
+                targetTile = cBattlefield.mapSearch.GetTile(vCharacter.ViewModel.CoordinateX.Value, vCharacter.ViewModel.CoordinateY.Value);
+            }
+            else
+            {
+                targetTile = cBattlefield.mapSearch.GetTile(targetView.ViewModel.CoordinateX.Value, targetView.ViewModel.CoordinateY.Value);
+            }
             if (skill.radius_type == RadiusType.range)
             {
                 foreach (VCharacter child in characters)
                 {
                     VTile tile = cBattlefield.mapSearch.GetTile(child.ViewModel.CoordinateX.Value, child.ViewModel.CoordinateY.Value);
-                    if (cBattlefield.mapSearch.GetDistance(targetTile, tile) <= skill.radius)
+                    if (targetTile.Index != tile.Index && cBattlefield.mapSearch.GetDistance(targetTile, tile) <= skill.radius)
                     {
                         result.Add(child);
                     }
@@ -94,14 +102,15 @@ namespace App.Util.Battle{
                 bool quantity_plus = skill.effect.special == App.Model.Master.SkillEffectSpecial.quantity_plus;
                 if (quantity_plus)
                 {
-                    List<VCharacter> resultPlus = new List<VCharacter>(){ targetView };
-                    while (result.Count > 1 && resultPlus.Count - 1 < skill.effect.special_value)
+                    List<VCharacter> resultPlus = new List<VCharacter>();
+                    while (result.Count > 1 && resultPlus.Count < skill.effect.special_value)
                     {
                         int index = Random.Range(1, result.Count - 1);
                         VCharacter plusView = result[index];
                         resultPlus.Add(plusView);
                         result.RemoveAt(index);
                     }
+                    resultPlus.Add(targetView);
                     return resultPlus;
                 }
             }else if (skill.radius_type == RadiusType.direction)
@@ -130,6 +139,9 @@ namespace App.Util.Battle{
         }
         public bool IsSameCharacter(MCharacter character1, MCharacter character2){
             return character1.Belong == character2.Belong && character1.Id == character2.Id;
+        }
+        public bool IsSameCharacter(VCharacter character1, VCharacter character2){
+            return character1.ViewModel.Belong.Value == character2.ViewModel.Belong.Value && character1.ViewModel.Id.Value == character2.ViewModel.Id.Value;
         }
         public bool IsSameBelong(Belong belong1, Belong belong2){
             if (belong1 == Belong.enemy)
