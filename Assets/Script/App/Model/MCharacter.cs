@@ -203,10 +203,12 @@ namespace App.Model{
             }
         }
         public void StatusInit(){
-            //Debug.LogError("this.CharacterId = " + this.CharacterId + ", " + this.WeaponType+", " + this.Skills);
             if (this.CurrentSkill == null)
             {
-                this.CurrentSkill = this.Skills == null ? null : System.Array.Find(this.Skills, s=>(System.Array.IndexOf(s.Master.weapon_types, this.WeaponType) >= 0));
+                if (this.Skills != null)
+                {
+                    this.CurrentSkill = System.Array.Find(this.Skills, s=>(System.Array.IndexOf(s.Master.weapon_types, this.WeaponType) >= 0));
+                }
             }
 
             if (this.Ability == null)
@@ -230,6 +232,7 @@ namespace App.Model{
                 return this.Ability.MpMax;
             }
         }
+        public int roadLength;
         public int Id{
             set{
                 if (this.ViewModel.Id.Value != value)

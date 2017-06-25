@@ -54,6 +54,10 @@ namespace App.Model.Master{
         /// </summary>
         move_after_attack,
         /// <summary>
+        /// 移动攻击
+        /// </summary>
+        move_and_attack,
+        /// <summary>
         /// 每回合固定伤害
         /// </summary>
         bout_fixed_damage,

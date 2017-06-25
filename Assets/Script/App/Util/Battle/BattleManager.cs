@@ -21,7 +21,6 @@ namespace App.Util.Battle{
         //private VBaseMap vBaseMap;
         //private App.Model.Master.MBaseMap baseMapMaster;
         private System.Action returnAction;
-        private int roadLength = 0;
         public int[] oldCoordinate = new int[]{0,0};
         private List<MCharacter> actionCharacterList = new List<MCharacter>();
         public BattleManager(CBattlefield controller, MBaseMap model, VBaseMap view){
@@ -40,7 +39,7 @@ namespace App.Util.Battle{
             if (mCharacter != null)
             {
                 this.mCharacter = mCharacter;
-                roadLength = 0;
+                this.mCharacter.roadLength = 0;
                 cBattlefield.tilesManager.ShowCharacterMovingArea(mCharacter);
                 cBattlefield.tilesManager.ShowCharacterSkillArea(mCharacter);
                 cBattlefield.OpenBattleCharacterPreviewDialog(mCharacter);
@@ -149,6 +148,50 @@ namespace App.Util.Battle{
         /// <summary>
         /// 开始动作
         /// </summary>
+        /// <returns><c>true</c>, if start run was actioned, <c>false</c> otherwise.</returns>
+        /// <param name="currentCharacter">Current character.</param>
+        private void ActionStartRun(MCharacter currentCharacter){
+            System.Action actionStartEvent = () =>
+                {
+                    currentCharacter.Direction = (currentCharacter.X > currentCharacter.Target.X ? Direction.left : Direction.right);
+                    currentCharacter.Action = ActionType.attack;
+                };
+            if (currentCharacter.CurrentSkill.Master.effect.special == App.Model.Master.SkillEffectSpecial.back_thrust)
+            {
+                //回马枪
+                VTile currentTile = cBattlefield.mapSearch.GetTile(currentCharacter.CoordinateX, currentCharacter.CoordinateY);
+                VTile targetTile = cBattlefield.mapSearch.GetTile(currentCharacter.Target.CoordinateX, currentCharacter.Target.CoordinateY);
+                Direction direction = cBattlefield.mapSearch.GetDirection(targetTile, currentTile);
+                VTile backTile = cBattlefield.mapSearch.GetTile(currentTile, direction);
+                if (cBattlefield.charactersManager.GetCharacter(backTile.Index) != null)
+                {
+                    actionStartEvent();
+                    return;
+                }
+                Sequence sequence = new Sequence();
+                TweenParms tweenParms = new TweenParms().Prop("X", backTile.transform.localPosition.x, false).Prop("Y", backTile.transform.localPosition.y, false).Ease(EaseType.Linear);
+                TweenParms tweenParmsTarget = new TweenParms().Prop("X", currentTile.transform.localPosition.x, false).Prop("Y", currentTile.transform.localPosition.y, false).Ease(EaseType.Linear);
+                Holoville.HOTween.Core.TweenDelegate.TweenCallback moveComplete = () =>
+                    {
+                        currentCharacter.CoordinateY = backTile.CoordinateY;
+                        currentCharacter.CoordinateX = backTile.CoordinateX;
+                        currentCharacter.Target.CoordinateY = currentTile.CoordinateY;
+                        currentCharacter.Target.CoordinateX = currentTile.CoordinateX;
+                        actionStartEvent();
+                    };
+                tweenParms.OnComplete(moveComplete);
+                sequence.Insert (0f, HOTween.To(currentCharacter, 0.5f, tweenParms));
+                sequence.Insert (0f, HOTween.To(currentCharacter.Target, 0.5f, tweenParmsTarget));
+                sequence.Play();
+            }
+            else
+            {
+                actionStartEvent();
+            }
+        }
+        /// <summary>
+        /// 开始动作
+        /// </summary>
         /// <returns><c>true</c>, if start was actioned, <c>false</c> otherwise.</returns>
         /// <param name="currentCharacter">Current character.</param>
         private bool ActionStart(MCharacter currentCharacter){
@@ -159,8 +202,7 @@ namespace App.Util.Battle{
                 {
                     return false;
                 }
-                currentCharacter.Direction = (currentCharacter.X > currentCharacter.Target.X ? Direction.left : Direction.right);
-                currentCharacter.Action = ActionType.attack;
+                ActionStartRun(currentCharacter);
                 return true;
             }
             actionCharacterList.Clear();
@@ -195,51 +237,45 @@ namespace App.Util.Battle{
             return false;
         }
         /// <summary>
+        /// 特技导致武将状态改变
+        /// </summary>
+        /// <param name="skill">Skill.</param>
+        private void AddAidToCharacter(App.Model.Master.MSkillEffect mSkillEffect){
+            List<int> aids = mSkillEffect.strategys.ToList();
+            int index = 0;
+            List<App.Model.Master.MStrategy> strategys = new List<App.Model.Master.MStrategy>();
+            while (index++ < mSkillEffect.count)
+            {
+                int i = Random.Range(0, aids.Count - 1);
+                App.Model.Master.MStrategy strategy = StrategyCacher.Instance.Get(aids[i]);
+                aids.RemoveAt(i);
+                strategys.Add(strategy);
+            }
+            foreach (App.Model.Master.MStrategy strategy in strategys)
+            {
+                //特效
+                if(strategy.effect_type == App.Model.Master.StrategyEffectType.aid){
+                    this.mCharacter.Target.AddAid(strategy);
+                    VTile vTile = this.cBattlefield.mapSearch.GetTile(this.mCharacter.Target.CoordinateX, this.mCharacter.Target.CoordinateY);
+                    this.cBattlefield.CreateEffect(strategy.hert > 0 ? "effect_up" : "effect_down", vTile.transform);
+                }
+            }
+        }
+        /// <summary>
         /// 动作结束后处理
         /// </summary>
         public void ActionOver(){
-            Debug.LogError("ActionOver" + this.mCharacter.Master.name);
+            //Debug.LogError("ActionOver" + this.mCharacter.Master.name);
             MSkill skill = this.mCharacter.CurrentSkill;
-            List<App.Model.Master.MSkillEffect> skillEffects = new List<App.Model.Master.MSkillEffect>();
-            if (skill.Master.effect.special == App.Model.Master.SkillEffectSpecial.aid && skill.Master.effect.enemy.time == App.Model.Master.SkillEffectBegin.attack_end)
+            if (skill.Master.effect.special == App.Model.Master.SkillEffectSpecial.aid)
             {
-                List<int> aids = skill.Master.effect.enemy.strategys.ToList();
-                int index = 0;
-                List<App.Model.Master.MStrategy> strategys = new List<App.Model.Master.MStrategy>();
-                while (index++ < skill.Master.effect.enemy.count)
+                if (skill.Master.effect.enemy.count > 0 && skill.Master.effect.enemy.time == App.Model.Master.SkillEffectBegin.attack_end)
                 {
-                    int i = Random.Range(0, aids.Count - 1);
-                    App.Model.Master.MStrategy strategy = StrategyCacher.Instance.Get(aids[i]);
-                    aids.RemoveAt(i);
-                    strategys.Add(strategy);
+                    AddAidToCharacter(skill.Master.effect.enemy);
                 }
-                foreach (App.Model.Master.MStrategy strategy in strategys)
+                else if(skill.Master.effect.self.count > 0 && skill.Master.effect.self.time == App.Model.Master.SkillEffectBegin.attack_end)
                 {
-                    //特效
-                    if(strategy.effect_type == App.Model.Master.StrategyEffectType.aid){
-                        this.mCharacter.Target.AddAid(strategy);
-                        VTile vTile = this.cBattlefield.mapSearch.GetTile(this.mCharacter.Target.CoordinateX, this.mCharacter.Target.CoordinateY);
-                        this.cBattlefield.CreateEffect(strategy.hert > 0 ? "effect_up" : "effect_down", vTile.transform);
-                    }
-                }
-            }else if (skill.Master.effect.self.count > 0 && skill.Master.effect.self.time == App.Model.Master.SkillEffectBegin.attack_end)
-            {
-                skillEffects.Add(skill.Master.effect.self);
-            }
-            if (skillEffects.Count > 0)
-            {
-                List<App.Model.Master.MStrategy> strategys = new List<App.Model.Master.MStrategy>();
-                foreach (App.Model.Master.MSkillEffect skillEffect in skillEffects)
-                {
-                    List<int> aids = skillEffect.strategys.ToList();
-                    int index = 0;
-                    while (index++ < skillEffect.count)
-                    {
-                        int i = Random.Range(0, aids.Count - 1);
-                        App.Model.Master.MStrategy strategy = StrategyCacher.Instance.Get(aids[i]);
-                        aids.RemoveAt(i);
-                        strategys.Add(strategy);
-                    }
+                    AddAidToCharacter(skill.Master.effect.self);
                 }
             }
             if (this.mCharacter.Target != null)
@@ -260,10 +296,10 @@ namespace App.Util.Battle{
                 cBattlefield.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.BattleFailDialog));
                 return;
             }
-            if (this.mCharacter.Hp > 0 && this.mCharacter.IsMoveAfterAttack && this.mCharacter.Ability.MovingPower - this.roadLength > 0)
+            if (this.mCharacter.Hp > 0 && this.mCharacter.IsMoveAfterAttack && this.mCharacter.Ability.MovingPower - this.mCharacter.roadLength > 0)
             {
                 Debug.LogError("MoveAfterAttack");
-                cBattlefield.tilesManager.ShowCharacterMovingArea(this.mCharacter, this.mCharacter.Ability.MovingPower - this.roadLength);
+                cBattlefield.tilesManager.ShowCharacterMovingArea(this.mCharacter, this.mCharacter.Ability.MovingPower - this.mCharacter.roadLength);
                 cBattlefield.battleMode = CBattlefield.BattleMode.move_after_attack;
                 if (this.mCharacter.Belong != Belong.self)
                 {
@@ -285,6 +321,7 @@ namespace App.Util.Battle{
                 this.mCharacter.Action = ActionType.idle;
             }
             this.mCharacter.ActionOver = true;
+            this.mCharacter.roadLength = 0;
             cBattlefield.tilesManager.ClearCurrentTiles();
             cBattlefield.HideBattleCharacterPreviewDialog();
             cBattlefield.battleMode = CBattlefield.BattleMode.none;
@@ -318,6 +355,59 @@ namespace App.Util.Battle{
                 cBattlefield.BoutWave(Belong.self);
             }
         }
+        private void MoveStart(int index){
+            VTile startTile = cBattlefield.mapSearch.GetTile(this.mCharacter.CoordinateX, this.mCharacter.CoordinateY);
+            VTile endTile = cBattlefield.mapSearch.GetTile(index);
+
+            Holoville.HOTween.Core.TweenDelegate.TweenCallback moveComplete;
+            if (cBattlefield.battleMode == CBattlefield.BattleMode.move_after_attack)
+            {
+                moveComplete = () =>
+                    {
+                        this.mCharacter.CoordinateY = endTile.CoordinateY;
+                        this.mCharacter.CoordinateX = endTile.CoordinateX;
+                        ActionOverNext();
+                    };
+            }
+            else
+            {
+                moveComplete = () =>
+                    {
+                        this.mCharacter.Action = ActionType.idle;
+                        cBattlefield.tilesManager.ClearCurrentTiles();
+                        cBattlefield.battleMode = CBattlefield.BattleMode.move_end;
+                        this.mCharacter.CoordinateY = endTile.CoordinateY;
+                        this.mCharacter.CoordinateX = endTile.CoordinateX;
+                        cBattlefield.tilesManager.ShowCharacterSkillArea(this.mCharacter);
+                        cBattlefield.OpenOperatingMenu();
+                    };
+            }
+
+            List<VTile> tiles = cBattlefield.aStar.Search(this.mCharacter, startTile, endTile);
+            this.mCharacter.roadLength = tiles.Count;
+            if (tiles.Count > 0)
+            {
+                cBattlefield.CloseOperatingMenu();
+                cBattlefield.tilesManager.ClearCurrentTiles();
+                this.mCharacter.Action = ActionType.move;
+                cBattlefield.battleMode = CBattlefield.BattleMode.moving;
+                Sequence sequence = new Sequence();
+                foreach (VTile tile in tiles)
+                {
+                    TweenParms tweenParms = new TweenParms().Prop("X", tile.transform.localPosition.x, false).Prop("Y", tile.transform.localPosition.y, false).Ease(EaseType.Linear);
+                    if (tile.Index == endTile.Index)
+                    {
+                        tweenParms.OnComplete(moveComplete);
+                    }
+                    sequence.Append(HOTween.To(this.mCharacter, 0.5f, tweenParms));
+                }
+                sequence.Play();
+            }
+            else
+            {
+                moveComplete();
+            }
+        }
         public void ClickMovingNode(int index){
             if (this.mCharacter.Belong != cBattlefield.currentBelong || this.mCharacter.ActionOver)
             {
@@ -337,57 +427,7 @@ namespace App.Util.Battle{
             }
             if (cBattlefield.tilesManager.IsInMovingCurrentTiles(index))
             {
-                VTile startTile = cBattlefield.mapSearch.GetTile(this.mCharacter.CoordinateX, this.mCharacter.CoordinateY);
-                VTile endTile = cBattlefield.mapSearch.GetTile(index);
-
-                Holoville.HOTween.Core.TweenDelegate.TweenCallback moveComplete;
-                if (cBattlefield.battleMode == CBattlefield.BattleMode.move_after_attack)
-                {
-                    moveComplete = () =>
-                        {
-                            this.mCharacter.CoordinateY = endTile.CoordinateY;
-                            this.mCharacter.CoordinateX = endTile.CoordinateX;
-                            ActionOverNext();
-                        };
-                }
-                else
-                {
-                    moveComplete = () =>
-                        {
-                            this.mCharacter.Action = ActionType.idle;
-                            cBattlefield.tilesManager.ClearCurrentTiles();
-                            cBattlefield.battleMode = CBattlefield.BattleMode.move_end;
-                            this.mCharacter.CoordinateY = endTile.CoordinateY;
-                            this.mCharacter.CoordinateX = endTile.CoordinateX;
-                            cBattlefield.tilesManager.ShowCharacterSkillArea(this.mCharacter);
-                            cBattlefield.OpenOperatingMenu();
-                        };
-                }
-                
-                List<VTile> tiles = cBattlefield.aStar.Search(this.mCharacter, startTile, endTile);
-                roadLength = tiles.Count;
-                if (tiles.Count > 0)
-                {
-                    cBattlefield.CloseOperatingMenu();
-                    cBattlefield.tilesManager.ClearCurrentTiles();
-                    this.mCharacter.Action = ActionType.move;
-                    cBattlefield.battleMode = CBattlefield.BattleMode.moving;
-                    Sequence sequence = new Sequence();
-                    foreach (VTile tile in tiles)
-                    {
-                        TweenParms tweenParms = new TweenParms().Prop("X", tile.transform.localPosition.x, false).Prop("Y", tile.transform.localPosition.y, false).Ease(EaseType.Linear);
-                        if (tile.Index == endTile.Index)
-                        {
-                            tweenParms.OnComplete(moveComplete);
-                        }
-                        sequence.Append(HOTween.To(this.mCharacter, 0.5f, tweenParms));
-                    }
-                    sequence.Play();
-                }
-                else
-                {
-                    moveComplete();
-                }
+                MoveStart(index);
             }
             else if(cBattlefield.battleMode != CBattlefield.BattleMode.move_after_attack)
             {

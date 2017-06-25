@@ -193,6 +193,10 @@ namespace App.Util.Battle{
             {
                 //对骑兵技能伤害加成
                 result *= (1f + skillMaster.effect.special_value * 0.01f);
+            }else if (skillMaster.effect.special == App.Model.Master.SkillEffectSpecial.move_and_attack && attackCharacter.roadLength > 0)
+            {
+                //移动攻击
+                result *= (1f + attackCharacter.roadLength * skillMaster.effect.special_value * 0.01f);
             }
             result = result > 1 ? result : 1;
             result = result > targetCharacter.Hp ? targetCharacter.Hp : result;

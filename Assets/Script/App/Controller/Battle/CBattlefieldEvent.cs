@@ -75,17 +75,18 @@ namespace App.Controller.Battle{
             MCharacter mCharacter = this.GetCharacterModel(vCharacter);
             MCharacter targetModel = vCharacter.ViewModel.Target.Value;
             VCharacter target = this.GetCharacterView(targetModel);
-            bool hit = this.calculateManager.AttackHitrate(mCharacter, targetModel);
-            if (!hit)
-            {
-                target.SendMessage(CharacterEvent.OnBlock.ToString());
-                return;
-            }
             List<VCharacter> characters = this.charactersManager.GetTargetCharacters(vCharacter, target, vCharacter.ViewModel.CurrentSkill.Value.Master);
             App.View.VTile tile = mapSearch.GetTile(mCharacter.CoordinateX, mCharacter.CoordinateY);
             foreach (VCharacter child in characters)
             {
-                App.Model.Battle.MDamageParam arg = new App.Model.Battle.MDamageParam(-this.calculateManager.Hert(mCharacter, this.GetCharacterModel(child), tile));
+                MCharacter childModel = this.GetCharacterModel(child);
+                bool hit = calculateManager.AttackHitrate(mCharacter, childModel);
+                if (!hit)
+                {
+                    child.SendMessage(CharacterEvent.OnBlock.ToString());
+                    continue;
+                }
+                App.Model.Battle.MDamageParam arg = new App.Model.Battle.MDamageParam(-this.calculateManager.Hert(mCharacter, childModel, tile));
                 child.SendMessage(CharacterEvent.OnDamage.ToString(), arg);
                 if (child.ViewModel.CharacterId.Value == targetModel.CharacterId)
                 {
