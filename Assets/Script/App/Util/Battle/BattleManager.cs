@@ -143,7 +143,7 @@ namespace App.Util.Battle{
                 }
             }
             cBattlefield.ActionEndHandler -= OnActionComplete;
-            ActionOver();
+            cBattlefield.StartCoroutine(ActionOver());
         }
         /// <summary>
         /// 开始动作
@@ -255,20 +255,35 @@ namespace App.Util.Battle{
             {
                 //特效
                 if(strategy.effect_type == App.Model.Master.StrategyEffectType.aid){
-                    this.mCharacter.Target.AddAid(strategy);
+                    //this.mCharacter.Target.AddAid(strategy);
                     VTile vTile = this.cBattlefield.mapSearch.GetTile(this.mCharacter.Target.CoordinateX, this.mCharacter.Target.CoordinateY);
                     this.cBattlefield.CreateEffect(strategy.effect, vTile.transform);
                 }else if(strategy.effect_type == App.Model.Master.StrategyEffectType.status){
-                    this.mCharacter.Target.AddStatus(strategy);
+                    //this.mCharacter.Target.AddStatus(strategy);
                     VTile vTile = this.cBattlefield.mapSearch.GetTile(this.mCharacter.Target.CoordinateX, this.mCharacter.Target.CoordinateY);
                     this.cBattlefield.CreateEffect(strategy.effect, vTile.transform);
+                }
+            }
+            cBattlefield.StartCoroutine(AddAidToCharacterComplete(strategys));
+        }
+        private IEnumerator AddAidToCharacterComplete(List<App.Model.Master.MStrategy> strategys){
+            while (App.View.Effect.VEffectAnimation.IsRunning)
+            {
+                yield return new WaitForEndOfFrame();
+            }
+            foreach (App.Model.Master.MStrategy strategy in strategys)
+            {
+                if(strategy.effect_type == App.Model.Master.StrategyEffectType.aid){
+                    this.mCharacter.Target.AddAid(strategy);
+                }else if(strategy.effect_type == App.Model.Master.StrategyEffectType.status){
+                    this.mCharacter.Target.AddStatus(strategy);
                 }
             }
         }
         /// <summary>
         /// 动作结束后处理
         /// </summary>
-        public void ActionOver(){
+        public IEnumerator ActionOver(){
             //Debug.LogError("ActionOver" + this.mCharacter.Master.name);
             /*MSkill skill = this.mCharacter.CurrentSkill;
             if (skill.Master.effect.special == App.Model.Master.SkillEffectSpecial.aid)
@@ -289,6 +304,11 @@ namespace App.Util.Battle{
                     foreach(App.Model.Master.MSkillEffect mSkillEffect in this.mCharacter.Target.attackEndEffects){
                         AddAidToCharacter(mSkillEffect);
                     }
+                    yield return new WaitForEndOfFrame();
+                    while (App.View.Effect.VEffectAnimation.IsRunning)
+                    {
+                        yield return new WaitForEndOfFrame();
+                    }
                     this.mCharacter.Target.attackEndEffects.Clear();
                 }
                 this.mCharacter.Target.Target = null;
@@ -299,13 +319,13 @@ namespace App.Util.Battle{
                 //敌军全灭
                 Debug.LogError("敌军全灭");
                 cBattlefield.BattleWin();
-                return;
+                yield break;
             }else if (!System.Array.Exists(mBaseMap.Characters, _ => _.Hp > 0 && _.Belong == Belong.self))
             {
                 //我军全灭
                 Debug.LogError("我军全灭");
                 cBattlefield.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.BattleFailDialog));
-                return;
+                yield break;
             }
             if (this.mCharacter.Hp > 0 && this.mCharacter.IsMoveAfterAttack && this.mCharacter.Ability.MovingPower - this.mCharacter.roadLength > 0)
             {

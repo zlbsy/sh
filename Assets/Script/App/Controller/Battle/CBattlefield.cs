@@ -64,7 +64,7 @@ namespace App.Controller.Battle{
             obj.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
             obj.transform.localPosition = new Vector3(0f, 0.2f, 0f);
             obj.transform.localEulerAngles = new Vector3(-30f, 0f, 0f);
-
+            VEffectAnimation.AddEffectAnimation(obj);
             VEffectAnimation effect = obj.GetComponent<VEffectAnimation>();
             effect.animator.Play(name);
             return obj;
@@ -213,7 +213,7 @@ namespace App.Controller.Battle{
         /// 待命
         /// </summary>
         public void AwaitOrders(){
-            manager.ActionOver();
+            this.StartCoroutine(manager.ActionOver());
         }
         /// <summary>
         /// 选择技能

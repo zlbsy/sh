@@ -269,7 +269,7 @@ namespace App.Util.Battle{
             {
                 //向最近武将移动
                 yield return cBattlefield.StartCoroutine(MoveToNearestTarget());
-                cBattlefield.manager.ActionOver();
+                cBattlefield.StartCoroutine(cBattlefield.manager.ActionOver());
             }
             else
             {

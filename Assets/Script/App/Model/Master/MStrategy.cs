@@ -15,6 +15,7 @@ namespace App.Model.Master{
     public enum StrategyEffectType{
         aid,
         status,
+        image,
         vampire
     }
     [System.Serializable]
