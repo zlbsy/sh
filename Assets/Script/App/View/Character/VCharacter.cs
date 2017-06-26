@@ -8,6 +8,7 @@ using App.Model.Avatar;
 using App.Model.Master;
 using App.Util.Cacher;
 using App.Util.Battle;
+using Holoville.HOTween;
 
 namespace App.View.Character{
     public partial class VCharacter : VBase {
@@ -34,6 +35,12 @@ namespace App.View.Character{
         [SerializeField]Anima2D.SpriteMeshInstance horseSaddle;
         [SerializeField]Anima2D.SpriteMeshInstance legLeft;
         [SerializeField]Anima2D.SpriteMeshInstance legRight;
+        [SerializeField]Transform content;
+        [SerializeField]SpriteRenderer hpSprite;
+        [SerializeField]TextMesh num;
+        [SerializeField]UnityEngine.Rendering.SortingGroup sortingGroup;
+        [SerializeField]SpriteRenderer[] status;
+        private Sequence sequenceStatus;
         private Dictionary<string,Anima2D.SpriteMeshInstance> meshs = new Dictionary<string, Anima2D.SpriteMeshInstance>();
         private Anima2D.SpriteMeshInstance Weapon{
             get{ 
@@ -60,13 +67,14 @@ namespace App.View.Character{
                 return armRightShort.gameObject.activeSelf ? armRightShort : armRightLong;
             }
         }
-        [SerializeField]Transform content;
-        [SerializeField]Transform hpTransform;
-        [SerializeField]TextMesh num;
-        [SerializeField]MeshRenderer meshRenderer;
         private static Material materialGray;
         private static Material materialDefault;
-        private static Dictionary<App.Model.Belong, Material> hpMaterials;
+        //private static Dictionary<App.Model.Belong, Material> hpMaterials;
+        private static Dictionary<App.Model.Belong, Color32> hpColors = new Dictionary<App.Model.Belong, Color32>{
+            {App.Model.Belong.self, new Color32(255,0,0,255)}, 
+            {App.Model.Belong.friend, new Color32(0,255,0,255)},
+            {App.Model.Belong.enemy, new Color32(0,0,255,255)}
+        };
         private Anima2D.SpriteMeshInstance[] allSprites;
         private bool init = false;
         private Animator _animator;
@@ -112,15 +120,15 @@ namespace App.View.Character{
                 meshs.Add("legLeft", legLeft);
                 meshs.Add("legRight", legRight);
             }
-            if (hpMaterials == null)
+            if (materialGray == null)
             {
                 materialGray = Resources.Load("Material/GrayMaterial") as Material;
                 materialDefault = head.sharedMaterial;
-
+                /*
                 hpMaterials = new Dictionary<App.Model.Belong, Material>();
                 hpMaterials.Add(App.Model.Belong.self, Resources.Load("Material/SelfHp") as Material);
                 hpMaterials.Add(App.Model.Belong.friend, Resources.Load("Material/FriendHp") as Material);
-                hpMaterials.Add(App.Model.Belong.enemy, Resources.Load("Material/EnemyHp") as Material);
+                hpMaterials.Add(App.Model.Belong.enemy, Resources.Load("Material/EnemyHp") as Material);*/
             }
             num.GetComponent<MeshRenderer>().sortingOrder = clothesDownLong.sortingOrder + 10;
             num.gameObject.SetActive(false);
@@ -163,7 +171,7 @@ namespace App.View.Character{
                 oldVm.Direction.OnValueChanged -= DirectionChanged;
                 oldVm.Hp.OnValueChanged -= HpChanged;
                 oldVm.ActionOver.OnValueChanged -= ActionOverChanged;
-                oldVm.Aids.OnValueChanged -= AidsChanged;
+                oldVm.Status.OnValueChanged -= StatusChanged;
             }
             if (ViewModel!=null)
             {
@@ -182,7 +190,7 @@ namespace App.View.Character{
                 ViewModel.Direction.OnValueChanged += DirectionChanged;
                 ViewModel.Hp.OnValueChanged += HpChanged;
                 ViewModel.ActionOver.OnValueChanged += ActionOverChanged;
-                ViewModel.Aids.OnValueChanged += AidsChanged;
+                ViewModel.Status.OnValueChanged += StatusChanged;
             }
         }
         private App.Controller.CBaseMap cBaseMap{
@@ -190,9 +198,41 @@ namespace App.View.Character{
                 return this.Controller as App.Controller.CBaseMap;
             }
         }
-        private void AidsChanged(List<App.Model.MBase> oldvalue, List<App.Model.MBase> newvalue)
+        private void StatusChanged(List<App.Model.MBase> oldvalue, List<App.Model.MBase> newvalue)
         {
-            
+            if (sequenceStatus != null)
+            {
+                sequenceStatus.Kill();
+            }
+            foreach (SpriteRenderer obj in status)
+            {
+                obj.gameObject.SetActive(false);
+                obj.color = new Color(obj.color.r, obj.color.g, obj.color.b, 0f);
+            }
+            //List<SpriteRenderer> objs = new List<SpriteRenderer>();
+            foreach (App.Model.MBase model in newvalue)
+            {
+                App.Model.Master.MStrategy strategy = model as App.Model.Master.MStrategy;
+                SpriteRenderer obj = System.Array.Find(status, child=>child.gameObject.name == strategy.aid_type.ToString());
+                obj.gameObject.SetActive(true);
+                //objs.Add(obj);
+            }
+            SpriteRenderer[] objs = System.Array.FindAll(status, child=>child.gameObject.activeSelf);
+            if (objs.Length == 0)
+            {
+                return;
+            }
+            float time = 0f;
+            sequenceStatus = new Sequence();
+            foreach (SpriteRenderer obj in objs)
+            {
+                sequenceStatus.Insert (time, HOTween.To (obj, 0.5f, new TweenParms().Prop("color", new Color(obj.color.r, obj.color.g, obj.color.b, 1f), false).Ease(EaseType.Linear)));
+                sequenceStatus.Insert (time + 0.5f, HOTween.To (obj, 0.5f, new TweenParms().Prop("color", new Color(obj.color.r, obj.color.g, obj.color.b, 0f), false)));
+                time += 1f;
+            }
+            sequenceStatus.loopType = LoopType.Restart;
+            sequenceStatus.loops = int.MaxValue;
+            sequenceStatus.Play ();
         }
         private void ActionOverChanged(bool oldvalue, bool newvalue)
         {
@@ -202,8 +242,8 @@ namespace App.View.Character{
         private void HpChanged(int oldvalue, int newvalue)
         {
             float hpValue = newvalue * 1f / ViewModel.Ability.Value.HpMax;
-            hpTransform.localPosition = new Vector3(0f, 1f - hpValue, 0f);
-            hpTransform.localScale = new Vector3(1f, hpValue, 1f);
+            hpSprite.transform.localPosition = new Vector3((hpValue - 1f) * 0.5f, 0f, 0f);
+            hpSprite.transform.localScale = new Vector3(hpValue, 1f, 1f);
         }
         private void DirectionChanged(App.Model.Direction oldvalue, App.Model.Direction newvalue)
         {
@@ -243,6 +283,7 @@ namespace App.View.Character{
             int i = ViewModel.CoordinateY.Value * vBaseMap.mapWidth + newvalue;
             VTile vTile = vBaseMap.tileUnits[i];
             ViewModel.X.Value = vTile.transform.localPosition.x;
+            sortingGroup.sortingOrder = vTile.Index + 10;
         }
         private void CoordinateYChanged(int oldvalue, int newvalue)
         {
@@ -254,6 +295,7 @@ namespace App.View.Character{
             int i = ViewModel.CoordinateY.Value * vBaseMap.mapWidth + newvalue;
             VTile vTile = vBaseMap.tileUnits[i];
             ViewModel.Y.Value = vTile.transform.localPosition.y;
+            sortingGroup.sortingOrder = vTile.Index + 10;
         }
         public float alpha{
             set{ 
@@ -283,6 +325,10 @@ namespace App.View.Character{
                     Holoville.HOTween.HOTween.To(this, 1f, new Holoville.HOTween.TweenParms().Prop("alpha", 0f).OnComplete(()=>{
                         this.gameObject.SetActive(false);
                         this.alpha = 1f;
+                        if (sequenceStatus != null)
+                        {
+                            sequenceStatus.Kill();
+                        }
                         if(App.Util.SceneManager.CurrentScene != null){
                             App.Util.SceneManager.CurrentScene.StartCoroutine(RemoveDynamicCharacter());
                         }
@@ -328,7 +374,7 @@ namespace App.View.Character{
         }
         private void BelongChanged(App.Model.Belong oldvalue, App.Model.Belong newvalue)
         {
-            meshRenderer.material = hpMaterials[newvalue];
+            hpSprite.color = hpColors[newvalue];
         }
         private void WeaponTypeChanged(App.Model.WeaponType oldvalue, App.Model.WeaponType newvalue){
             ActionChanged(ViewModel.Action.Value, ViewModel.Action.Value);
@@ -398,6 +444,8 @@ namespace App.View.Character{
             this.WeaponChanged(0, ViewModel.Weapon.Value);
             this.HorseChanged(0, ViewModel.Horse.Value);
             this.MoveTypeChanged(ViewModel.MoveType.Value, ViewModel.MoveType.Value);
+            this.StatusChanged(null, ViewModel.Status.Value);
+            this.CoordinateYChanged(0, ViewModel.CoordinateY.Value);
         }
         #endregion
 

@@ -26,6 +26,10 @@ namespace App.Model.Master{
         /// </summary>
         aid,
         /// <summary>
+        /// 状态变化
+        /// </summary>
+        status,
+        /// <summary>
         /// 攻击范围扩大
         /// </summary>
         attack_distance,

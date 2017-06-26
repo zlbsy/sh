@@ -13,10 +13,10 @@ namespace App.View.Battlefield{
         {
             App.Model.Master.MStrategy mStrategy = model as App.Model.Master.MStrategy;
             string iconName = string.Format("{0}_{1}", mStrategy.aid_type.ToString(), mStrategy.hert > 0 ? "up" : "down");
-            Debug.LogError("VStatusIcon iconName = " + iconName);
+            //Debug.LogError("VStatusIcon iconName = " + iconName);
             foreach (GameObject icon in icons)
             {
-                Debug.LogError(icon.name+" == "+iconName + ", " + (icon.name == iconName));
+                //Debug.LogError(icon.name+" == "+iconName + ", " + (icon.name == iconName));
                 icon.SetActive(icon.name == iconName);
             }
         }

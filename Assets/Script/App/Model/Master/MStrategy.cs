@@ -8,10 +8,13 @@ namespace App.Model.Master{
         physicalAttack,
         magicAttack,
         physicalDefense,
-        magicDefense
+        magicDefense,
+        chaos,
+        sleep
     }
     public enum StrategyEffectType{
         aid,
+        status,
         vampire
     }
     [System.Serializable]
@@ -21,5 +24,6 @@ namespace App.Model.Master{
         public AidType aid_type;
         public StrategyEffectType effect_type;
         public float hert;
+        public string effect;
 	}
 }

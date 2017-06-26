@@ -88,9 +88,13 @@ namespace App.Controller.Battle{
                 }
                 App.Model.Battle.MDamageParam arg = new App.Model.Battle.MDamageParam(-this.calculateManager.Hert(mCharacter, childModel, tile));
                 child.SendMessage(CharacterEvent.OnDamage.ToString(), arg);
-                if (child.ViewModel.CharacterId.Value == targetModel.CharacterId)
+                if (child.ViewModel.CharacterId.Value != targetModel.CharacterId)
                 {
-                    if (mCharacter.CurrentSkill.Master.effect.special == App.Model.Master.SkillEffectSpecial.vampire && mCharacter.CurrentSkill.Master.effect.enemy.time == App.Model.Master.SkillEffectBegin.enemy_hert)
+                    continue;
+                }
+                if (mCharacter.CurrentSkill.Master.effect.enemy.time == App.Model.Master.SkillEffectBegin.enemy_hert)
+                {
+                    if (mCharacter.CurrentSkill.Master.effect.special == App.Model.Master.SkillEffectSpecial.vampire)
                     {
                         App.Model.Master.MStrategy strategy = App.Util.Cacher.StrategyCacher.Instance.Get(mCharacter.CurrentSkill.Master.effect.enemy.strategys[0]);
                         VCharacter currentCharacter = this.GetCharacterView(mCharacter);
@@ -98,6 +102,16 @@ namespace App.Controller.Battle{
                         int addHp = -UnityEngine.Mathf.FloorToInt(arg.value * strategy.hert * 0.01f);
                         App.Model.Battle.MDamageParam arg2 = new App.Model.Battle.MDamageParam(addHp);
                         currentCharacter.SendMessage(CharacterEvent.OnHealWithoutAction.ToString(), arg2);
+                    }
+                }else if (mCharacter.CurrentSkill.Master.effect.enemy.time == App.Model.Master.SkillEffectBegin.attack_end)
+                {
+                    if (mCharacter.CurrentSkill.Master.effect.special == App.Model.Master.SkillEffectSpecial.aid || mCharacter.CurrentSkill.Master.effect.special == App.Model.Master.SkillEffectSpecial.status)
+                    {
+                        int specialValue = mCharacter.CurrentSkill.Master.effect.special_value;
+                        if(specialValue > 0 && UnityEngine.Random.Range(0,50) > specialValue){
+                            continue;
+                        }
+                        childModel.attackEndEffects.Add(mCharacter.CurrentSkill.Master.effect.enemy);
                     }
                 }
             }

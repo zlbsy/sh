@@ -257,7 +257,11 @@ namespace App.Util.Battle{
                 if(strategy.effect_type == App.Model.Master.StrategyEffectType.aid){
                     this.mCharacter.Target.AddAid(strategy);
                     VTile vTile = this.cBattlefield.mapSearch.GetTile(this.mCharacter.Target.CoordinateX, this.mCharacter.Target.CoordinateY);
-                    this.cBattlefield.CreateEffect(strategy.hert > 0 ? "effect_up" : "effect_down", vTile.transform);
+                    this.cBattlefield.CreateEffect(strategy.effect, vTile.transform);
+                }else if(strategy.effect_type == App.Model.Master.StrategyEffectType.status){
+                    this.mCharacter.Target.AddStatus(strategy);
+                    VTile vTile = this.cBattlefield.mapSearch.GetTile(this.mCharacter.Target.CoordinateX, this.mCharacter.Target.CoordinateY);
+                    this.cBattlefield.CreateEffect(strategy.effect, vTile.transform);
                 }
             }
         }
@@ -266,7 +270,7 @@ namespace App.Util.Battle{
         /// </summary>
         public void ActionOver(){
             //Debug.LogError("ActionOver" + this.mCharacter.Master.name);
-            MSkill skill = this.mCharacter.CurrentSkill;
+            /*MSkill skill = this.mCharacter.CurrentSkill;
             if (skill.Master.effect.special == App.Model.Master.SkillEffectSpecial.aid)
             {
                 if (skill.Master.effect.enemy.count > 0 && skill.Master.effect.enemy.time == App.Model.Master.SkillEffectBegin.attack_end)
@@ -277,9 +281,16 @@ namespace App.Util.Battle{
                 {
                     AddAidToCharacter(skill.Master.effect.self);
                 }
-            }
+            }*/
             if (this.mCharacter.Target != null)
             {
+                if (this.mCharacter.Target.attackEndEffects.Count > 0)
+                {
+                    foreach(App.Model.Master.MSkillEffect mSkillEffect in this.mCharacter.Target.attackEndEffects){
+                        AddAidToCharacter(mSkillEffect);
+                    }
+                    this.mCharacter.Target.attackEndEffects.Clear();
+                }
                 this.mCharacter.Target.Target = null;
                 this.mCharacter.Target = null;
             }

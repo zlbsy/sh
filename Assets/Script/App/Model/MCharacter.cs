@@ -105,6 +105,7 @@ namespace App.Model{
         public MCharacter(){
             viewModel = new VMCharacter ();
             this.ViewModel.Aids.Value = new List<App.Model.MBase>();
+            this.ViewModel.Status.Value = new List<App.Model.MBase>();
         }
         public static MCharacter Create(App.Model.Master.MNpc npc){
             MCharacter mCharacter = new MCharacter();
@@ -593,5 +594,22 @@ namespace App.Model{
             this.ViewModel.Aids.Value.Remove(aid);
             this.ViewModel.Aids.OnValueChanged(null, this.ViewModel.Aids.Value);
         }
+        public List<App.Model.MBase> Status{
+            get{ 
+                return this.ViewModel.Status.Value;
+            }
+        }
+        public void AddStatus(App.Model.Master.MStrategy status){
+            this.ViewModel.Status.Value.Add(status);
+            this.ViewModel.Status.OnValueChanged(null, this.ViewModel.Status.Value);
+        }
+        public void RemoveStatus(App.Model.Master.MStrategy status){
+            this.ViewModel.Status.Value.Remove(status);
+            this.ViewModel.Status.OnValueChanged(null, this.ViewModel.Status.Value);
+        }
+        /// <summary>
+        /// 攻击动作结束后，将受到的技能
+        /// </summary>
+        public List<App.Model.Master.MSkillEffect> attackEndEffects = new List<App.Model.Master.MSkillEffect>();
     }
 }
