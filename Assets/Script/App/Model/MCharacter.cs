@@ -288,17 +288,37 @@ namespace App.Model{
                 return IsSkillEffectSpecial(App.Model.Master.SkillEffectSpecial.force_hit);
             }
         }
-        public MSkill BoutFixedDamageSkill{
+        public App.Model.Master.MSkill BoutFixedDamageSkill{
             get{ 
                 foreach (MSkill skill in this.Skills)
                 {
-                    if (skill.Master.effect.special != App.Model.Master.SkillEffectSpecial.bout_fixed_damage)
+                    App.Model.Master.MSkill mSkill = skill.Master;
+                    if (mSkill.effect.special != App.Model.Master.SkillEffectSpecial.bout_fixed_damage)
                     {
                         continue;
                     }
-                    return skill;
+                    return mSkill;
                 }
                 return null;
+            }
+        }
+        public List<App.Model.Master.MSkill> ActionEndSkills{
+            get{ 
+                List<App.Model.Master.MSkill> skills = null;
+                foreach (MSkill skill in this.Skills)
+                {
+                    App.Model.Master.MSkill mSkill = skill.Master;
+                    if (mSkill.effect.enemy.time == App.Model.Master.SkillEffectBegin.action_end)
+                    {
+                        continue;
+                    }
+                    if (skills == null)
+                    {
+                        skills = new List<App.Model.Master.MSkill>();
+                    }
+                    skills.Add(mSkill);
+                }
+                return skills;
             }
         }
         public bool IsMoveAfterAttack{
@@ -588,11 +608,17 @@ namespace App.Model{
         }
         public void AddAid(App.Model.Master.MStrategy aid){
             this.ViewModel.Aids.Value.Add(aid);
-            this.ViewModel.Aids.OnValueChanged(null, this.ViewModel.Aids.Value);
+            if (this.ViewModel.Aids.OnValueChanged != null)
+            {
+                this.ViewModel.Aids.OnValueChanged(null, this.ViewModel.Aids.Value);
+            }
         }
         public void RemoveAid(App.Model.Master.MStrategy aid){
             this.ViewModel.Aids.Value.Remove(aid);
-            this.ViewModel.Aids.OnValueChanged(null, this.ViewModel.Aids.Value);
+            if (this.ViewModel.Aids.OnValueChanged != null)
+            {
+                this.ViewModel.Aids.OnValueChanged(null, this.ViewModel.Aids.Value);
+            }
         }
         public List<App.Model.MBase> Status{
             get{ 
@@ -601,11 +627,17 @@ namespace App.Model{
         }
         public void AddStatus(App.Model.Master.MStrategy status){
             this.ViewModel.Status.Value.Add(status);
-            this.ViewModel.Status.OnValueChanged(null, this.ViewModel.Status.Value);
+            if (this.ViewModel.Status.OnValueChanged != null)
+            {
+                this.ViewModel.Status.OnValueChanged(null, this.ViewModel.Status.Value);
+            }
         }
         public void RemoveStatus(App.Model.Master.MStrategy status){
             this.ViewModel.Status.Value.Remove(status);
-            this.ViewModel.Status.OnValueChanged(null, this.ViewModel.Status.Value);
+            if (this.ViewModel.Status.OnValueChanged != null)
+            {
+                this.ViewModel.Status.OnValueChanged(null, this.ViewModel.Status.Value);
+            }
         }
         /// <summary>
         /// 攻击动作结束后，将受到的技能

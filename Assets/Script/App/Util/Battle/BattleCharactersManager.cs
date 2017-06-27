@@ -36,7 +36,13 @@ namespace App.Util.Battle{
         /// 是否在攻击范围内
         /// </summary>
         public bool IsInSkillDistance(int CoordinateX, int CoordinateY, int targetX, int targetY, MCharacter distanceCharacter){
-            MSkill targetSkill = distanceCharacter.CurrentSkill;
+            return IsInSkillDistance(CoordinateX, CoordinateY, targetX, targetY, distanceCharacter, distanceCharacter.CurrentSkill);
+        }
+        /// <summary>
+        /// 是否在攻击范围内
+        /// </summary>
+        public bool IsInSkillDistance(int CoordinateX, int CoordinateY, int targetX, int targetY, MCharacter distanceCharacter, MSkill targetSkill){
+            //MSkill targetSkill = distanceCharacter.CurrentSkill;
             App.Model.Master.MSkill targetSkillMaster = targetSkill.Master;
             int distance = cBattlefield.mapSearch.GetDistance(CoordinateX, CoordinateY, targetX, targetY);
             if (distance >= targetSkillMaster.distance[0] && distance <= targetSkillMaster.distance[1])

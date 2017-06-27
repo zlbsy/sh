@@ -9,13 +9,23 @@ namespace App.Model.Master{
         magicAttack,
         physicalDefense,
         magicDefense,
+        /// <summary>
+        /// 混乱
+        /// </summary>
         chaos,
-        sleep
+        /// <summary>
+        /// 睡眠
+        /// </summary>
+        sleep,
+        /// <summary>
+        /// 定身/麻痹
+        /// </summary>
+        hemp,
     }
     public enum StrategyEffectType{
         aid,
         status,
-        image,
+        animation,
         vampire
     }
     [System.Serializable]

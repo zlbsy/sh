@@ -155,6 +155,11 @@ namespace App.Util.Battle{
                 {
                     currentCharacter.Direction = (currentCharacter.X > currentCharacter.Target.X ? Direction.left : Direction.right);
                     currentCharacter.Action = ActionType.attack;
+                    App.Model.Master.MSkill skillMaster = currentCharacter.CurrentSkill.Master;
+                    if(!string.IsNullOrEmpty(skillMaster.animation)){
+                        VTile vTile = this.cBattlefield.mapSearch.GetTile(currentCharacter.Target.CoordinateX, currentCharacter.Target.CoordinateY);
+                        this.cBattlefield.CreateEffect(skillMaster.animation, vTile.transform);
+                    }
                 };
             if (currentCharacter.CurrentSkill.Master.effect.special == App.Model.Master.SkillEffectSpecial.back_thrust)
             {
@@ -240,7 +245,7 @@ namespace App.Util.Battle{
         /// 特技导致武将状态改变
         /// </summary>
         /// <param name="skill">Skill.</param>
-        private void AddAidToCharacter(App.Model.Master.MSkillEffect mSkillEffect){
+        private void AddAidToCharacter(App.Model.Master.MSkillEffect mSkillEffect, App.Model.MCharacter[] targetCharacters){
             List<int> aids = mSkillEffect.strategys.ToList();
             int index = 0;
             List<App.Model.Master.MStrategy> strategys = new List<App.Model.Master.MStrategy>();
@@ -253,30 +258,36 @@ namespace App.Util.Battle{
             }
             foreach (App.Model.Master.MStrategy strategy in strategys)
             {
-                //特效
-                if(strategy.effect_type == App.Model.Master.StrategyEffectType.aid){
-                    //this.mCharacter.Target.AddAid(strategy);
-                    VTile vTile = this.cBattlefield.mapSearch.GetTile(this.mCharacter.Target.CoordinateX, this.mCharacter.Target.CoordinateY);
-                    this.cBattlefield.CreateEffect(strategy.effect, vTile.transform);
-                }else if(strategy.effect_type == App.Model.Master.StrategyEffectType.status){
-                    //this.mCharacter.Target.AddStatus(strategy);
-                    VTile vTile = this.cBattlefield.mapSearch.GetTile(this.mCharacter.Target.CoordinateX, this.mCharacter.Target.CoordinateY);
-                    this.cBattlefield.CreateEffect(strategy.effect, vTile.transform);
+                foreach (App.Model.MCharacter target in targetCharacters)
+                {
+                    //特效
+                    if(strategy.effect_type == App.Model.Master.StrategyEffectType.aid){
+                        //this.mCharacter.Target.AddAid(strategy);
+                        VTile vTile = this.cBattlefield.mapSearch.GetTile(target.CoordinateX, target.CoordinateY);
+                        this.cBattlefield.CreateEffect(strategy.effect, vTile.transform);
+                    }else if(strategy.effect_type == App.Model.Master.StrategyEffectType.status){
+                        //this.mCharacter.Target.AddStatus(strategy);
+                        VTile vTile = this.cBattlefield.mapSearch.GetTile(target.CoordinateX, target.CoordinateY);
+                        this.cBattlefield.CreateEffect(strategy.effect, vTile.transform);
+                    }
                 }
             }
-            cBattlefield.StartCoroutine(AddAidToCharacterComplete(strategys));
+            cBattlefield.StartCoroutine(AddAidToCharacterComplete(strategys, targetCharacters));
         }
-        private IEnumerator AddAidToCharacterComplete(List<App.Model.Master.MStrategy> strategys){
+        private IEnumerator AddAidToCharacterComplete(List<App.Model.Master.MStrategy> strategys, App.Model.MCharacter[] targetCharacters){
             while (App.View.Effect.VEffectAnimation.IsRunning)
             {
                 yield return new WaitForEndOfFrame();
             }
             foreach (App.Model.Master.MStrategy strategy in strategys)
             {
-                if(strategy.effect_type == App.Model.Master.StrategyEffectType.aid){
-                    this.mCharacter.Target.AddAid(strategy);
-                }else if(strategy.effect_type == App.Model.Master.StrategyEffectType.status){
-                    this.mCharacter.Target.AddStatus(strategy);
+                foreach (App.Model.MCharacter target in targetCharacters)
+                {
+                    if(strategy.effect_type == App.Model.Master.StrategyEffectType.aid){
+                        target.AddAid(strategy);
+                    }else if(strategy.effect_type == App.Model.Master.StrategyEffectType.status){
+                        target.AddStatus(strategy);
+                    }
                 }
             }
         }
@@ -299,20 +310,21 @@ namespace App.Util.Battle{
             }*/
             if (this.mCharacter.Target != null)
             {
-                if (this.mCharacter.Target.attackEndEffects.Count > 0)
+                if (this.mCharacter.Target.Hp > 0 && this.mCharacter.Target.attackEndEffects.Count > 0)
                 {
                     foreach(App.Model.Master.MSkillEffect mSkillEffect in this.mCharacter.Target.attackEndEffects){
-                        AddAidToCharacter(mSkillEffect);
+                        AddAidToCharacter(mSkillEffect, new MCharacter[]{this.mCharacter.Target});
                     }
-                    yield return new WaitForEndOfFrame();
                     while (App.View.Effect.VEffectAnimation.IsRunning)
                     {
                         yield return new WaitForEndOfFrame();
                     }
+                    yield return new WaitForEndOfFrame();
                     this.mCharacter.Target.attackEndEffects.Clear();
                 }
                 this.mCharacter.Target.Target = null;
                 this.mCharacter.Target = null;
+
             }
             if (!System.Array.Exists(mBaseMap.Characters, _ => _.Hp > 0 && _.Belong == Belong.enemy))
             {
@@ -340,17 +352,49 @@ namespace App.Util.Battle{
             else
             {
                 Debug.LogError("ActionOverNext");
-                ActionOverNext();
+                cBattlefield.StartCoroutine(ActionOverNext());
+            }
+        }
+        private IEnumerator ActionEndSkillsRun(){
+            List<App.Model.Master.MSkill> skills = this.mCharacter.ActionEndSkills;
+            if (skills == null || skills.Count == 0)
+            {
+                yield break;
+            }
+            foreach(App.Model.Master.MSkill skill in skills){
+                if (skill.effect.special == App.Model.Master.SkillEffectSpecial.status)
+                {
+                    if (skill.effect.enemy.count > 0 && skill.effect.enemy.time == App.Model.Master.SkillEffectBegin.action_end)
+                    {
+                        
+                    }
+                    else if (skill.effect.self.count > 0 && skill.effect.self.time == App.Model.Master.SkillEffectBegin.action_end)
+                    {
+                        MCharacter[] targets = System.Array.FindAll(mBaseMap.Characters, (character)=>{
+                            if(character.Hp == 0 || !cBattlefield.charactersManager.IsSameBelong(character.Belong, this.mCharacter.Belong)){
+                                return false;
+                            }
+                            int distance = cBattlefield.mapSearch.GetDistance(character.CoordinateX, character.CoordinateY, this.mCharacter.CoordinateX, this.mCharacter.CoordinateY);
+                            return distance >= skill.distance[0] && distance <= skill.distance[1];
+                        } );
+                        AddAidToCharacter(skill.effect.self, targets);
+                    }
+                }
+            }
+            while (App.View.Effect.VEffectAnimation.IsRunning)
+            {
+                yield return new WaitForEndOfFrame();
             }
         }
         /// <summary>
         /// 动作结束后处理
         /// </summary>
-        public void ActionOverNext(){
+        public IEnumerator ActionOverNext(){
             if (cBattlefield.battleMode == CBattlefield.BattleMode.moving)
             {
                 this.mCharacter.Action = ActionType.idle;
             }
+            yield return cBattlefield.StartCoroutine(ActionEndSkillsRun());
             this.mCharacter.ActionOver = true;
             this.mCharacter.roadLength = 0;
             cBattlefield.tilesManager.ClearCurrentTiles();
@@ -397,7 +441,7 @@ namespace App.Util.Battle{
                     {
                         this.mCharacter.CoordinateY = endTile.CoordinateY;
                         this.mCharacter.CoordinateX = endTile.CoordinateX;
-                        ActionOverNext();
+                        cBattlefield.StartCoroutine(ActionOverNext());
                     };
             }
             else

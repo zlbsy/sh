@@ -22,11 +22,7 @@ namespace App.Model.Master{
         /// </summary>
         vampire,
         /// <summary>
-        /// 能力变化
-        /// </summary>
-        aid,
-        /// <summary>
-        /// 状态变化
+        /// 能力,状态变化
         /// </summary>
         status,
         /// <summary>
@@ -81,11 +77,10 @@ namespace App.Model.Master{
         /// 回马枪
         /// </summary>
         back_thrust,
-        /*
         /// <summary>
         /// 固定伤害攻击
         /// </summary>
-        fixed_damage,*/
+        fixed_damage
     }
     [System.Serializable]
 	public class MSkillEffects : MBase {

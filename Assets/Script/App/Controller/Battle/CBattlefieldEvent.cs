@@ -38,11 +38,11 @@ namespace App.Controller.Battle{
                 {
                     break;
                 }
-                MSkill skill = mCharacter.BoutFixedDamageSkill;
+                App.Model.Master.MSkill skill = mCharacter.BoutFixedDamageSkill;
                 if (skill != null)
                 {
                     List<VCharacter> characters = vBaseMap.Characters.FindAll(c=>c.ViewModel.Hp.Value > 0 && !this.charactersManager.IsSameBelong(c.ViewModel.Belong.Value, currentBelong));
-                    yield return OnBoutFixedDamage(mCharacter, skill.Master, characters);
+                    yield return OnBoutFixedDamage(mCharacter, skill, characters);
                 }
                 mCharacter.boutEventComplete = true;
             }
@@ -62,7 +62,12 @@ namespace App.Controller.Battle{
                 App.View.VTile tile = this.mapSearch.GetTile(child.ViewModel.CoordinateX.Value, child.ViewModel.CoordinateY.Value);
                 if (this.mapSearch.GetDistance(targetTile, tile) <= skill.radius)
                 {
-                    App.Model.Battle.MDamageParam arg = new App.Model.Battle.MDamageParam(-skill.strength);
+                    int hert = skill.strength;
+                    if (child.ViewModel.Hp.Value - hert <= 0)
+                    {
+                        hert = child.ViewModel.Hp.Value - 1;
+                    }
+                    App.Model.Battle.MDamageParam arg = new App.Model.Battle.MDamageParam(-hert);
                     child.SendMessage(CharacterEvent.OnDamage.ToString(), arg);
                 }
             }
@@ -105,7 +110,7 @@ namespace App.Controller.Battle{
                     }
                 }else if (mCharacter.CurrentSkill.Master.effect.enemy.time == App.Model.Master.SkillEffectBegin.attack_end)
                 {
-                    if (mCharacter.CurrentSkill.Master.effect.special == App.Model.Master.SkillEffectSpecial.aid || mCharacter.CurrentSkill.Master.effect.special == App.Model.Master.SkillEffectSpecial.status)
+                    if (mCharacter.CurrentSkill.Master.effect.special == App.Model.Master.SkillEffectSpecial.status)
                     {
                         int specialValue = mCharacter.CurrentSkill.Master.effect.special_value;
                         if(specialValue > 0 && UnityEngine.Random.Range(0,50) > specialValue){

@@ -42,7 +42,7 @@ namespace App.Model{
             this.Archery = master.archery;
             this.HiddenWeapons = master.hidden_weapons;
             this.DualWield = master.dual_wield;
-            int hp = 100;
+            int hp = 1100;
             int mp = 10;
             foreach (App.Model.MSkill skill in skills)
             {
@@ -72,11 +72,56 @@ namespace App.Model{
                 this.Archery += skillMaster.archery;
                 this.HiddenWeapons += skillMaster.hidden_weapons;
                 this.DualWield += skillMaster.dual_wield;
+                this.ResistanceMetal += skillMaster.resistance_metal;
+                this.ResistanceWood += skillMaster.resistance_wood;
+                this.ResistanceWater += skillMaster.resistance_water;
+                this.ResistanceFire += skillMaster.resistance_fire;
+                this.ResistanceEarth += skillMaster.resistance_earth;
             }
-            if (mCharacter.MoveType == MoveType.cavalry)
+            List<App.Model.Master.MEquipment> equipments = new List<App.Model.Master.MEquipment>();
+            if (mCharacter.Weapon > 0)
             {
-                this.MovingPower += 1;
+                equipments.Add(EquipmentCacher.Instance.GetEquipment(mCharacter.Weapon, App.Model.Master.MEquipment.EquipmentType.weapon));
             }
+            if (mCharacter.Clothes > 0)
+            {
+                equipments.Add(EquipmentCacher.Instance.GetEquipment(mCharacter.Clothes, App.Model.Master.MEquipment.EquipmentType.clothes));
+            }
+            Debug.LogError("mCharacter.Horse = " + mCharacter.Horse);
+            if (mCharacter.Horse > 0)
+            {
+                equipments.Add(EquipmentCacher.Instance.GetEquipment(mCharacter.Horse, App.Model.Master.MEquipment.EquipmentType.horse));
+            }
+            foreach (App.Model.Master.MEquipment equipment in equipments)
+            {
+                hp += equipment.hp;
+                mp += equipment.mp;
+                this.Power += equipment.power;
+                this.Knowledge += equipment.knowledge;
+                this.Speed += equipment.speed;
+                this.Trick += equipment.trick;
+                this.Endurance += equipment.endurance;
+                this.MovingPower += equipment.moving_power;
+                this.Riding += equipment.riding;
+                this.Walker += equipment.walker;
+                this.Pike += equipment.pike;
+                this.Sword += equipment.sword;
+                this.LongKnife += equipment.long_knife;
+                this.Knife += equipment.knife;
+                this.LongAx += equipment.long_ax;
+                this.Ax += equipment.ax;
+                this.LongSticks += equipment.long_sticks;
+                this.Sticks += equipment.sticks;
+                this.Archery += equipment.archery;
+                this.HiddenWeapons += equipment.hidden_weapons;
+                this.DualWield += equipment.dual_wield;
+                this.ResistanceMetal += equipment.resistance_metal;
+                this.ResistanceWood += equipment.resistance_wood;
+                this.ResistanceWater += equipment.resistance_water;
+                this.ResistanceFire += equipment.resistance_fire;
+                this.ResistanceEarth += equipment.resistance_earth;
+            }
+
             this.HpMax = mCharacter.Level * 2 + master.hp + this.Endurance + hp;
             this.MpMax = mCharacter.Level + master.mp + this.Knowledge + mp;
             this.PhysicalAttack = Mathf.FloorToInt((this.Power * 2 + this.Knowledge) * (0.5f + (mCharacter.MoveType == MoveType.cavalry ? this.Riding : this.Walker) * 0.5f * 0.01f) * (1f + mCharacter.Level * 0.01f));
@@ -357,6 +402,46 @@ namespace App.Model{
             }
             get{ 
                 return this.ViewModel.MpMax.Value;
+            }
+        }
+        public int ResistanceMetal{
+            set{
+                this.ViewModel.ResistanceMetal.Value = value;
+            }
+            get{ 
+                return this.ViewModel.ResistanceMetal.Value;
+            }
+        }
+        public int ResistanceWood{
+            set{
+                this.ViewModel.ResistanceWood.Value = value;
+            }
+            get{ 
+                return this.ViewModel.ResistanceWood.Value;
+            }
+        }
+        public int ResistanceWater{
+            set{
+                this.ViewModel.ResistanceWater.Value = value;
+            }
+            get{ 
+                return this.ViewModel.ResistanceWater.Value;
+            }
+        }
+        public int ResistanceFire{
+            set{
+                this.ViewModel.ResistanceFire.Value = value;
+            }
+            get{ 
+                return this.ViewModel.ResistanceFire.Value;
+            }
+        }
+        public int ResistanceEarth{
+            set{
+                this.ViewModel.ResistanceEarth.Value = value;
+            }
+            get{ 
+                return this.ViewModel.ResistanceEarth.Value;
             }
         }
 	}

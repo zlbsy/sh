@@ -308,7 +308,7 @@ namespace App.Util.Battle{
             }
             else
             {
-                cBattlefield.manager.ActionOverNext();
+                cBattlefield.StartCoroutine(cBattlefield.manager.ActionOverNext());
             }
         }
     }
