@@ -46,30 +46,12 @@ namespace App.Model.Master{
         public int archery;//箭术
         public int hidden_weapons;//暗器
         public int dual_wield;//双手
+        public int resistance_metal;//抗金
+        public int resistance_wood;//抗木
+        public int resistance_water;//抗水
+        public int resistance_fire;//抗火
+        public int resistance_earth;//抗土
         public MCharacterSkill[] skills;
-        /*
-资质
-力量
-技巧
-谋略
-速度
-耐力
-
-物攻 = 力量*2+技巧
-法攻 = 谋略*2+技巧
-物防 = 力量+技巧
-法防 = 谋略+技巧
-
-物理攻击
-命中/躲闪 = 技巧+速度*2
-双击 = 技巧+速度-力量
-爆击 = 力量+速度
-
-法术攻击
-命中/躲闪 = 技巧+速度*2
-双击 = 技巧+速度-谋略
-爆击 = 谋略+速度
-        */
 
 	}
 }

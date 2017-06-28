@@ -34,6 +34,7 @@ namespace App.ViewModel
         public VMProperty<int> Archery = new VMProperty<int>();
         public VMProperty<int> HiddenWeapons = new VMProperty<int>();
         public VMProperty<int> DualWield = new VMProperty<int>();
+        public VMProperty<int> Magic = new VMProperty<int>();
         public VMProperty<int> ResistanceMetal = new VMProperty<int>();
         public VMProperty<int> ResistanceWood = new VMProperty<int>();
         public VMProperty<int> ResistanceWater = new VMProperty<int>();

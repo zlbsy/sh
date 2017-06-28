@@ -42,8 +42,13 @@ namespace App.Model{
             this.Archery = master.archery;
             this.HiddenWeapons = master.hidden_weapons;
             this.DualWield = master.dual_wield;
-            int hp = 1100;
-            int mp = 10;
+            this.ResistanceMetal += master.resistance_metal;
+            this.ResistanceWood += master.resistance_wood;
+            this.ResistanceWater += master.resistance_water;
+            this.ResistanceFire += master.resistance_fire;
+            this.ResistanceEarth += master.resistance_earth;
+            int hp = master.hp;
+            int mp = master.mp;
             foreach (App.Model.MSkill skill in skills)
             {
                 App.Model.Master.MSkill skillMaster = skill.Master;
@@ -72,6 +77,7 @@ namespace App.Model{
                 this.Archery += skillMaster.archery;
                 this.HiddenWeapons += skillMaster.hidden_weapons;
                 this.DualWield += skillMaster.dual_wield;
+                this.Magic += skillMaster.magic;
                 this.ResistanceMetal += skillMaster.resistance_metal;
                 this.ResistanceWood += skillMaster.resistance_wood;
                 this.ResistanceWater += skillMaster.resistance_water;
@@ -87,7 +93,6 @@ namespace App.Model{
             {
                 equipments.Add(EquipmentCacher.Instance.GetEquipment(mCharacter.Clothes, App.Model.Master.MEquipment.EquipmentType.clothes));
             }
-            Debug.LogError("mCharacter.Horse = " + mCharacter.Horse);
             if (mCharacter.Horse > 0)
             {
                 equipments.Add(EquipmentCacher.Instance.GetEquipment(mCharacter.Horse, App.Model.Master.MEquipment.EquipmentType.horse));
@@ -115,6 +120,7 @@ namespace App.Model{
                 this.Archery += equipment.archery;
                 this.HiddenWeapons += equipment.hidden_weapons;
                 this.DualWield += equipment.dual_wield;
+                this.Magic += equipment.magic;
                 this.ResistanceMetal += equipment.resistance_metal;
                 this.ResistanceWood += equipment.resistance_wood;
                 this.ResistanceWater += equipment.resistance_water;
@@ -122,12 +128,48 @@ namespace App.Model{
                 this.ResistanceEarth += equipment.resistance_earth;
             }
 
-            this.HpMax = mCharacter.Level * 2 + master.hp + this.Endurance + hp;
-            this.MpMax = mCharacter.Level + master.mp + this.Knowledge + mp;
-            this.PhysicalAttack = Mathf.FloorToInt((this.Power * 2 + this.Knowledge) * (0.5f + (mCharacter.MoveType == MoveType.cavalry ? this.Riding : this.Walker) * 0.5f * 0.01f) * (1f + mCharacter.Level * 0.01f));
-            this.MagicAttack = Mathf.FloorToInt(mCharacter.Level + (this.Trick * 2 + this.Knowledge) * (mCharacter.MoveType == MoveType.cavalry ? this.Riding : this.Walker) * 0.01f);
-            this.PhysicalDefense = Mathf.FloorToInt((this.Power + this.Knowledge * 0.5f) * (1f + mCharacter.Level * 0.01f));
-            this.MagicDefense = mCharacter.Level + this.Trick + this.Knowledge;
+            this.HpMax = Mathf.FloorToInt(mCharacter.Level * (2 + this.Endurance * 0.02f) + hp);
+            this.MpMax = Mathf.FloorToInt(mCharacter.Level * (1 + this.Knowledge * 0.01f) + mp);
+            float moveTypeValue = (mCharacter.MoveType == MoveType.cavalry ? this.Riding : this.Walker);
+            switch(mCharacter.WeaponType){
+                case WeaponType.archery:
+                    moveTypeValue += this.Archery;
+                    break;
+                case WeaponType.pike:
+                    moveTypeValue += this.Pike;
+                    break;
+                case WeaponType.sword:
+                    moveTypeValue += this.Sword;
+                    break;
+                case WeaponType.longAx:
+                    moveTypeValue += this.LongAx;
+                    break;
+                case WeaponType.ax:
+                    moveTypeValue += this.Ax;
+                    break;
+                case WeaponType.longKnife:
+                    moveTypeValue += this.LongKnife;
+                    break;
+                case WeaponType.shortKnife:
+                    moveTypeValue += this.Knife;
+                    break;
+                case WeaponType.longSticks:
+                    moveTypeValue += this.LongSticks;
+                    break;
+                case WeaponType.sticks:
+                    moveTypeValue += this.Sticks;
+                    break;
+                case WeaponType.dualWield:
+                    moveTypeValue += this.DualWield;
+                    break;
+                case WeaponType.magic:
+                    moveTypeValue += this.Magic;
+                    break;
+            }
+            this.PhysicalAttack = (this.Power + this.Knowledge) + Mathf.FloorToInt((this.Power * 2f + this.Knowledge) * (0.4f + (mCharacter.MoveType == MoveType.cavalry ? this.Riding : this.Walker) * 0.006f) * (1f + mCharacter.Level * 0.5f) * 0.1f);
+            this.MagicAttack = (this.Trick + this.Knowledge) + Mathf.FloorToInt((this.Trick * 2f + this.Knowledge) * (0.4f + (mCharacter.MoveType == MoveType.cavalry ? this.Riding : this.Walker) * 0.006f) * (1f + mCharacter.Level * 0.5f) * 0.1f);
+            this.PhysicalDefense = Mathf.FloorToInt((this.Power * 2 + this.Knowledge)*0.35f + (this.Power*2 + this.Knowledge) * (0.7f + mCharacter.Level * 0.003f) * 0.05f);
+            this.MagicDefense = Mathf.FloorToInt((this.Trick * 2 + this.Knowledge)*0.35f + (this.Trick*2 + this.Knowledge) * (0.7f + mCharacter.Level * 0.003f) * 0.05f);
         }
         /// <summary>
         /// 物攻 = Lv + (力量*2+技巧)*(骑术|步战)/100
@@ -380,6 +422,17 @@ namespace App.Model{
             }
             get{ 
                 return this.ViewModel.DualWield.Value;
+            }
+        }
+        /// <summary>
+        /// 法宝 = 初始 + 技能
+        /// </summary>
+        public int Magic{
+            set{
+                this.ViewModel.Magic.Value = value;
+            }
+            get{ 
+                return this.ViewModel.Magic.Value;
             }
         }
         /// <summary>

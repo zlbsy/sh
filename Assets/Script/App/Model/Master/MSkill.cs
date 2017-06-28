@@ -21,6 +21,10 @@ namespace App.Model.Master{
         public int radius;
         public MSkillEffects effect;
         public string animation;
+        /// <summary>
+        /// 五行
+        /// </summary>
+        public FiveElements five_elements;
         public string explanation;
 
         //SkillType为ability时下列数据有效
@@ -46,6 +50,7 @@ namespace App.Model.Master{
         public int archery;//箭术
         public int hidden_weapons;//暗器
         public int dual_wield;//双手
+        public int magic;//法宝
         public int resistance_metal;//抗金
         public int resistance_wood;//抗木
         public int resistance_water;//抗水

@@ -19,6 +19,15 @@ namespace App.Model{
         direction,//穿透攻击
         sector,//扇形穿透
     }
+    [System.Serializable]
+    public enum FiveElements{
+        none,
+        metal,
+        wood,
+        water,
+        fire,
+        earth
+    }
     public class MSkill : MBase {
         public MSkill(){
             viewModel = new VMSkill ();
