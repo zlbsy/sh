@@ -14,6 +14,10 @@ class Master extends MY_Controller {
 			$master_constant = $master_model->get_master_constant();
 			$result["constant"]=$master_constant;
 		}
+		if($args["exp"]){
+			$master_exp = $master_model->get_master_exp();
+			$result["exps"]=$master_exp;
+		}
 		if($args["avatar"]){
 			$master_avatar = $master_model->get_master_avatar();
 			$result["avatar"]=$master_avatar;
@@ -85,6 +89,10 @@ class Master extends MY_Controller {
 		if($args["npc_equipment"]){
 			$master_npc_equipment = $master_model->get_master_npc_equipments();
 			$result["npc_equipments"]=$master_npc_equipment;
+		}
+		if($args["strategy"]){
+			$master_strategy = $master_model->get_master_strategys();
+			$result["strategys"]=$master_strategy;
 		}
 		if($args["battlefield"]){
 			$master_battlefield = $master_model->get_master_battlefields();

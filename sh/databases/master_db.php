@@ -31,6 +31,7 @@ class Master_DB extends Base_Database {
 	var $shop = "sh109_master.shop";
 	var $battlefield_reward = "sh109_master.battlefield_reward";
 	var $exp = "sh109_master.exp";
+	var $strategy = "sh109_master.strategy";
 	function __construct() {
 		parent::__construct();
 		$db = mysql_select_db('sh109_master', $this->connect);

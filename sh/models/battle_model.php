@@ -54,7 +54,11 @@ class Battle_model extends MY_Model
 		$battlefield_master = $this->get_master($battlefield_id);
 		$user = $this->getSessionData("user");
 		$user_id = $user["id"];
-		if($user["Ap"] < $battlefield_master["ap"]){
+		$recover_ap_time = $this->get_recover_ap_time_constant();
+		$seconds = time() - $user["LastApDate"];
+		$recover_ap = floor($seconds / $recover_ap_time);
+		$currentAp = $user["Ap"] + $recover_ap;
+		if($currentAp < $battlefield_master["ap"]){
 			return false;
 		}
 		$user_model = new User_model();
@@ -69,7 +73,7 @@ class Battle_model extends MY_Model
 			}
 		}
 		$this->user_db->trans_begin();
-		$ap = $user["Ap"] - $battlefield_master["ap"];
+		$ap = $currentAp - $battlefield_master["ap"];
 		$res_start = $user_model->update(array("id"=>$user_id, "battling_id"=>$battlefield_id, "ap"=>$ap, "last_ap_date"=>"'".date("Y-m-d H:i:s")."'"));
 		if(!$res_start){
 			$this->user_db->trans_rollback();
@@ -81,7 +85,7 @@ class Battle_model extends MY_Model
 		$this->user_db->trans_commit();
 		return true;
 	}
-	function battle_end($battlefield_id, $characterIds, $star){
+	function battle_end($battlefield_id, $characterIds, $die_ids, $star){
 		$battlefield_master = $this->get_master($battlefield_id);
 		$user = $this->getSessionData("user");
 		$user_id = $user["id"];
@@ -119,16 +123,18 @@ class Battle_model extends MY_Model
 		$battlefield_rewards = $this->get_rewards_master($battlefield_id);
 		$contents = array();
 		foreach ($battlefield_rewards as $battlefield_reward) {
-			$content = $battlefield_reward["content"];
+			$content = json_decode($battlefield_reward["content"],true);
 			if($battlefield_reward["is_first"] == 1){
 				if($isFirstBattle){
+					$content["get_type"] = "battle";
 					$contents[] = $content;
 				}
 				continue;
 			}
 			$probability = $battlefield_reward["probability"];
 			if(rand(0,100) <= $probability){
-				$contents[] = json_decode($content, true);
+				$content["get_type"] = "battle";
+				$contents[] = $content;
 			}
 		}
 		$npcs = $this->get_master_battlefield_npcs($battlefield_id);
@@ -163,6 +169,9 @@ class Battle_model extends MY_Model
 				}
 			}
 			$exp = $this->get_character_exp($charater["Level"], $level, $battlefield_master["exp"]);
+			if(array_search($characterId, $die_ids) !== false){
+				$exp = floor($exp * 0.5);
+			}
 			$character_level = $this->get_character_level($character["Exp"] + $exp);
 			$character_args = array("exp"=>$exp + $character["Exp"], "level"=>$character_level);
 			$res_update_character = $character_model->update_character($user_id, $characterId, $character_args);
@@ -226,6 +235,10 @@ class Battle_model extends MY_Model
 		$result = $this->master_db->select("`val`", $this->master_db->constant, array("`name`='user_characters'"), null, null, Database_Result::TYPE_ROW);
 		return json_decode($result["val"], true);
 	}
+	public function get_recover_ap_time_constant(){
+		$result = $this->master_db->select("`val`", $this->master_db->constant, array("`name`='recover_ap_time'"), null, null, Database_Result::TYPE_ROW);
+		return json_decode($result["val"], true);
+	}
 	function get_master_battlefield_npcs($battlefield_id){
 		$select = "`id`, `npc_id`,`boss`,`skills`, `x`,`y`, `level`,`star`,`weapon`,`horse`,`clothes`";
 		$table = $this->master_db->battlefield_npc;
@@ -237,8 +250,7 @@ class Battle_model extends MY_Model
 		$select = "`id`,`battlefield_id`,`content`, `probability`, `is_first`";
 		$table = $this->master_db->battlefield_reward;
 		$where = array();
-		$where[] = "id={$battlefield_id}";
-		$order_by = "id asc";
+		$where[] = "battlefield_id={$battlefield_id}";
 		$result = $this->master_db->select($select, $table, $where);
 		return $result;
 	}
