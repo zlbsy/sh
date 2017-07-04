@@ -21,6 +21,10 @@ namespace App.Model.Master{
         /// 定身/麻痹
         /// </summary>
         hemp,
+        /// <summary>
+        /// 毒
+        /// </summary>
+        poison,
     }
     public enum StrategyEffectType{
         aid,

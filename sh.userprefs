@@ -1,20 +1,23 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Script/App/Model/Master/MStrategy.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Script/App/Model/MSkill.cs">
     <Files>
-      <File FileName="Assets/Script/App/Util/Battle/BattleManager.cs" Line="258" Column="48" />
+      <File FileName="Assets/Script/App/Util/Battle/BattleManager.cs" Line="1" Column="1" />
       <File FileName="Assets/Script/App/View/Character/VCharacter.cs" Line="1" Column="1" />
       <File FileName="Assets/Script/App/Controller/Battle/CBattlefield.cs" Line="1" Column="1" />
-      <File FileName="Assets/Script/App/Util/Battle/CharacterAI.cs" Line="52" Column="57" />
-      <File FileName="Assets/Script/App/Model/Master/MSkillEffects.cs" Line="54" Column="23" />
-      <File FileName="Assets/Script/App/Util/Battle/BattleCalculateManager.cs" Line="198" Column="23" />
+      <File FileName="Assets/Script/App/Util/Battle/CharacterAI.cs" Line="1" Column="1" />
+      <File FileName="Assets/Script/App/Model/Master/MSkillEffects.cs" Line="1" Column="1" />
+      <File FileName="Assets/Script/App/Util/Battle/BattleCalculateManager.cs" Line="1" Column="1" />
       <File FileName="Assets/Script/App/Controller/CLogo.cs" Line="1" Column="1" />
-      <File FileName="Assets/Script/App/Util/Battle/BattleCharactersManager.cs" Line="128" Column="82" />
-      <File FileName="Assets/Script/App/Controller/Battle/CBattlefieldEvent.cs" Line="89" Column="110" />
-      <File FileName="Assets/Script/App/Model/MCharacter.cs" Line="588" Column="51" />
+      <File FileName="Assets/Script/App/Util/Battle/BattleCharactersManager.cs" Line="1" Column="1" />
+      <File FileName="Assets/Script/App/Controller/Battle/CBattlefieldEvent.cs" Line="1" Column="1" />
+      <File FileName="Assets/Script/App/Model/MCharacter.cs" Line="1" Column="1" />
       <File FileName="Assets/Script/App/Controller/Battle/CBattleCharacterPreviewDialog.cs" Line="1" Column="1" />
-      <File FileName="Assets/Script/App/View/Battlefield/VBattleCharacterPreview.cs" Line="58" Column="54" />
-      <File FileName="Assets/Script/App/Model/Master/MStrategy.cs" Line="9" Column="20" />
+      <File FileName="Assets/Script/App/View/Battlefield/VBattleCharacterPreview.cs" Line="1" Column="1" />
+      <File FileName="Assets/Script/App/Model/Master/MStrategy.cs" Line="23" Column="13" />
+      <File FileName="Assets/Script/App/View/Effect/VEffectAnimation.cs" Line="1" Column="1" />
+      <File FileName="Assets/Script/App/Model/Master/MSkill.cs" Line="11" Column="18" />
+      <File FileName="Assets/Script/App/Model/MSkill.cs" Line="10" Column="14" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

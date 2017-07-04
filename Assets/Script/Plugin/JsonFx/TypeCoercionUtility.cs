@@ -352,7 +352,6 @@ namespace JsonFx
 							}
 						}
 					}
-
 					return Enum.Parse(targetType, (string)value);
 				}
 				else
