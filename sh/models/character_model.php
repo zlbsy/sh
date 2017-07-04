@@ -60,4 +60,10 @@ class Character_model extends MY_Model
 		$result = $this->user_db->update($values, $table, $where);
 		return $result;
 	}
+	function get_master_character_skills($character_id){
+		$select = "character_id, skill_id, star, skill_point";
+		$where = array("character_id = {$character_id}");
+		$result = $this->master_db->select($select, $this->master_db->character_skill, $where);
+		return $result;
+	}
 }
