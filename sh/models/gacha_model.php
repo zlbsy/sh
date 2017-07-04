@@ -142,8 +142,8 @@ class Gacha_model extends MY_Model
 				case "item":
 					$items = $this->get_item_master($gacha_child["child_id"], $gacha_child["child_type"], $gacha_child["qualification"]);
 					$item = $items[rand(0, count($items) - 1)];
-					$item_model = $item_model == null ? new Item_model() : $item_model;
-					$gacha_get = $item_model->set_item($user["id"], $item["id"]);
+					/*$item_model = $item_model == null ? new Item_model() : $item_model;
+					$gacha_get = $item_model->set_item($user["id"], $item["id"]);*/
 					$contents[] = array("type"=>$gacha_child["type"], "content_id"=>$item["id"]);
 					break;
 				case "horse":
@@ -151,40 +151,34 @@ class Gacha_model extends MY_Model
 				case "clothes":
 					$equipments = $this->get_equipment_master($gacha_child["type"], $gacha_child["child_id"], $gacha_child["child_type"], $gacha_child["qualification"]);
 					$equipment = $equipments[rand(0, count($equipments) - 1)];
-					$equipment_model = $equipment_model == null ? new Equipment_model() : $equipment_model;
-					$gacha_get = $equipment_model->set_equipment($user["id"], $equipment["id"], $gacha_child["type"]);
+					/*$equipment_model = $equipment_model == null ? new Equipment_model() : $equipment_model;
+					$gacha_get = $equipment_model->set_equipment($user["id"], $equipment["id"], $gacha_child["type"]);*/
 					$contents[] = array("type"=>$gacha_child["type"], "content_id"=>$equipment["id"]);
 					break;
 				case "character":
-					$characters = $this->get_character_master($gacha_child["child_id"], $gacha_child["child_type"], $gacha_child["qualification"]);
+					$characters = $this->get_character_master($gacha_child["child_type"], $gacha_child["qualification"]);
 					$character = $characters[rand(0, count($characters) - 1)];
-					$character_model = $character_model == null ? new Character_model() : $character_model;
+					/*$character_model = $character_model == null ? new Character_model() : $character_model;
+					$equipment_model = $equipment_model == null ? new Equipment_model() : $equipment_model;
 					$character_values = array();
 					$character_values['user_id'] = $user["id"];
 					$character_values['character_id'] = $character["id"];
-					//$character_values['star'] = $character["Star"];
-					//$character_values['weapon_type'] = "'".$character["WeaponType"]."'";
-					//$character_values['move_type'] = "'".$character["MoveType"]."'";
-					$character_values['horse'] = $character["horse"];
-					$character_values['clothes'] = $character["clothes"];
-					$character_values['weapon'] = $character["weapon"];
 					$character_values['register_time'] = "'{$now}'";
-					$gacha_get = $character_model->character_insert($character_values);
-		
-					//$gacha_get = $item_model->set_item($user["id"], $item["id"]);
+					$gacha_get = $character_model->character_insert($character_values);*/
 					$contents[] = array("type"=>$gacha_child["type"], "content_id"=>$character["id"]);
 					break;
 			}
-			if(!$gacha_get){
+			/*if(!$gacha_get){
 			    $this->user_db->trans_rollback();
 				$this->error("get present error ");
-			}
+			}*/
+		}
+		$contents_res = $user_model->set_contents($user_id,$contents);
+		if(!$contents_res){
+			$this->user_db->trans_rollback();
+			$this->error("set contents error ".$this->user_db->last_sql);
 		}
 		$this->user_db->trans_commit();
-		/*$contents = array();
-		foreach ($slot_list as $slot) {
-			$contents[] = array("type"=>$slot["type"], "content_id"=>$slot["child_id"]);
-		}*/
 		return $contents;
 	}
 	function get_gacha_character_ids($child_type){
@@ -193,12 +187,10 @@ class Gacha_model extends MY_Model
 		$result = $this->master_db->select($select, $this->master_db->gacha_characters, $where);
 		return $result;
 	}
-	function get_character_master($id = 0, $child_type = null, $qualification = null){
+	function get_character_master($child_type = null, $qualification = null){
 		$select = "*";
 		$where = array();
-		if($id > 0){
-			$where[] = "id={$id}";
-		}
+		$where[] = "can_gacha=1";
 		if(!is_null($child_type)){
 			$id_array = $this->get_gacha_character_ids($child_type);
 			$probability_sum = 0;
@@ -207,16 +199,17 @@ class Gacha_model extends MY_Model
 			}
 			$rand_value = rand(0, $probability_sum);
 			$probability = 0;
-			$character_id = 0;
+			$character_ids = [];
 			foreach($id_array as $character){
 				$probability += $character["probability"];
 				if($rand_value <= $probability){
-					$character_id = $character["character_id"];
+					$character_id = split(",", $character["character_id"]);
 					break;
 				}
 			}
-			if($character_id > 0){
-				$where[] = "id = {$character_id} ";
+			if(count($character_ids) > 0){
+				$where[] = "id >= {$character_id[0]} ";
+				$where[] = "id <= {$character_id[1]} ";
 			}
 		}
 		if($qualification > 0){
