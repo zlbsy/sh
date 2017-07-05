@@ -36,12 +36,14 @@ class Character_model extends MY_Model
 		$result = $this->user_db->select($select, $table, $where, $order_by);
 		return $result;
 	}
-	function character_insert($values){
+	function character_insert($values, &$is_new){
 		$characters = $this->get_character_list($values["user_id"], $values["character_id"]);
 		if(count($characters) > 0){
 			$res = $this->update_character($values["user_id"], $values["character_id"], array("fragment"=>$characters[0]["Fragment"] + 1));
+			$is_new = false;
 		}else{
 			$res = $this->user_db->insert($values, $this->user_db->characters);
+			$is_new = true;
 		}
 		return $res;
 	}

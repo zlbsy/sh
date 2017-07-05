@@ -99,26 +99,21 @@ class Gacha_model extends MY_Model
 		$gacha_childs = $this->get_gacha_childs($gacha["id"]);
 		$slot_list = array();
 		$i = 0;
-		$this->log("start:\n");
 		while(count($slot_list) < $args["cnt"]){
 			$probability_sum = 0;
 			foreach($gacha_childs as $val){
 				$probability_sum += $val["probability"];
 			}
-			$this->log("probability_sum:{$probability_sum}\n");
 			$rand_index = rand(0,$probability_sum);
-			$this->log("rand_index:{$rand_index}\n");
 			$probability_sum = 0;
 			foreach($gacha_childs as $val){
 				$probability_sum += $val["probability"];
-				$this->log("foreach sum:{$probability_sum}\n");
 				if($rand_index <= $probability_sum){
 					$slot_list[] = $val;
 					break;
 				}
 			}
 		}
-		$this->log("end:\n");
 		$this->user_db->trans_begin();
 		//购买记录(消费)
 		if($free_gacha){

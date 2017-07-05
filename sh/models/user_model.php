@@ -245,21 +245,24 @@ class User_model extends MY_Model
 				$character_values['character_id'] = $content["content_id"];
 				$character_values['register_time'] = "'{$now}'";
 				$character_model = new Character_model();
-				$res_get = $character_model->character_insert($character_values);
+				$is_new = false;
+				$res_get = $character_model->character_insert($character_values, $is_new);
 				if(!$res_get){
 					break;
 				}
-				$skills = $character_model->get_master_character_skills($content["content_id"]);
-				foreach ($skills as $skill) {
-					$character_skills = array();
-					$character_skills['user_id'] = $user_id;
-					$character_skills['character_id'] = $skill["character_id"];
-					$character_skills['skill_id'] = $skill["skill_id"];
-					$character_skills['level'] = 1;
-					$character_skills['register_time'] = "'".NOW."'";
-					$res_get = $character_model->character_skill_insert($character_skills);
-					if(!$res_get){
-						break;
+				if($is_new){
+					$skills = $character_model->get_master_character_skills($content["content_id"]);
+					foreach ($skills as $skill) {
+						$character_skills = array();
+						$character_skills['user_id'] = $user_id;
+						$character_skills['character_id'] = $skill["character_id"];
+						$character_skills['skill_id'] = $skill["skill_id"];
+						$character_skills['level'] = 1;
+						$character_skills['register_time'] = "'".NOW."'";
+						$res_get = $character_model->character_skill_insert($character_skills);
+						if(!$res_get){
+							break;
+						}
 					}
 				}
 				$character_update = true;
