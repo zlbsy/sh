@@ -172,6 +172,7 @@ namespace App.View.Character{
                 oldVm.Hp.OnValueChanged -= HpChanged;
                 oldVm.ActionOver.OnValueChanged -= ActionOverChanged;
                 oldVm.Status.OnValueChanged -= StatusChanged;
+                oldVm.IsHide.OnValueChanged -= IsHideChanged;
             }
             if (ViewModel!=null)
             {
@@ -191,12 +192,17 @@ namespace App.View.Character{
                 ViewModel.Hp.OnValueChanged += HpChanged;
                 ViewModel.ActionOver.OnValueChanged += ActionOverChanged;
                 ViewModel.Status.OnValueChanged += StatusChanged;
+                ViewModel.IsHide.OnValueChanged += IsHideChanged;
             }
         }
         private App.Controller.CBaseMap cBaseMap{
             get{
                 return this.Controller as App.Controller.CBaseMap;
             }
+        }
+        private void IsHideChanged(bool oldvalue, bool newvalue)
+        {
+            this.gameObject.SetActive(newvalue);
         }
         private void StatusChanged(List<App.Model.MBase> oldvalue, List<App.Model.MBase> newvalue)
         {
@@ -381,7 +387,16 @@ namespace App.View.Character{
         }
         private void WeaponChanged(int oldvalue, int newvalue)
         {
-            App.Model.Master.MEquipment mEquipment = EquipmentCacher.Instance.GetEquipment(newvalue, MEquipment.EquipmentType.weapon);
+            App.Model.Master.MEquipment mEquipment = null;
+            if (newvalue == 0)
+            {
+
+                App.Model.Master.MCharacter character = CharacterCacher.Instance.Get(ViewModel.CharacterId.Value);
+                mEquipment = EquipmentCacher.Instance.GetEquipment(character.weapon, App.Model.Master.MEquipment.EquipmentType.weapon);
+                newvalue = character.weapon;
+            }else{
+                mEquipment = EquipmentCacher.Instance.GetEquipment(newvalue, MEquipment.EquipmentType.weapon);
+            }
             bool isArchery = (mEquipment.weapon_type == App.Model.WeaponType.archery);
             weapon.gameObject.SetActive(!isArchery);
             weaponArchery.gameObject.SetActive(isArchery);
@@ -399,7 +414,17 @@ namespace App.View.Character{
         }
         private void HorseChanged(int oldvalue, int newvalue)
         {
-            App.Model.Master.MEquipment mEquipment = EquipmentCacher.Instance.GetEquipment(newvalue, MEquipment.EquipmentType.horse);
+            App.Model.Master.MEquipment mEquipment = null;
+            if (newvalue == 0)
+            {
+
+                App.Model.Master.MCharacter character = CharacterCacher.Instance.Get(ViewModel.CharacterId.Value);
+                mEquipment = EquipmentCacher.Instance.GetEquipment(character.horse, App.Model.Master.MEquipment.EquipmentType.horse);
+                newvalue = character.horse;
+            }else{
+                mEquipment = EquipmentCacher.Instance.GetEquipment(newvalue, MEquipment.EquipmentType.horse);
+            }
+
             if (mEquipment.move_type == App.Model.MoveType.cavalry)
             {
                 horseBody.spriteMesh = ImageAssetBundleManager.GetHorseBodyMesh(mEquipment.image_index);
@@ -420,7 +445,16 @@ namespace App.View.Character{
         }
         private void ClothesChanged(int oldvalue, int newvalue)
         {
-            App.Model.Master.MEquipment mEquipment = EquipmentCacher.Instance.GetEquipment(newvalue, MEquipment.EquipmentType.clothes);
+            App.Model.Master.MEquipment mEquipment = null;
+            if (newvalue == 0)
+            {
+
+                App.Model.Master.MCharacter character = CharacterCacher.Instance.Get(ViewModel.CharacterId.Value);
+                mEquipment = EquipmentCacher.Instance.GetEquipment(character.clothes, App.Model.Master.MEquipment.EquipmentType.clothes);
+                newvalue = character.clothes;
+            }else{
+                mEquipment = EquipmentCacher.Instance.GetEquipment(newvalue, MEquipment.EquipmentType.clothes);
+            }
             bool isArmor = (mEquipment.clothes_type == MEquipment.ClothesType.armor);
 
             clothesUpShort.gameObject.SetActive(isArmor);

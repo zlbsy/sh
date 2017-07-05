@@ -35,6 +35,7 @@ namespace App.Service{
             public App.Model.Master.MNpc[] npcs;
             public App.Model.Master.MLoginBonus[] loginbonus;
             public App.Model.Master.MExp[] exps;
+            public App.Model.Master.MCharacterStar[] character_stars;
             public App.MyEditor.MAvatar avatar;
             public List<string>[] tutorials;
 		}

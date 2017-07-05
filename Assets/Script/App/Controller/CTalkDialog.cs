@@ -45,6 +45,14 @@ namespace App.Controller{
                 faceId = user.Face;
                 name = user.name;
             }
+            else if (request.Has("npcId"))
+            {
+                int npcId = request.Get<int>("npcId");
+                CBaseMap cBaseMap = App.Util.SceneManager.CurrentScene as CBaseMap;
+                App.Model.MCharacter mCharacter = cBaseMap.GetCharacterFromNpc(npcId);
+                faceId = mCharacter.CharacterId;
+                name = mCharacter.Master.name;
+            }
             else
             {
                 faceId = request.Get<int>("characterId");
@@ -80,6 +88,10 @@ namespace App.Controller{
         /// <param name="onComplete">对话框结束回掉</param>
         public static void ToShow(int characterId, string message, bool isLeft = true, System.Action onComplete = null){
             Request req = Request.Create("characterId",characterId,"message",message,"isLeft",isLeft,"closeEvent",onComplete);
+            SceneManager.CurrentScene.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.TalkDialog, req));
+        }
+        public static void ToShowNpc(int npcId, string message, bool isLeft = true, System.Action onComplete = null){
+            Request req = Request.Create("npcId",npcId,"message",message,"isLeft",isLeft,"closeEvent",onComplete);
             SceneManager.CurrentScene.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.TalkDialog, req));
         }
         public static void ToShowPlayer(int userId, string message, bool isLeft = true, System.Action onComplete = null){

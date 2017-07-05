@@ -12,9 +12,11 @@ namespace App.View.Character{
     public class VCharacterStatus : VBase {
         [SerializeField]private GameObject statusChild;
         [SerializeField]private Transform statusContent;
+        [SerializeField]private Text labelLevel;
+        [SerializeField]private Text labelExp;
         #region VM处理
         public VMCharacter ViewModel { get { return (VMCharacter)BindingContext; } }
-        protected override void OnBindingContextChanged(VMBase oldViewModel, VMBase newViewModel)
+        /*protected override void OnBindingContextChanged(VMBase oldViewModel, VMBase newViewModel)
         {
 
             base.OnBindingContextChanged(oldViewModel, newViewModel);
@@ -22,43 +24,65 @@ namespace App.View.Character{
             VMCharacter oldVm = oldViewModel as VMCharacter;
             if (oldVm != null)
             {
-                //oldVm.Weapon.OnValueChanged -= WeaponChanged;
-                //oldVm.Clothes.OnValueChanged -= ClothesChanged;
-                //oldVm.Horse.OnValueChanged -= HorseChanged;
+                oldVm.Weapon.OnValueChanged -= WeaponChanged;
+                oldVm.Clothes.OnValueChanged -= ClothesChanged;
+                oldVm.Horse.OnValueChanged -= HorseChanged;
             }
             if (ViewModel!=null)
             {
-                //ViewModel.Weapon.OnValueChanged += WeaponChanged;
-                //ViewModel.Clothes.OnValueChanged += ClothesChanged;
-                //ViewModel.Horse.OnValueChanged += HorseChanged;
+                ViewModel.Weapon.OnValueChanged += WeaponChanged;
+                ViewModel.Clothes.OnValueChanged += ClothesChanged;
+                ViewModel.Horse.OnValueChanged += HorseChanged;
             }
         }
         private void WeaponChanged(int oldvalue, int newvalue)
         {
-            
+            UpdateStatus();
         }
+        private void ClothesChanged(int oldvalue, int newvalue)
+        {
+            UpdateStatus();
+        }
+        private void HorseChanged(int oldvalue, int newvalue)
+        {
+            UpdateStatus();
+        }*/
         #endregion
 
         public override void UpdateView()
         {
-            Global.ClearChild(statusContent.gameObject);
+            labelLevel.text = string.Format("Lv.{0}", ViewModel.Level.Value);
+            int fromExp = ExpCacher.Instance.MaxExp(ViewModel.Level.Value);
+            int toExp = ExpCacher.Instance.MaxExp(ViewModel.Level.Value + 1);
+            labelExp.text = string.Format("Exp {0}/{1}", ViewModel.Exp.Value - fromExp, toExp - fromExp);
+            UpdateStatus();
+        }
+
+        public void UpdateStatus()
+        {
+            this.Controller.StartCoroutine(UpdateStatusCoroutine());
+        }
+
+        public IEnumerator UpdateStatusCoroutine()
+        {
+            yield return new WaitForEndOfFrame();
             statusContent.parent.gameObject.SetActive(false);
+            Global.ClearChild(statusContent.gameObject);
             App.Model.MCharacterAbility ability = ViewModel.Ability.Value;
             Dictionary<string, string> statusList = new Dictionary<string, string>();
-            statusList.Add("资质","99");
+            //statusList.Add("资质","99");
+            statusList.Add("HP",ability.HpMax.ToString());
+            statusList.Add("MP",ability.MpMax.ToString());
             statusList.Add("力量",ability.Power.ToString());
             statusList.Add("技巧",ability.Knowledge.ToString());
             statusList.Add("谋略",ability.Trick.ToString());
             statusList.Add("速度",ability.Speed.ToString());
             statusList.Add("耐力",ability.Endurance.ToString());
-            statusList.Add("HP",ability.HpMax.ToString());
-            statusList.Add("MP",ability.MpMax.ToString());
             statusList.Add("物攻",ability.PhysicalAttack.ToString());
             statusList.Add("法攻",ability.MagicAttack.ToString());
             statusList.Add("物防",ability.PhysicalDefense.ToString());
             statusList.Add("法防",ability.MagicDefense.ToString());
-
-            statusList.Add("轻功",ability.MovingPower.ToString());
+            statusList.Add("移动力",ability.MovingPower.ToString());
             statusList.Add("骑术",ability.Riding.ToString());
             statusList.Add("步战",ability.Walker.ToString());
             statusList.Add("长枪",ability.Pike.ToString());
@@ -72,6 +96,7 @@ namespace App.View.Character{
             statusList.Add("箭术",ability.Archery.ToString());
             statusList.Add("暗器",ability.HiddenWeapons.ToString());
             statusList.Add("双手",ability.DualWield.ToString());
+            statusList.Add("法宝",ability.Magic.ToString());
             foreach (string key in statusList.Keys)
             {
                 GameObject obj = Instantiate(statusChild);

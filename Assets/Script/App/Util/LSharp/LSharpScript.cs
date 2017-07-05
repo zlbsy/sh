@@ -24,6 +24,7 @@ namespace App.Util.LSharp{
             subClasses.Add("Var", LSharpVarlable.Instance);
             subClasses.Add("Tutorial", LSharpTutorial.Instance);
             subClasses.Add("Wait", LSharpWait.Instance);
+            //LSharpVarlable.SetVarlable("player_id", (System.Array.Find(Global.SUser.self.characters, c=>c.CharacterId >= App.Util.Global.Constant.user_characters[0])).ToString());
             LSharpVarlable.SetVarlable("player_id", Global.SUser.self.id.ToString());
             LSharpVarlable.SetVarlable("player_name", Global.SUser.self.name);
             LSharpVarlable.SetVarlable("player_nickname", Global.SUser.self.Nickname);

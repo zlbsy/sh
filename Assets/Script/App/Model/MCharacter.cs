@@ -206,7 +206,7 @@ namespace App.Model{
         public void StatusInit(){
             if (this.CurrentSkill == null)
             {
-                if (this.Skills != null)
+                if (this.Skills != null && this.Skills.Length > 0)
                 {
                     this.CurrentSkill = System.Array.Find(this.Skills, s=>(System.Array.IndexOf(s.Master.weapon_types, this.WeaponType) >= 0));
                 }
@@ -507,7 +507,6 @@ namespace App.Model{
                 {
                     App.Model.Master.MCharacter character = CharacterCacher.Instance.Get(this.CharacterId);
                     mEquipment = EquipmentCacher.Instance.GetEquipment(character.horse, App.Model.Master.MEquipment.EquipmentType.horse);
-                    value = character.horse;
                 }
                 else
                 {
@@ -522,11 +521,6 @@ namespace App.Model{
         }
         public int Clothes{
             set{ 
-                if (value == 0)
-                {
-                    App.Model.Master.MCharacter character = CharacterCacher.Instance.Get(this.CharacterId);
-                    value = character.clothes;
-                }
                 this.ViewModel.Clothes.Value = value;
             }
             get{ 
@@ -540,13 +534,12 @@ namespace App.Model{
                 {
                     App.Model.Master.MCharacter character = CharacterCacher.Instance.Get(this.CharacterId);
                     mEquipment = EquipmentCacher.Instance.GetEquipment(character.weapon, App.Model.Master.MEquipment.EquipmentType.weapon);
-                    value = character.weapon;
                 }
                 else
                 {
                     mEquipment = EquipmentCacher.Instance.GetEquipment(value, App.Model.Master.MEquipment.EquipmentType.weapon);
                 }
-                this.WeaponType = mEquipment.weapon_type;
+                this.WeaponType = mEquipment == null ? WeaponType.sticks : mEquipment.weapon_type;
                 this.ViewModel.Weapon.Value = value;
             }
             get{ 
@@ -575,6 +568,14 @@ namespace App.Model{
             }
             get{ 
                 return this.ViewModel.Hat.Value;
+            }
+        }
+        public bool IsHide{
+            set{ 
+                this.ViewModel.IsHide.Value = value;
+            }
+            get{ 
+                return this.ViewModel.IsHide.Value;
             }
         }
         public MSkill[] Skills{

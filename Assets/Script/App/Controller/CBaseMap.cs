@@ -69,7 +69,12 @@ namespace App.Controller{
             MCharacter mCharacter = System.Array.Find(mBaseMap.Characters, _=>_.CharacterId == vCharacter.ViewModel.CharacterId.Value && _.Belong == vCharacter.ViewModel.Belong.Value);
             return mCharacter;
         }
-        public void addCharacter(int npcId, ActionType action, string direction, int x, int y){
+        public MCharacter GetCharacterFromNpc(int npcId){
+            MCharacter mCharacter = System.Array.Find(mBaseMap.Characters, c=>c.Id == npcId && c.Belong != Belong.self);
+            return mCharacter;
+        }
+        #region LSharp处理
+        public void AddCharacter(int npcId, ActionType action, string direction, int x, int y){
             MCharacter mCharacter = NpcCacher.Instance.GetFromNpc(npcId);
             mCharacter.Action = action;
             mCharacter.CoordinateX = x;
@@ -90,5 +95,75 @@ namespace App.Controller{
             characters.Add(mCharacter);
             mBaseMap.Characters = characters.ToArray();
         }
+        public void HideNpc(int npcId, bool isHide){
+            MCharacter mCharacter = System.Array.Find(mBaseMap.Characters, c=>c.Id == npcId && c.Belong != Belong.self);
+            mCharacter.IsHide = isHide;
+        }
+        public void HideCharacter(int characterId, bool isHide){
+            MCharacter mCharacter = System.Array.Find(mBaseMap.Characters, c=>c.CharacterId == characterId && c.Belong == Belong.self);
+            mCharacter.IsHide = isHide;
+        }
+        public void MoveNpc(int npcId, int x, int y){
+            MCharacter mCharacter = System.Array.Find(mBaseMap.Characters, c=>c.Id == npcId && c.Belong != Belong.self);
+            MoveCharacter(mCharacter, x, y);
+        }
+        public void MoveCharacter(int characterId, int x, int y){
+            MCharacter mCharacter = System.Array.Find(mBaseMap.Characters, c=>c.CharacterId == characterId && c.Belong == Belong.self);
+            MoveCharacter(mCharacter, x, y);
+        }
+        private void MoveCharacter(MCharacter mCharacter, int x, int y){
+            MapMoveToPosition(mCharacter.CoordinateX, mCharacter.CoordinateY);
+            VTile startTile = mapSearch.GetTile(mCharacter.CoordinateX, mCharacter.CoordinateY);
+            VTile endTile = mapSearch.GetTile(x, y);
+            List<VTile> tiles = aStar.Search(mCharacter, startTile, endTile);
+
+            Holoville.HOTween.Core.TweenDelegate.TweenCallback moveComplete = () =>
+                {
+                    mCharacter.CoordinateY = endTile.CoordinateY;
+                    mCharacter.CoordinateX = endTile.CoordinateX;
+                    mCharacter.Action = ActionType.idle;
+                    MapMoveToPosition(mCharacter.CoordinateX, mCharacter.CoordinateY);
+                    App.Util.LSharp.LSharpScript.Instance.Analysis();
+                };
+            if (tiles.Count > 0)
+            {
+                mCharacter.Action = ActionType.move;
+                Sequence sequence = new Sequence();
+                foreach (VTile tile in tiles)
+                {
+                    TweenParms tweenParms = new TweenParms().Prop("X", tile.transform.localPosition.x, false).Prop("Y", tile.transform.localPosition.y, false).Ease(EaseType.Linear);
+                    if (tile.Index == endTile.Index)
+                    {
+                        tweenParms.OnComplete(moveComplete);
+                    }
+                    sequence.Append(HOTween.To(mCharacter, 0.5f, tweenParms));
+                }
+                sequence.Play();
+            }
+            else
+            {
+                moveComplete();
+            }
+        }
+        public void MapMoveToPosition(int x, int y){
+            this.vBaseMap.MoveToPosition(x, y);
+        }
+        public void NpcFocus(int npcId){
+            MCharacter mCharacter = System.Array.Find(mBaseMap.Characters, c=>c.Id == npcId && c.Belong != Belong.self);
+            if (mCharacter == null)
+            {
+                return;
+            }
+            MapMoveToPosition(mCharacter.CoordinateX, mCharacter.CoordinateY);
+        }
+        public void CharacterFocus(int characterId){
+            MCharacter mCharacter = System.Array.Find(mBaseMap.Characters, c=>c.CharacterId == characterId);
+            if (mCharacter == null)
+            {
+                return;
+            }
+            MapMoveToPosition(mCharacter.CoordinateX, mCharacter.CoordinateY);
+        }
+        #endregion
 	}
 }

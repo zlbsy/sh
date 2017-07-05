@@ -45,7 +45,6 @@ namespace App.View.Equipment{
         }
         private void HorseChanged(int oldvalue, int newvalue)
         {
-            Debug.LogError("HorseChanged");
             horse.Init();
             shoe.Init();
             StartCoroutine(EquipmentChanged(ViewModel.MoveType.Value == App.Model.MoveType.cavalry ? horse : shoe, newvalue, App.Model.Master.MEquipment.EquipmentType.horse));
@@ -72,9 +71,6 @@ namespace App.View.Equipment{
             {
                 mEquipment = new App.Model.MEquipment();
                 mEquipment.EquipmentType = equipmentType;
-                mEquipment.Id = equipmentId;
-                mEquipment.EquipmentId = equipmentId;
-                mEquipment.Level = 1;
             }
             equipmentIcon.BindingContext = mEquipment.ViewModel;
             equipmentIcon.UpdateView();

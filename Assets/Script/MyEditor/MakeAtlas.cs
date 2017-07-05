@@ -148,7 +148,7 @@ namespace MyEditor
             BuildAssetBundleShop();
             BuildAssetBundleLoginBonus();
             BuildAssetBundleGacha();
-            BuildAssetBundleAvatar();
+            //BuildAssetBundleAvatar();
             BuildAssetBundleConstant();
             BuildAssetBundleSkill();
             BuildAssetBundleItem();
@@ -168,6 +168,12 @@ namespace MyEditor
             BuildAssetBundleMasterNpc();
             BuildAssetBundleMasterBattlefield();
             BuildAssetBundleMasterStrategy();
+            BuildAssetBundleCharacterStar();
+        }
+        [MenuItem("SH/Build Assetbundle/Master/CharacterStar")]
+        static private void BuildAssetBundleCharacterStar()
+        {
+            BuildAssetBundleMaster(App.Model.Scriptable.CharacterStarAsset.Name);
         }
         [MenuItem("SH/Build Assetbundle/Master/Exp")]
         static private void BuildAssetBundleExp()

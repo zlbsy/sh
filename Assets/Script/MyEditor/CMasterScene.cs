@@ -59,7 +59,7 @@ namespace App.Controller{
                     apis.Add("word", CreateScriptableObjectMasterWordRun());
                     apis.Add("npc", CreateScriptableObjectMasterNpcRun());
                     apis.Add("npc_equip", CreateScriptableObjectMasterNpcEquipmentRun());
-                    apis.Add("avatar", CreateScriptableObjectMasterAvatarRun());
+                    apis.Add("star", CreateScriptableObjectMasterStarRun());
                     apis.Add("loginbonus", CreateScriptableObjectMasterLoginBonusRun());
                     apis.Add("exp", CreateScriptableObjectMasterExpRun());
                     apiKeys = apis.Keys.ToArray();
@@ -155,16 +155,14 @@ namespace App.Controller{
             UnityEditor.AssetDatabase.CreateAsset(asset, string.Format("Assets/Editor Default Resources/ScriptableObject/{0}.asset", App.Model.Scriptable.LoginBonusAsset.Name));
             UnityEditor.AssetDatabase.Refresh();
         }
-        IEnumerator CreateScriptableObjectMasterAvatarRun()
+        IEnumerator CreateScriptableObjectMasterStarRun()
         {
-            var asset = ScriptableObject.CreateInstance<App.Model.Avatar.AvatarAsset>();
+            var asset = ScriptableObject.CreateInstance<App.Model.Scriptable.CharacterStarAsset>();
 
             SEditorMaster sMaster = new SEditorMaster();
-            yield return StartCoroutine (sMaster.RequestAll("avatar"));
-            App.MyEditor.MAvatar avatar = sMaster.responseAll.avatar;
-            asset.cavalry = avatar.cavalry;
-            asset.infantry = avatar.infantry;
-            UnityEditor.AssetDatabase.CreateAsset(asset, string.Format("Assets/Editor Default Resources/ScriptableObject/{0}.asset", App.Model.Avatar.AvatarAsset.Name));
+            yield return StartCoroutine (sMaster.RequestAll("character_star"));
+            asset.characterStars = sMaster.responseAll.character_stars;
+            UnityEditor.AssetDatabase.CreateAsset(asset, string.Format("Assets/Editor Default Resources/ScriptableObject/{0}.asset", App.Model.Scriptable.CharacterStarAsset.Name));
             UnityEditor.AssetDatabase.Refresh();
         }
         IEnumerator CreateScriptableObjectLanguageAssetRun()

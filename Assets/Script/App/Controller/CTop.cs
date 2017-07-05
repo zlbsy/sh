@@ -34,6 +34,7 @@ namespace App.Controller{
             if (!isTutorial && !Global.SUser.self.loginbonus_received)
             {
                 App.Model.Master.MLoginBonus[] loginBonusesList = App.Util.Cacher.LoginBonusCacher.Instance.GetAll();
+                Debug.LogError("loginBonusesList = " + loginBonusesList.Length+","+Global.SUser.self.loginbonus_cnt);
                 App.Model.Master.MLoginBonus loginBonuses = loginBonusesList[Global.SUser.self.loginbonus_cnt];
                 SLoginBonus sLoginBonus = new SLoginBonus();
                 yield return StartCoroutine(sLoginBonus.RequestGet());

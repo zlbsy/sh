@@ -15,7 +15,7 @@ namespace App.Model{
         public int world;
         public int word;
         public int loginbonus;
-        public int characterword;
+        public int characterstar;
         public int area;
         public int effect;
         public int battlefield;

@@ -47,7 +47,7 @@ namespace App.View.Equipment{
             }
         }
         public override void UpdateView(){
-            if (ViewModel != null)
+            if (ViewModel != null && ViewModel.EquipmentId.Value > 0)
             {
                 icon.gameObject.SetActive(true);
                 level.transform.parent.gameObject.SetActive(true);
@@ -55,6 +55,12 @@ namespace App.View.Equipment{
                 icon.sprite = ImageAssetBundleManager.GetEquipmentIcon(string.Format("{0}_{1}", ViewModel.EquipmentType.Value, ViewModel.EquipmentId.Value));
                 LevelChanged(0, ViewModel.Level.Value);
                 level.transform.parent.gameObject.SetActive(!hideLevel);
+            }
+            else
+            {
+                icon.gameObject.SetActive(false);
+                level.transform.parent.gameObject.SetActive(false);
+                stars[0].transform.parent.gameObject.SetActive(false);
             }
         }
         #endregion

@@ -85,6 +85,7 @@ namespace App.Model{
                 this.ResistanceEarth += skillMaster.resistance_earth;
             }
             List<App.Model.Master.MEquipment> equipments = new List<App.Model.Master.MEquipment>();
+
             if (mCharacter.Weapon > 0)
             {
                 equipments.Add(EquipmentCacher.Instance.GetEquipment(mCharacter.Weapon, App.Model.Master.MEquipment.EquipmentType.weapon));
@@ -97,6 +98,10 @@ namespace App.Model{
             {
                 equipments.Add(EquipmentCacher.Instance.GetEquipment(mCharacter.Horse, App.Model.Master.MEquipment.EquipmentType.horse));
             }
+            int physicalAttack = 0;
+            int physicalDefense = 0;
+            int magicAttack = 0;
+            int magicDefense = 0;
             foreach (App.Model.Master.MEquipment equipment in equipments)
             {
                 hp += equipment.hp;
@@ -126,6 +131,10 @@ namespace App.Model{
                 this.ResistanceWater += equipment.resistance_water;
                 this.ResistanceFire += equipment.resistance_fire;
                 this.ResistanceEarth += equipment.resistance_earth;
+                physicalAttack += equipment.physical_attack;
+                physicalDefense += equipment.physical_defense;
+                magicAttack += equipment.magic_attack;
+                magicDefense += equipment.magic_defense;
             }
 
             this.HpMax = Mathf.FloorToInt(mCharacter.Level * (2 + this.Endurance * 0.02f) + hp);
@@ -166,10 +175,14 @@ namespace App.Model{
                     moveTypeValue += this.Magic;
                     break;
             }
-            this.PhysicalAttack = (this.Power + this.Knowledge) + Mathf.FloorToInt((this.Power * 2f + this.Knowledge) * (0.4f + (mCharacter.MoveType == MoveType.cavalry ? this.Riding : this.Walker) * 0.006f) * (1f + mCharacter.Level * 0.5f) * 0.1f);
-            this.MagicAttack = (this.Trick + this.Knowledge) + Mathf.FloorToInt((this.Trick * 2f + this.Knowledge) * (0.4f + (mCharacter.MoveType == MoveType.cavalry ? this.Riding : this.Walker) * 0.006f) * (1f + mCharacter.Level * 0.5f) * 0.1f);
+            this.PhysicalAttack = (this.Power + this.Knowledge) + Mathf.FloorToInt((this.Power * 2f + this.Knowledge) * (0.4f + (moveTypeValue * 0.5f) * 0.006f) * (1f + mCharacter.Level * 0.5f) * 0.1f);
+            this.PhysicalAttack += physicalAttack;
+            this.MagicAttack = (this.Trick + this.Knowledge) + Mathf.FloorToInt((this.Trick * 2f + this.Knowledge) * (0.4f + (moveTypeValue * 0.5f) * 0.006f) * (1f + mCharacter.Level * 0.5f) * 0.1f);
+            this.MagicAttack += magicAttack;
             this.PhysicalDefense = Mathf.FloorToInt((this.Power * 2 + this.Knowledge)*0.35f + (this.Power*2 + this.Knowledge) * (0.7f + mCharacter.Level * 0.003f) * 0.05f);
+            this.PhysicalDefense += physicalDefense;
             this.MagicDefense = Mathf.FloorToInt((this.Trick * 2 + this.Knowledge)*0.35f + (this.Trick*2 + this.Knowledge) * (0.7f + mCharacter.Level * 0.003f) * 0.05f);
+            this.MagicDefense += magicDefense;
         }
         /// <summary>
         /// 物攻 = Lv + (力量*2+技巧)*(骑术|步战)/100

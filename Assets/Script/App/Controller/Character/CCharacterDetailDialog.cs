@@ -17,6 +17,7 @@ namespace App.Controller.Character{
     public class CCharacterDetailDialog : CDialog {
         [SerializeField]private VCard vCard;
         [SerializeField]private App.View.Character.VCharacterDetail characterDetail;
+        [SerializeField]private App.View.Character.VCharacterGrade characterGrade;
         [SerializeField]private App.View.Character.VCharacter vCharacter;
         [SerializeField]private VCharacterStatus vCharacterStatus;
         [SerializeField]private VEquipments vEquipment;
@@ -41,6 +42,8 @@ namespace App.Controller.Character{
             characterDetail.UpdateView();
             vCard.BindingContext = character.ViewModel;
             vCard.UpdateView();
+            characterGrade.BindingContext = character.ViewModel;
+            characterGrade.UpdateView();
             vCharacter.BindingContext = character.ViewModel;
             vCharacter.UpdateView();
             vCharacterStatus.BindingContext = character.ViewModel;
@@ -78,6 +81,7 @@ namespace App.Controller.Character{
             {
                 character.Horse = mEquipment.EquipmentId;
             }
+            character.StatusInit();
         }
         public void SkillLevelUp(int id){
             App.Model.MSkill mSkill = System.Array.Find(character.Skills, s=>s.Id == id);
@@ -148,8 +152,13 @@ namespace App.Controller.Character{
             {
                 index = 0; 
             }
-            currentContent = contents[index].gameObject;
+            VBase view = contents[index];
+            currentContent = view.gameObject;
             currentContent.SetActive(true);
+            if (view is VCharacterStatus)
+            {
+                view.UpdateView();
+            }
         }
         public void ChangeCharacterAction(){
             switch (character.Action)

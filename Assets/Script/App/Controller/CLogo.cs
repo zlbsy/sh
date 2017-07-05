@@ -133,6 +133,11 @@ namespace App.Controller{
                 NpcEquipmentCacher.Instance.Reset(NpcEquipmentAsset.Data.npc_equipments);
                 NpcEquipmentAsset.Clear();
             }));
+            list.Add(sUser.Download(CharacterStarAsset.Url, versions.characterstar, (AssetBundle assetbundle)=>{
+                CharacterStarAsset.assetbundle = assetbundle;
+                CharacterStarCacher.Instance.Reset(CharacterStarAsset.Data.characterStars);
+                CharacterStarAsset.Clear();
+            }));
             list.Add(sUser.Download(AreaAsset.Url, versions.area, (AssetBundle assetbundle)=>{
                 AreaAsset.assetbundle = assetbundle;
                 AreaCacher.Instance.Reset(AreaAsset.Data.areas);

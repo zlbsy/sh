@@ -21,7 +21,8 @@ namespace App.ViewModel
         public VMProperty<int> Fragment = new VMProperty<int>();
         public VMProperty<int> Star = new VMProperty<int>();
 		public VMProperty<int> Head = new VMProperty<int>();
-		public VMProperty<int> Hat = new VMProperty<int>();
+        public VMProperty<int> Hat = new VMProperty<int>();
+        public VMProperty<bool> IsHide = new VMProperty<bool>();
         public VMProperty<int> Horse = new VMProperty<int>();
         public VMProperty<int> Weapon = new VMProperty<int>();
         public VMProperty<int> Clothes = new VMProperty<int>();

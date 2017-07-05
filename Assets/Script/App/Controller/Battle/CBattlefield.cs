@@ -109,6 +109,17 @@ namespace App.Controller.Battle{
             vBaseMap.MoveToPosition();
             base.InitMap();
             characters.ForEach(character=>character.Action = ActionType.idle);
+            battlefieldMaster.script.Add("Character.hide(3);");
+            battlefieldMaster.script.Add("Character.hide(4);");
+            battlefieldMaster.script.Add("Character.hide(8);");
+            battlefieldMaster.script.Add("Talk.setnpc(5,0,来了个不怕死的黄毛小鬼！把他一起干掉！,false);");
+            battlefieldMaster.script.Add("Talk.setplayer(@player_id,0,（那个山大王凶神恶煞的样子好可怕啊，怎么办？怎么办？）,true);");
+            battlefieldMaster.script.Add("Talk.setnpc(1,0,多谢小英雄仗义出手，前面两个强盗我可以应付！,false);");
+            battlefieldMaster.script.Add("Talk.setnpc(1,0,左面的小强盗比较弱一些，就麻烦小英雄先挡一挡了！,false);");
+            battlefieldMaster.script.Add("Talk.setplayer(@player_id,0,（正合我意）,true);");
+            battlefieldMaster.script.Add("Talk.setplayer(@player_id,0,王教头放心，交给我了。,true);");
+            battlefieldMaster.script.Add("Character.move(1,2,3);");
+
             battlefieldMaster.script.Add("Battle.boutwave(self);");
             App.Util.LSharp.LSharpScript.Instance.Analysis(battlefieldMaster.script);
         }
