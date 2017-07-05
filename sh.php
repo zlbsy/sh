@@ -10,7 +10,7 @@ $class = ucfirst($controller_p);
 error_reporting(E_ALL ^ E_NOTICE);
 define('TIME_INIT', '2000-1-1 00:00:00');
 define('DAY_START', date("Y-m-d 05:00:00", date("H",time()) > "05" ? time() : strtotime("-1 day")));
-define('NOW', date("Y-m-d H:i:s", time());
+define('NOW', date("Y-m-d H:i:s",time()));
 
 require_once("sh/core/Base_Database.php");
 require_once("sh/databases/master_db.php");

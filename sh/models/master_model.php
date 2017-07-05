@@ -5,7 +5,7 @@ class Master_model extends MY_Model
 		parent::__construct();
 	}
 	public function get_master_character(){
-		$select = "`id`,`name`,`nickname`,`head`,`hat`,`weapon`,`clothes`,`horse`,`qualification`,
+		$select = "`id`,`name`,`nickname`,`head`,`hat`,`hp`,`mp`,`weapon`,`clothes`,`horse`,`qualification`,
 		`power`,`knowledge`,`trick`,`endurance`,`speed`,`moving_power`,`riding`,`walker`,`pike`,`sword`,
 		`long_knife`,`knife`,`long_ax`,`ax`,`long_sticks`,`sticks`,`archery`,`hidden_weapons`,`dual_wield`,`magic`, `introduction` ";
 		$table = $this->master_db->base_character;

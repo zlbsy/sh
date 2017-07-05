@@ -173,7 +173,7 @@ class Gacha_model extends MY_Model
 				$this->error("get present error ");
 			}*/
 		}
-		$contents_res = $user_model->set_contents($user_id,$contents);
+		$contents_res = $user_model->set_contents($user["id"],$contents);
 		if(!$contents_res){
 			$this->user_db->trans_rollback();
 			$this->error("set contents error ".$this->user_db->last_sql);
