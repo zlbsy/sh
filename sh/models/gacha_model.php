@@ -217,6 +217,7 @@ class Gacha_model extends MY_Model
 				$where[] = "id <= {$character_id[1]} ";
 			}
 		}
+		$this->log("qualification={$qualification}\n");
 		if($qualification > 0){
 			$where[] = "qualification={$qualification}";
 		}
@@ -267,7 +268,7 @@ class Gacha_model extends MY_Model
 		return $result;
 	}
 	function get_gacha_childs($gacha_id){
-		$select = "id, gacha_id, type, child_id, child_type, probability";
+		$select = "id, gacha_id, type, child_id, child_type, probability,qualification";
 		$table = $this->master_db->gacha_child;
 		$where = array();
 		$where[] = "gacha_id={$gacha_id}";

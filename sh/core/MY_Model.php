@@ -28,7 +28,7 @@ class MY_Model {
 		MY_Model::$_master_db->close();
 	}
 	protected function log($message){
-		$fp = fopen('/var/www/d/test/test.txt', 'w');
+		$fp = fopen('/var/www/d/test/test.txt', 'a');
 		fwrite($fp, $message);
 		fclose($fp);
 	}
