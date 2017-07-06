@@ -18,12 +18,12 @@ namespace App.Controller.Character{
         public override IEnumerator OnLoad( Request request ) 
 		{  
             yield return StartCoroutine(base.OnLoad(request));
-            if (Global.SUser.self.characters == null)
+            /*if (Global.SUser.self.characters == null)
             {
                 SCharacter sCharacter = new SCharacter();
                 yield return StartCoroutine(sCharacter.RequestList(Global.SUser.self.id));
                 Global.SUser.self.characters = sCharacter.characters;
-            }
+            }*/
             ScrollViewSets(content, childItem, Global.SUser.self.characters);
 			yield return 0;
 		}

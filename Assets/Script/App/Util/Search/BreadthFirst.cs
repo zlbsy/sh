@@ -12,12 +12,12 @@ namespace App.Util.Search{
     /// </summary>
     public class BreadthFirst{
         private App.Controller.Battle.CBattlefield cBattlefield;
-        private CBaseMap cBaseMap;
+        private App.Controller.Common.CBaseMap cBaseMap;
         private MBaseMap mBaseMap;
         private VBaseMap vBaseMap;
         private App.Model.Master.MBaseMap baseMapMaster;
         private List<VTile> tiles;
-        public BreadthFirst(CBaseMap controller, MBaseMap model, VBaseMap view){
+        public BreadthFirst(App.Controller.Common.CBaseMap controller, MBaseMap model, VBaseMap view){
             cBaseMap = controller;
             mBaseMap = model;
             vBaseMap = view;

@@ -63,7 +63,7 @@ namespace App.Util.Battle{
             {
                 return true;
             }
-            if (attackCharacter.IsNoBackAttack)
+            if (attackCharacter.IsNoBackAttack || targetCharacter.CurrentSkill == null)
             {
                 return false;
             }

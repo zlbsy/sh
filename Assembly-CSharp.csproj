@@ -82,7 +82,6 @@
      <Compile Include="Assets\Script\App\Controller\Battle\CBoutWaveDialog.cs" />
      <Compile Include="Assets\Script\App\Controller\CAlertDialog.cs" />
      <Compile Include="Assets\Script\App\Controller\CArea.cs" />
-     <Compile Include="Assets\Script\App\Controller\CBaseMap.cs" />
      <Compile Include="Assets\Script\App\Controller\CBuildingDialog.cs" />
      <Compile Include="Assets\Script\App\Controller\CConfirmDialog.cs" />
      <Compile Include="Assets\Script\App\Controller\CConnectingDialog.cs" />
@@ -99,6 +98,8 @@
      <Compile Include="Assets\Script\App\Controller\Character\CCharacterDetailDialog.cs" />
      <Compile Include="Assets\Script\App\Controller\Character\CCharacterListDialog.cs" />
      <Compile Include="Assets\Script\App\Controller\Common\CBase.cs" />
+     <Compile Include="Assets\Script\App\Controller\Common\CBaseMap.cs" />
+     <Compile Include="Assets\Script\App\Controller\Common\CBaseMapScript.cs" />
      <Compile Include="Assets\Script\App\Controller\Common\CDialog.cs" />
      <Compile Include="Assets\Script\App\Controller\Common\CScene.cs" />
      <Compile Include="Assets\Script\App\Controller\Common\CSingleDialog.cs" />

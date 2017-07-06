@@ -6,6 +6,7 @@ using App.ViewModel;
 using App.Service;
 using App.Controller;
 using System;
+using App.Controller.Common;
 
 namespace App.Util.LSharp{
     public class LSharpCharacter : LSharpBase<LSharpCharacter> {
@@ -16,7 +17,7 @@ namespace App.Util.LSharp{
             {
                 action = "idle";
             }
-            string direction = arguments[2];
+            string directionStr = arguments[2];
             int x = int.Parse(arguments[3]);
             int y = int.Parse(arguments[4]);
             CBaseMap cBaseMap = App.Util.SceneManager.CurrentScene as CBaseMap;
@@ -26,6 +27,7 @@ namespace App.Util.LSharp{
                 return;
             }
             App.Model.ActionType actionType = (App.Model.ActionType)Enum.Parse(typeof(App.Model.ActionType), action);
+            App.Model.Direction direction = (App.Model.Direction)System.Enum.Parse(typeof(App.Model.Direction), directionStr, true);
             cBaseMap.AddCharacter(npcId, actionType, direction, x, y);
             LSharpScript.Instance.Analysis();
         }
@@ -62,6 +64,87 @@ namespace App.Util.LSharp{
                 return;
             }
             cBaseMap.MoveNpc(npcId, x, y);
+        }
+        public void Moveself(string[] arguments){
+            int index = int.Parse(arguments[0]);
+            int x = int.Parse(arguments[1]);
+            int y = int.Parse(arguments[2]);
+            CBaseMap cBaseMap = App.Util.SceneManager.CurrentScene as CBaseMap;
+            if (cBaseMap == null)
+            {
+                LSharpScript.Instance.Analysis();
+                return;
+            }
+            cBaseMap.MoveSelf(index, x, y);
+        }
+        /*public void Moveplayer(string[] arguments){
+            int x = int.Parse(arguments[0]);
+            int y = int.Parse(arguments[1]);
+            CBaseMap cBaseMap = App.Util.SceneManager.CurrentScene as CBaseMap;
+            if (cBaseMap == null)
+            {
+                LSharpScript.Instance.Analysis();
+                return;
+            }
+            cBaseMap.MovePlayer(x, y);
+        }*/
+        public void Setmission(string[] arguments){
+            int npcId = int.Parse(arguments[0]);
+            App.Model.Mission mission = (App.Model.Mission)Enum.Parse(typeof(App.Model.Mission), arguments[1]);
+            CBaseMap cBaseMap = App.Util.SceneManager.CurrentScene as CBaseMap;
+            if (cBaseMap == null)
+            {
+                LSharpScript.Instance.Analysis();
+                return;
+            }
+            cBaseMap.SetNpcMission(npcId, mission);
+            LSharpScript.Instance.Analysis();
+        }
+        public void Setdirection(string[] arguments){
+            int npcId = int.Parse(arguments[0]);
+            App.Model.Direction direction = (App.Model.Direction)System.Enum.Parse(typeof(App.Model.Direction), arguments[1], true);
+            CBaseMap cBaseMap = App.Util.SceneManager.CurrentScene as CBaseMap;
+            if (cBaseMap == null)
+            {
+                LSharpScript.Instance.Analysis();
+                return;
+            }
+            cBaseMap.SetNpcDirection(npcId, direction);
+            LSharpScript.Instance.Analysis();
+        }
+        public void Setselfdirection(string[] arguments){
+            int index = int.Parse(arguments[0]);
+            App.Model.Direction direction = (App.Model.Direction)System.Enum.Parse(typeof(App.Model.Direction), arguments[1], true);
+            CBaseMap cBaseMap = App.Util.SceneManager.CurrentScene as CBaseMap;
+            if (cBaseMap == null)
+            {
+                LSharpScript.Instance.Analysis();
+                return;
+            }
+            cBaseMap.SetSelfDirection(index, direction);
+            LSharpScript.Instance.Analysis();
+        }
+        public void Setaction(string[] arguments){
+            int npcId = int.Parse(arguments[0]);
+            App.Model.ActionType actionType = (App.Model.ActionType)Enum.Parse(typeof(App.Model.ActionType), arguments[1]);
+            CBaseMap cBaseMap = App.Util.SceneManager.CurrentScene as CBaseMap;
+            if (cBaseMap == null)
+            {
+                LSharpScript.Instance.Analysis();
+                return;
+            }
+            cBaseMap.SetNpcAction(npcId, actionType);
+        }
+        public void Setselfaction(string[] arguments){
+            int index = int.Parse(arguments[0]);
+            App.Model.ActionType actionType = (App.Model.ActionType)Enum.Parse(typeof(App.Model.ActionType), arguments[1]);
+            CBaseMap cBaseMap = App.Util.SceneManager.CurrentScene as CBaseMap;
+            if (cBaseMap == null)
+            {
+                LSharpScript.Instance.Analysis();
+                return;
+            }
+            cBaseMap.SetSelfAction(index, actionType);
         }
 	}
 }

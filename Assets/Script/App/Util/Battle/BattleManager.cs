@@ -82,7 +82,7 @@ namespace App.Util.Battle{
             //attackCharacterList.Clear();
             if (useToEnemy)
             {
-                bool forceFirst = (mCharacter.CurrentSkill.Master.effect.special == App.Model.Master.SkillEffectSpecial.force_first);
+                bool forceFirst = (mCharacter.CurrentSkill != null && mCharacter.CurrentSkill.Master.effect.special == App.Model.Master.SkillEffectSpecial.force_first);
                 if (forceFirst && cBattlefield.charactersManager.IsInSkillDistance(this.mCharacter, mCharacter))
                 {
                     //先手攻击
@@ -434,6 +434,7 @@ namespace App.Util.Battle{
             VTile startTile = cBattlefield.mapSearch.GetTile(this.mCharacter.CoordinateX, this.mCharacter.CoordinateY);
             VTile endTile = cBattlefield.mapSearch.GetTile(index);
 
+            cBattlefield.MapMoveToPosition(this.mCharacter.CoordinateX, this.mCharacter.CoordinateY);
             Holoville.HOTween.Core.TweenDelegate.TweenCallback moveComplete;
             if (cBattlefield.battleMode == CBattlefield.BattleMode.move_after_attack)
             {
@@ -441,6 +442,7 @@ namespace App.Util.Battle{
                     {
                         this.mCharacter.CoordinateY = endTile.CoordinateY;
                         this.mCharacter.CoordinateX = endTile.CoordinateX;
+                        cBattlefield.MapMoveToPosition(this.mCharacter.CoordinateX, this.mCharacter.CoordinateY);
                         cBattlefield.StartCoroutine(ActionOverNext());
                     };
             }
@@ -453,6 +455,7 @@ namespace App.Util.Battle{
                         cBattlefield.battleMode = CBattlefield.BattleMode.move_end;
                         this.mCharacter.CoordinateY = endTile.CoordinateY;
                         this.mCharacter.CoordinateX = endTile.CoordinateX;
+                        cBattlefield.MapMoveToPosition(this.mCharacter.CoordinateX, this.mCharacter.CoordinateY);
                         cBattlefield.tilesManager.ShowCharacterSkillArea(this.mCharacter);
                         cBattlefield.OpenOperatingMenu();
                     };

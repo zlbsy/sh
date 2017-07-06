@@ -28,10 +28,15 @@ namespace App.Controller{
             SceneManager.CurrentScene.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.ConnectingDialog));
         }
         public static void ToClose(){
-            if (Global.SceneManager.CurrentDialog is CConnectingDialog)
+            CDialog dialog = Global.SceneManager.FindDialog(SceneManager.Prefabs.ConnectingDialog);
+            if (dialog != null)
+            {
+                dialog.Close();
+            }
+            /*if (Global.SceneManager.CurrentDialog is CConnectingDialog)
             {
                 Global.SceneManager.CurrentDialog.Close();
-            }
+            }*/
         }
 	}
 }

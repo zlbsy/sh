@@ -92,7 +92,7 @@ namespace App.Util.LSharp{
         }
         public void Camerato(string[] arguments){
             int worldId = int.Parse(arguments[0]);
-            CBaseMap cBasemap = SceneManager.CurrentScene as CBaseMap;
+            App.Controller.Common.CBaseMap cBasemap = SceneManager.CurrentScene as App.Controller.Common.CBaseMap;
             cBasemap.CameraTo(worldId);
         }
 	}

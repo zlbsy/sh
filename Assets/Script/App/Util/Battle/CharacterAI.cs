@@ -149,6 +149,10 @@ namespace App.Util.Battle{
         private void FindAttackTarget(){
             attackTarget = null;
             targetTile = null;
+            if (mCharacter.CurrentSkill == null)
+            {
+                return;
+            }
             foreach (MCharacter character in mBaseMap.Characters)
             {
                 if (character.Hp == 0)
@@ -230,6 +234,10 @@ namespace App.Util.Battle{
             }
         }
         private VTile GetNearestNode(MCharacter target, List<VTile> tiles){
+            if (mCharacter.Mission == Mission.defensive)
+            {
+                return tiles.Find(t=>t.CoordinateX == mCharacter.CoordinateX && t.CoordinateY == mCharacter.CoordinateY);
+            }
             if (cBattlefield.tilesManager.CurrentMovingTiles.Count == 1)
             {
                 return cBattlefield.tilesManager.CurrentMovingTiles[0];
@@ -267,8 +275,10 @@ namespace App.Util.Battle{
             yield return cBattlefield.StartCoroutine(WaitMoving());
             if (targetTile == null)
             {
-                //向最近武将移动
-                yield return cBattlefield.StartCoroutine(MoveToNearestTarget());
+                if(mCharacter.Mission == Mission.initiative){
+                    //向最近武将移动
+                    yield return cBattlefield.StartCoroutine(MoveToNearestTarget());
+                }
                 cBattlefield.StartCoroutine(cBattlefield.manager.ActionOver());
             }
             else

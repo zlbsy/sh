@@ -104,6 +104,7 @@ namespace App.Model{
     public class MCharacter : MBase {
         public MCharacter(){
             viewModel = new VMCharacter ();
+            this.Mission = Mission.initiative;
             this.ViewModel.Aids.Value = new List<App.Model.MBase>();
             this.ViewModel.Status.Value = new List<App.Model.MBase>();
         }

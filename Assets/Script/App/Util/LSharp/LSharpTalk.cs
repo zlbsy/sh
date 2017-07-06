@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using App.ViewModel;
 using App.Service;
 using App.Controller;
+using App.Controller.Common;
 
 namespace App.Util.LSharp{
     public class LSharpTalk : LSharpBase<LSharpTalk> {
@@ -40,7 +41,11 @@ namespace App.Util.LSharp{
             CBaseMap cBaseMap = App.Util.SceneManager.CurrentScene as CBaseMap;
             if (cBaseMap != null)
             {
+                foreach(App.Model.MCharacter c in Global.SUser.self.characters){
+                    Debug.LogError("c.CharacterId="+ + c.CharacterId);
+                }
                 App.Model.MCharacter mCharacter = System.Array.Find(Global.SUser.self.characters, c => c.CharacterId >= App.Util.Global.Constant.user_characters[0]);
+                Debug.LogError("Global.SUser.self.characters="+Global.SUser.self.characters + ", " + mCharacter);
                 cBaseMap.CharacterFocus(mCharacter.CharacterId);
             }
             CTalkDialog.ToShowPlayer(userId, message, isLeft, LSharpScript.Instance.Analysis);

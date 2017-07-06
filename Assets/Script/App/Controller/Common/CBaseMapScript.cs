@@ -12,88 +12,53 @@ using App.Controller.Common;
 using System.Linq;
 
 
-namespace App.Controller{
-    public class CBaseMap : CScene {
-        [SerializeField]protected VBaseMap vBaseMap;
-        protected MBaseMap mBaseMap;
-        public App.Util.Search.TileMap mapSearch{ get; set;}
-        public App.Util.Search.AStar aStar{ get; set;}
-        public App.Util.Search.BreadthFirst breadthFirst{ get; set;}
-        public override IEnumerator OnLoad( Request request ) 
-        {  
-            InitMap();
-            yield return this.StartCoroutine(base.OnLoad(request));
-        }
-        protected virtual void InitManager(){
-            mapSearch = new App.Util.Search.TileMap(mBaseMap, vBaseMap);
-            aStar = new App.Util.Search.AStar(this, mBaseMap, vBaseMap);
-            breadthFirst = new App.Util.Search.BreadthFirst(this, mBaseMap, vBaseMap);
-        }
-        protected virtual void InitMap(){
-            InitManager();
-        }
-        public virtual void CameraTo(int id){
-            App.Model.MTile tile = System.Array.Find(mBaseMap.Tiles, w=>w.id==id);
-            vBaseMap.MoveToPosition(tile.x, tile.y);
-            App.Util.LSharp.LSharpScript.Instance.Analysis();
-        }
-        /// <summary>
-        /// 点击地图块儿
-        /// </summary>
-        /// <param name="index">地图块儿索引</param>
-        public virtual void OnClickTile(int index){
-            App.Model.Master.MBaseMap topMapMaster = BaseMapCacher.Instance.Get(mBaseMap.MapId);
-            Vector2 coordinate = topMapMaster.GetCoordinateFromIndex(index);
-            App.Model.MTile tile = System.Array.Find(mBaseMap.Tiles, _=>_.x == coordinate.x && _.y == coordinate.y);
-            OnClickTile(tile);
-        }
-        /// <summary>
-        /// 点击地图块儿
-        /// </summary>
-        /// <param name="tile">地图块儿</param>
-        public virtual void OnClickTile(App.Model.MTile tile){
-        }
-        public VBaseMap GetVBaseMap(){
-            return vBaseMap;
-        }
-        public MBaseMap GetMBaseMap(){
-            return mBaseMap;
-        }
-        public virtual void OnDestroy(){
-        }
-        public App.View.Character.VCharacter GetCharacterView(MCharacter mCharacter){
-            App.View.Character.VCharacter vCharacter = this.vBaseMap.Characters.Find(_=>_.ViewModel.CharacterId.Value == mCharacter.CharacterId && _.ViewModel.Belong.Value == mCharacter.Belong);
-            return vCharacter;
-        }
-        public MCharacter GetCharacterModel(App.View.Character.VCharacter vCharacter){
-            MCharacter mCharacter = System.Array.Find(mBaseMap.Characters, _=>_.CharacterId == vCharacter.ViewModel.CharacterId.Value && _.Belong == vCharacter.ViewModel.Belong.Value);
-            return mCharacter;
-        }
-        public MCharacter GetCharacterFromNpc(int npcId){
-            MCharacter mCharacter = System.Array.Find(mBaseMap.Characters, c=>c.Id == npcId && c.Belong != Belong.self);
-            return mCharacter;
-        }
+namespace App.Controller.Common{
+    public partial class CBaseMap {
         #region LSharp处理
-        public void AddCharacter(int npcId, ActionType action, string direction, int x, int y){
+        public void AddCharacter(int npcId, ActionType action, Direction direction, int x, int y){
             MCharacter mCharacter = NpcCacher.Instance.GetFromNpc(npcId);
+            mCharacter.StatusInit();
             mCharacter.Action = action;
             mCharacter.CoordinateX = x;
             mCharacter.CoordinateY = y;
-            mCharacter.Direction = (Direction)System.Enum.Parse(typeof(Direction), direction, true);
-            mCharacter.Hp = 10;
-            /*
-            mCharacter.CharacterId = characterId;
-            mCharacter.MoveType = MoveType.cavalry;
-            mCharacter.WeaponType = WeaponType.longKnife;
-            mCharacter.Weapon = 1;
-            mCharacter.Clothes = 1;
-            mCharacter.Horse = 1;
-            mCharacter.Head = 1;
-            mCharacter.Hat = 1;
-            */
+            mCharacter.Direction = direction;
+            /*if (mCharacter.Hp == 0)
+            {
+                mCharacter.Hp = 1;
+            }*/
             List<MCharacter> characters = mBaseMap.Characters == null ? new List<MCharacter>() : mBaseMap.Characters.ToList();
             characters.Add(mCharacter);
             mBaseMap.Characters = characters.ToArray();
+        }
+        public IEnumerator SetAction(MCharacter mCharacter, ActionType action){
+            MapMoveToPosition(mCharacter.CoordinateX, mCharacter.CoordinateY);
+            mCharacter.Action = action;
+            if (mCharacter.Action != ActionType.idle && mCharacter.Action != ActionType.move)
+            {
+                while (mCharacter.Action == action)
+                {
+                    yield return new WaitForEndOfFrame();
+                }
+            }
+            App.Util.LSharp.LSharpScript.Instance.Analysis();
+        }
+        public void SetNpcAction(int npcId, ActionType action){
+            MCharacter mCharacter = System.Array.Find(mBaseMap.Characters, c=>c.Id == npcId && c.Belong != Belong.self);
+            this.StartCoroutine(SetAction(mCharacter, action));
+        }
+        public void SetSelfAction(int index, ActionType action){
+            int characterId = (this as App.Controller.Battle.CBattlefield).characterIds[index];
+            MCharacter mCharacter = System.Array.Find(mBaseMap.Characters, c=>c.CharacterId == characterId && c.Belong == Belong.self);
+            this.StartCoroutine(SetAction(mCharacter, action));
+        }
+        public void SetNpcDirection(int npcId, Direction direction){
+            MCharacter mCharacter = System.Array.Find(mBaseMap.Characters, c=>c.Id == npcId && c.Belong != Belong.self);
+            mCharacter.Direction = direction;
+        }
+        public void SetSelfDirection(int index, Direction direction){
+            int characterId = (this as App.Controller.Battle.CBattlefield).characterIds[index];
+            MCharacter mCharacter = System.Array.Find(mBaseMap.Characters, c=>c.CharacterId == characterId && c.Belong == Belong.self);
+            mCharacter.Direction = direction;
         }
         public void HideNpc(int npcId, bool isHide){
             MCharacter mCharacter = System.Array.Find(mBaseMap.Characters, c=>c.Id == npcId && c.Belong != Belong.self);
@@ -106,6 +71,19 @@ namespace App.Controller{
         public void MoveNpc(int npcId, int x, int y){
             MCharacter mCharacter = System.Array.Find(mBaseMap.Characters, c=>c.Id == npcId && c.Belong != Belong.self);
             MoveCharacter(mCharacter, x, y);
+        }
+        /*public void MovePlayer(int x, int y){
+            MCharacter mCharacter = System.Array.Find(mBaseMap.Characters, c=>c.CharacterId >= App.Util.Global.Constant.user_characters[0] && c.CharacterId <= App.Util.Global.Constant.user_characters[1]);
+            MoveCharacter(mCharacter, x, y);
+        }*/
+        public void MoveSelf(int index, int x, int y){
+            int characterId = (this as App.Controller.Battle.CBattlefield).characterIds[index];
+            MCharacter mCharacter = System.Array.Find(mBaseMap.Characters, c=>c.CharacterId == characterId && c.Belong == Belong.self);
+            MoveCharacter(mCharacter, x, y);
+        }
+        public void SetNpcMission(int npcId, App.Model.Mission mission){
+            MCharacter mCharacter = System.Array.Find(mBaseMap.Characters, c=>c.Id == npcId && c.Belong != Belong.self);
+            mCharacter.Mission = mission;
         }
         public void MoveCharacter(int characterId, int x, int y){
             MCharacter mCharacter = System.Array.Find(mBaseMap.Characters, c=>c.CharacterId == characterId && c.Belong == Belong.self);
@@ -157,6 +135,10 @@ namespace App.Controller{
             MapMoveToPosition(mCharacter.CoordinateX, mCharacter.CoordinateY);
         }
         public void CharacterFocus(int characterId){
+            if (mBaseMap.Characters == null)
+            {
+                return;
+            }
             MCharacter mCharacter = System.Array.Find(mBaseMap.Characters, c=>c.CharacterId == characterId);
             if (mCharacter == null)
             {

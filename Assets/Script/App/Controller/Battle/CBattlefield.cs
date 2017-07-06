@@ -25,7 +25,7 @@ namespace App.Controller.Battle{
         public static VEffectAnimation effectAnimation;
 
         private int battlefieldId;
-        List<int> characterIds;
+        public List<int> characterIds{ get;set;}
         private List<VCharacter> dynamicCharacters = new List<VCharacter>();
         public enum BattleMode
         {
@@ -112,14 +112,24 @@ namespace App.Controller.Battle{
             battlefieldMaster.script.Add("Character.hide(3);");
             battlefieldMaster.script.Add("Character.hide(4);");
             battlefieldMaster.script.Add("Character.hide(8);");
-            battlefieldMaster.script.Add("Talk.setnpc(5,0,来了个不怕死的黄毛小鬼！把他一起干掉！,false);");
+            /*battlefieldMaster.script.Add("Talk.setnpc(5,0,来了个不怕死的黄毛小鬼！把他一起干掉！,false);");
             battlefieldMaster.script.Add("Talk.setplayer(@player_id,0,（那个山大王凶神恶煞的样子好可怕啊，怎么办？怎么办？）,true);");
             battlefieldMaster.script.Add("Talk.setnpc(1,0,多谢小英雄仗义出手，前面两个强盗我可以应付！,false);");
-            battlefieldMaster.script.Add("Talk.setnpc(1,0,左面的小强盗比较弱一些，就麻烦小英雄先挡一挡了！,false);");
-            battlefieldMaster.script.Add("Talk.setplayer(@player_id,0,（正合我意）,true);");
-            battlefieldMaster.script.Add("Talk.setplayer(@player_id,0,王教头放心，交给我了。,true);");
+            battlefieldMaster.script.Add("Talk.setnpc(1,0,左面的小强盗比较弱一些，就麻烦小英雄先挡一挡了！,false);");*/
             battlefieldMaster.script.Add("Character.move(1,2,3);");
-
+            /*battlefieldMaster.script.Add("Talk.setplayer(@player_id,0,（正合我意）,true);");
+            battlefieldMaster.script.Add("Talk.setplayer(@player_id,0,王教头放心，交给我了。,true);");*/
+            battlefieldMaster.script.Add("Character.moveself(0,5,5);");
+            battlefieldMaster.script.Add("Character.show(3);");
+            battlefieldMaster.script.Add("Character.show(4);");
+            battlefieldMaster.script.Add("Talk.setnpc(3,0,王教头，终于赶上你了，高太尉派我们抓你回去！,false);");
+            //battlefieldMaster.script.Add("Talk.setnpc(1,0,（糟糕！高俅的人这么快就追来了...）,false);");
+            battlefieldMaster.script.Add("Character.show(8);");
+            battlefieldMaster.script.Add("Character.setdirection(8,left);");
+            battlefieldMaster.script.Add("Character.setaction(8,attack);");
+            battlefieldMaster.script.Add("Talk.setnpc(8,0,哪里来的强盗，竟敢在我史家村附近出没，问过我史大郎的刀了吗？,false);");
+            battlefieldMaster.script.Add("Character.move(8,3,8);");
+            battlefieldMaster.script.Add("Character.setmission(2,defensive);");
             battlefieldMaster.script.Add("Battle.boutwave(self);");
             App.Util.LSharp.LSharpScript.Instance.Analysis(battlefieldMaster.script);
         }

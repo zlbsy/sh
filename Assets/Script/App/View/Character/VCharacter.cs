@@ -195,14 +195,18 @@ namespace App.View.Character{
                 ViewModel.IsHide.OnValueChanged += IsHideChanged;
             }
         }
-        private App.Controller.CBaseMap cBaseMap{
+        private App.Controller.Common.CBaseMap cBaseMap{
             get{
-                return this.Controller as App.Controller.CBaseMap;
+                return this.Controller as App.Controller.Common.CBaseMap;
             }
         }
         private void IsHideChanged(bool oldvalue, bool newvalue)
         {
-            this.gameObject.SetActive(newvalue);
+            this.gameObject.SetActive(!newvalue);
+            if (!newvalue)
+            {
+                this.UpdateView();
+            }
         }
         private void StatusChanged(List<App.Model.MBase> oldvalue, List<App.Model.MBase> newvalue)
         {
@@ -316,11 +320,6 @@ namespace App.View.Character{
         }
         private void ActionChanged(App.Model.ActionType oldvalue, App.Model.ActionType newvalue)
         {
-            /*this.StartCoroutine(ActionChanged(newvalue));
-        }
-        private IEnumerator ActionChanged(App.Model.ActionType newvalue)
-        {
-            yield return new WaitForEndOfFrame();*/
             string animatorName = string.Format("{0}_{1}_{2}", ViewModel.MoveType.ToString(), App.Util.WeaponManager.GetWeaponTypeAction(ViewModel.WeaponType.Value, newvalue), newvalue.ToString());
             //Debug.LogError(ViewModel.CharacterId.Value + " = " + animatorName);
             animator.Play(animatorName);
@@ -396,6 +395,13 @@ namespace App.View.Character{
                 newvalue = character.weapon;
             }else{
                 mEquipment = EquipmentCacher.Instance.GetEquipment(newvalue, MEquipment.EquipmentType.weapon);
+            }
+            if (mEquipment == null)
+            {
+                weapon.gameObject.SetActive(false);
+                weaponRight.gameObject.SetActive(false);
+                weaponArchery.gameObject.SetActive(false);
+                return;
             }
             bool isArchery = (mEquipment.weapon_type == App.Model.WeaponType.archery);
             weapon.gameObject.SetActive(!isArchery);

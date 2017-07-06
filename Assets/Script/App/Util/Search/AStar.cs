@@ -11,14 +11,14 @@ namespace App.Util.Search{
     /// A星搜索
     /// </summary>
     public class AStar{
-        private CBaseMap cBaseMap;
+        private App.Controller.Common.CBaseMap cBaseMap;
         //private MBaseMap mBaseMap;
         private VBaseMap vBaseMap;
         //private App.Model.Master.MBaseMap baseMapMaster;
         private List<VTile> path = new List<VTile>();
         private List<VTile> open = new List<VTile>();
         private VTile endNode;
-        public AStar(CBaseMap controller, MBaseMap model, VBaseMap view){
+        public AStar(App.Controller.Common.CBaseMap controller, MBaseMap model, VBaseMap view){
             cBaseMap = controller;
             //mBaseMap = model;
             vBaseMap = view;

@@ -71,7 +71,7 @@ namespace App.View{
                 {
                     //新建武将
                     GameObject obj = this.Controller.ScrollViewSetChild(characterLayer.transform, characterPrefab, mCharacter);
-                    obj.name = obj.name + Random.Range(1,100);
+                    //obj.name = obj.name + Random.Range(1,100);
                     int i = mCharacter.CoordinateY * mapWidth + mCharacter.CoordinateX;
                     VTile vTile = tileUnits[i];
                     obj.transform.eulerAngles = new Vector3(-30f, 0f, 0f);
@@ -198,8 +198,8 @@ namespace App.View{
             {
                 return;
             }
-            float x = camera3dPosition.x + (mousePosition.x - Input.mousePosition.x) * 0.01f;
-            float y = camera3dPosition.y + (mousePosition.y - Input.mousePosition.y) * 0.01f;
+            float x = camera3dPosition.x + (mousePosition.x - Input.mousePosition.x) * 0.005f;
+            float y = camera3dPosition.y + (mousePosition.y - Input.mousePosition.y) * 0.005f;
             if (x < minPosition.x)
             {
                 x = minPosition.x;
@@ -225,7 +225,7 @@ namespace App.View{
             {
                 return;
             }
-            _isDraging = Mathf.Abs(Input.mousePosition.x - mousePosition.x) > 2f || Mathf.Abs(Input.mousePosition.y - mousePosition.y) > 2f;
+            _isDraging = Mathf.Abs(Input.mousePosition.x - mousePosition.x) > 4f || Mathf.Abs(Input.mousePosition.y - mousePosition.y) > 4f;
             if (!_isDraging)
             {
                 return;

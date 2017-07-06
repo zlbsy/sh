@@ -38,23 +38,29 @@ namespace App.Controller{
             rect.gameObject.SetActive(false);
         }
         public void ShowFocus(float x, float y, float width, float height){
-            const float lightSize = 26f;
+            int screenWidth = 640;
+            int screenHeight = Camera.main.pixelHeight * 640 / Camera.main.pixelWidth;
+            float scale = screenWidth * 1f / Camera.main.pixelWidth;
+            float lightSize = 26f * scale;
+            width *= scale;
+            height *= scale;
+            x *= scale;
+            y *= scale;
             rect.sizeDelta = new Vector2(width, height);
             rect.anchoredPosition = new Vector2(x + width * 0.5f,-y - height * 0.5f);
 
             icon.sizeDelta = new Vector2(width, height);
+            left.sizeDelta = new Vector2(x + lightSize, screenHeight);
+            left.anchoredPosition = new Vector2(-(width+x)*0.5f, -rect.anchoredPosition.y - screenHeight * 0.5f);
 
-            left.sizeDelta = new Vector2(x + lightSize, Camera.main.pixelHeight);
-            left.anchoredPosition = new Vector2(-(width+x)*0.5f, -rect.anchoredPosition.y - Camera.main.pixelHeight * 0.5f);
-
-            right.sizeDelta = new Vector2(Camera.main.pixelWidth - x - width + lightSize, Camera.main.pixelHeight);
-            right.anchoredPosition = new Vector2((Camera.main.pixelWidth - x)*0.5f, -rect.anchoredPosition.y - Camera.main.pixelHeight * 0.5f);
+            right.sizeDelta = new Vector2(screenWidth - x - width + lightSize, screenHeight);
+            right.anchoredPosition = new Vector2((screenWidth - x)*0.5f, -rect.anchoredPosition.y - screenHeight * 0.5f);
 
             up.sizeDelta = new Vector2(width - lightSize, y + lightSize);
             up.anchoredPosition = new Vector2(0f, (height + y) * 0.5f);
 
-            down.sizeDelta = new Vector2(width - lightSize, Camera.main.pixelHeight - y - height + lightSize);
-            down.anchoredPosition = new Vector2(0f, (y - Camera.main.pixelHeight)*0.5f);
+            down.sizeDelta = new Vector2(width - lightSize, screenHeight - y - height + lightSize);
+            down.anchoredPosition = new Vector2(0f, (y - screenHeight)*0.5f);
             rect.gameObject.SetActive(true);
         }
 	}

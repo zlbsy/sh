@@ -81,7 +81,7 @@ namespace App.Controller{
                 script.Add("Talk.set(4100,0,这我帮不了你，你要自己想办法，现在给你第一个任务！,false);");
                 script.Add("Talk.setplayer(@player_id,0,还有其他任务？,true);");*/
                
-                /*script.Add("Talk.set(4100,0,别废话，跟我来，点一下这里！,false);");
+                script.Add("Talk.set(4100,0,别废话，跟我来，点一下这里！,false);");
                 script.Add("Tutorial.clickmask(SceneTop.UICamera.Canvas.LeftFooter.MapButton,0,0,96,96);");
                 script.Add("Tutorial.call(SceneTop,GotoWorld);");
                 script.Add("Tutorial.wait(SceneWorld);");
@@ -95,15 +95,15 @@ namespace App.Controller{
                 script.Add("Character.add(1,stand,right,4,3,true);");
                 script.Add("Character.add(2,stand,left,5,3,true);");
                 script.Add("Tutorial.camerato(1);");
-                script.Add("Wait.time(0.4);");*/
+                script.Add("Wait.time(0.4);");
 
-                /*script.Add("Talk.set(109,0,（可恶的山贼！我倒是不怕他们，但是他们一起上的话，恐怕保护不了母亲大人，怎么办......？）,false);");
+                script.Add("Talk.set(109,0,（可恶的山贼！我倒是不怕他们，但是他们一起上的话，恐怕保护不了母亲大人，怎么办......？）,false);");
                 script.Add("Talk.set(4100,0,看到前面了吗？王教头母子正被山贼围攻，你快去救他们！,false);");
                 script.Add("Talk.setplayer(@player_id,0,开什么玩笑？我又不会武功，上去不是多送一条命啊！,true);");
                 script.Add("Talk.set(4100,0,打架的本能总是有的吧。王教头！我来帮你！,false);");
                 script.Add("Talk.setplayer(@player_id,0,啊——！别推我啊！,true);");
-                script.Add("Talk.set(5200,0,来了个不怕死的黄毛小子！把他一起干掉！,false);");*/
-                /*
+                //script.Add("Talk.set(5200,0,来了个不怕死的黄毛小子！把他一起干掉！,false);");
+
                 script.Add("Talk.setplayer(@player_id,0,可恶！只能硬着头皮上了！,true);");
                 script.Add("Battle.start(1);");
                 script.Add("Tutorial.wait(ReadyBattleDialog(Clone));");
@@ -111,11 +111,11 @@ namespace App.Controller{
                 script.Add("Talk.set(4100,0,选择出战的武将吧，没错就是你自己了！,false);");
                 script.Add("Tutorial.clickmask(ReadyBattleDialog(Clone).Panel.Scroll View.Viewport.Content.CharacterIcon(Clone),0,0,120,120);");
                 script.Add("Tutorial.call(ReadyBattleDialog(Clone).Panel.Scroll View.Viewport.Content.CharacterIcon(Clone),ClickChild);");
-                script.Add("Tutorial.wait(ReadyBattleDialog(Clone).Panel.SelectCharacterContent.shadowChild(Clone).CharacterIcon(Clone));");
+                script.Add("Tutorial.wait(ReadyBattleDialog(Clone).Panel.Scroll View  SelectCharacter.Viewport.CharacterContent.shadowChild(Clone).CharacterIcon(Clone));");
                 script.Add("Tutorial.clickmask(ReadyBattleDialog(Clone).Panel.Battle,0,0,96,96);");
                 script.Add("Tutorial.call(ReadyBattleDialog(Clone),BattleStart);");
-                script.Add("Tutorial.wait(SceneBattlefield);");*/
-
+                script.Add("Tutorial.wait(SceneBattlefield);");
+                script.Add("Talk.set(4100,0,测试测试测试测试测试！,false);");
                 /*
                 //script.Add("Talk.set(1,0,少年，现在开始教学,true);");
                 //script.Add("Var.setprogress(tutorial,1);");

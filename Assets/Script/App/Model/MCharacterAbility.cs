@@ -49,40 +49,43 @@ namespace App.Model{
             this.ResistanceEarth += master.resistance_earth;
             int hp = master.hp;
             int mp = master.mp;
-            foreach (App.Model.MSkill skill in skills)
+            if (skills != null)
             {
-                App.Model.Master.MSkill skillMaster = skill.Master;
-                if (!System.Array.Exists(skillMaster.types, s=>s==SkillType.ability))
+                foreach (App.Model.MSkill skill in skills)
                 {
-                    continue;
+                    App.Model.Master.MSkill skillMaster = skill.Master;
+                    if (!System.Array.Exists(skillMaster.types, s => s == SkillType.ability))
+                    {
+                        continue;
+                    }
+                    hp += skillMaster.hp;
+                    mp += skillMaster.mp;
+                    this.Power += skillMaster.power;
+                    this.Knowledge += skillMaster.knowledge;
+                    this.Speed += skillMaster.speed;
+                    this.Trick += skillMaster.trick;
+                    this.Endurance += skillMaster.endurance;
+                    this.MovingPower += skillMaster.moving_power;
+                    this.Riding += skillMaster.riding;
+                    this.Walker += skillMaster.walker;
+                    this.Pike += skillMaster.pike;
+                    this.Sword += skillMaster.sword;
+                    this.LongKnife += skillMaster.long_knife;
+                    this.Knife += skillMaster.knife;
+                    this.LongAx += skillMaster.long_ax;
+                    this.Ax += skillMaster.ax;
+                    this.LongSticks += skillMaster.long_sticks;
+                    this.Sticks += skillMaster.sticks;
+                    this.Archery += skillMaster.archery;
+                    this.HiddenWeapons += skillMaster.hidden_weapons;
+                    this.DualWield += skillMaster.dual_wield;
+                    this.Magic += skillMaster.magic;
+                    this.ResistanceMetal += skillMaster.resistance_metal;
+                    this.ResistanceWood += skillMaster.resistance_wood;
+                    this.ResistanceWater += skillMaster.resistance_water;
+                    this.ResistanceFire += skillMaster.resistance_fire;
+                    this.ResistanceEarth += skillMaster.resistance_earth;
                 }
-                hp += skillMaster.hp;
-                mp += skillMaster.mp;
-                this.Power += skillMaster.power;
-                this.Knowledge += skillMaster.knowledge;
-                this.Speed += skillMaster.speed;
-                this.Trick += skillMaster.trick;
-                this.Endurance += skillMaster.endurance;
-                this.MovingPower += skillMaster.moving_power;
-                this.Riding += skillMaster.riding;
-                this.Walker += skillMaster.walker;
-                this.Pike += skillMaster.pike;
-                this.Sword += skillMaster.sword;
-                this.LongKnife += skillMaster.long_knife;
-                this.Knife += skillMaster.knife;
-                this.LongAx += skillMaster.long_ax;
-                this.Ax += skillMaster.ax;
-                this.LongSticks += skillMaster.long_sticks;
-                this.Sticks += skillMaster.sticks;
-                this.Archery += skillMaster.archery;
-                this.HiddenWeapons += skillMaster.hidden_weapons;
-                this.DualWield += skillMaster.dual_wield;
-                this.Magic += skillMaster.magic;
-                this.ResistanceMetal += skillMaster.resistance_metal;
-                this.ResistanceWood += skillMaster.resistance_wood;
-                this.ResistanceWater += skillMaster.resistance_water;
-                this.ResistanceFire += skillMaster.resistance_fire;
-                this.ResistanceEarth += skillMaster.resistance_earth;
             }
             List<App.Model.Master.MEquipment> equipments = new List<App.Model.Master.MEquipment>();
 
