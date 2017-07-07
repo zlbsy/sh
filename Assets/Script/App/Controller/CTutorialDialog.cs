@@ -15,18 +15,18 @@ using App.Controller.Common;
 namespace App.Controller{
     public class CTutorialDialog : CDialog {
         [SerializeField]private RectTransform rect;
+        [SerializeField]private Image backgroundClip;
         private RectTransform icon;
         private RectTransform left;
         private RectTransform right;
         private RectTransform up;
         private RectTransform down;
+        public override IEnumerator Start(){
+            yield return this.StartCoroutine(OnLoad(null));
+        }
         public override IEnumerator OnLoad( Request request ) 
-		{  
+        {  
             icon = rect.Find("Icon") as RectTransform;
-            left = rect.Find("Left") as RectTransform;
-            right = rect.Find("Right") as RectTransform;
-            up = rect.Find("Up") as RectTransform;
-            down = rect.Find("Down") as RectTransform;
             HideFocus();
             yield return StartCoroutine(base.OnLoad(request));
         }
@@ -35,32 +35,22 @@ namespace App.Controller{
             App.Util.LSharp.LSharpScript.Instance.Analysis();
         }
         public void HideFocus(){
+            ShowFocus(-1f,-1f,1f,1f);
+            backgroundClip.material.SetColor("_Color", new Color(0, 0, 0, 0));
             rect.gameObject.SetActive(false);
         }
         public void ShowFocus(float x, float y, float width, float height){
             int screenWidth = 640;
-            int screenHeight = Camera.main.pixelHeight * 640 / Camera.main.pixelWidth;
             float scale = screenWidth * 1f / Camera.main.pixelWidth;
-            float lightSize = 26f * scale;
-            width *= scale;
-            height *= scale;
-            x *= scale;
-            y *= scale;
-            rect.sizeDelta = new Vector2(width, height);
-            rect.anchoredPosition = new Vector2(x + width * 0.5f,-y - height * 0.5f);
-
-            icon.sizeDelta = new Vector2(width, height);
-            left.sizeDelta = new Vector2(x + lightSize, screenHeight);
-            left.anchoredPosition = new Vector2(-(width+x)*0.5f, -rect.anchoredPosition.y - screenHeight * 0.5f);
-
-            right.sizeDelta = new Vector2(screenWidth - x - width + lightSize, screenHeight);
-            right.anchoredPosition = new Vector2((screenWidth - x)*0.5f, -rect.anchoredPosition.y - screenHeight * 0.5f);
-
-            up.sizeDelta = new Vector2(width - lightSize, y + lightSize);
-            up.anchoredPosition = new Vector2(0f, (height + y) * 0.5f);
-
-            down.sizeDelta = new Vector2(width - lightSize, screenHeight - y - height + lightSize);
-            down.anchoredPosition = new Vector2(0f, (y - screenHeight)*0.5f);
+            backgroundClip.material.SetFloat("_HoleWidth", 1f * ((width/scale) / Camera.main.pixelWidth));
+            backgroundClip.material.SetFloat("_HoleHeight", 1f * ((height/scale) / Camera.main.pixelHeight));
+            backgroundClip.material.SetFloat("_StartPosX", 1f * ((x + width * 0.5f) / Camera.main.pixelWidth));
+            backgroundClip.material.SetFloat("_StartPosY", 1f + 1f * ((-y - height * 0.5f) / Camera.main.pixelHeight));
+            backgroundClip.material.SetColor("_Color", new Color(0, 0, 0, 0.7f));
+            float lightSize = 26f;
+            rect.sizeDelta = new Vector2(width + lightSize, height + lightSize);
+            rect.anchoredPosition = new Vector2((x + width * 0.5f)*scale,(-y - height * 0.5f)*scale);
+            icon.sizeDelta = new Vector2(width + lightSize, height + lightSize);
             rect.gameObject.SetActive(true);
         }
 	}

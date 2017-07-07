@@ -53,6 +53,10 @@ namespace App.Controller.Battle{
             else
             {
                 CloseOperatingMenu();
+                if (scriptWaitPaths != null)
+                {
+                    WaitScript(scriptWaitPaths);
+                }
             }
         }
         public IEnumerator OnBoutFixedDamage(MCharacter mCharacter, App.Model.Master.MSkill skill, List<VCharacter> characters){

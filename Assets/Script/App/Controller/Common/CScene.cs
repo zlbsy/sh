@@ -12,7 +12,7 @@ namespace App.Controller.Common{
     /// 场景
     /// </summary>
     public class CScene : CBase {
-        private static string[] scriptWaitPaths = null;
+        protected static string[] scriptWaitPaths = null;
         public void WaitScript(string[] paths){
             scriptWaitPaths = paths;
             this.StartCoroutine(WaitScriptContinue());
@@ -67,7 +67,7 @@ namespace App.Controller.Common{
                 }
             }
             yield return 0;
-            if (scriptWaitPaths != null)
+            if (scriptWaitPaths != null && !(this is App.Controller.Battle.CBattlefield))
             {
                 this.StartCoroutine(WaitScriptContinue());
             }
