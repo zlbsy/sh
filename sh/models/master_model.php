@@ -25,6 +25,10 @@ class Master_model extends MY_Model
 		$result = $this->master_db->select("`character_id`,`skill_id`,`star`,`skill_point`", $this->master_db->character_skill, $where, "star asc");
 		return $result;
 	}
+	public function get_character_stars(){
+		$result = $this->master_db->select("`id`,`star`,`cost`", $this->master_db->character_star, null, "star asc");
+		return $result;
+	}
 	public function get_master_avatar(){
 		$select = "`id`,`move_arms`,`arms`,`clothes`,`avatar_action`,`avatar_action_index`,`avatar_property`,`animation_index`,`position_x`,`position_y`,`sibling`,`scale_x`,`scale_y`";
 		$order_by = "move_arms ASC, arms ASC, avatar_action ASC, avatar_action_index ASC";
@@ -230,7 +234,11 @@ class Master_model extends MY_Model
 		$result = array();
 		foreach($result_array as $val){
 			//$val["script"] = explode(";",$val["script"]);
-			$result[] = explode(";",$val["script"]);
+			$arr = explode(";",$val["script"]);
+			foreach($arr as $k=>$v){
+				$arr[$k] = trim($v);
+			}
+			$result[] = $arr;
 		}
 		return $result;
 	}

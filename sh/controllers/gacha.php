@@ -26,8 +26,9 @@ class Gacha extends MY_Controller {
 		$contents = $gacha_model->slot($this->args);
 		$logs = $gacha_model->get_free_logs($gacha_id);
 		$gacha = $logs[0];
-		$user_model = new User_model();
-		$user = $user_model->get($user_id);
+		//$user_model = new User_model();
+		//$user = $user_model->get($user_id);
+		$user = $this->getSessionData("user");
 		if($contents){
 			$this->out(array("contents"=>$contents, "gacha"=>$gacha, "user"=>$user));
 		}else{

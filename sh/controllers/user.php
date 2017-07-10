@@ -54,6 +54,10 @@ class User extends MY_Controller {
 			$user["loginbonus_cnt"] = $loginbonus_model->get_log_count($user["id"]);
 			$user["loginbonus_received"] = $loginbonus_model->received_loginbonus($user["id"]);
 		}
+		if(is_null($user["characters"])){
+			$character_model = new Character_model();
+			$user["characters"] = $character_model->get_character_list($user["id"]);
+		}
 		$this->setSessionData("user", $user);
 		$this->out(array("user"=>$user));
 	}

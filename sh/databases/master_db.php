@@ -25,6 +25,7 @@ class Master_DB extends Base_Database {
 	var $npc = "sh109_master.npc";
 	var $npc_equipment = "sh109_master.npc_equipment";
 	var $character_skill = "sh109_master.character_skill";
+	var $character_star = "sh109_master.character_star";
 	var $tutorial = "sh109_master.tutorial";
 	var $avatar_setting = "sh109_master.avatar_setting";
 	var $login_bonus = "sh109_master.login_bonus";

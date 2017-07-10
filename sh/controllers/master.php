@@ -18,9 +18,9 @@ class Master extends MY_Controller {
 			$master_exp = $master_model->get_master_exp();
 			$result["exps"]=$master_exp;
 		}
-		if($args["avatar"]){
-			$master_avatar = $master_model->get_master_avatar();
-			$result["avatar"]=$master_avatar;
+		if($args["character_star"]){
+			$master_character_stars = $master_model->get_character_stars();
+			$result["character_stars"]=$master_character_stars;
 		}
 		if($args["building"]){
 			$master_building = $master_model->get_master_building();
