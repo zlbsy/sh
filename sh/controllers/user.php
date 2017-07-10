@@ -58,6 +58,12 @@ class User extends MY_Controller {
 			$character_model = new Character_model();
 			$user["characters"] = $character_model->get_character_list($user["id"]);
 		}
+		if(is_null($user["battlelist"])){
+			load_model(array('battle_model'));
+			$battle_model = new Battle_model();
+			$battle_list = $battle_model->get_list($user["id"]);
+			$user["battlelist"] = $battle_list;
+		}
 		$this->setSessionData("user", $user);
 		$this->out(array("user"=>$user));
 	}
