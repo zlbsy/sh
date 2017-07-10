@@ -30,6 +30,12 @@ namespace App.Util.Battle{
         /// <param name="attackCharacter">Attack character.</param>
         /// <param name="targetCharacter">Target character.</param>
         public bool AttackHitrate(MCharacter attackCharacter, MCharacter targetCharacter){
+            //游戏教学时100%命中
+            if (Global.SUser.self.GetValue("tutorial") < Global.Constant.tutorial_end)
+            {
+                return true;
+            }
+            //技能100%命中
             if (attackCharacter.IsForceHit)
             {
                 return true;

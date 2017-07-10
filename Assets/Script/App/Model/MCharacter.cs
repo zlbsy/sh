@@ -209,7 +209,7 @@ namespace App.Model{
             {
                 if (this.Skills != null && this.Skills.Length > 0)
                 {
-                    this.CurrentSkill = System.Array.Find(this.Skills, s=>(System.Array.IndexOf(s.Master.weapon_types, this.WeaponType) >= 0));
+                    this.CurrentSkill = System.Array.Find(this.Skills, s=>App.Model.Master.MSkill.IsWeaponType(s.Master, this.WeaponType));
                 }
             }
 

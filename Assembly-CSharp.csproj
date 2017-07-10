@@ -109,6 +109,7 @@
      <Compile Include="Assets\Script\App\Controller\Gacha\CGachaResultDialog.cs" />
      <Compile Include="Assets\Script\App\Controller\LoginBonus\CLoginBonusDialog.cs" />
      <Compile Include="Assets\Script\App\Controller\LoginBonus\CLoginBonusGetDialog.cs" />
+     <Compile Include="Assets\Script\App\Controller\Mission\CMissionDialog.cs" />
      <Compile Include="Assets\Script\App\Controller\Register\CRegister.cs" />
      <Compile Include="Assets\Script\App\Controller\Register\CRegisterConfirmDialog.cs" />
      <Compile Include="Assets\Script\App\Controller\Shop\CShopDialog.cs" />
@@ -298,6 +299,8 @@
      <Compile Include="Assets\Script\App\View\Item\VItemDetail.cs" />
      <Compile Include="Assets\Script\App\View\Item\VItemIcon.cs" />
      <Compile Include="Assets\Script\App\View\LoginBonus\VLoginBonusChild.cs" />
+     <Compile Include="Assets\Script\App\View\Mission\VMissionChild.cs" />
+     <Compile Include="Assets\Script\App\View\Mission\VMissionRewardChild.cs" />
      <Compile Include="Assets\Script\App\View\Present\VPresentChild.cs" />
      <Compile Include="Assets\Script\App\View\Shop\VShopItemChild.cs" />
      <Compile Include="Assets\Script\App\View\Skill\VSkillChild.cs" />

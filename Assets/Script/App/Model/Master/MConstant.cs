@@ -13,6 +13,7 @@ namespace App.Model.Master{
         public int world_map_id = 1;
         public int shoe_default_index = 1;
         public int tutorial_end = 5;
+        public int tutorial_gacha = 4;
         public int[] female_heads;
         public int[] user_characters;
         public float weak_hp = 0.2f;

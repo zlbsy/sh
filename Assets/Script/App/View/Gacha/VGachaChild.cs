@@ -56,6 +56,7 @@ namespace App.View.Gacha{
             icon.sprite = App.Model.Master.MGacha.GetIcon(ViewModel.GachaId.Value);
             App.Model.Master.MGacha gachaMaster = GachaCacher.Instance.Get(ViewModel.GachaId.Value);
             gachaName.text = gachaMaster.name;
+            this.gameObject.name = string.Format("Gacha_{0}", ViewModel.GachaId.Value == Global.Constant.tutorial_gacha ? "tutorial" : ViewModel.GachaId.Value.ToString());
             UpdateGachaButtons();
         }
         #endregion

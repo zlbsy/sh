@@ -153,6 +153,7 @@ namespace App.Util.Battle{
         private void ActionStartRun(MCharacter currentCharacter){
             System.Action actionStartEvent = () =>
                 {
+                    cBattlefield.MapMoveToPosition(currentCharacter.CoordinateX, currentCharacter.CoordinateY);
                     currentCharacter.Direction = (currentCharacter.X > currentCharacter.Target.X ? Direction.left : Direction.right);
                     currentCharacter.Action = ActionType.attack;
                     App.Model.Master.MSkill skillMaster = currentCharacter.CurrentSkill.Master;

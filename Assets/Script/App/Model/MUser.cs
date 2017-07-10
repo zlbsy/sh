@@ -187,6 +187,9 @@ namespace App.Model{
             if(user.characters != null){
                 this.characters = user.characters;
             }
+            if(user.battlelist != null){
+                this.battlelist = user.battlelist;
+            }
             if(user.loginbonus_cnt != this.loginbonus_cnt){
                 this.loginbonus_cnt = user.loginbonus_cnt;
             }

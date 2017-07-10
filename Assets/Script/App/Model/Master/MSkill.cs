@@ -60,7 +60,7 @@ namespace App.Model.Master{
             return System.Array.Exists(skill.types, s => s == type);
         }
         public static bool IsWeaponType(MSkill skill, WeaponType type){
-            return System.Array.Exists(skill.weapon_types, s => s == type);
+            return skill.weapon_types.Length == 0 || System.Array.Exists(skill.weapon_types, s => s == type);
         }
 	}
 }

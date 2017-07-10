@@ -34,7 +34,6 @@ namespace App.Controller{
             if (!isTutorial && !Global.SUser.self.loginbonus_received)
             {
                 App.Model.Master.MLoginBonus[] loginBonusesList = App.Util.Cacher.LoginBonusCacher.Instance.GetAll();
-                Debug.LogError("loginBonusesList = " + loginBonusesList.Length+","+Global.SUser.self.loginbonus_cnt);
                 App.Model.Master.MLoginBonus loginBonuses = loginBonusesList[Global.SUser.self.loginbonus_cnt];
                 SLoginBonus sLoginBonus = new SLoginBonus();
                 yield return StartCoroutine(sLoginBonus.RequestGet());
@@ -51,92 +50,46 @@ namespace App.Controller{
             }
             SUser sUser = Global.SUser;
             int tutorial = sUser.self.GetValue("tutorial");
+            Debug.LogError("TutorialStart tutorial = " + tutorial);
             StartCoroutine(sUser.Download(TutorialAsset.TutorialUrl(tutorial), Global.versions.tutorial, (AssetBundle assetbundle)=>{
                 TutorialAsset.assetbundle = assetbundle;
-                //App.Util.LSharp.LSharpScript.Instance.Analysis(TutorialAsset.Data.tutorial);
-                List<string> script = new List<string>();
-                /*script.Add("Talk.set(4100,0,@player_name，起床了，太阳都晒到屁股了！,false);");
-                script.Add("Talk.setplayer(@player_id,0,......,true);");
-                script.Add("Talk.setplayer(@player_id,0,哇！！你是谁啊？怎么随便跑到别人家里来了？,true);");
-                script.Add("Talk.set(4100,0,哈哈！你果然连我都不认识了啊！,false);");
-                script.Add("Talk.setplayer(@player_id,0,果然？什么啊？我认识你？,true);");
-                script.Add("Talk.set(4100,0,我问你！你知道自己的身世吗？,false);");
-                script.Add("Talk.setplayer(@player_id,0,我......这个......,true);");
-                script.Add("Talk.set(4100,0,你竖起耳朵听好了，我接下来说的话，关系到你的命运。,false);");
-                script.Add("Talk.setplayer(@player_id,0,怪里怪气的，暂且听一听吧,true);");
-                script.Add("Talk.set(4100,0,你是星宿下凡，原本是九天玄女娘娘的大弟子——青衣。,false);");
-                script.Add("Talk.setplayer(@player_id,0,等等！说什么鬼话？那我不就是神仙了？,true);");
-                script.Add("Talk.set(4100,0,不许插嘴！好好听我说！,false);");
-                script.Add("Talk.setplayer(@player_id,0,哦，但是九天玄女是谁啊？,true);");
-                script.Add("Talk.set(4100,0,闭嘴！,false);");
-                script.Add("Talk.setplayer(@player_id,0,......,true);");
-                script.Add("Talk.set(4100,0,九天玄女娘娘是上古神仙，娘娘命你看守镇魔塔，你因贪睡，放走了镇魔塔里的数百只妖星魔星，娘娘才罚你下界，让你抓捕放走的妖星魔星！,false);");
-                script.Add("Talk.setplayer(@player_id,0,......,true);");
-                script.Add("Talk.set(4100,0,你发什么呆啊，我说完了！,false);");
-                script.Add("Talk.setplayer(@player_id,0,继续编啊！,true);");
-                script.Add("Talk.set(4100,0,谁编了！我说的都是事实！,false);");
-                script.Add("Talk.setplayer(@player_id,0,我既然是神仙，怎么不会法术呢？,true);");
-                script.Add("Talk.set(4100,0,那是因为你是被贬下界，所以法力都被封起来了！,false);");
-                script.Add("Talk.setplayer(@player_id,0,那我怎么抓那些妖星魔星啊？,true);");
-                script.Add("Talk.set(4100,0,这我帮不了你，你要自己想办法，现在给你第一个任务！,false);");
-                script.Add("Talk.setplayer(@player_id,0,还有其他任务？,true);");*/
-               
-                script.Add("Talk.set(4100,0,别废话，跟我来，点一下这里！,false);");
-                script.Add("Tutorial.clickmask(SceneTop.UICamera.Canvas.LeftFooter.MapButton,0,0,96,96);");
-                script.Add("Tutorial.call(SceneTop,GotoWorld);");
-                script.Add("Tutorial.wait(SceneWorld);");
-                script.Add("Tutorial.camerato(1);");
-                script.Add("Wait.time(0.4);");
-                script.Add("Talk.setplayer(@player_id,0,你这是要带我去哪儿？,true);");
-                script.Add("Talk.set(4100,0,现在八十万禁军教头王进遇到了些麻烦，你必须赶过去帮忙，快点儿！,false);");
-                script.Add("Tutorial.clickmask3d(SceneWorld.3DPanel.BaseMap.Tile_6_5,-50,-50,100,100);");
-                script.Add("Tutorial.call(SceneWorld,OnClickTutorialTile);");
-                script.Add("Tutorial.wait(SceneArea);");
-                script.Add("Character.add(1,stand,right,4,3,true);");
-                script.Add("Character.add(2,stand,left,5,3,true);");
-                script.Add("Tutorial.camerato(1);");
-                script.Add("Wait.time(0.4);");
+                if(tutorial <= 0){
+                    App.Util.LSharp.LSharpScript.Instance.Analysis(TutorialAsset.Data.tutorial);
+                }else{
+                    List<string> script = new List<string>();
+                    script.Add("Talk.set(4100,0,@player_name，恭喜你打了胜仗啊！,false);");
+                    script.Add("Talk.setplayer(@player_id,0,差点儿被你害死了，还好友军比较厉害！,true);");
+                    script.Add("Talk.set(4100,0,你也要继续变强啊，才能完成玄女娘娘交给你的任务！,false);");
+                    script.Add("Talk.setplayer(@player_id,0,你说的容易，我的法力都被封起来了，一个凡人怎么有那么大的本事啊！,true);");
+                    script.Add("Talk.set(4100,0,你也不用太担心，被你放走的妖魔星中，也不全是坏人！,false);");
+                    script.Add("Talk.setplayer(@player_id,0,妖魔中还有好人？,true);");
+                    script.Add("Talk.set(4100,0,被放走的魔星中，有三十六天罡星和七十二地煞星，这一百单八星虽然也被叫做魔星，但是都心存善念，而且讲义气！,false);");
+                    script.Add("Talk.setplayer(@player_id,0,哦！？这么说，我可以先找他们帮忙，一起对付另外的妖星魔星？,true);");
+                    script.Add("Talk.set(4100,0,真聪明！现在再跟你介绍一个比较重要的功能，打开任务菜单看一下！,false);");
+                    script.Add("Tutorial.clickmask(SceneTop.UICamera.Canvas.LeftMenu.MissionButton,0,0,96,96);");
+                    script.Add("Tutorial.call(SceneTop,OpenMission);");
+                    /*script.Add("Tutorial.wait(GachaDialog(Clone).Panel.Scroll View.Viewport.Content.Gacha_tutorial);");
+                    script.Add("Tutorial.clickmask(GachaDialog(Clone).Panel.Scroll View.Viewport.Content.Gacha_tutorial.ButtonSingle,0,0,160,70);");
+                    script.Add("Tutorial.call(GachaDialog(Clone).Panel.Scroll View.Viewport.Content.Gacha_tutorial.ButtonSingle,OnClickGacha);");
+                    script.Add("Tutorial.wait(GachaResultDialog(Clone));");
+                    script.Add("Wait.time(0.4);");
+                    script.Add("Talk.set(4100,0,太棒了！召唤除了紫将啊！记得以后要召唤更多的伙伴啊！,false);");
+                    script.Add("Tutorial.call(GachaResultDialog(Clone),BackgroundClick);");
+                    script.Add("Wait.time(0.3);");
+                    script.Add("Tutorial.call(GachaResultDialog(Clone),Close);");
+                    script.Add("Tutorial.call(GachaDialog(Clone),Close);");
+                    script.Add("Wait.time(0.3);");
+                    script.Add("Talk.set(4100,0,好了，我暂时就帮你到这里了，你以后要自己努力了！,false);");
+                    script.Add("Talk.setplayer(@player_id,0,等等......？,true);");
+                    script.Add("Talk.setplayer(@player_id,0,走的好快啊...看来以后得靠自己了。,true);");
+                    script.Add("Talk.setplayer(@player_id,0,总之，要先去寻找天罡星和地煞星这些人的下落了。,true);");
+                    script.Add("Talk.setplayer(@player_id,0,上次一起帮忙打强盗的那个叫史大郎的英雄好像很厉害，会不会是我要找的人呢，我先去找他聊一聊吧。,true);");
+                    script.Add("Tutorial.close();");*/
+                    //script.Add("Var.setprogress(tutorial,2);");
 
-                /*script.Add("Talk.set(109,0,（可恶的山贼！我倒是不怕他们，但是他们一起上的话，恐怕保护不了母亲大人，怎么办......？）,false);");
-                script.Add("Talk.set(4100,0,看到前面了吗？王教头母子正被山贼围攻，你快去救他们！,false);");
-                script.Add("Talk.setplayer(@player_id,0,开什么玩笑？我又不会武功，上去不是多送一条命啊！,true);");
-                script.Add("Talk.set(4100,0,打架的本能总是有的吧。王教头！我来帮你！,false);");
-                script.Add("Talk.setplayer(@player_id,0,啊——！别推我啊！,true);");
-                script.Add("Talk.setplayer(@player_id,0,可恶！只能硬着头皮上了！,true);");*/
-                script.Add("Battle.start(1);");
-                script.Add("Tutorial.wait(ReadyBattleDialog(Clone));");
-                script.Add("Wait.time(0.4);");
-                script.Add("Talk.set(4100,0,选择出战的武将吧，没错就是你自己了！,false);");
-                script.Add("Tutorial.clickmask(ReadyBattleDialog(Clone).Panel.Scroll View.Viewport.Content.CharacterIcon(Clone),0,0,120,120);");
-                script.Add("Tutorial.call(ReadyBattleDialog(Clone).Panel.Scroll View.Viewport.Content.CharacterIcon(Clone),ClickChild);");
-                script.Add("Tutorial.wait(ReadyBattleDialog(Clone).Panel.Scroll View  SelectCharacter.Viewport.CharacterContent.shadowChild(Clone).CharacterIcon(Clone));");
-                script.Add("Tutorial.clickmask(ReadyBattleDialog(Clone).Panel.Battle,0,0,96,96);");
-                script.Add("Tutorial.call(ReadyBattleDialog(Clone),BattleStart);");
-                script.Add("Tutorial.wait(SceneBattlefield);");
-                script.Add("Talk.set(4100,0,测试测试测试测试测试-----------------------------------------！,false);");
-                script.Add("Talk.set(4100,0,测试测试测试测试测试-----------------------------------------！,false);");
-                /*
-                //script.Add("Talk.set(1,0,少年，现在开始教学,true);");
-                //script.Add("Var.setprogress(tutorial,1);");
-                script.Add("Tutorial.clickmask(SceneTop.UICamera.Canvas.LeftFooter.MapButton,0,0,96,96);");
-                script.Add("Tutorial.call(SceneTop,GotoWorld);");
-                script.Add("Tutorial.wait(SceneWorld);");
-                script.Add("Tutorial.camerato(1);");
-                script.Add("Wait.time(0.4);");
-                script.Add("Tutorial.clickmask3d(SceneWorld.3DPanel.BaseMap.Tile_6_5,-50,-50,100,100);");
-                script.Add("Tutorial.call(SceneWorld,OnClickTutorialTile);");
-                script.Add("Tutorial.wait(SceneArea);");
-                script.Add("Tutorial.camerato(1);");
-                script.Add("Wait.time(0.4);");
-                script.Add("Tutorial.clickmask3d(SceneArea.3DPanel.BaseMap.Tile_7_5,-50,-50,100,100);");
-                script.Add("Tutorial.call(SceneArea,OnClickTutorialTile);");
-                script.Add("Tutorial.wait(SceneStage);");
-                //script.Add("Tutorial.call(Scene,OpenCharacterList);");
-                ///script.Add("Tutorial.wait(CharacterListDialog(Clone));");
-                //script.Add("Talk.set(1,0,武将一览打开了,true);");
-                */
-                script.Add("Tutorial.close();");
-                App.Util.LSharp.LSharpScript.Instance.Analysis(script);
+
+                    App.Util.LSharp.LSharpScript.Instance.Analysis(script);
+                }
             }));
             return true;
         }

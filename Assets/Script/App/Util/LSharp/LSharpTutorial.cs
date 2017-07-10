@@ -83,12 +83,46 @@ namespace App.Util.LSharp{
                 target = tran;
                 index++;
             }
-            target.gameObject.SendMessage(arguments[1]);
+            if (arguments.Length > 2)
+            {
+                string type = arguments[2];
+                switch (type)
+                {
+                    case "int":
+                        target.gameObject.SendMessage(arguments[1], int.Parse(arguments[3]));
+                        break;
+                    default:
+                        target.gameObject.SendMessage(arguments[1], arguments[3]);
+                        break;
+                }
+            }
+            else
+            {
+                target.gameObject.SendMessage(arguments[1]);
+            }
             LSharpScript.Instance.Analysis();
         }
         public void Wait(string[] arguments){
             string[] paths = arguments[0].Split('.');
             App.Util.SceneManager.CurrentScene.GetComponent<App.Controller.Common.CScene>().WaitScript(paths);
+        }
+        public void Waitbelong(string[] arguments){
+            App.Model.Belong belong = (App.Model.Belong)System.Enum.Parse(typeof(App.Model.Belong), arguments[0]);
+            App.Controller.Battle.CBattlefield cBattlefield = App.Util.SceneManager.CurrentScene as App.Controller.Battle.CBattlefield;
+            if (cBattlefield == null)
+            {
+                LSharpScript.Instance.Analysis();
+                return;
+            }
+            cBattlefield.StartCoroutine(WaitBelongRun(cBattlefield, belong));
+        }
+        private IEnumerator WaitBelongRun(App.Controller.Battle.CBattlefield cBattlefield, App.Model.Belong belong){
+            Debug.LogError("WaitBelongRun " + cBattlefield.currentBelong + ", " + belong);
+            while (cBattlefield.currentBelong != belong)
+            {
+                yield return new WaitForEndOfFrame();
+            }
+            LSharpScript.Instance.Analysis();
         }
         public void Camerato(string[] arguments){
             int worldId = int.Parse(arguments[0]);

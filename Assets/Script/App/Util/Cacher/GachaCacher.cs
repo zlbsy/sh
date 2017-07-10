@@ -8,7 +8,14 @@ namespace App.Util.Cacher{
     public class GachaCacher: CacherBase<GachaCacher, App.Model.Master.MGacha> {
 
         public App.Model.Master.MGacha[] GetAllOpen(){
-            return System.Array.FindAll(datas, _=>_.fromTime <= HttpClient.Now && _.toTime >= HttpClient.Now);
+            if (Global.SUser.self.GetValue("tutorial") >= Global.Constant.tutorial_end)
+            {
+                return System.Array.FindAll(datas, g=>g.id != Global.Constant.tutorial_gacha && g.fromTime <= HttpClient.Now && g.toTime >= HttpClient.Now);
+            }
+            else
+            {
+                return System.Array.FindAll(datas, g=>g.id == Global.Constant.tutorial_gacha && g.fromTime <= HttpClient.Now && g.toTime >= HttpClient.Now);
+            }
         }
     }
 }

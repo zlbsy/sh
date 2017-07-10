@@ -7,6 +7,7 @@ using App.Service;
 using App.Controller;
 using System;
 using App.Controller.Common;
+using System.Linq;
 
 namespace App.Util.LSharp{
     public class LSharpCharacter : LSharpBase<LSharpCharacter> {
@@ -145,6 +146,43 @@ namespace App.Util.LSharp{
                 return;
             }
             cBaseMap.SetSelfAction(index, actionType);
+        }
+        public void Addskill(string[] arguments){
+            int characterId = int.Parse(arguments[0]);
+            int skillId = int.Parse(arguments[1]);
+            int skillLevel = int.Parse(arguments[2]);
+            App.Model.MCharacter mCharacter = System.Array.Find(Global.SUser.self.characters, c=>c.CharacterId == characterId);
+            App.Model.MSkill mSkill = new App.Model.MSkill();
+            mSkill.Id = mCharacter.Skills[mCharacter.Skills.Length - 1].Id + 1;
+            mSkill.SkillId = skillId;
+            mSkill.Level = skillLevel;
+            List<App.Model.MSkill> skills = mCharacter.Skills.ToList();
+            skills.Add(mSkill);
+            mCharacter.Skills = skills.ToArray();
+            if (App.Model.Master.MSkill.IsSkillType(mSkill.Master, App.Model.SkillType.ability))
+            {
+                int hp = mCharacter.Hp;
+                int mp = mCharacter.Mp;
+                mCharacter.StatusInit();
+                mCharacter.Hp = hp;
+                mCharacter.Mp = mp;
+            }
+            LSharpScript.Instance.Analysis();
+        }
+        public void Removeskill(string[] arguments){
+            int characterId = int.Parse(arguments[0]);
+            int skillId = int.Parse(arguments[1]);
+            App.Model.MCharacter mCharacter = System.Array.Find(Global.SUser.self.characters, c=>c.CharacterId == characterId);
+            List<App.Model.MSkill> skills = mCharacter.Skills.ToList();
+            int index = skills.FindIndex(s=>s.SkillId == skillId);
+            skills.RemoveAt(index);
+            mCharacter.Skills = skills.ToArray();
+            if (mCharacter.CurrentSkill.SkillId == skillId)
+            {
+                mCharacter.CurrentSkill = System.Array.Find(mCharacter.Skills, s=>App.Model.Master.MSkill.IsWeaponType(s.Master, mCharacter.WeaponType));
+
+            }
+            LSharpScript.Instance.Analysis();
         }
 	}
 }

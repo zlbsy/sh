@@ -71,7 +71,7 @@ namespace App.View{
                 {
                     //新建武将
                     GameObject obj = this.Controller.ScrollViewSetChild(characterLayer.transform, characterPrefab, mCharacter);
-                    //obj.name = obj.name + Random.Range(1,100);
+                    obj.name = string.Format("Character_{0}_{1}", mCharacter.Belong.ToString(), mCharacter.CharacterId.ToString());
                     int i = mCharacter.CoordinateY * mapWidth + mCharacter.CoordinateX;
                     VTile vTile = tileUnits[i];
                     obj.transform.eulerAngles = new Vector3(-30f, 0f, 0f);

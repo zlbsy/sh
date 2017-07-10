@@ -24,16 +24,24 @@ namespace App.Util.LSharp{
             subClasses.Add("Var", LSharpVarlable.Instance);
             subClasses.Add("Tutorial", LSharpTutorial.Instance);
             subClasses.Add("Wait", LSharpWait.Instance);
-            //LSharpVarlable.SetVarlable("player_id", (System.Array.Find(Global.SUser.self.characters, c=>c.CharacterId >= App.Util.Global.Constant.user_characters[0])).ToString());
+            LSharpVarlable.SetVarlable("player_character_id", System.Array.Find(Global.SUser.self.characters, c=>c.CharacterId >= App.Util.Global.Constant.user_characters[0]).CharacterId.ToString());
             LSharpVarlable.SetVarlable("player_id", Global.SUser.self.id.ToString());
             LSharpVarlable.SetVarlable("player_name", Global.SUser.self.name);
             LSharpVarlable.SetVarlable("player_nickname", Global.SUser.self.Nickname);
+            UpdateVarList();
+        }
+        public void UpdateVarList(){
             if (LSharpVarlable.Instance.VarList.Count == 0 && Global.SUser.self.Progress != null)
             {
                 Dictionary<string, int> progress = Global.SUser.self.Progress;
                 foreach(string k in progress.Keys){
                     LSharpVarlable.SetVarlable(k, progress[k].ToString());
                 }
+            }
+        }
+        public void UpdateBattleList(){
+            foreach(App.Model.MBattleChild mBattleChild in Global.SUser.self.battlelist){
+                LSharpVarlable.SetVarlable(string.Format("battlefield_{0}", mBattleChild.BattlefieldId), "1");
             }
         }
         public void ToList(List<string> datas){

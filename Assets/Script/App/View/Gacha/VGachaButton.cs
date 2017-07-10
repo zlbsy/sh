@@ -65,22 +65,19 @@ namespace App.View.Gacha{
             StartCoroutine(UpdateFreetime(gachaMaster, mGacha));
         }
         public void OnClickGacha(){
-            if (gachaPrice.price_type == App.Model.PriceType.gold)
+            if (!labelFree.gameObject.activeSelf)
             {
-                if (Global.SUser.self.Gold < gachaPrice.price)
+                if (gachaPrice.price_type == App.Model.PriceType.gold && Global.SUser.self.Gold < gachaPrice.price)
                 {
                     CAlertDialog.Show("元宝不够");
                     return;
                 }
-            }else if (gachaPrice.price_type == App.Model.PriceType.silver)
-            {
-                if (Global.SUser.self.Silver < gachaPrice.price)
+                else if (gachaPrice.price_type == App.Model.PriceType.silver && Global.SUser.self.Silver < gachaPrice.price)
                 {
                     CAlertDialog.Show("银两不够");
                     return;
                 }
             }
-
             VGachaChild gachaChild = this.GetComponentInParent<VGachaChild>();
             gachaChild.OnClickGacha(gachaPrice.child_id, gachaPrice.cnt, labelFree != null && labelFree.gameObject.activeSelf);
         }

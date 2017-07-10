@@ -17,6 +17,7 @@ namespace App.View.Battlefield{
         public override void UpdateView(){
             icon.sprite = ImageAssetBundleManager.GetSkillIcon(ViewModel.SkillId.Value);
             mp.text = string.Format("M {0}", 14);
+            this.gameObject.name = string.Format("Skill_{0}", ViewModel.SkillId.Value);
         }
         #endregion
         public void OnPointerClick(UnityEngine.EventSystems.PointerEventData eventData){

@@ -24,6 +24,7 @@ namespace App.Controller.Battle{
             HidePreview();
             ScrollViewSets(content, childItem, System.Array.FindAll(mCharacter.Skills, (s)=>{
                 App.Model.Master.MSkill skillMaster = s.Master;
+                Debug.LogError("CBattleSkillListDialog : " + skillMaster.id + ", " + skillMaster.name);
                 bool isType = App.Model.Master.MSkill.IsSkillType(skillMaster, SkillType.attack) || App.Model.Master.MSkill.IsSkillType(skillMaster, SkillType.magic) || App.Model.Master.MSkill.IsSkillType(skillMaster, SkillType.heal);
                 if(!isType){
                     return false;
