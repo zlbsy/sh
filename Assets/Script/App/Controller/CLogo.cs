@@ -148,6 +148,11 @@ namespace App.Controller{
                 ItemCacher.Instance.Reset(ItemAsset.Data.items);
                 ItemAsset.Clear();
             }));
+            list.Add(sUser.Download(MissionAsset.Url, versions.mission, (AssetBundle assetbundle)=>{
+                MissionAsset.assetbundle = assetbundle;
+                MissionCacher.Instance.Reset(MissionAsset.Data.missions);
+                MissionAsset.Clear();
+            }));
             list.Add(sUser.Download(SkillAsset.Url, versions.skill, (AssetBundle assetbundle)=>{
                 SkillAsset.assetbundle = assetbundle;
                 SkillCacher.Instance.Reset(SkillAsset.Data.skills);

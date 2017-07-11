@@ -20,6 +20,7 @@ namespace App.Model{
         public int effect;
         public int battlefield;
         public int item;
+        public int mission;
         public int skill;
         public int strategy;
         public int exp;

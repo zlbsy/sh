@@ -41,6 +41,7 @@ namespace App.Model{
         }
         public MCharacter[] characters;
         public MEquipment[] equipments;
+        public MMission[] missions;
         public MBattleChild[] battlelist;
         public MItem[] items;
         public StoryProgress[] progress;
@@ -183,6 +184,9 @@ namespace App.Model{
             }
             if(user.equipments != null){
                 this.equipments = user.equipments;
+            }
+            if(user.missions != null){
+                this.missions = user.missions;
             }
             if(user.characters != null){
                 this.characters = user.characters;

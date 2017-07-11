@@ -133,6 +133,7 @@
      <Compile Include="Assets\Script\App\Model\MGacha.cs" />
      <Compile Include="Assets\Script\App\Model\MItem.cs" />
      <Compile Include="Assets\Script\App\Model\MLoginBonus.cs" />
+     <Compile Include="Assets\Script\App\Model\MMission.cs" />
      <Compile Include="Assets\Script\App\Model\MPresent.cs" />
      <Compile Include="Assets\Script\App\Model\MPrice.cs" />
      <Compile Include="Assets\Script\App\Model\MSkill.cs" />
@@ -158,6 +159,7 @@
      <Compile Include="Assets\Script\App\Model\Master\MGachaPrice.cs" />
      <Compile Include="Assets\Script\App\Model\Master\MItem.cs" />
      <Compile Include="Assets\Script\App\Model\Master\MLoginBonus.cs" />
+     <Compile Include="Assets\Script\App\Model\Master\MMission.cs" />
      <Compile Include="Assets\Script\App\Model\Master\MNpc.cs" />
      <Compile Include="Assets\Script\App\Model\Master\MNpcEquipment.cs" />
      <Compile Include="Assets\Script\App\Model\Master\MShopItem.cs" />
@@ -187,6 +189,7 @@
      <Compile Include="Assets\Script\App\Model\Scriptable\ItemAsset.cs" />
      <Compile Include="Assets\Script\App\Model\Scriptable\LanguageAsset.cs" />
      <Compile Include="Assets\Script\App\Model\Scriptable\LoginBonusAsset.cs" />
+     <Compile Include="Assets\Script\App\Model\Scriptable\MissionAsset.cs" />
      <Compile Include="Assets\Script\App\Model\Scriptable\NpcAsset.cs" />
      <Compile Include="Assets\Script\App\Model\Scriptable\NpcEquipmentAsset.cs" />
      <Compile Include="Assets\Script\App\Model\Scriptable\PromptMessageAsset.cs" />
@@ -236,6 +239,7 @@
      <Compile Include="Assets\Script\App\Util\Cacher\GachaCacher.cs" />
      <Compile Include="Assets\Script\App\Util\Cacher\ItemCacher.cs" />
      <Compile Include="Assets\Script\App\Util\Cacher\LoginBonusCacher.cs" />
+     <Compile Include="Assets\Script\App\Util\Cacher\MissionCacher.cs" />
      <Compile Include="Assets\Script\App\Util\Cacher\NpcCacher.cs" />
      <Compile Include="Assets\Script\App\Util\Cacher\NpcEquipmentCacher.cs" />
      <Compile Include="Assets\Script\App\Util\Cacher\ShopCacher.cs" />
@@ -329,6 +333,7 @@
      <Compile Include="Assets\Script\App\ViewModel\VMGachaButton.cs" />
      <Compile Include="Assets\Script\App\ViewModel\VMItem.cs" />
      <Compile Include="Assets\Script\App\ViewModel\VMLoginBonus.cs" />
+     <Compile Include="Assets\Script\App\ViewModel\VMMission.cs" />
      <Compile Include="Assets\Script\App\ViewModel\VMPresent.cs" />
      <Compile Include="Assets\Script\App\ViewModel\VMProperty.cs" />
      <Compile Include="Assets\Script\App\ViewModel\VMSkill.cs" />

@@ -152,6 +152,7 @@ namespace MyEditor
             BuildAssetBundleConstant();
             BuildAssetBundleSkill();
             BuildAssetBundleItem();
+            BuildAssetBundleMission();
             BuildAssetBundleTile();
             BuildAssetBundleWorld();
             BuildAssetBundleBaseMap();
@@ -214,6 +215,11 @@ namespace MyEditor
         static private void BuildAssetBundleItem()
         {
             BuildAssetBundleMaster(App.Model.Scriptable.ItemAsset.Name);
+        }
+        [MenuItem("SH/Build Assetbundle/Master/Mission")]
+        static private void BuildAssetBundleMission()
+        {
+            BuildAssetBundleMaster(App.Model.Scriptable.MissionAsset.Name);
         }
         [MenuItem("SH/Build Assetbundle/Master/Tile")]
         static private void BuildAssetBundleTile()

@@ -23,7 +23,7 @@ namespace App.Controller{
         [SerializeField]VHeaderTop headerTop;
         private VBottomMenu currentMenu;
         public override IEnumerator OnLoad( Request request ) 
-		{  
+        {  Debug.LogError("sUser.self.missions.Length=" + Global.SUser.self.missions.Length);
             InitHeader();
             InitMap();
             yield return StartCoroutine(base.OnLoad(request));

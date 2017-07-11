@@ -54,6 +54,7 @@ namespace App.Controller{
                     apis.Add("strategy", CreateScriptableObjectMasterStrategyRun());
                     apis.Add("battlefield", CreateScriptableObjectMasterBattleFieldRun());
                     apis.Add("item", CreateScriptableObjectMasterItemRun());
+                    apis.Add("mission", CreateScriptableObjectMasterMissionRun());
                     apis.Add("shop", CreateScriptableObjectMasterShopRun());
                     apis.Add("gacha", CreateScriptableObjectMasterGachaRun());
                     apis.Add("word", CreateScriptableObjectMasterWordRun());
@@ -259,6 +260,17 @@ namespace App.Controller{
             asset.shopItems = sMaster.responseAll.shop_items;
 
             UnityEditor.AssetDatabase.CreateAsset(asset, string.Format("Assets/Editor Default Resources/ScriptableObject/{0}.asset", App.Model.Scriptable.ShopAsset.Name));
+            UnityEditor.AssetDatabase.Refresh();
+        }
+        IEnumerator CreateScriptableObjectMasterMissionRun()
+        {
+            var asset = ScriptableObject.CreateInstance<App.Model.Scriptable.MissionAsset>();
+
+            SEditorMaster sMaster = new SEditorMaster();
+            yield return StartCoroutine (sMaster.RequestAll("mission"));
+            asset.missions = sMaster.responseAll.missions;
+
+            UnityEditor.AssetDatabase.CreateAsset(asset, string.Format("Assets/Editor Default Resources/ScriptableObject/{0}.asset", App.Model.Scriptable.MissionAsset.Name));
             UnityEditor.AssetDatabase.Refresh();
         }
         IEnumerator CreateScriptableObjectMasterItemRun()

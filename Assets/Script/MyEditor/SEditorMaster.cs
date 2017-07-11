@@ -28,6 +28,7 @@ namespace App.Service{
             public App.Model.Master.MStrategy[] strategys;
             public App.Model.Master.MItem[] items;
             public App.Model.Master.MShopItem[] shop_items;
+            public App.Model.Master.MMission[] missions;
             public App.Model.Master.MGacha[] gachas;
             public App.Model.Master.MConstant constant;
             public App.Model.Master.MWord[] words;
