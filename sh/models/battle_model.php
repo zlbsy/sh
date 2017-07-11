@@ -85,9 +85,10 @@ class Battle_model extends MY_Model
 		$this->user_db->trans_commit();
 		return true;
 	}
-	function battle_end($battlefield_id, $characterIds, $die_ids, $star){
-		$battlefield_master = $this->get_master($battlefield_id);
+	function battle_end($characterIds, $die_ids, $star){
 		$user = $this->getSessionData("user");
+		$battlefield_id = $user["BattlingId"];
+		$battlefield_master = $this->get_master($battlefield_id);
 		$user_id = $user["id"];
 		$user_model = new User_model();
 		$conditions = json_decode($battlefield_master["conditions"], true);
@@ -188,8 +189,26 @@ class Battle_model extends MY_Model
 			$this->user_db->trans_rollback();
 			$this->error("user update error");
 		}
-		$user["BattlingId"] = 0;
+		$battle_mission_change = false;
+		$level_mission_change = false;
+		$mission_model = new Mission_model();
+		$mission_result = $mission_model->battle_mission_change($user, $battlefield_id, $battle_mission_change);
+		if(!$mission_result){
+			$this->user_db->trans_rollback();
+			$this->error("mission update error");
+		}
 		$user["Level"] = $user_level;
+		$mission_result = $mission_model->level_mission_change($user, $level_mission_change);
+		if(!$mission_result){
+			$this->user_db->trans_rollback();
+			$this->error("mission update error");
+		}
+		if($battle_mission_change || $level_mission_change){
+			$user["missions"]=$mission_model->get_mission_list($user["id"]);
+		}
+
+		$user["characters"]=$character_model->get_character_list($user["id"]);
+		$user["BattlingId"] = 0;
 		$this->setSessionData("user", $user);
 		$this->master_db->trans_commit();
 		return $contents;

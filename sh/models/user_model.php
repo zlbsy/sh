@@ -173,18 +173,38 @@ class User_model extends MY_Model
 	}
 	function set_story_progress($user_id,$k,$v){
 		$values = array();
+		$this->user_db->trans_begin();
 		$all_progress = $this->get_story_progress($user_id, $k);
 		if(count($all_progress) == 0){
 			$values["k"] = "'{$k}'";
 			$values["v"] = $v;
 			$values["user_id"] = $user_id;
-			return  $this->user_db->insert($values, $this->user_db->story_progress);
+			$result = $this->user_db->insert($values, $this->user_db->story_progress);
+		}else{
+			$values[] = "v=".$v;
+			$table = $this->user_db->story_progress;
+			$where = array("user_id={$user_id}","k='{$k}'");
+			$result = $this->user_db->update($values, $table, $where);
 		}
-		//$values[] = "k=".$k;
-		$values[] = "v=".$v;
-		$table = $this->user_db->story_progress;
-		$where = array("user_id={$user_id}","k='{$k}'");
-		$result = $this->user_db->update($values, $table, $where);
+		if(!$result){
+			$this->user_db->trans_rollback();
+			return false;
+		}
+		if($v){
+			$user = $this->getSessionData("user");
+			$mission_change = false;
+			$mission_model = new Mission_model();
+			$mission_result = $mission_model->progress_mission_change($user, $k, $mission_change);
+			if(!$mission_result){
+				$this->user_db->trans_rollback();
+				return false;
+			}
+			if($mission_change){
+				$user["missions"]=$mission_model->get_mission_list($user["id"]);
+				$this->setSessionData("user",$user);
+			}
+		}
+		$this->user_db->trans_commit();
 		return $result;
 	}
 	function set_contents($user_id, $contents){
@@ -213,6 +233,15 @@ class User_model extends MY_Model
 			$character_model = new Character_model();
 			$characters = $character_model->get_character_list($user_id);
 			$user["characters"] = $characters;
+			$mission_change = false;
+			$mission_model = new Mission_model();
+			$mission_result = $mission_model->character_mission_change($user, $mission_change);
+			if(!$mission_result){
+				return false;
+			}
+			if($mission_change){
+				$user["missions"]=$mission_model->get_mission_list($user["id"]);
+			}
 		}
 		if($user_update){
 			$new_user = $this->get($user_id,false,true);

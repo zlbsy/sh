@@ -5,7 +5,7 @@ class Battle extends MY_Controller {
 	function __construct() {
 		$this->needAuth = true;
 		parent::__construct();
-		load_model(array('battle_model', 'user_model'));
+		load_model(array('battle_model'));
 	}
 	public function battle_list()
 	{
@@ -47,12 +47,10 @@ class Battle extends MY_Controller {
 		}
 		load_model(array('character_model', 'item_model', 'equipment_model'));
 		$battle_model = new Battle_model();
-		$battle_rewards = $battle_model->battle_end($user["BattlingId"], $character_ids, $die_ids, $star);
+		$BattlingId = $user["BattlingId"];
+		$battle_rewards = $battle_model->battle_end($character_ids, $die_ids, $star);
 		if(!is_null($battle_rewards)){
 			$user = $this->getSessionData("user");
-			$character_model = new Character_model();
-			$characters = $character_model->get_character_list($user["id"]);
-			$user["characters"]=$characters;
 			$result = array("battle_rewards"=>$battle_rewards, "user"=>$user);
 			$this->out($result);
 		}else{

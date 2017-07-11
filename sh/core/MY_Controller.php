@@ -14,6 +14,8 @@ class MY_Controller {
 		if($this->needAuth){
 			$this->checkAuth();
 		}
+		//共通Model
+		load_model(array('user_model', 'mission_model'));
 	}
 	protected function error($message){
 		die(json_encode(array("result"=>0,"message"=>$message)));

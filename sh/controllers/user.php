@@ -2,7 +2,7 @@
 class User extends MY_Controller {
 	function __construct() {
 		parent::__construct();
-		load_model(array('user_model', 'character_model', 'item_model', 'version_model', 'loginbonus_model'));
+		load_model(array('user_model', 'character_model', 'item_model', 'version_model', 'loginbonus_model', 'mission_model'));
 	}
 	public function register()
 	{
@@ -53,6 +53,11 @@ class User extends MY_Controller {
 			$loginbonus_model = new Loginbonus_model();
 			$user["loginbonus_cnt"] = $loginbonus_model->get_log_count($user["id"]);
 			$user["loginbonus_received"] = $loginbonus_model->received_loginbonus($user["id"]);
+		}
+		if(!isset($user["missions"])){
+			$mission_model = new Mission_model();
+			$user["missions"] = $mission_model->get_mission_list($user["id"]);
+			$user["mission_masters"] = $mission_model->get_master_missions();
 		}
 		if(is_null($user["characters"])){
 			$character_model = new Character_model();
