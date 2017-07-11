@@ -14,6 +14,10 @@ class Master extends MY_Controller {
 			$master_constant = $master_model->get_master_constant();
 			$result["constant"]=$master_constant;
 		}
+		if($args["mission"]){
+			$master_mission = $master_model->get_master_mission();
+			$result["missions"]=$master_mission;
+		}
 		if($args["exp"]){
 			$master_exp = $master_model->get_master_exp();
 			$result["exps"]=$master_exp;

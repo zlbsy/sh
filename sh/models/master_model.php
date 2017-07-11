@@ -25,6 +25,12 @@ class Master_model extends MY_Model
 		$result = $this->master_db->select("`character_id`,`skill_id`,`star`,`skill_point`", $this->master_db->character_skill, $where, "star asc");
 		return $result;
 	}
+	public function get_master_mission($language="cn"){
+		$select = "`id`,`mission_type`,`name_{$language}` as `name`, `start_time`, `end_time`, `parent_id`, `battle_id`, 
+		`story_progress`, `level`, `character_count`, `message_{$language}` as `message`,`rewards`";
+		$result = $this->master_db->select($select, $this->master_db->character_star, null, "id asc");
+		return $result;
+	}
 	public function get_character_stars(){
 		$result = $this->master_db->select("`id`,`star`,`cost`", $this->master_db->character_star, null, "star asc");
 		return $result;
