@@ -28,8 +28,15 @@ class Master_model extends MY_Model
 	public function get_master_mission($language="cn"){
 		$select = "`id`,`mission_type`,`name_{$language}` as `name`, `start_time`, `end_time`, `parent_id`, `battle_id`, 
 		`story_progress`, `level`, `character_count`, `message_{$language}` as `message`,`rewards`";
-		$result = $this->master_db->select($select, $this->master_db->character_star, null, "id asc");
-		return $result;
+		$table =  $this->master_db->mission;
+		$order_by = "id asc";
+		$result = $this->master_db->select($select, $table, null, $order_by, null, Database_Result::TYPE_DEFAULT);
+		$result_array = array();
+		while ($row = mysql_fetch_assoc($result)) {
+			$row["rewards"] = json_decode($row["rewards"]);
+			$result_array[] = $row;
+		}
+		return $result_array;
 	}
 	public function get_character_stars(){
 		$result = $this->master_db->select("`id`,`star`,`cost`", $this->master_db->character_star, null, "star asc");
