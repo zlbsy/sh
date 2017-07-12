@@ -60,24 +60,18 @@ class User_model extends MY_Model
 			$this->user_db->trans_rollback();
 			$this->error("register fail skill");
 		}
-		/*$equipment_model = new Equipment_model();
-		if($character["Horse"] > 0){
-			$rs_horse = $equipment_model->set_equipment($user_id, $character["Horse"], "horse", $character_id);
-			if(!$rs_horse){
-				$this->user_db->trans_rollback();
-				$this->error("register fail horse");
+		$mission_model = new Mission_model();
+		$missions = $mission_model->get_master_missions();
+		foreach ($missions as $mission) {
+			if($mission["id"] == Mission_model::TUTORIAL_ID){
+				$res = $mission_model->set_new_mission($user,$mission);
+				if(!$res){
+					$this->user_db->trans_rollback();
+					$this->error("mission fail");
+				}
+				break;
 			}
 		}
-		$rs_weapon = $equipment_model->set_equipment($user_id, $character["Weapon"], "weapon", $character_id);
-		if(!$rs_weapon){
-			$this->user_db->trans_rollback();
-			$this->error("register fail weapon");
-		}
-		$rs_clothes = $equipment_model->set_equipment($user_id, $character["Clothes"], "clothes", $character_id);
-		if(!$rs_clothes){
-			$this->user_db->trans_rollback();
-			$this->error("register fail clothes");
-		}*/
 		$this->user_db->trans_commit();
 		return $user_id;
 	}

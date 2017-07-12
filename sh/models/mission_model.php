@@ -9,6 +9,7 @@ class Mission_model extends MY_Model
 	function __construct(){
 		parent::__construct();
 	}
+	const TUTORIAL_ID = 1;
 	function get_master_missions($parent_id=0){
 		$select = "`id`,`mission_type`,`start_time`, `end_time`, `parent_id`, `battle_id`, 
 		`story_progress`, `level`, `character_count`, `battle_count`, `gold_count` ,`rewards`";

@@ -68,4 +68,24 @@ class Character_model extends MY_Model
 		$result = $this->master_db->select($select, $this->master_db->character_skill, $where);
 		return $result;
 	}
+
+	function get_tutorial_characters(){
+		$user_characters = $this->get_user_characters_constant();
+		$select = "`id` as CharacterId,`level` as 1,`horse` as `Horse`, `clothes` as `Clothes`, `weapon` as `Weapon`";
+		$table = $this->master_db->base_character;
+		$order_by = "id";
+		$result_select = $this->master_db->select($select, $table, null, $order_by, null, Database_Result::TYPE_DEFAULT);
+		$result = array();
+		while ($row = mysql_fetch_assoc($result_select)) {
+			$skills = $this->get_master_character_skills($row["CharacterId"]);
+			$skill = $skills[0];
+			$row["Skills"] = array("SkillId"=>$skill["skill_id"],"Level"=>1);
+			$result[] = $row;
+		}
+		return $result;
+	}
+	public function get_user_characters_constant(){
+		$result = $this->master_db->select("`val`", $this->master_db->constant, array("`name`='user_characters'"), null, null, Database_Result::TYPE_ROW);
+		return json_decode($result["val"], true);
+	}
 }

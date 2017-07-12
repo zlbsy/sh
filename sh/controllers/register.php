@@ -8,7 +8,7 @@ class Register extends MY_Controller {
 	public function character_list()
 	{
 		$character_model = new Character_model();
-		$characters = $character_model->get_character_list(0);
+		$characters = $character_model->get_tutorial_characters();
 		if($characters !== null){
 			$this->out(array("characters"=>$characters));
 		}else{
