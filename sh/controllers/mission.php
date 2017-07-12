@@ -3,7 +3,7 @@ class Mission extends MY_Controller {
 	function __construct() {
 		$this->needAuth = true;
 		parent::__construct();
-		load_model(array('item_model'));
+		load_model(array('character_model', 'item_model', 'equipment_model'));
 	}
 	public function mission_list()
 	{

@@ -27,7 +27,7 @@ class Master_model extends MY_Model
 	}
 	public function get_master_mission($language="cn"){
 		$select = "`id`,`mission_type`,`name_{$language}` as `name`, `start_time`, `end_time`, `parent_id`, `battle_id`, 
-		`story_progress`, `level`, `character_count`, `battle_count`, `message_{$language}` as `message`,`rewards`";
+		`story_progress`, `level`, `character_count`, `battle_count`, `gold_count`, `message_{$language}` as `message`,`rewards`";
 		$table =  $this->master_db->mission;
 		$order_by = "id asc";
 		$result = $this->master_db->select($select, $table, null, $order_by, null, Database_Result::TYPE_DEFAULT);

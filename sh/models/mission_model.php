@@ -11,7 +11,7 @@ class Mission_model extends MY_Model
 	}
 	function get_master_missions($parent_id=0){
 		$select = "`id`,`mission_type`,`start_time`, `end_time`, `parent_id`, `battle_id`, 
-		`story_progress`, `level`, `character_count`, `battle_count`, `rewards`";
+		`story_progress`, `level`, `character_count`, `battle_count`, `gold_count` ,`rewards`";
 		$where = null;
 		if($parent_id > 0){
 			$where = array("parent_id={$parent_id}");
@@ -219,6 +219,29 @@ class Mission_model extends MY_Model
 			$mission_master = $this->get_master_mission($mission_masters, $mission["MissionId"]);
 			if(!empty($mission_master["story_progress"]) && $mission_master["story_progress"] == $key){
 				$change = $this->update($mission["Id"], array("status"=>"'".MissionStatus::clear."'"));
+				if(!$change){
+					return false;
+				}
+				$mission_change  = true;
+			}
+		}
+		return true;
+	}
+	function gold_count_mission_change($user, &$mission_change){
+		$missions = $user["missions"];
+		$mission_masters = $user["mission_masters"];
+		$mission_change = false;
+		foreach ($missions as $key=>$mission) {
+			if($mission["status"] != MissionStatus::init){
+				continue;
+			}
+			$mission_master = $this->get_master_mission($mission_masters, $mission["MissionId"]);
+			if($mission_master["gold_count"] > 0){
+				$args = array("counts"=>$mission["counts"] + 1);
+				if($mission["counts"] + 1 >= $mission_master["gold_count"]){
+					$args["status"] = "'".MissionStatus::clear."'";
+				}
+				$change = $this->update($mission["Id"], $args);
 				if(!$change){
 					return false;
 				}

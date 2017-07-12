@@ -21,6 +21,13 @@ class Shop_model extends MY_Model
 			$this->user_db->trans_rollback();
 			$this->error("set buy log error");
 		}
+		$mission_change = false;
+		$mission_model = new Mission_model();
+		$mission_result = $mission_model->gold_count_mission_change($user, $mission_change);
+		if(!$mission_result){
+			$this->user_db->trans_rollback();
+			return false;
+		}
 		$up_result = false;
 		$user_model = new User_model();
 		if($master["gold"] > 0){
@@ -36,6 +43,9 @@ class Shop_model extends MY_Model
 		
 		$new_user = $user_model->get($user_id, true);
 		$user = $this->getSessionData("user");
+		if($mission_change){
+			$user["missions"]=$mission_model->get_mission_list($user["id"]);
+		}
 		$user["Gold"] = $new_user["Gold"];
 		$user["Silver"] = $new_user["Silver"];
 		$this->setSessionData("user", $user);
