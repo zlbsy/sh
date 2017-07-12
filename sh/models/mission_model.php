@@ -9,11 +9,15 @@ class Mission_model extends MY_Model
 	function __construct(){
 		parent::__construct();
 	}
-	function get_master_missions(){
+	function get_master_missions($parent_id=0){
 		$select = "`id`,`mission_type`,`start_time`, `end_time`, `parent_id`, `battle_id`, 
 		`story_progress`, `level`, `character_count`, `battle_count`, `rewards`";
+		$where = null;
+		if($parent_id > 0){
+			$where = array("parent_id={$parent_id}");
+		}
 		$table =  $this->master_db->mission;
-		$result = $this->master_db->select($select, $table);
+		$result = $this->master_db->select($select, $table, $where);
 		return $result;
 	}
 	function get_mission_list($user_id){
@@ -33,15 +37,14 @@ class Mission_model extends MY_Model
 		return null;
 	}
 	function complete($user, $mission){
+		$mission_masters = $user["mission_masters"];
 		$mission_master = $this->get_master_mission($mission_masters, $mission["MissionId"]);
 		$contents = array();
 		$rewards = json_decode($mission_master["rewards"],true);
 		foreach ($rewards as $content) {
-			$content = json_decode($battlefield_reward["content"],true);
 			$content["get_type"] = "mission";
 			$contents[] = $content;
 		}
-		$rewards = json_decode($mission_master["rewards"]);
 		$this->user_db->trans_begin();
 		$user_model = new User_model();
 		$contents_res = $user_model->set_contents($user["id"],$contents);
@@ -49,28 +52,87 @@ class Mission_model extends MY_Model
 			$this->user_db->trans_rollback();
 			$this->error("set contents error ".$this->user_db->last_sql);
 		}
-		$update_res = $this->update($mission["MissionId"], array("status"=>MissionStatus::complete));
+		$update_res = $this->update($mission["MissionId"], array("status"=>"'".MissionStatus::complete."'"));
 		if(!$update_res){
 			$this->user_db->trans_rollback();
 			$this->error("mission complete error ");
 		}
+		$new_missions = $this->get_master_missions($mission["MissionId"]);
+		foreach($new_missions as $new_mission){
+			$new_res = $this->set_new_mission($user, $new_mission);
+			if(!$new_res){
+				$this->user_db->trans_rollback();
+				$this->error("set new mission error ");
+			}
+		}
+		if($mission["MissionId"] == 1){
+			$mission_change = false;
+			$this->mission_init($user,$mission_change);
+		}
 		$user = $this->getSessionData("user");
-		$user["missions"]=$mission_model->get_mission_list($user["id"]);
+		$user["missions"]=$this->get_mission_list($user["id"]);
 		$this->setSessionData("user",$user);
 		$this->user_db->trans_commit();
 		return true;
 	}
-	function update($id, $args){
-		if(!$args || !is_array($args))return false;
-		$values = array();
-		foreach ($args as $key=>$value){
-			if($key == "id")continue;
-			$values[] = $key ."=". $value;
+	function mission_init($user, &$mission_change){
+		$mission_masters = $user["mission_masters"];
+		$mission_change = false;
+		foreach ($mission_masters as $mission_master) {
+			if($mission_master["start_time"] > NOW || $mission_master["end_time"] < NOW){
+				continue;
+			}
+			if($mission_master["mission_type"] == "normal" || $mission_master["mission_type"] == "events"){
+				if($mission_master["parent_id"] > 0){
+					continue;
+				}
+				$user_mission = $this->get_user_mission($user["missions"], $mission_master["id"]);
+				if(!is_null($user_mission)){
+					continue;
+				}
+				$mission_change = true;
+				$res = $this->set_new_mission($user, $mission_master);
+				if(!$res){
+					return false;
+				}
+			}else if($mission_master["mission_type"] == "daily"){
+				if($mission_master["parent_id"] > 0){
+					continue;
+				}
+				$user_mission = $this->get_user_mission($user["missions"], $mission_master["id"]);
+				if(is_null($user_mission)){
+					$this->set_new_mission($user, $mission_master);
+					continue;
+				}
+				if($user_mission["update_time"] < DAY_START){
+					$res = $this->update($user_mission["MissionId"], array("status"=>MissionStatus::init,"counts"=>0/*, "update_time"=>NOW*/));
+					$mission_change = true;
+					if(!$res){
+						return false;
+					}
+				}
+			}
 		}
-		$where = array("id={$id}");
-		$table = $this->user_db->equipment;
-		$result = $this->user_db->update($values, $table, $where);
-		return $result;
+		return true;
+	}
+	function get_user_mission($user_missions, $mission_id){
+		foreach ($user_missions as $user_mission) {
+			if($user_mission["MissionId"] == $mission_id){
+				return $user_mission;
+			}
+		}
+		return null;
+	}
+	function set_new_mission($user, $mission_master){
+		$values = array();
+		$values["user_id"] = "{$user["id"]}";
+		$values["mission_id"] = "{$mission_master["id"]}";
+		$values["status"] = "'".MissionStatus::init."'";
+		$values["register_time"] = "'".NOW."'";
+		return $this->user_db->insert($values, $this->user_db->mission);
+	}
+	function update($id, $args){
+		return $this->update_common($this->user_db->mission,$id,$args);
 	}
 	function battle_mission_change($user, $BattlingId, &$mission_change){
 		$missions = $user["missions"];
@@ -82,7 +144,7 @@ class Mission_model extends MY_Model
 			}
 			$mission_master = $this->get_master_mission($mission_masters, $mission["MissionId"]);
 			if($mission_master["battle_id"] == $BattlingId){
-				$change = $this->update($mission["Id"], array("status"=>MissionStatus::clear));
+				$change = $this->update($mission["Id"], array("status"=>"'".MissionStatus::clear."'"));
 				if(!$change){
 					return false;
 				}
@@ -90,7 +152,7 @@ class Mission_model extends MY_Model
 			}else if($mission_master["battle_count"] > 0){
 				$args = array("counts"=>$mission["counts"] + 1);
 				if($mission["counts"] + 1 >= $mission_master["battle_count"]){
-					$args["status"] = MissionStatus::clear;
+					$args["status"] = "'".MissionStatus::clear."'";
 				}
 				$change = $this->update($mission["Id"], $args);
 				if(!$change){
@@ -114,7 +176,7 @@ class Mission_model extends MY_Model
 			if($mission_master["character_count"] > 0 && $mission["counts"] != $character_count){
 				$args = array("counts"=>$mission["counts"] + 1);
 				if($mission["counts"] + 1 >= $mission_master["character_count"]){
-					$args["status"] = MissionStatus::clear;
+					$args["status"] = "'".MissionStatus::clear."'";
 				}
 				$change = $this->update($mission["Id"], $args);
 				if(!$change){
@@ -136,7 +198,7 @@ class Mission_model extends MY_Model
 			}
 			$mission_master = $this->get_master_mission($mission_masters, $mission["MissionId"]);
 			if($mission_master["level"] > 0 && $user["Level"] >= $mission_master["level"]){
-				$change = $this->update($mission["Id"], array("status"=>MissionStatus::clear));
+				$change = $this->update($mission["Id"], array("status"=>"'".MissionStatus::clear."'"));
 				if(!$change){
 					return false;
 				}
@@ -156,7 +218,7 @@ class Mission_model extends MY_Model
 			}
 			$mission_master = $this->get_master_mission($mission_masters, $mission["MissionId"]);
 			if(!empty($mission_master["story_progress"]) && $mission_master["story_progress"] == $key){
-				$change = $this->update($mission["Id"], array("status"=>MissionStatus::clear));
+				$change = $this->update($mission["Id"], array("status"=>"'".MissionStatus::clear."'"));
 				if(!$change){
 					return false;
 				}

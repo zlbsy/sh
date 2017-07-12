@@ -32,4 +32,18 @@ class MY_Model {
 		fwrite($fp, $message);
 		fclose($fp);
 	}
+	public function update_common($table, $id, $args){
+		if(!$args || !is_array($args))return false;
+		$values = array();
+		foreach ($args as $key=>$value){
+			if($key == "id")continue;
+			if(is_string($value) && !strstr($value, "'")){
+				$value = "'" . $value . "'";
+			}
+			$values[] = $key ."=". $value;
+		}
+		$where = array("id={$id}");
+		$result = $this->user_db->update($values, $table, $where);
+		return $result;
+	}
 }

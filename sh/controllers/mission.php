@@ -3,7 +3,7 @@ class Mission extends MY_Controller {
 	function __construct() {
 		$this->needAuth = true;
 		parent::__construct();
-		load_model(array('mission_model', 'user_model'));
+		load_model(array('item_model'));
 	}
 	public function mission_list()
 	{
@@ -29,7 +29,7 @@ class Mission extends MY_Controller {
 				break;
 			}
 		}
-		if(is_null($mission) || $mission["status"] != MissionStatus::clear){
+		if(is_null($mission) || $mission["Status"] != MissionStatus::clear){
 			$this->error("Mission->exist error");
 		}
 		$mission_model = new Mission_model();

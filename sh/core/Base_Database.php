@@ -105,6 +105,9 @@ class Base_Database {
 		$child_values = array();
 		foreach ($values as $key => $value) {
 			$child_names[] = $key;
+			if(is_string($value) && !strstr($value, "'")){
+				$value = "'" . $value . "'";
+			}
 			$child_values[] = $value;
 		}
 		$sql .= " (".implode(", ", $child_names).") ";
