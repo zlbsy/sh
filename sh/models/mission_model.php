@@ -140,7 +140,7 @@ class Mission_model extends MY_Model
 		$mission_masters = $this->getSessionData("mission_masters");
 		$mission_change = false;
 		foreach ($missions as $key=>$mission) {
-			if($mission["status"] != MissionStatus::init){
+			if($mission["Status"] != MissionStatus::init){
 				continue;
 			}
 			$mission_master = $this->get_master_mission($mission_masters, $mission["MissionId"]);
@@ -170,7 +170,7 @@ class Mission_model extends MY_Model
 		$character_count = count($user["characters"]);
 		$mission_change = false;
 		foreach ($missions as $key=>$mission) {
-			if($mission["status"] != MissionStatus::init){
+			if($mission["Status"] != MissionStatus::init){
 				continue;
 			}
 			$mission_master = $this->get_master_mission($mission_masters, $mission["MissionId"]);
@@ -194,7 +194,7 @@ class Mission_model extends MY_Model
 		$character_count = count($user["characters"]);
 		$mission_change = false;
 		foreach ($missions as $key=>$mission) {
-			if($mission["status"] != MissionStatus::init){
+			if($mission["Status"] != MissionStatus::init){
 				continue;
 			}
 			$mission_master = $this->get_master_mission($mission_masters, $mission["MissionId"]);
@@ -214,7 +214,7 @@ class Mission_model extends MY_Model
 		$character_count = count($user["characters"]);
 		$mission_change = false;
 		foreach ($missions as $key=>$mission) {
-			if($mission["status"] != MissionStatus::init){
+			if($mission["Status"] != MissionStatus::init){
 				continue;
 			}
 			$mission_master = $this->get_master_mission($mission_masters, $mission["MissionId"]);
@@ -233,7 +233,7 @@ class Mission_model extends MY_Model
 		$mission_masters = $this->getSessionData("mission_masters");
 		$mission_change = false;
 		foreach ($missions as $key=>$mission) {
-			if($mission["status"] != MissionStatus::init){
+			if($mission["Status"] != MissionStatus::init){
 				continue;
 			}
 			$mission_master = $this->get_master_mission($mission_masters, $mission["MissionId"]);
