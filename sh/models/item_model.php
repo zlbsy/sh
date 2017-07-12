@@ -24,10 +24,10 @@ class Item_model extends MY_Model
 		$item = $this->get_item($user_id, $item_id);
 		if($item == null){
 			$values = array();
-			$values[] = "user_id={$user_id}";
-			$values[] = "item_id={$item_id}";
-			$values[] = "cnt={$cnt}";
-			$values[] = "register_time='".date("Y-m-d H:i:s",time())."'";
+			$values["user_id"] = $user_id;
+			$values["item_id"] = $item_id;
+			$values["cnt"] = $cnt;
+			$values["register_time"] = "'".NOW."'";
 			return $this->user_db->insert($values, $this->user_db->item);
 		}else{
 			$values = array();

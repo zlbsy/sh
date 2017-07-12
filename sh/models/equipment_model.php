@@ -9,7 +9,7 @@ class Equipment_model extends MY_Model
 		$values["user_id"] = "{$user_id}";
 		$values["equipment_id"] = "{$equipment_id}";
 		$values["equipment_type"] = "'{$equipment_type}'";
-		$values["register_time"] = "'".date("Y-m-d H:i:s",time())."'";
+		$values["register_time"] = "'".NOW."'";
 		if($character_id > 0){
 			$values["character_id"] = "{$character_id}";
 		}
