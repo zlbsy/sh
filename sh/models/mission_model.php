@@ -38,7 +38,7 @@ class Mission_model extends MY_Model
 		return null;
 	}
 	function complete($user, $mission){
-		$mission_masters = $user["mission_masters"];
+		$mission_masters = $this->getSessionData("mission_masters");
 		$mission_master = $this->get_master_mission($mission_masters, $mission["MissionId"]);
 		$contents = array();
 		$rewards = json_decode($mission_master["rewards"],true);
@@ -77,7 +77,7 @@ class Mission_model extends MY_Model
 		return true;
 	}
 	function mission_init($user, &$mission_change){
-		$mission_masters = $user["mission_masters"];
+		$mission_masters = $this->getSessionData("mission_masters");
 		$mission_change = false;
 		foreach ($mission_masters as $mission_master) {
 			if($mission_master["start_time"] > NOW || $mission_master["end_time"] < NOW){
@@ -137,7 +137,7 @@ class Mission_model extends MY_Model
 	}
 	function battle_mission_change($user, $BattlingId, &$mission_change){
 		$missions = $user["missions"];
-		$mission_masters = $user["mission_masters"];
+		$mission_masters = $this->getSessionData("mission_masters");
 		$mission_change = false;
 		foreach ($missions as $key=>$mission) {
 			if($mission["status"] != MissionStatus::init){
@@ -166,7 +166,7 @@ class Mission_model extends MY_Model
 	}
 	function character_mission_change($user, &$mission_change){
 		$missions = $user["missions"];
-		$mission_masters = $user["mission_masters"];
+		$mission_masters = $this->getSessionData("mission_masters");
 		$character_count = count($user["characters"]);
 		$mission_change = false;
 		foreach ($missions as $key=>$mission) {
@@ -190,7 +190,7 @@ class Mission_model extends MY_Model
 	}
 	function level_mission_change($user, &$mission_change){
 		$missions = $user["missions"];
-		$mission_masters = $user["mission_masters"];
+		$mission_masters = $this->getSessionData("mission_masters");
 		$character_count = count($user["characters"]);
 		$mission_change = false;
 		foreach ($missions as $key=>$mission) {
@@ -210,7 +210,7 @@ class Mission_model extends MY_Model
 	}
 	function progress_mission_change($user, $key, &$mission_change){
 		$missions = $user["missions"];
-		$mission_masters = $user["mission_masters"];
+		$mission_masters = $this->getSessionData("mission_masters");
 		$character_count = count($user["characters"]);
 		$mission_change = false;
 		foreach ($missions as $key=>$mission) {
@@ -230,7 +230,7 @@ class Mission_model extends MY_Model
 	}
 	function gold_count_mission_change($user, &$mission_change){
 		$missions = $user["missions"];
-		$mission_masters = $user["mission_masters"];
+		$mission_masters = $this->getSessionData("mission_masters");
 		$mission_change = false;
 		foreach ($missions as $key=>$mission) {
 			if($mission["status"] != MissionStatus::init){

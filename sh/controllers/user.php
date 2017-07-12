@@ -57,7 +57,7 @@ class User extends MY_Controller {
 		if(!isset($user["missions"])){
 			$mission_model = new Mission_model();
 			$user["missions"] = $mission_model->get_mission_list($user["id"]);
-			$user["mission_masters"] = $mission_model->get_master_missions();
+			$this->setSessionData("mission_masters", $mission_model->get_master_missions());
 			if(count($user["missions"]) > 1){
 				$mission_change = false;
 				$res = $mission_model->mission_init($user, $mission_change);
