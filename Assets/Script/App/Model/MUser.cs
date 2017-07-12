@@ -54,7 +54,7 @@ namespace App.Model{
             return Progress[key];
         }
         public bool IsTutorial{
-            get{ 
+            get{
                 return GetValue("tutorial") < App.Util.Global.Constant.tutorial_end;
             }
         }

@@ -7,13 +7,15 @@ using App.Service;
 using App.Model;
 using UnityEngine.UI;
 using App.Util;
+using App.View.Equipment;
+using App.View;
 
 
 namespace App.Controller.Register{
     public class CRegister : CScene {
         [SerializeField]private VFace faceIcon;
-        [SerializeField]private VCharacter vCharacter;
         [SerializeField]private VCharacterStatus vCharacterStatus;
+        [SerializeField]private App.View.Character.VCharacter vCharacter;
         private MCharacter[] allCharacters;
         private MCharacter[] characters;
         private int index = 0;
@@ -38,6 +40,7 @@ namespace App.Controller.Register{
         private void CharacterUpdate(){
             MCharacter character = characters[index];
             faceIcon.CharacterId = character.CharacterId;
+
             vCharacter.BindingContext = character.ViewModel;
             vCharacter.UpdateView();
             vCharacterStatus.BindingContext = character.ViewModel;

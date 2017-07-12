@@ -12,9 +12,9 @@ using App.View.Common;
 namespace App.View.Mission{
     public class VMissionRewardChild : VBase {
         [SerializeField]private VContentsChild vContentsChild;
-        #region VM处理
+        /*#region VM处理
         public VMPresent ViewModel { get { return (VMPresent)BindingContext; } }
-        /*protected override void OnBindingContextChanged(VMBase oldViewModel, VMBase newViewModel)
+        protected override void OnBindingContextChanged(VMBase oldViewModel, VMBase newViewModel)
         {
 
             base.OnBindingContextChanged(oldViewModel, newViewModel);
@@ -32,13 +32,11 @@ namespace App.View.Mission{
         private void CntChanged(int oldvalue, int newvalue)
         {
             cnt.text = newvalue.ToString();
-        }*/
-        public override void UpdateView(){
-            
         }
-        #endregion
-        public void ClickReceive(){
-            this.Controller.SendMessage("ClickReceive", this);
+        #endregion*/
+        public override void UpdateView(App.Model.MBase model){
+            //App.Model.MContent content = model as App.Model.MContent;
+            vContentsChild.UpdateView(model);
         }
     }
 }

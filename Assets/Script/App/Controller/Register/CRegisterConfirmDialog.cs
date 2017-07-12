@@ -56,6 +56,15 @@ namespace App.Controller.Register{
             yield return this.StartCoroutine(sRegister.RequestInsert(characterId, accountText, passwordText, nameText));
             if (sRegister.responseInsert.result)
             {
+                CConnectingDialog.ToShow();
+                yield return StartCoroutine (App.Util.Global.SUser.RequestLogin(account.text.Trim(), password.text.Trim()));
+                if (App.Util.Global.SUser.self == null)
+                {
+                    CConnectingDialog.ToClose();
+                    this.Close();
+                    yield break;
+                }
+                yield return StartCoroutine(Global.SUser.RequestGet());
                 App.Util.SceneManager.LoadScene( App.Util.SceneManager.Scenes.Top.ToString() );
             }
         }

@@ -42,6 +42,7 @@ namespace App.Util{
             RegisterConfirmDialog,
             WebviewDialog,
             TutorialDialog,
+            ContentsConfirmDialog,
         }
         public static CScene CurrentScene;
         public static Request CurrentSceneRequest;

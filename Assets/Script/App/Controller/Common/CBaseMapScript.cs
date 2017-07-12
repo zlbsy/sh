@@ -17,6 +17,7 @@ namespace App.Controller.Common{
         #region LSharp处理
         public void AddCharacter(int npcId, ActionType action, Direction direction, int x, int y){
             MCharacter mCharacter = NpcCacher.Instance.GetFromNpc(npcId);
+            mCharacter.Belong = Belong.friend;
             mCharacter.StatusInit();
             mCharacter.Action = action;
             mCharacter.CoordinateX = x;
@@ -121,6 +122,36 @@ namespace App.Controller.Common{
             else
             {
                 moveComplete();
+            }
+        }
+        public void AddCharacterSkill(int characterId, App.Model.Belong belong, int skillId, int skillLevel){
+            MCharacter mCharacter = System.Array.Find(mBaseMap.Characters, c=>c.CharacterId == characterId && c.Belong == belong);
+            App.Model.MSkill mSkill = new App.Model.MSkill();
+            mSkill.Id = mCharacter.Skills[mCharacter.Skills.Length - 1].Id + 1;
+            mSkill.SkillId = skillId;
+            mSkill.Level = skillLevel;
+            List<App.Model.MSkill> skills = mCharacter.Skills.ToList();
+            skills.Add(mSkill);
+            mCharacter.Skills = skills.ToArray();
+            if (App.Model.Master.MSkill.IsSkillType(mSkill.Master, App.Model.SkillType.ability))
+            {
+                int hp = mCharacter.Hp;
+                int mp = mCharacter.Mp;
+                mCharacter.StatusInit();
+                mCharacter.Hp = hp + mSkill.Master.hp;
+                mCharacter.Mp = mp + mSkill.Master.mp;
+            }
+        }
+        public void RemoveCharacterSkill(int characterId, App.Model.Belong belong, int skillId){
+            MCharacter mCharacter = System.Array.Find(mBaseMap.Characters, c=>c.CharacterId == characterId && c.Belong == belong);
+            List<App.Model.MSkill> skills = mCharacter.Skills.ToList();
+            int index = skills.FindIndex(s=>s.SkillId == skillId);
+            skills.RemoveAt(index);
+            mCharacter.Skills = skills.ToArray();
+            if (mCharacter.CurrentSkill.SkillId == skillId)
+            {
+                mCharacter.CurrentSkill = System.Array.Find(mCharacter.Skills, s=>App.Model.Master.MSkill.IsWeaponType(s.Master, mCharacter.WeaponType));
+
             }
         }
         public void MapMoveToPosition(int x, int y){

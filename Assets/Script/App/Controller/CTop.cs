@@ -23,7 +23,7 @@ namespace App.Controller{
         [SerializeField]VHeaderTop headerTop;
         private VBottomMenu currentMenu;
         public override IEnumerator OnLoad( Request request ) 
-        {  Debug.LogError("sUser.self.missions.Length=" + Global.SUser.self.missions.Length);
+        {
             InitHeader();
             InitMap();
             yield return StartCoroutine(base.OnLoad(request));
@@ -43,16 +43,17 @@ namespace App.Controller{
             }
             yield break;
         }
-        private bool TutorialStart(){
-            if (Global.SUser.self.GetValue("tutorial") >= Global.Constant.tutorial_end)
+        public bool TutorialStart(){
+            if (!Global.SUser.self.IsTutorial)
             {
                 return false;
             }
             SUser sUser = Global.SUser;
             int tutorial = sUser.self.GetValue("tutorial");
-            Debug.LogError("TutorialStart tutorial = " + tutorial);
             StartCoroutine(sUser.Download(TutorialAsset.TutorialUrl(tutorial), Global.versions.tutorial, (AssetBundle assetbundle)=>{
                 TutorialAsset.assetbundle = assetbundle;
+                App.Util.LSharp.LSharpScript.Instance.Analysis(TutorialAsset.Data.tutorial);
+                /*
                 if(tutorial <= 0){
                     App.Util.LSharp.LSharpScript.Instance.Analysis(TutorialAsset.Data.tutorial);
                 }else{
@@ -68,7 +69,23 @@ namespace App.Controller{
                     script.Add("Talk.set(4100,0,真聪明！现在再跟你介绍一个比较重要的功能，打开任务菜单看一下！,false);");
                     script.Add("Tutorial.clickmask(SceneTop.UICamera.Canvas.LeftMenu.MissionButton,0,0,96,96);");
                     script.Add("Tutorial.call(SceneTop,OpenMission);");
-                    /*script.Add("Tutorial.wait(GachaDialog(Clone).Panel.Scroll View.Viewport.Content.Gacha_tutorial);");
+                    script.Add("Tutorial.wait(MissionDialog(Clone).Panel.Scroll View.Viewport.Content.MissionChild(Clone));");
+                    script.Add("Talk.set(4100,0,当你完成了一些任务之后，就可以获取一些奖励，你刚刚完成了【援助王进】的任务，先领取奖励吧！,false);");
+                    script.Add("Tutorial.clickmask(MissionDialog(Clone).Panel.Scroll View.Viewport.Content.MissionChild(Clone).GetButton,0,0,120,40);");
+                    script.Add("Tutorial.call(MissionDialog(Clone).Panel.Scroll View.Viewport.Content.MissionChild(Clone),ClickComplete);");
+                    script.Add("Tutorial.wait(ContentsConfirmDialog(Clone));");
+                    script.Add("Var.setprogress(tutorial,2);");
+                    script.Add("Talk.set(4100,0,每个任务都有相应的说明，你也可以把这些任务当作是游戏进程的提醒，每天通过任务就可以获得很多奖励哦！,false);");
+                    script.Add("Talk.set(4100,0,任务功能就介绍到这里了，现在关闭任务窗口！,false);");
+                    script.Add("Tutorial.clickmask(ContentsConfirmDialog(Clone).Panel.Close,0,0,96,96);");
+                    script.Add("Tutorial.call(ContentsConfirmDialog(Clone),Close);");
+                    script.Add("Wait.time(0.1);");
+                    script.Add("Tutorial.call(MissionDialog(Clone),Close);");
+                    script.Add("Wait.time(0.4);");
+                    script.Add("Tutorial.call(SceneTop,TutorialStart);");
+
+
+                    script.Add("Tutorial.wait(GachaDialog(Clone).Panel.Scroll View.Viewport.Content.Gacha_tutorial);");
                     script.Add("Tutorial.clickmask(GachaDialog(Clone).Panel.Scroll View.Viewport.Content.Gacha_tutorial.ButtonSingle,0,0,160,70);");
                     script.Add("Tutorial.call(GachaDialog(Clone).Panel.Scroll View.Viewport.Content.Gacha_tutorial.ButtonSingle,OnClickGacha);");
                     script.Add("Tutorial.wait(GachaResultDialog(Clone));");
@@ -84,12 +101,12 @@ namespace App.Controller{
                     script.Add("Talk.setplayer(@player_id,0,走的好快啊...看来以后得靠自己了。,true);");
                     script.Add("Talk.setplayer(@player_id,0,总之，要先去寻找天罡星和地煞星这些人的下落了。,true);");
                     script.Add("Talk.setplayer(@player_id,0,上次一起帮忙打强盗的那个叫史大郎的英雄好像很厉害，会不会是我要找的人呢，我先去找他聊一聊吧。,true);");
-                    script.Add("Tutorial.close();");*/
+                    script.Add("Tutorial.close();");
                     //script.Add("Var.setprogress(tutorial,2);");
 
 
                     App.Util.LSharp.LSharpScript.Instance.Analysis(script);
-                }
+                }*/
             }));
             return true;
         }

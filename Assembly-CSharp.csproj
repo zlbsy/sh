@@ -100,6 +100,7 @@
      <Compile Include="Assets\Script\App\Controller\Common\CBase.cs" />
      <Compile Include="Assets\Script\App\Controller\Common\CBaseMap.cs" />
      <Compile Include="Assets\Script\App\Controller\Common\CBaseMapScript.cs" />
+     <Compile Include="Assets\Script\App\Controller\Common\CContentsConfirmDialog.cs" />
      <Compile Include="Assets\Script\App\Controller\Common\CDialog.cs" />
      <Compile Include="Assets\Script\App\Controller\Common\CScene.cs" />
      <Compile Include="Assets\Script\App\Controller\Common\CSingleDialog.cs" />
@@ -213,6 +214,7 @@
      <Compile Include="Assets\Script\App\Service\SItem.cs" />
      <Compile Include="Assets\Script\App\Service\SLoginBonus.cs" />
      <Compile Include="Assets\Script\App\Service\SMaster.cs" />
+     <Compile Include="Assets\Script\App\Service\SMission.cs" />
      <Compile Include="Assets\Script\App\Service\SPresent.cs" />
      <Compile Include="Assets\Script\App\Service\SRegister.cs" />
      <Compile Include="Assets\Script\App\Service\SShop.cs" />
