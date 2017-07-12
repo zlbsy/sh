@@ -69,17 +69,21 @@ class Character_model extends MY_Model
 		return $result;
 	}
 
-	function get_tutorial_characters(){
+	function get_tutorial_characters($character_id=0){
 		$user_characters = $this->get_user_characters_constant();
-		$select = "`id` as CharacterId,`level` as 1,`horse` as `Horse`, `clothes` as `Clothes`, `weapon` as `Weapon`";
+		$select = "`id` as CharacterId,1 as Level,`horse` as `Horse`, `clothes` as `Clothes`, `weapon` as `Weapon`";
 		$table = $this->master_db->base_character;
 		$order_by = "id";
-		$result_select = $this->master_db->select($select, $table, null, $order_by, null, Database_Result::TYPE_DEFAULT);
+		$where = array("id>={$user_characters[0]}","id<={$user_characters[1]}");
+		if($character_id > 0){
+			$where[] = "id={$character_id}";
+		}
+		$result_select = $this->master_db->select($select, $table, $where, $order_by, null, Database_Result::TYPE_DEFAULT);
 		$result = array();
 		while ($row = mysql_fetch_assoc($result_select)) {
 			$skills = $this->get_master_character_skills($row["CharacterId"]);
 			$skill = $skills[0];
-			$row["Skills"] = array("SkillId"=>$skill["skill_id"],"Level"=>1);
+			$row["Skills"] = array(array("SkillId"=>$skill["skill_id"],"Level"=>1));
 			$result[] = $row;
 		}
 		return $result;

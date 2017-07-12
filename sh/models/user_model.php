@@ -8,7 +8,7 @@ class User_model extends MY_Model
 	var $_select_other_clums = 'id, name, nickname as Nickname, face as Face, level as Level, gold as Gold, silver as Silver, ap as Ap, map_id as MapId, last_ap_date as LastApDate';
 	function register($account, $password, $name, $character_id){
 		$character_model = new Character_model();
-		$characters = $character_model->get_character_list(0, $character_id);
+		$characters = $character_model->get_tutorial_characters($character_id);
 		if(count($characters) == 0){
 			return false;
 		}
