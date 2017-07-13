@@ -76,11 +76,13 @@ namespace App.Controller.Battle{
             mBaseMap = new MBaseMap();
             mBaseMap.MapId = battlefieldMaster.map_id;
             mBaseMap.Tiles = battlefieldMaster.tiles.Clone() as App.Model.MTile[];
+            base.InitMap();
             List<MCharacter> characters = new List<MCharacter>();
             for (int i = 0; i < characterIds.Count; i++)
             {
                 MCharacter mCharacter = System.Array.Find(App.Util.Global.SUser.self.characters, _=>_.CharacterId==characterIds[i]);
                 mCharacter.Belong = Belong.self;
+                //mCharacter.Level = 50;
                 //己方出战坐标
                 App.Model.Master.MBattleOwn mBattleOwn = battlefieldMaster.owns[i];
                 mCharacter.CoordinateX = mBattleOwn.x;
@@ -92,6 +94,7 @@ namespace App.Controller.Battle{
             foreach(App.Model.Master.MBattleNpc battleNpc in battlefieldMaster.enemys){
                 MCharacter mCharacter = NpcCacher.Instance.GetFromBattleNpc(battleNpc);
                 mCharacter.Belong = Belong.enemy;
+                //mCharacter.Level = 50;
                 CharacterInit(mCharacter);
                 characters.Add(mCharacter);
                 //mCharacter.Hp = 1;
@@ -99,6 +102,7 @@ namespace App.Controller.Battle{
             foreach(App.Model.Master.MBattleNpc battleNpc in battlefieldMaster.friends){
                 MCharacter mCharacter = NpcCacher.Instance.GetFromBattleNpc(battleNpc);
                 mCharacter.Belong = Belong.friend;
+                //mCharacter.Level = 50;
                 CharacterInit(mCharacter);
                 characters.Add(mCharacter);
             }
@@ -107,7 +111,6 @@ namespace App.Controller.Battle{
             vBaseMap.UpdateView();
             vBaseMap.transform.parent.localScale = Vector3.one;
             vBaseMap.MoveToPosition();
-            base.InitMap();
             characters.ForEach(character=>character.Action = ActionType.idle);
             battlefieldMaster.script.Add("Battle.boutwave(self);");
             App.Util.LSharp.LSharpScript.Instance.Analysis(battlefieldMaster.script);
@@ -245,7 +248,15 @@ namespace App.Controller.Battle{
         /// 结束战斗
         /// </summary>
         public void BattleEnd(){
-            App.Util.SceneManager.LoadScene( this.fromScene.ToString(), this.fromRequest );
+            App.Util.LSharp.LSharpScript.Instance.UpdateBattleList();
+            if (Global.SUser.self.IsTutorial)
+            {
+                App.Util.SceneManager.LoadScene( App.Util.SceneManager.Scenes.Top.ToString() );
+            }
+            else
+            {
+                App.Util.SceneManager.LoadScene( this.fromScene.ToString(), this.fromRequest );
+            }
         }
         /// <summary>
         /// 结束胜利

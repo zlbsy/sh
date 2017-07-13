@@ -289,9 +289,7 @@ namespace App.View.Character{
             {
                 return;
             }
-            VBaseMap vBaseMap = cBaseMap.GetVBaseMap();
-            int i = ViewModel.CoordinateY.Value * vBaseMap.mapWidth + newvalue;
-            VTile vTile = vBaseMap.tileUnits[i];
+            VTile vTile = cBaseMap.mapSearch.GetTile(newvalue, ViewModel.CoordinateY.Value);
             ViewModel.X.Value = vTile.transform.localPosition.x;
             sortingGroup.sortingOrder = vTile.Index + 10;
         }
@@ -301,9 +299,7 @@ namespace App.View.Character{
             {
                 return;
             }
-            VBaseMap vBaseMap = cBaseMap.GetVBaseMap();
-            int i = ViewModel.CoordinateY.Value * vBaseMap.mapWidth + newvalue;
-            VTile vTile = vBaseMap.tileUnits[i];
+            VTile vTile = cBaseMap.mapSearch.GetTile(ViewModel.CoordinateX.Value, newvalue);
             ViewModel.Y.Value = vTile.transform.localPosition.y;
             sortingGroup.sortingOrder = vTile.Index + 10;
         }
@@ -321,7 +317,6 @@ namespace App.View.Character{
         private void ActionChanged(App.Model.ActionType oldvalue, App.Model.ActionType newvalue)
         {
             string animatorName = string.Format("{0}_{1}_{2}", ViewModel.MoveType.ToString(), App.Util.WeaponManager.GetWeaponTypeAction(ViewModel.WeaponType.Value, newvalue), newvalue.ToString());
-            //Debug.LogError(ViewModel.CharacterId.Value + " = " + animatorName);
             animator.Play(animatorName);
             if (newvalue == App.Model.ActionType.idle)
             {
@@ -486,11 +481,11 @@ namespace App.View.Character{
             this.MoveTypeChanged(ViewModel.MoveType.Value, ViewModel.MoveType.Value);
             this.StatusChanged(null, ViewModel.Status.Value);
             this.CoordinateYChanged(0, ViewModel.CoordinateY.Value);
+            this.DirectionChanged(ViewModel.Direction.Value, ViewModel.Direction.Value);
         }
         #endregion
 
         public void AttackToHert(){
-            //Debug.LogError("AttackToHert:"+ViewModel.Name+", " + ViewModel.Target.Value);
             if (ViewModel.Target.Value == null)
             {
                 return;
@@ -514,7 +509,6 @@ namespace App.View.Character{
         public void SetOrders(Dictionary<string,int> meshOrders){
             foreach(string key in meshOrders.Keys){
                 meshs[key].sortingOrder = meshOrders[key];
-                //Debug.LogError("SetOrders : " + key + " = " + meshs[key].sortingOrder);
             }
         }
         /// <summary>

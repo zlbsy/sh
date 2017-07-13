@@ -327,13 +327,13 @@ namespace App.Util.Battle{
                 this.mCharacter.Target = null;
 
             }
-            if (!System.Array.Exists(mBaseMap.Characters, _ => _.Hp > 0 && _.Belong == Belong.enemy))
+            if (!System.Array.Exists(mBaseMap.Characters, c => c.Hp > 0 && !c.IsHide && c.Belong == Belong.enemy))
             {
                 //敌军全灭
                 Debug.LogError("敌军全灭");
                 cBattlefield.BattleWin();
                 yield break;
-            }else if (!System.Array.Exists(mBaseMap.Characters, _ => _.Hp > 0 && _.Belong == Belong.self))
+            }else if (!System.Array.Exists(mBaseMap.Characters, c => c.Hp > 0 && !c.IsHide && c.Belong == Belong.self))
             {
                 //我军全灭
                 Debug.LogError("我军全灭");
@@ -403,7 +403,7 @@ namespace App.Util.Battle{
             cBattlefield.battleMode = CBattlefield.BattleMode.none;
             Belong belong = this.mCharacter.Belong;
             this.mCharacter = null;
-            if (!System.Array.Exists(mBaseMap.Characters, _ => _.Hp > 0 && _.Belong == belong && !_.ActionOver))
+            if (!System.Array.Exists(mBaseMap.Characters, c => c.Hp > 0 && !c.IsHide && c.Belong == belong && !c.ActionOver))
             {
                 ChangeBelong(belong);
             }
@@ -415,7 +415,7 @@ namespace App.Util.Battle{
         public void ChangeBelong(Belong belong){
             if (belong == Belong.self)
             {
-                if (System.Array.Exists(mBaseMap.Characters, _ => _.Hp > 0 && _.Belong == Belong.friend && !_.ActionOver))
+                if (System.Array.Exists(mBaseMap.Characters, c => c.Hp > 0 && !c.IsHide && c.Belong == Belong.friend && !c.ActionOver))
                 {
                     cBattlefield.BoutWave(Belong.friend);
                 }

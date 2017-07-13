@@ -42,6 +42,7 @@ namespace App.Util.LSharp{
         public void UpdateBattleList(){
             foreach(App.Model.MBattleChild mBattleChild in Global.SUser.self.battlelist){
                 LSharpVarlable.SetVarlable(string.Format("battlefield_{0}", mBattleChild.BattlefieldId), "1");
+                Debug.LogError("UpdateBattleList = "+string.Format("battlefield_{0}", mBattleChild.BattlefieldId));
             }
         }
         public void ToList(List<string> datas){

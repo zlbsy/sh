@@ -175,8 +175,11 @@ namespace App.View{
                 return _isDraging;
             }
         }
-        public void MoveToPosition(int x = int.MinValue, int y = 0){
-            App.Model.Master.MBaseMap baseMapMaster = BaseMapCacher.Instance.Get(ViewModel.MapId.Value);
+        public void MoveToPosition(int x = int.MinValue, int y = 0, App.Model.Master.MBaseMap baseMapMaster = null){
+            if (baseMapMaster == null)
+            {
+                baseMapMaster = BaseMapCacher.Instance.Get(ViewModel.MapId.Value);
+            }
             if (x == int.MinValue)
             {
                 x = Mathf.FloorToInt(baseMapMaster.width / 2f);

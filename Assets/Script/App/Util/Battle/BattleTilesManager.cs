@@ -67,7 +67,7 @@ namespace App.Util.Battle{
                     continue;
                 }
                 MCharacter character = cBattlefield.charactersManager.GetCharacter(tile.Index);
-                if (character == null || character.Hp == 0)
+                if (character == null || character.Hp == 0 ||  character.IsHide)
                 {
                     continue;
                 }

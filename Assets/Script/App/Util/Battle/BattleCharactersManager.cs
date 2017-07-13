@@ -168,12 +168,12 @@ namespace App.Util.Battle{
         }
         public MCharacter GetCharacter(int index, MCharacter[] characters = null){
             Vector2 coordinate = baseMapMaster.GetCoordinateFromIndex(index);
-            MCharacter mCharacter = System.Array.Find(characters == null ? mBaseMap.Characters : characters, c=>c.Hp > 0 && c.CoordinateX == coordinate.x && c.CoordinateY == coordinate.y);
+            MCharacter mCharacter = System.Array.Find(characters == null ? mBaseMap.Characters : characters, c=>c.Hp > 0 && !c.IsHide && c.CoordinateX == coordinate.x && c.CoordinateY == coordinate.y);
             return mCharacter;
         }
         public App.View.Character.VCharacter GetCharacter(int index, List<App.View.Character.VCharacter> characters){
             Vector2 coordinate = baseMapMaster.GetCoordinateFromIndex(index);
-            App.View.Character.VCharacter vCharacter = characters.Find(c=>c.ViewModel.Hp.Value > 0 && c.ViewModel.CoordinateX.Value == coordinate.x && c.ViewModel.CoordinateY.Value == coordinate.y);
+            App.View.Character.VCharacter vCharacter = characters.Find(c=>c.ViewModel.Hp.Value > 0 && !c.ViewModel.IsHide.Value && c.ViewModel.CoordinateX.Value == coordinate.x && c.ViewModel.CoordinateY.Value == coordinate.y);
             return vCharacter;
         }
     }

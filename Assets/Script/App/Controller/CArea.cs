@@ -31,6 +31,7 @@ namespace App.Controller{
             vBaseMap.BindingContext = mBaseMap.ViewModel;
             vBaseMap.UpdateView();
             vBaseMap.transform.parent.localScale = Vector3.one;
+            base.InitMap();
             if (App.Util.Global.SUser.self.IsTutorial)
             {
                 return;

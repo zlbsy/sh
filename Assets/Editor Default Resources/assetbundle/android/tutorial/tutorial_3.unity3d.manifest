@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 3258672817
+CRC: 4131902385
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: cf78b1e384400012302a418c6816442a
+    Hash: 3f97ef049be1aeef86b42298125c4f65
   TypeTreeHash:
     serializedVersion: 2
     Hash: 8c1870e0bc4c20b59153d395b570bc45
@@ -14,5 +14,5 @@ ClassTypes:
 - Class: 115
   Script: {instanceID: 0}
 Assets:
-- Assets/Editor Default Resources/ScriptableObject/tutorial/0.asset
+- Assets/Editor Default Resources/ScriptableObject/tutorial/3.asset
 Dependencies: []

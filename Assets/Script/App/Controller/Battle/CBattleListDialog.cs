@@ -21,9 +21,7 @@ namespace App.Controller.Battle{
             yield return StartCoroutine(base.OnLoad(request));
             if (Global.SUser.self.battlelist == null)
             {
-                //sBattlefield = new SBattlefield();
                 yield return StartCoroutine(Global.SBattlefield.RequestBattlelist());
-                //Global.SUser.self.battlelist = sBattlefield.battlelist;
             }
             if (Global.SUser.self.battlelist != null && Global.SUser.self.battlelist.Length > 0)
             {

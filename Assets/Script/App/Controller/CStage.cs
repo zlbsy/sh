@@ -34,6 +34,7 @@ namespace App.Controller{
             vBaseMap.UpdateView();
             vBaseMap.transform.parent.localScale = Vector3.one;
             vBaseMap.MoveToPosition();
+            base.InitMap();
             App.Util.LSharp.LSharpScript.Instance.Analysis(new List<string>{string.Format("Load.script({0})", area.tile_id)});
         }
         public override void OnClickTile(int index){

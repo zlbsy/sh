@@ -31,6 +31,8 @@ namespace App.View{
         public bool IsRoad{ get; set;}
         public bool IsAllCost{ get; set;}
 
+        public int TileId{ get; private set;}
+        public int BuildingId{ get; private set;}
         private GameObject attackTween;
         private VBaseMap vBaseMap;
         private App.Controller.Battle.CBattlefield _cBattlefield;
@@ -59,6 +61,8 @@ namespace App.View{
             this.Index = index;
             this.CoordinateX = cx;
             this.CoordinateY = cy;
+            this.TileId = tileId;
+            this.BuildingId = subId;
             tileSprite.sprite = App.Model.Master.MTile.GetIcon(tileId);
             tileName.gameObject.SetActive(false);
             if (subId > 0)
@@ -94,7 +98,7 @@ namespace App.View{
             {
                 yield break;
             }
-            this.Controller.SendMessage("OnClickTile", this.Index);
+            this.Controller.SendMessage("OnClickTile", this.Index, SendMessageOptions.DontRequireReceiver);
         }
         public void ShowMoving(App.Model.Belong belong){
             this.movingSprite.gameObject.SetActive(true);

@@ -65,7 +65,7 @@ namespace App.View.Gacha{
             StartCoroutine(UpdateFreetime(gachaMaster, mGacha));
         }
         public void OnClickGacha(){
-            if (!labelFree.gameObject.activeSelf)
+            if (labelFree == null || !labelFree.gameObject.activeSelf)
             {
                 if (gachaPrice.price_type == App.Model.PriceType.gold && Global.SUser.self.Gold < gachaPrice.price)
                 {

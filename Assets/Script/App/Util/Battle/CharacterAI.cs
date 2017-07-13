@@ -34,7 +34,7 @@ namespace App.Util.Battle{
         }
         public IEnumerator Execute(){
             //TODO::行动顺序
-            mCharacter = System.Array.Find(mBaseMap.Characters, c=>c.Belong == this.belong && c.Hp > 0 && !c.ActionOver);
+            mCharacter = System.Array.Find(mBaseMap.Characters, c=>c.Belong == this.belong && c.Hp > 0 && !c.IsHide && !c.ActionOver);
             MSkill attackSkill = System.Array.Find(mCharacter.Skills, delegate(MSkill skill){
                 App.Model.Master.MSkill skillMaster = skill.Master;
                 return System.Array.Exists(skillMaster.types, s=>(s==SkillType.attack || s==SkillType.magic)) 
@@ -121,7 +121,7 @@ namespace App.Util.Battle{
                 {
                     continue;
                 }
-                MCharacter character = System.Array.Find(mBaseMap.Characters, chara=>chara.Hp > 0 && chara.CoordinateX == tile.CoordinateX && chara.CoordinateY == tile.CoordinateY);
+                MCharacter character = System.Array.Find(mBaseMap.Characters, chara=>chara.Hp > 0 && !chara.IsHide && chara.CoordinateX == tile.CoordinateX && chara.CoordinateY == tile.CoordinateY);
                 if (character != null)
                 {
                     continue;
@@ -155,7 +155,7 @@ namespace App.Util.Battle{
             }
             foreach (MCharacter character in mBaseMap.Characters)
             {
-                if (character.Hp == 0)
+                if (character.Hp == 0 || character.IsHide)
                 {
                     continue;
                 }
@@ -243,7 +243,7 @@ namespace App.Util.Battle{
                 return cBattlefield.tilesManager.CurrentMovingTiles[0];
             }
             tiles.Sort((a, b)=>{
-                bool aNotRoad = System.Array.Exists(mBaseMap.Characters, c=>c.Hp > 0 && c.CoordinateX == a.CoordinateX && c.CoordinateY == a.CoordinateY);
+                bool aNotRoad = System.Array.Exists(mBaseMap.Characters, c=>c.Hp > 0 && !c.IsHide && c.CoordinateX == a.CoordinateX && c.CoordinateY == a.CoordinateY);
                 if(aNotRoad){
                     return 1;
                 }

@@ -33,7 +33,7 @@ namespace App.Controller.Battle{
         }
         public IEnumerator OnBoutStart(){
             while(true){
-                MCharacter mCharacter = System.Array.Find(mBaseMap.Characters, c=>c.Belong == this.currentBelong && c.Hp > 0 && !c.boutEventComplete);
+                MCharacter mCharacter = System.Array.Find(mBaseMap.Characters, c=>c.Belong == this.currentBelong && c.Hp > 0 && !c.IsHide && !c.boutEventComplete);
                 if (mCharacter == null)
                 {
                     break;
@@ -41,7 +41,7 @@ namespace App.Controller.Battle{
                 App.Model.Master.MSkill skill = mCharacter.BoutFixedDamageSkill;
                 if (skill != null)
                 {
-                    List<VCharacter> characters = vBaseMap.Characters.FindAll(c=>c.ViewModel.Hp.Value > 0 && !this.charactersManager.IsSameBelong(c.ViewModel.Belong.Value, currentBelong));
+                    List<VCharacter> characters = vBaseMap.Characters.FindAll(c=>c.ViewModel.Hp.Value > 0 && !c.ViewModel.IsHide.Value && !this.charactersManager.IsSameBelong(c.ViewModel.Belong.Value, currentBelong));
                     yield return OnBoutFixedDamage(mCharacter, skill, characters);
                 }
                 mCharacter.boutEventComplete = true;

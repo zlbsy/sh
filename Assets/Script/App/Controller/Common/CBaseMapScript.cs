@@ -10,6 +10,7 @@ using Holoville.HOTween;
 using App.View.Top;
 using App.Controller.Common;
 using System.Linq;
+using App.Controller.Battle;
 
 
 namespace App.Controller.Common{
@@ -20,13 +21,13 @@ namespace App.Controller.Common{
             mCharacter.Belong = Belong.friend;
             mCharacter.StatusInit();
             mCharacter.Action = action;
+            VTile vTile = this.mapSearch.GetTile(x, y);
+            mCharacter.X = vTile.transform.localPosition.x;
+            mCharacter.Y = vTile.transform.localPosition.y;
+
             mCharacter.CoordinateX = x;
             mCharacter.CoordinateY = y;
             mCharacter.Direction = direction;
-            /*if (mCharacter.Hp == 0)
-            {
-                mCharacter.Hp = 1;
-            }*/
             List<MCharacter> characters = mBaseMap.Characters == null ? new List<MCharacter>() : mBaseMap.Characters.ToList();
             characters.Add(mCharacter);
             mBaseMap.Characters = characters.ToArray();

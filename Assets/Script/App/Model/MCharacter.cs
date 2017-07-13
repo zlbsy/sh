@@ -212,7 +212,6 @@ namespace App.Model{
                     this.CurrentSkill = System.Array.Find(this.Skills, s=>App.Model.Master.MSkill.IsWeaponType(s.Master, this.WeaponType));
                 }
             }
-
             if (this.Ability == null)
             {
                 this.Ability = MCharacterAbility.Create(this);

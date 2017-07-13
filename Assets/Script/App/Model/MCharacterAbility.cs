@@ -140,8 +140,8 @@ namespace App.Model{
                 magicDefense += equipment.magic_defense;
             }
 
-            this.HpMax = Mathf.FloorToInt(mCharacter.Level * (2 + this.Endurance * 0.02f) + hp);
-            this.MpMax = Mathf.FloorToInt(mCharacter.Level * (1 + this.Knowledge * 0.01f) + mp);
+            this.HpMax = Mathf.FloorToInt(mCharacter.Level * (10 + this.Endurance * 0.2f) + hp);
+            this.MpMax = Mathf.FloorToInt(mCharacter.Level * (5 + this.Knowledge * 0.1f) + mp);
             float moveTypeValue = (mCharacter.MoveType == MoveType.cavalry ? this.Riding : this.Walker);
             switch(mCharacter.WeaponType){
                 case WeaponType.archery:
@@ -178,13 +178,14 @@ namespace App.Model{
                     moveTypeValue += this.Magic;
                     break;
             }
-            this.PhysicalAttack = (this.Power + this.Knowledge) + Mathf.FloorToInt((this.Power * 2f + this.Knowledge) * (0.4f + (moveTypeValue * 0.5f) * 0.006f) * (1f + mCharacter.Level * 0.5f) * 0.1f);
+            float starPower = 0.7f + mCharacter.Star *0.06f;
+            this.PhysicalAttack = Mathf.FloorToInt((this.Power + this.Knowledge)*0.3f + (this.Power * 2f + this.Knowledge) * (0.4f + (moveTypeValue * 0.5f) * 0.006f) * (1f + mCharacter.Level * starPower * 0.5f) * 0.1f);
             this.PhysicalAttack += physicalAttack;
-            this.MagicAttack = (this.Trick + this.Knowledge) + Mathf.FloorToInt((this.Trick * 2f + this.Knowledge) * (0.4f + (moveTypeValue * 0.5f) * 0.006f) * (1f + mCharacter.Level * 0.5f) * 0.1f);
+            this.MagicAttack = Mathf.FloorToInt((this.Trick + this.Knowledge)*0.3f + (this.Trick * 2f + this.Knowledge) * (0.4f + (moveTypeValue * 0.5f) * 0.006f) * (1f + mCharacter.Level * starPower * 0.5f) * 0.1f);
             this.MagicAttack += magicAttack;
-            this.PhysicalDefense = Mathf.FloorToInt((this.Power * 2 + this.Knowledge)*0.35f + (this.Power*2 + this.Knowledge) * (0.7f + mCharacter.Level * 0.003f) * 0.05f);
+            this.PhysicalDefense = Mathf.FloorToInt((this.Power*0.5f + this.Knowledge)*0.3f + (this.Power + this.Knowledge) * (1f + mCharacter.Level * starPower * 0.5f) * 0.04f);
             this.PhysicalDefense += physicalDefense;
-            this.MagicDefense = Mathf.FloorToInt((this.Trick * 2 + this.Knowledge)*0.35f + (this.Trick*2 + this.Knowledge) * (0.7f + mCharacter.Level * 0.003f) * 0.05f);
+            this.MagicDefense = Mathf.FloorToInt((this.Trick*0.5f + this.Knowledge)*0.3f + (this.Trick + this.Knowledge) * (1f + mCharacter.Level * starPower * 0.5f) * 0.04f);
             this.MagicDefense += magicDefense;
         }
         /// <summary>

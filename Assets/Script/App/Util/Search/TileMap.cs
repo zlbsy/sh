@@ -18,7 +18,10 @@ namespace App.Util.Search{
         public TileMap(MBaseMap model, VBaseMap view){
             mBaseMap = model;
             vBaseMap = view;
-            baseMapMaster = BaseMapCacher.Instance.Get(mBaseMap.MapId);
+            if (mBaseMap.MapId > 0)
+            {
+                baseMapMaster = BaseMapCacher.Instance.Get(mBaseMap.MapId);
+            }
         }
         public VTile GetTile(int index){
             Vector2 coordinate = baseMapMaster.GetCoordinateFromIndex(index);
