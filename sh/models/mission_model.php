@@ -53,7 +53,7 @@ class Mission_model extends MY_Model
 			$this->user_db->trans_rollback();
 			$this->error("set contents error ".$this->user_db->last_sql);
 		}
-		$update_res = $this->update($mission["MissionId"], array("status"=>"'".MissionStatus::complete."'"));
+		$update_res = $this->update($mission["Id"], array("status"=>"'".MissionStatus::complete."'"));
 		if(!$update_res){
 			$this->user_db->trans_rollback();
 			$this->error("mission complete error ");
@@ -106,7 +106,7 @@ class Mission_model extends MY_Model
 					continue;
 				}
 				if($user_mission["update_time"] < DAY_START){
-					$res = $this->update($user_mission["MissionId"], array("status"=>MissionStatus::init,"counts"=>0/*, "update_time"=>NOW*/));
+					$res = $this->update($user_mission["Id"], array("status"=>MissionStatus::init,"counts"=>0/*, "update_time"=>NOW*/));
 					$mission_change = true;
 					if(!$res){
 						return false;
@@ -175,8 +175,8 @@ class Mission_model extends MY_Model
 			}
 			$mission_master = $this->get_master_mission($mission_masters, $mission["MissionId"]);
 			if($mission_master["character_count"] > 0 && $mission["Counts"] != $character_count){
-				$args = array("counts"=>$mission["Counts"] + 1);
-				if($mission["Counts"] + 1 >= $mission_master["character_count"]){
+				$args = array("counts"=>$character_count);
+				if($character_count >= $mission_master["character_count"]){
 					$args["status"] = "'".MissionStatus::clear."'";
 				}
 				$change = $this->update($mission["Id"], $args);

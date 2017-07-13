@@ -12,7 +12,7 @@ class Equipment extends MY_Controller {
 		$user = $this->getSessionData("user");
 		$equipment_model = new Equipment_model();
 		$equipments = $equipment_model->get_list($user["id"]);
-		if($equipments){
+		if(!is_null($equipments)){
 			$result = array("equipments"=>$equipments);
 			$this->out($result);
 		}else{
