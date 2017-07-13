@@ -151,8 +151,8 @@ class Mission_model extends MY_Model
 				}
 				$mission_change  = true;
 			}else if($mission_master["battle_count"] > 0){
-				$args = array("counts"=>$mission["counts"] + 1);
-				if($mission["counts"] + 1 >= $mission_master["battle_count"]){
+				$args = array("counts"=>$mission["Counts"] + 1);
+				if($mission["Counts"] + 1 >= $mission_master["battle_count"]){
 					$args["status"] = "'".MissionStatus::clear."'";
 				}
 				$change = $this->update($mission["Id"], $args);
@@ -174,9 +174,9 @@ class Mission_model extends MY_Model
 				continue;
 			}
 			$mission_master = $this->get_master_mission($mission_masters, $mission["MissionId"]);
-			if($mission_master["character_count"] > 0 && $mission["counts"] != $character_count){
-				$args = array("counts"=>$mission["counts"] + 1);
-				if($mission["counts"] + 1 >= $mission_master["character_count"]){
+			if($mission_master["character_count"] > 0 && $mission["Counts"] != $character_count){
+				$args = array("counts"=>$mission["Counts"] + 1);
+				if($mission["Counts"] + 1 >= $mission_master["character_count"]){
 					$args["status"] = "'".MissionStatus::clear."'";
 				}
 				$change = $this->update($mission["Id"], $args);
@@ -238,8 +238,8 @@ class Mission_model extends MY_Model
 			}
 			$mission_master = $this->get_master_mission($mission_masters, $mission["MissionId"]);
 			if($mission_master["gold_count"] > 0){
-				$args = array("counts"=>$mission["counts"] + 1);
-				if($mission["counts"] + 1 >= $mission_master["gold_count"]){
+				$args = array("counts"=>$mission["Counts"] + 1);
+				if($mission["Counts"] + 1 >= $mission_master["gold_count"]){
 					$args["status"] = "'".MissionStatus::clear."'";
 				}
 				$change = $this->update($mission["Id"], $args);
