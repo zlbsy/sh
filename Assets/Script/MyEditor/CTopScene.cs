@@ -23,6 +23,7 @@ namespace App.Controller{
         private bool createMapOk = false;
         private App.Model.Master.MTile currentTile = null;
         private bool isBuild = false;
+        private int setId = 1;
         public override IEnumerator OnLoad( Request req ) 
 		{  
 			yield return 0;
@@ -36,12 +37,21 @@ namespace App.Controller{
             }
             if (createMapOk)
             {
-                GUI.Label(new Rect(100, 50, 100, 30), currentTile.name);
-                if (GUI.Button(new Rect(250, 50, 100, 30), "isBuild:"+isBuild))
+                GUI.Label(new Rect(10, 10, 100, 30), currentTile.name);
+                if (GUI.Button(new Rect(120, 50, 100, 30), "isBuild:"+isBuild))
                 {
                     isBuild = !isBuild;
                 }
                 ChangeCurrentTile();
+                setId = int.Parse(GUI.TextField(new Rect(250, 10, 50, 30),setId.ToString()));
+                if (GUI.Button(new Rect(250, 50, 80, 30), "basemap"))
+                {
+                    
+                }
+                if (GUI.Button(new Rect(350, 50, 80, 30), "tiles"))
+                {
+
+                }
             }
             else
             {
