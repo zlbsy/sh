@@ -16,10 +16,10 @@ class Tool_model extends MY_Model
 		}
 		foreach ($worlds as $world) {
 			$values = array();
-			$values["id"] = $world["id"];
 			$values["x"] = $world["x"];
 			$values["y"] = $world["y"];
 			$values["tile_id"] = $world["tile_id"];
+			$values["map_id"] = $world["map_id"];
 			$values["build_name_cn"] = "'".$world["build_name"]."'";
 			$res = $this->master_db->insert($values, $this->world);
 			if(!$res){

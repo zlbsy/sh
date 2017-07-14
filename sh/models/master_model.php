@@ -148,14 +148,20 @@ class Master_model extends MY_Model
 		$select = "`id`,`tile_id`,`x`,`y`,`level`,`map_id`,`build_name_{$language}` as `build_name`";
 		$table = $this->master_db->world;
 		$order_by = "id asc";
-		$result = $this->master_db->select($select, $table, null, $order_by);
+		$result_select = $this->master_db->select($select, $table, null, $order_by, null, Database_Result::TYPE_DEFAULT);
+		$result = array();
+		while ($row = mysql_fetch_assoc($result_select)) {
+			$row["stages"] = $this->get_master_area($row["tile_id"], $language);
+			$result[] = $row;
+		}
 		return $result;
 	}
-	function get_master_area($language = "cn"){
-		$select = "`id`,`world_id`,`tile_id`,`x`,`y`,`level`,`map_id`,`build_name_{$language}` as `build_name`";
+	function get_master_area($world_id, $language = "cn"){
+		$select = "`id`,`world_id`,`tile_id`,`x`,`y`,`level`";
 		$table = $this->master_db->area;
+		$where = array("`world_id`={$world_id}");
 		$order_by = "id asc";
-		$result = $this->master_db->select($select, $table, null, $order_by);
+		$result = $this->master_db->select($select, $table, $where, $order_by);
 		return $result;
 	}
 	function get_master_horse($language = "cn"){
