@@ -144,15 +144,15 @@ class Master_model extends MY_Model
 		}
 		return $result;
 	}
-	function get_master_world(){
-		$select = "`id`,`tile_id`,`x`,`y`,`level`,`map_id`";
+	function get_master_world($language = "cn"){
+		$select = "`id`,`tile_id`,`x`,`y`,`level`,`map_id`,`build_name_{$language}` as `build_name`";
 		$table = $this->master_db->world;
 		$order_by = "id asc";
 		$result = $this->master_db->select($select, $table, null, $order_by);
 		return $result;
 	}
-	function get_master_area(){
-		$select = "`id`,`world_id`,`tile_id`,`x`,`y`,`level`,`map_id`";
+	function get_master_area($language = "cn"){
+		$select = "`id`,`world_id`,`tile_id`,`x`,`y`,`level`,`map_id`,`build_name_{$language}` as `build_name`";
 		$table = $this->master_db->area;
 		$order_by = "id asc";
 		$result = $this->master_db->select($select, $table, null, $order_by);
