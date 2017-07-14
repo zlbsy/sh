@@ -3,8 +3,32 @@ class Tool_model extends MY_Model
 {
 	var $base_map = "sh109_master.base_map";
 	var $world = "sh109_master.world";
+	var $area = "sh109_master.area";
 	function __construct(){
 		parent::__construct();
+	}
+	function set_stage($world_id, $stages){
+		$this->master_db->trans_begin();
+		$where = array("world_id='{$world_id}'");
+		$res = $this->master_db->delete($this->area, $where);
+		if(!$res){
+			$this->master_db->trans_rollback();
+			return false;
+		}
+		foreach ($stages as $world) {
+			$values = array();
+			$values["x"] = $world["x"];
+			$values["y"] = $world["y"];
+			$values["tile_id"] = $world["tile_id"];
+			$values["world_id"] = $world_id;
+			$res = $this->master_db->insert($values, $this->area);
+			if(!$res){
+				$this->master_db->trans_rollback();
+				return false;
+			}
+		}
+		$this->master_db->trans_commit();
+		return true;
 	}
 	function set_world($worlds){
 		$this->master_db->trans_begin();
