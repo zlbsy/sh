@@ -36,8 +36,8 @@ namespace App.Controller{
             {
                 return;
             }
-            int lastAreaId = App.Util.Global.SUser.self.lastAreaId > 0 ? App.Util.Global.SUser.self.lastAreaId : mBaseMap.Tiles[0].id;
-            CameraTo(lastAreaId);
+            //int lastAreaId = App.Util.Global.SUser.self.lastAreaId > 0 ? App.Util.Global.SUser.self.lastAreaId : mBaseMap.Tiles[0].id;
+            //CameraTo(lastAreaId);
         }
         public void OnClickTutorialTile(){
             App.Model.MTile tile = mBaseMap.Tiles[0];

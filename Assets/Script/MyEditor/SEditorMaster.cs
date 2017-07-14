@@ -10,6 +10,7 @@ namespace App.Service{
     */
 	public class SEditorMaster : SBase {
         public ResponseAll responseAll;
+        public ResponseBase response;
         public SEditorMaster(){
 		}
         public class ResponseAll : ResponseBase
@@ -56,6 +57,37 @@ namespace App.Service{
             HttpClient client = new HttpClient();
             yield return App.Util.SceneManager.CurrentScene.StartCoroutine(client.Send( url, form));
             responseAll = client.Deserialize<ResponseAll>();
-		}
+        }
+        public IEnumerator RequestSetBasemap(int id,int width, int height,string tile_ids)
+        {
+            var url = "tool/set_basemap";
+            WWWForm form = new WWWForm();
+            form.AddField("id", id);
+            form.AddField("width", width);
+            form.AddField("height", height);
+            form.AddField("tile_ids", tile_ids);
+            HttpClient client = new HttpClient();
+            yield return App.Util.SceneManager.CurrentScene.StartCoroutine(client.Send( url, form));
+            response = client.Deserialize<ResponseBase>();
+        }
+        public IEnumerator RequestSetWorld(List<App.Model.Master.MWorld> worlds)
+        {
+            var url = "tool/set_world";
+            WWWForm form = new WWWForm();
+            form.AddField("worlds", JsonFx.JsonWriter.Serialize(worlds));
+            HttpClient client = new HttpClient();
+            yield return App.Util.SceneManager.CurrentScene.StartCoroutine(client.Send( url, form));
+            response = client.Deserialize<ResponseBase>();
+        }
+        public IEnumerator RequestSetStage(int world_id, List<App.Model.Master.MArea> stages)
+        {
+            var url = "tool/set_stage";
+            WWWForm form = new WWWForm();
+            form.AddField("world_id", world_id);
+            form.AddField("stages", JsonFx.JsonWriter.Serialize(stages));
+            HttpClient client = new HttpClient();
+            yield return App.Util.SceneManager.CurrentScene.StartCoroutine(client.Send( url, form));
+            response = client.Deserialize<ResponseBase>();
+        }
 	}
 }

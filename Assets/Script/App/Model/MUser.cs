@@ -18,7 +18,7 @@ namespace App.Model{
         public string password;
         public int lastStageId;
         public int BattlingId;
-        public int lastAreaId{
+        /*public int lastAreaId{
             get{ 
                 if (lastStageId == 0)
                 {
@@ -34,11 +34,11 @@ namespace App.Model{
                 {
                     return App.Util.Global.worlds[0].id;
                 }
-                App.Model.Master.MArea area = AreaCacher.Instance.GetArea(lastStageId);
-                App.Model.Master.MWorld world = System.Array.Find(App.Util.Global.worlds, w => w.id == area.world_id);
+                //App.Model.Master.MArea area = AreaCacher.Instance.GetArea(lastStageId);
+                App.Model.Master.MWorld world = System.Array.Find(App.Util.Global.worlds, w => w.id == lastStageId);
                 return world.id;
             }
-        }
+        }*/
         public MCharacter[] characters;
         public MEquipment[] equipments;
         public MMission[] missions;

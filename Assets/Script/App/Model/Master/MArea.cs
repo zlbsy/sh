@@ -10,7 +10,5 @@ namespace App.Model.Master{
         public MArea(){
         }
         public int world_id;
-        public int map_id;
-        public App.Model.MTile[] stages;
 	}
 }

@@ -38,7 +38,7 @@ namespace App.Controller{
             {
                 return;
             }
-            CameraTo(App.Util.Global.SUser.self.lastWorldId);
+            CameraTo(App.Util.Global.SUser.self.lastStageId);
         }
         /*public override void CameraTo(int id){
             App.Model.Master.MWorld mWorld = System.Array.Find(App.Util.Global.worlds, w=>w.id==id);
@@ -49,6 +49,7 @@ namespace App.Controller{
             App.Model.Master.MWorld tile = App.Util.Global.worlds[0];
             OnClickTile(tile);
         }
+        /*
         /// <summary>
         /// 点击州府县，进入州府县场景
         /// </summary>
@@ -61,12 +62,14 @@ namespace App.Controller{
             //根据州府县坐标获取州府县
             App.Model.Master.MWorld tile = System.Array.Find(mBaseMap.Tiles, _=>_.x == coordinate.x && _.y == coordinate.y) as App.Model.Master.MWorld;
             OnClickTile(tile);
-        }
+        }*/
         public override void OnClickTile(App.Model.MTile tile){
-            if (tile != null)
+            App.Model.Master.MWorld world = tile as App.Model.Master.MWorld;
+            if (world != null)
             {
-                Request req = Request.Create("worldId", tile.id, "nameKey", tile.Master.name);
-                App.Util.SceneManager.LoadScene( App.Util.SceneManager.Scenes.Area.ToString(), req );
+                Request req = Request.Create("world", world);
+                App.Util.SceneManager.LoadScene( App.Util.SceneManager.Scenes.Stage.ToString(), req );
+                //App.Util.SceneManager.LoadScene( App.Util.SceneManager.Scenes.Area.ToString(), req );
             }
         }
         public void GotoTop(){

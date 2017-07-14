@@ -122,7 +122,18 @@ namespace App.View{
                 obj.gameObject.SetActive (true);
                 App.Model.MTile building = System.Array.Find(ViewModel.Tiles.Value, _=>_.x == widthCount && _.y == heightCount);
                 //if(building != null)Debug.LogError(widthCount + ","+heightCount + ", " + building.Master);
-                obj.SetData(heightCount * baseMapMaster.width + widthCount, widthCount, heightCount, tile.id, building != null ? building.Master.id : 0);
+                string name = "";
+                if (building != null)
+                {
+                    if (building is App.Model.Master.MWorld)
+                    {
+                        name = (building as App.Model.Master.MWorld).build_name;
+                    }/*else if (building is App.Model.Master.MArea)
+                    {
+                        name = (building as App.Model.Master.MArea).build_name;
+                    }*/
+                }
+                obj.SetData(heightCount * baseMapMaster.width + widthCount, widthCount, heightCount, tile.id, building != null ? building.Master.id : 0, name);
                 widthCount++;
                 if (widthCount >= baseMapMaster.width)
                 {

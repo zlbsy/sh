@@ -9,8 +9,8 @@ namespace App.Util.Cacher{
         public App.Model.Master.MArea[] GetAreas(int worldId){
             return System.Array.FindAll(datas, _=>_.world_id == worldId);
         }
-        public App.Model.Master.MArea GetArea(int stageId){
+        /*public App.Model.Master.MArea GetArea(int stageId){
             return System.Array.Find(datas, area=>System.Array.Exists(area.stages, stage=>stage.id == stageId));
-        }
+        }*/
     }
 }

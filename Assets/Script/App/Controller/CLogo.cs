@@ -138,11 +138,11 @@ namespace App.Controller{
                 CharacterStarCacher.Instance.Reset(CharacterStarAsset.Data.characterStars);
                 CharacterStarAsset.Clear();
             }));
-            list.Add(sUser.Download(AreaAsset.Url, versions.area, (AssetBundle assetbundle)=>{
+            /*list.Add(sUser.Download(AreaAsset.Url, versions.area, (AssetBundle assetbundle)=>{
                 AreaAsset.assetbundle = assetbundle;
                 AreaCacher.Instance.Reset(AreaAsset.Data.areas);
                 AreaAsset.Clear();
-            }));
+            }));*/
             list.Add(sUser.Download(ItemAsset.Url, versions.item, (AssetBundle assetbundle)=>{
                 ItemAsset.assetbundle = assetbundle;
                 ItemCacher.Instance.Reset(ItemAsset.Data.items);

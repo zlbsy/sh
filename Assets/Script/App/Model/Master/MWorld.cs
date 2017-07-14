@@ -9,11 +9,8 @@ namespace App.Model.Master{
     public class MWorld : App.Model.MTile {
         public MWorld(){
         }
-        //public int id;
-        //public int tile_id;
-        //public int x;
-        //public int y;
-        //public int level;
         public int map_id;
+        public string build_name;
+        public App.Model.MTile[] stages;
 	}
 }

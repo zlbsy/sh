@@ -74,8 +74,10 @@ namespace App.Controller.Battle{
             maxBout = battlefieldMaster.max_bout;
             title.text = battlefieldMaster.name;
             mBaseMap = new MBaseMap();
-            mBaseMap.MapId = battlefieldMaster.map_id;
-            mBaseMap.Tiles = battlefieldMaster.tiles.Clone() as App.Model.MTile[];
+            App.Model.Master.MWorld mWorld = System.Array.Find(Global.worlds, w=>w.id == battlefieldMaster.map_id);
+            mBaseMap.MapId = mWorld.map_id;
+            //mBaseMap.Tiles = battlefieldMaster.tiles.Clone() as App.Model.MTile[];
+            mBaseMap.Tiles = mWorld.stages.Clone() as App.Model.MTile[];
             base.InitMap();
             List<MCharacter> characters = new List<MCharacter>();
             for (int i = 0; i < characterIds.Count; i++)

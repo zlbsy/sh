@@ -31,6 +31,8 @@ namespace App.View{
         public bool IsRoad{ get; set;}
         public bool IsAllCost{ get; set;}
 
+        public int Id{ get; set;}
+        public int MapId{ get; set;}
         public int TileId{ get; private set;}
         public int BuildingId{ get; private set;}
         private GameObject attackTween;
@@ -57,7 +59,7 @@ namespace App.View{
             lineSprite.sprite = App.Model.Master.MTile.GetIcon(0);
             tileName.GetComponent<MeshRenderer>().sortingOrder = 5;
         }
-        public void SetData(int index, int cx, int cy, int tileId, int subId = 0){
+        public void SetData(int index, int cx, int cy, int tileId, int subId = 0, string name = ""){
             this.Index = index;
             this.CoordinateX = cx;
             this.CoordinateY = cy;
@@ -72,8 +74,9 @@ namespace App.View{
                 if (subId > 2000)
                 {
                     tileName.gameObject.SetActive(true);
-                    string nameKey = TileCacher.Instance.Get(subId).name;
-                    tileName.text = Language.Get(nameKey);
+                    //string nameKey = TileCacher.Instance.Get(subId).name;
+                    //tileName.text = Language.Get(nameKey);
+                    tileName.text = name;
                 }
             }
             else
