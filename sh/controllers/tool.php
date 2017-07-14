@@ -20,4 +20,18 @@ class Tool extends MY_Controller {
 			$this->error("Tools->set_tiles error");
 		}
 	}
+	public function set_world()
+	{
+		/*$id = $this->args["id"];
+		$width = $this->args["width"];
+		$height = $this->args["height"];*/
+		$worlds = json_decode($this->args["worlds"]);
+		$tool_model = new Tool_model();
+		$res = $tool_model->set_world($worlds);
+		if($res){
+			$this->out(array());
+		}else{
+			$this->error("Tools->set_tiles error");
+		}
+	}
 }

@@ -2,8 +2,33 @@
 class Tool_model extends MY_Model
 {
 	var $base_map = "sh109_master.base_map";
+	var $world = "sh109_master.world";
 	function __construct(){
 		parent::__construct();
+	}
+	function set_world($worlds){
+		$this->master_db->trans_begin();
+		$sql = "TRUNCATE ".$this->world;
+		$res = $this->master_db->selectSQL($sql);
+		if(!$res){
+			$this->master_db->trans_rollback();
+			return false;
+		}
+		foreach ($worlds as $world) {
+			$values = array();
+			//$values["id"] = $world["id"];
+			$values["x"] = $world["x"];
+			$values["y"] = $world["y"];
+			$values["tile_id"] = $world["tile_id"];
+			$values["build_name_cn"] = "'".$world["build_name"]."'";
+			$res = $this->master_db->insert($values, $this->world);
+			if(!$res){
+				$this->master_db->trans_rollback();
+				return false;
+			}
+		}
+		$this->master_db->trans_commit();
+		return true;
 	}
 	function set_basemap($id, $width, $height, $tile_ids){
 		$basemap = $this->get_basemap($id);
