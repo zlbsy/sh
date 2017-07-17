@@ -188,7 +188,7 @@ class User_model extends MY_Model
 			$user = $this->getSessionData("user");
 			$mission_change = false;
 			$mission_model = new Mission_model();
-			$mission_result = $mission_model->progress_mission_change($user, $k, $mission_change);
+			$mission_result = $mission_model->progress_mission_change($user, $k, $v, $mission_change);
 			if(!$mission_result){
 				$this->user_db->trans_rollback();
 				return false;

@@ -17,7 +17,7 @@ class Tool extends MY_Controller {
 		if($res){
 			$this->out(array());
 		}else{
-			$this->error("Tools->set_tiles error");
+			$this->error("Tools->set_tiles error sql=". $tool_model->master_db->last_sql);
 		}
 	}
 	public function set_world()
@@ -28,7 +28,7 @@ class Tool extends MY_Controller {
 		if($res){
 			$this->out(array());
 		}else{
-			$this->error("Tools->set_tiles error");
+			$this->error("Tools->set_world error sql=". $tool_model->master_db->last_sql);
 		}
 	}
 	public function set_stage()

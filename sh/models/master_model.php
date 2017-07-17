@@ -245,6 +245,21 @@ class Master_model extends MY_Model
 		$result = $this->master_db->select($select, $table, $where, $order_by);
 		return $result;
 	}
+	function get_master_scenarios($language="cn"){
+		$select = "`id`,`script_{$language}` as `script`";
+		$table = $this->master_db->scenario;
+		$order_by = "id asc";
+		$result_array = $this->master_db->select($select, $table, null, $order_by);
+		$result = array();
+		foreach($result_array as $val){
+			$arr = explode(";",$val["script"]);
+			foreach($arr as $k=>$v){
+				$arr[$k] = trim($v);
+			}
+			$result[] = $arr;
+		}
+		return $result;
+	}
 	function get_master_tutorial($language="cn"){
 		$select = "`id`,`script_{$language}` as `script`";
 		$table = $this->master_db->tutorial;
