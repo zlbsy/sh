@@ -36,6 +36,7 @@ namespace App.Util.LSharp{
             dialog.ShowFocus(target.position.x -w*0.5f + x, Camera.main.pixelHeight - target.position.y - h*0.5f + y, w, h);
         }
         public void Clickmask3d(string[] arguments){
+            //arguments[0] = "SceneWorld.3DPanel.BaseMap.Tile_14_3";
             string[] paths = arguments[0].Split('.');
             float x = float.Parse(arguments[1]);
             float y = float.Parse(arguments[2]);
@@ -57,14 +58,16 @@ namespace App.Util.LSharp{
             CTutorialDialog dialog = Global.SceneManager.FindDialog(SceneManager.Prefabs.TutorialDialog) as CTutorialDialog;
             int intDefault = LayerMask.NameToLayer("Default");
             //Debug.LogError("intDefault = " + intDefault);
-            //int intUI = LayerMask.NameToLayer("UI");
+            int intUI = LayerMask.NameToLayer("UI");
             //Debug.LogError("intUI = " + intUI);
             Camera[] cameras = App.Util.SceneManager.CurrentScene.GetComponentsInChildren<Camera>();
             Camera camera3D = System.Array.Find(cameras, c=>c.gameObject.layer == intDefault);
-            //Camera cameraUI = System.Array.Find(cameras, c=>c.gameObject.layer == intUI);
+            Camera cameraUI = System.Array.Find(cameras, c=>c.gameObject.layer == intUI);
             //Debug.LogError("cameraUI w h = " + cameraUI.pixelWidth + ", " + cameraUI.pixelHeight);
             //Debug.LogError("camera3D = " + RectTransformUtility.WorldToScreenPoint(camera3D,target.position));
             //Debug.LogError("cameraUI = " + RectTransformUtility.WorldToScreenPoint(cameraUI,target.position));
+            //Vector2 cameraVec = new Vector2(target.position.x - camera3D.transform.position.x, target.position.y - camera3D.transform.position.y);
+            //Debug.LogError("target.position="+target.position);
             Vector2 vec = RectTransformUtility.WorldToScreenPoint(camera3D, target.position);
             dialog.ShowFocus(vec.x + x, Camera.main.pixelHeight - vec.y + y, w, h);
         }
@@ -125,9 +128,9 @@ namespace App.Util.LSharp{
             LSharpScript.Instance.Analysis();
         }
         public void Camerato(string[] arguments){
-            int worldId = int.Parse(arguments[0]);
+            int id = int.Parse(arguments[0]);
             App.Controller.Common.CBaseMap cBasemap = SceneManager.CurrentScene as App.Controller.Common.CBaseMap;
-            cBasemap.CameraTo(worldId);
+            cBasemap.CameraTo(id);
         }
 	}
 }

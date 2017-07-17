@@ -15,6 +15,7 @@ namespace App.View{
         [SerializeField]public SpriteRenderer lineSprite;
         [SerializeField]public SpriteRenderer movingSprite;
         [SerializeField]public SpriteRenderer attackSprite;
+        [SerializeField]public SpriteRenderer textBackground;
         [SerializeField]public TextMesh tileName;
 
         public int MovingPower{ get; set;}
@@ -57,7 +58,9 @@ namespace App.View{
         }
         void Start(){
             lineSprite.sprite = App.Model.Master.MTile.GetIcon(0);
-            tileName.GetComponent<MeshRenderer>().sortingOrder = 5;
+            buildingSprite.transform.localRotation = Quaternion.Euler(-30f, 0f, 0f);
+            tileName.transform.localRotation = Quaternion.Euler(-30f, 0f, 0f);
+            tileName.GetComponent<MeshRenderer>().sortingOrder = 6;
         }
         public void SetData(int index, int cx, int cy, int tileId, int subId = 0, string name = ""){
             this.Index = index;
@@ -67,6 +70,7 @@ namespace App.View{
             this.BuildingId = subId;
             tileSprite.sprite = App.Model.Master.MTile.GetIcon(tileId);
             tileName.gameObject.SetActive(false);
+            textBackground.gameObject.SetActive(false);
             if (subId > 0)
             {
                 buildingSprite.gameObject.SetActive(true);
@@ -74,6 +78,7 @@ namespace App.View{
                 if (subId > 2000)
                 {
                     tileName.gameObject.SetActive(true);
+                    textBackground.gameObject.SetActive(true);
                     //string nameKey = TileCacher.Instance.Get(subId).name;
                     //tileName.text = Language.Get(nameKey);
                     tileName.text = name;

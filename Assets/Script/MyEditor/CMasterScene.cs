@@ -63,6 +63,7 @@ namespace App.Controller{
                     apis.Add("star", CreateScriptableObjectMasterStarRun());
                     apis.Add("loginbonus", CreateScriptableObjectMasterLoginBonusRun());
                     apis.Add("exp", CreateScriptableObjectMasterExpRun());
+                    apis.Add("scenario", CreateScriptableObjectMasterScenarioRun());
                     apiKeys = apis.Keys.ToArray();
 
                     assets.Add("face", CreateScriptableObjectFaceAssetRun());
@@ -193,6 +194,17 @@ namespace App.Controller{
             UnityEditor.AssetDatabase.CreateAsset(faceAsset, string.Format("Assets/Editor Default Resources/ScriptableObject/{0}.asset", App.Model.Scriptable.FaceAsset.Name));
             UnityEditor.AssetDatabase.Refresh();
             yield break;
+        }
+        IEnumerator CreateScriptableObjectMasterScenarioRun(){
+            SEditorMaster sMaster = new SEditorMaster();
+            yield return StartCoroutine (sMaster.RequestAll("scenario"));
+            int i = 1;
+            foreach(List<string> scenario in sMaster.responseAll.scenarios){
+                var asset = ScriptableObject.CreateInstance<App.Model.Scriptable.ScenarioAsset>();
+                asset.script = scenario;
+                UnityEditor.AssetDatabase.CreateAsset(asset, string.Format("Assets/Editor Default Resources/ScriptableObject/scenario/{0}.asset", i++));
+                UnityEditor.AssetDatabase.Refresh();
+            }
         }
         IEnumerator CreateScriptableObjectMasterTutorialRun()
         {

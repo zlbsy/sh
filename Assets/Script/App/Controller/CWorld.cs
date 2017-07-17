@@ -38,7 +38,8 @@ namespace App.Controller{
             {
                 return;
             }
-            CameraTo(App.Util.Global.SUser.self.lastStageId);
+            int lastStageId = App.Util.Global.SUser.self.lastStageId;
+            CameraTo(lastStageId > 0 ? lastStageId : 1);
         }
         /*public override void CameraTo(int id){
             App.Model.Master.MWorld mWorld = System.Array.Find(App.Util.Global.worlds, w=>w.id==id);
@@ -46,7 +47,7 @@ namespace App.Controller{
             base.CameraTo(id);
         }*/
         public void OnClickTutorialTile(){
-            App.Model.Master.MWorld tile = App.Util.Global.worlds[0];
+            App.Model.Master.MWorld tile = System.Array.Find(App.Util.Global.worlds, w=>w.id == Global.Constant.tutorial_world_id);
             OnClickTile(tile);
         }
         /*

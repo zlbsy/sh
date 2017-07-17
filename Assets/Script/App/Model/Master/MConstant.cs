@@ -30,6 +30,10 @@ namespace App.Model.Master{
         /// </summary>
         public int tutorial_gacha = 4;
         /// <summary>
+        /// 教学WorldId
+        /// </summary>
+        public int tutorial_world_id = 2;
+        /// <summary>
         /// 女英雄头像ID范围
         /// </summary>
         public int[] female_heads;

@@ -24,11 +24,17 @@ namespace App.Util.LSharp{
             subClasses.Add("Var", LSharpVarlable.Instance);
             subClasses.Add("Tutorial", LSharpTutorial.Instance);
             subClasses.Add("Wait", LSharpWait.Instance);
+            if (Global.SUser.self != null && Global.SUser.self.characters != null && Global.SUser.self.characters.Length > 0)
+            {
+                UpdatePlayer();
+                UpdateVarList();
+            }
+        }
+        public void UpdatePlayer(){
             LSharpVarlable.SetVarlable("player_character_id", System.Array.Find(Global.SUser.self.characters, c=>c.CharacterId >= App.Util.Global.Constant.user_characters[0]).CharacterId.ToString());
             LSharpVarlable.SetVarlable("player_id", Global.SUser.self.id.ToString());
             LSharpVarlable.SetVarlable("player_name", Global.SUser.self.name);
             LSharpVarlable.SetVarlable("player_nickname", Global.SUser.self.Nickname);
-            UpdateVarList();
         }
         public void UpdateVarList(){
             if (LSharpVarlable.Instance.VarList.Count == 0 && Global.SUser.self.Progress != null)
@@ -40,9 +46,12 @@ namespace App.Util.LSharp{
             }
         }
         public void UpdateBattleList(){
+            if (Global.SUser.self == null)
+            {
+                return;
+            }
             foreach(App.Model.MBattleChild mBattleChild in Global.SUser.self.battlelist){
                 LSharpVarlable.SetVarlable(string.Format("battlefield_{0}", mBattleChild.BattlefieldId), "1");
-                Debug.LogError("UpdateBattleList = "+string.Format("battlefield_{0}", mBattleChild.BattlefieldId));
             }
         }
         public void ToList(List<string> datas){

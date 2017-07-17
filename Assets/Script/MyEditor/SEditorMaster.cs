@@ -40,6 +40,7 @@ namespace App.Service{
             public App.Model.Master.MCharacterStar[] character_stars;
             public App.MyEditor.MAvatar avatar;
             public List<string>[] tutorials;
+            public List<string>[] scenarios;
 		}
         public IEnumerator RequestAll(string type = "")
 		{

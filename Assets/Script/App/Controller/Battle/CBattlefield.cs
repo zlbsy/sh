@@ -55,6 +55,7 @@ namespace App.Controller.Battle{
             characterIds = request.Get<List<int>>("characterIds");
             fromScene = request.Get<App.Util.SceneManager.Scenes>("fromScene");
             fromRequest = request.Get<Request>("fromRequest");
+            App.Util.LSharp.LSharpVarlable.SetVarlable(string.Format("battlefield_{0}", battlefieldId), "0");
             App.Util.LSharp.LSharpScript.Instance.UpdateBattleList();
             yield return this.StartCoroutine(base.OnLoad(request));
         }

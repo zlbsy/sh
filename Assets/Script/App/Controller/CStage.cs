@@ -50,12 +50,12 @@ namespace App.Controller{
             VCharacter vCharacter = vBaseMap.Characters.Find(_=>_.ViewModel.CoordinateX.Value == coordinate.x && _.ViewModel.CoordinateY.Value == coordinate.y);
             if (vCharacter != null)
             {
-                App.Util.LSharp.LSharpScript.Instance.Analysis(new List<string>{string.Format("Call.characterclick_{0}();", vCharacter.ViewModel.CharacterId.Value)});
+                App.Util.LSharp.LSharpScript.Instance.Analysis(new List<string>{string.Format("Call.characterclick_{0}();", vCharacter.ViewModel.Id.Value)});
             }
         }
         public void GotoArea(){
             Request req = Request.Create("worldId", saveRequest.Get<int>("worldId"), "nameKey", saveRequest.Get<string>("nameKey"));
-            App.Util.SceneManager.LoadScene( App.Util.SceneManager.Scenes.Area.ToString(), req );
+            App.Util.SceneManager.LoadScene( App.Util.SceneManager.Scenes.World.ToString(), req );
         }
 	}
 }

@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Script/MyEditor/Map.unity
+- path: Assets/Scene/Logo.unity
   isLoaded: 1
   isActive: 1

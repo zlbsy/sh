@@ -27,6 +27,7 @@ namespace App.Controller{
         private bool deleteBuild = false;
         private int setId = 1;
         private int mapId = 1;
+        private int worldId = 0;
         private string buildName = "";
         public override IEnumerator OnLoad( Request req ) 
 		{  
@@ -65,7 +66,9 @@ namespace App.Controller{
                 }
                 if (GUI.Button(new Rect(350, 80, 150, 30), "save world"))
                 {
-                    StartCoroutine(SaveWorld());
+                    CConfirmDialog.Show("确认","保存World吗？",()=>{
+                        StartCoroutine(SaveWorld());
+                    });
                 }
                 if (GUI.Button(new Rect(350, 110, 150, 30), "change world id"))
                 {
@@ -222,7 +225,7 @@ namespace App.Controller{
             }
             else
             {
-                vTile.SetData(vTile.Index, vTile.CoordinateX, vTile.CoordinateY, currentTile.id, vTile.BuildingId);
+                vTile.SetData(vTile.Index, vTile.CoordinateX, vTile.CoordinateY, currentTile.id, vTile.BuildingId, vTile.tileName.text);
                 currentVTile = null;
             }
             //OnClickTile(tile);
@@ -295,6 +298,7 @@ namespace App.Controller{
                 {
                     VTile vTile = mapSearch.GetTile(world.x, world.y);
                     vTile.MapId = world.map_id;
+                    vTile.Id = world.id;
                     vTile.SetData(vTile.Index, vTile.CoordinateX, vTile.CoordinateY, vTile.TileId, world.tile_id, world.build_name);
                 }
             }

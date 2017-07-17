@@ -65,6 +65,7 @@ namespace App.Controller.Register{
                     yield break;
                 }
                 yield return StartCoroutine(Global.SUser.RequestGet());
+                App.Util.LSharp.LSharpScript.Instance.UpdatePlayer();
                 App.Util.SceneManager.LoadScene( App.Util.SceneManager.Scenes.Top.ToString() );
             }
         }
