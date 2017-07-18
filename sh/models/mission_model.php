@@ -21,10 +21,13 @@ class Mission_model extends MY_Model
 		$result = $this->master_db->select($select, $table, $where);
 		return $result;
 	}
-	function get_mission_list($user_id){
+	function get_mission_list($user_id, $is_all = false){
 		$select = "`id` as Id, `user_id` as UserId, `mission_id` as MissionId, `status` as Status, `counts` as Counts, `update_time`";
 		$table = $this->user_db->mission;
 		$where = array("`user_id`={$user_id}");
+		if(!$is_all){
+			$where[] = "`status`<>'complete'";
+		}
 		$order_by = "id asc";
 		$result = $this->user_db->select($select, $table, $where, $order_by);
 		return $result;
@@ -58,15 +61,15 @@ class Mission_model extends MY_Model
 			$this->user_db->trans_rollback();
 			$this->error("mission complete error ");
 		}
-		/*$new_missions = $this->get_master_missions($mission["MissionId"]);
-		foreach($new_missions as $new_mission){
-			$new_res = $this->set_new_mission($user, $new_mission);
-			if(!$new_res){
-				$this->user_db->trans_rollback();
-				$this->error("set new mission error ");
-			}
-		}*/
 		if($mission["MissionId"] == 1){
+			$new_missions = $this->get_master_missions($mission["MissionId"]);
+			foreach($new_missions as $new_mission){
+				$new_res = $this->set_new_mission($user, $new_mission);
+				if(!$new_res){
+					$this->user_db->trans_rollback();
+					$this->error("set new mission error ");
+				}
+			}
 			$mission_change = false;
 			$this->mission_init($user,$mission_change);
 		}
@@ -97,12 +100,15 @@ class Mission_model extends MY_Model
 				continue;
 			}
 			if($mission_master["mission_type"] == "normal" || $mission_master["mission_type"] == "events"){
-				if($mission_master["parent_id"] > 0){
-					continue;
-				}
 				$user_mission = $this->get_user_mission($user["missions"], $mission_master["id"]);
 				if(!is_null($user_mission)){
 					continue;
+				}
+				if($mission_master["parent_id"] > 0){
+					$parent_mission = $this->get_user_mission($user["missions"], $mission_master["parent_id"]);
+					if(is_null($parent_mission) || $parent_mission["Status"] == MissionStatus::init){
+						continue;
+					}
 				}
 				$mission_change = true;
 				$res = $this->set_new_mission($user, $mission_master);
