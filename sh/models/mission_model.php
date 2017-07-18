@@ -79,7 +79,7 @@ class Mission_model extends MY_Model
 		$this->user_db->trans_commit();
 		return true;
 	}
-	function mission_plus($missionId){
+	function mission_plus($user, $missionId){
 		if($missionId == 1){
 			return true;
 		}
@@ -168,7 +168,7 @@ class Mission_model extends MY_Model
 				if(!$change){
 					return false;
 				}
-				$add = $this->mission_plus($mission["MissionId"]);
+				$add = $this->mission_plus($user, $mission["MissionId"]);
 				if(!$add){
 					return false;
 				}
@@ -182,7 +182,7 @@ class Mission_model extends MY_Model
 				if(!$change){
 					return false;
 				}
-				$add = $this->mission_plus($mission["MissionId"]);
+				$add = $this->mission_plus($user, $mission["MissionId"]);
 				if(!$add){
 					return false;
 				}
@@ -210,7 +210,7 @@ class Mission_model extends MY_Model
 				if(!$change){
 					return false;
 				}
-				$add = $this->mission_plus($mission["MissionId"]);
+				$add = $this->mission_plus($user, $mission["MissionId"]);
 				if(!$add){
 					return false;
 				}
@@ -234,7 +234,7 @@ class Mission_model extends MY_Model
 				if(!$change){
 					return false;
 				}
-				$add = $this->mission_plus($mission["MissionId"]);
+				$add = $this->mission_plus($user, $mission["MissionId"]);
 				if(!$add){
 					return false;
 				}
@@ -260,7 +260,7 @@ class Mission_model extends MY_Model
 					if(!$change){
 						return false;
 					}
-					$add = $this->mission_plus($mission["MissionId"]);
+					$add = $this->mission_plus($user, $mission["MissionId"]);
 					if(!$add){
 						return false;
 					}
@@ -288,7 +288,7 @@ class Mission_model extends MY_Model
 				if(!$change){
 					return false;
 				}
-				$add = $this->mission_plus($mission["MissionId"]);
+				$add = $this->mission_plus($user, $mission["MissionId"]);
 				if(!$add){
 					return false;
 				}

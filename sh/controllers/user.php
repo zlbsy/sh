@@ -35,7 +35,12 @@ class User extends MY_Controller {
 	{
 		$user_model = new User_model();
 		$result = $user_model->set_story_progress($this->args["user_id"], $this->args["k"], $this->args["v"]);
-		$this->out(array());
+		if($result){
+			$user = $this->getSessionData("user");
+			$this->out(array("user",$user));
+		}else{
+			$this->error("progress failed");
+		}
 	}
 	public function get()
 	{
