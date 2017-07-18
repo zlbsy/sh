@@ -260,6 +260,12 @@ class Master_model extends MY_Model
 		}
 		return $result;
 	}
+	function get_master_story_progress(){
+		$select = "`k`";
+		$table = $this->master_db->story_progress;
+		$result = $this->master_db->select($select, $table);
+		return $result;
+	}
 	function get_master_tutorial($language="cn"){
 		$select = "`id`,`script_{$language}` as `script`";
 		$table = $this->master_db->tutorial;

@@ -10,6 +10,10 @@ class Master extends MY_Controller {
 	{
 		$result = array();
 		$master_model = new Master_model();
+		if($args["story_progress"]){
+			$master_story_progress = $master_model->get_master_story_progress();
+			$result["story_progress_keys"]=$master_story_progress;
+		}
 		if($args["constant"]){
 			$master_constant = $master_model->get_master_constant();
 			$result["constant"]=$master_constant;
