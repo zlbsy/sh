@@ -37,7 +37,7 @@ namespace App.Util.LSharp{
             LSharpVarlable.SetVarlable("player_nickname", Global.SUser.self.Nickname);
         }
         public void UpdateVarList(){
-            if (LSharpVarlable.Instance.VarList.Count == 0 && Global.SUser.self.Progress != null)
+            if (Global.SUser.self.Progress != null)
             {
                 Dictionary<string, int> progress = Global.SUser.self.Progress;
                 foreach(string k in progress.Keys){
@@ -101,7 +101,10 @@ namespace App.Util.LSharp{
             }
             if (lineList.Count == 0)
             {
-                dataList.RemoveAt(0);
+                if (dataList.Count > 0)
+                {
+                    dataList.RemoveAt(0);
+                }
                 if (dataList.Count > 0)
                 {
                     List<string>[] arr = dataList[0];

@@ -223,6 +223,11 @@ namespace App.Model{
             this.Hp = this.Ability.HpMax;
             this.Mp = this.Ability.MpMax;
         }
+        public bool CanHeal{
+            get{ 
+                return System.Array.Exists(this.Skills, s=>App.Model.Master.MSkill.IsSkillType(s.Master, SkillType.heal));
+            }
+        }
         public int HpMax{
             get{ 
                 return this.Ability.HpMax;
@@ -325,6 +330,27 @@ namespace App.Model{
             get{ 
                 return IsSkillEffectSpecial(App.Model.Master.SkillEffectSpecial.move_after_attack);
             }
+        }
+        public float TileAid(App.View.VTile vTile){
+            int aid = 0;
+            List<App.Model.Master.MSkill> skills = null;
+            foreach (MSkill skill in this.Skills)
+            {
+                App.Model.Master.MSkill mSkill = skill.Master;
+                if (!App.Model.Master.MSkill.IsSkillType(mSkill, SkillType.help) || mSkill.effect.special != App.Model.Master.SkillEffectSpecial.tile)
+                {
+                    continue;
+                }
+                if (mSkill.wild > 0 && System.Array.Exists(App.Util.Global.Constant.tile_wild, v=>v==vTile.TileId))
+                {
+                    aid += mSkill.wild;
+                }
+                if (mSkill.swim > 0 && System.Array.Exists(App.Util.Global.Constant.tile_swim, v=>v==vTile.TileId))
+                {
+                    aid += mSkill.swim;
+                }
+            }
+            return aid == 0 ? 1f : (100 + aid) * 0.01f;
         }
         public List<int[]> SkillDistances{
             get{
@@ -490,6 +516,15 @@ namespace App.Model{
             }
             get{ 
                 return this.ViewModel.Action.Value;
+            }
+        }
+        /// <summary>
+        /// 是否残血
+        /// </summary>
+        /// <value><c>true</c> if this instance is pant; otherwise, <c>false</c>.</value>
+        public bool IsPant{
+            get{ 
+                return this.Hp / this.HpMax < App.Util.Global.Constant.is_pant;
             }
         }
         public WeaponType WeaponType{

@@ -195,6 +195,7 @@ namespace App.Controller{
             App.Model.Master.MBaseMap topMapMaster = baseMapMaster;
             Vector2 coordinate = topMapMaster.GetCoordinateFromIndex(index);
             App.View.VTile vTile = this.mapSearch.GetTile(coordinate);
+            Debug.Log("vTile:"+vTile.Index+","+vTile.TileId+",("+vTile.CoordinateX+","+vTile.CoordinateY+")");
             if (isBuild)
             {
                 if (vTile.BuildingId > 0)

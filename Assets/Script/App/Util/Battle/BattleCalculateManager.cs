@@ -31,7 +31,7 @@ namespace App.Util.Battle{
         /// <param name="targetCharacter">Target character.</param>
         public bool AttackHitrate(MCharacter attackCharacter, MCharacter targetCharacter){
             //游戏教学时100%命中
-            if (Global.SUser.self.GetValue("tutorial") < Global.Constant.tutorial_end)
+            if (Global.SUser.self.IsTutorial)
             {
                 return true;
             }
@@ -40,8 +40,11 @@ namespace App.Util.Battle{
             {
                 return true;
             }
-            int attackValue = attackCharacter.Ability.Knowledge + attackCharacter.Ability.Speed * 2;
-            int targetValue = targetCharacter.Ability.Knowledge + targetCharacter.Ability.Speed * 2;
+            //获取地形辅助
+            float tileAid = attackCharacter.TileAid(cBattlefield.mapSearch.GetTile(attackCharacter.CoordinateX, attackCharacter.CoordinateY));
+            float targetTileAid = attackCharacter.TileAid(cBattlefield.mapSearch.GetTile(targetCharacter.CoordinateX, targetCharacter.CoordinateY));
+            int attackValue = (int)((attackCharacter.Ability.Knowledge + attackCharacter.Ability.Speed * 2) * tileAid);
+            int targetValue = (int)((targetCharacter.Ability.Knowledge + targetCharacter.Ability.Speed * 2) * targetTileAid);
             int r;
             if(attackValue > 2*targetValue){
                 r = 100;
@@ -141,6 +144,9 @@ namespace App.Util.Battle{
         /// <param name="attackCharacter">Attack character.</param>
         /// <param name="targetCharacter">Target character.</param>
         public int Hert(MCharacter attackCharacter, MCharacter targetCharacter, VTile tile = null, VTile targetTile = null){
+            //获取地形辅助
+            float tileAid = attackCharacter.TileAid(tile);
+            float targetTileAid = targetCharacter.TileAid(targetTile);
             MSkill skill = attackCharacter.CurrentSkill;
             App.Model.Master.MSkill skillMaster = skill.Master;
             if (tile == null)
@@ -152,7 +158,8 @@ namespace App.Util.Battle{
                 targetTile = cBattlefield.mapSearch.GetTile(targetCharacter.CoordinateX, targetCharacter.CoordinateY);
             }
             float attack = System.Array.Exists(skillMaster.types, s=>s==SkillType.attack) ? attackCharacter.Ability.PhysicalAttack : attackCharacter.Ability.MagicAttack;
-            //attack *= skill.Master.power;
+            //地形辅助
+            attack *= tileAid;
             if (attackCharacter.IsPike && targetCharacter.IsKnife)
             {
                 //枪剑类克制刀类
@@ -167,6 +174,8 @@ namespace App.Util.Battle{
                 attack *= 1.2f;
             }
             float defense = System.Array.Exists(skillMaster.types, s=>s==SkillType.attack) ? targetCharacter.Ability.PhysicalDefense : targetCharacter.Ability.MagicDefense;
+            //地形辅助
+            defense *= targetTileAid;
             if (attackCharacter.IsLongWeapon && targetCharacter.IsShortWeapon)
             {
                 //长兵器克制短兵器
@@ -180,8 +189,18 @@ namespace App.Util.Battle{
                 //远程类兵器克制长兵器
                 defense *= 0.8f;
             }
-            float result = skillMaster.strength * 0.3f + attack - defense;
-            Debug.LogError("result="+result + ", skillMaster.strength="+skillMaster.strength +", attack=" + attack+", defense="+defense);
+            App.Model.Master.MTile mTile = TileCacher.Instance.Get(targetTile.TileId);
+            //地形对技能威力的影响
+            int five_elements = (int)skillMaster.five_elements;
+            float skillStrength = skillMaster.strength * mTile.strategys[five_elements];
+            //抗性对技能威力的影响
+            int resistance = targetCharacter.Master.resistances[five_elements];
+            if (resistance > 0)
+            {
+                skillStrength *= ((100 - resistance) * 0.01f);
+            }
+            float result = skillStrength * 0.3f + attack - defense;
+            //Debug.LogError("result="+result + ", skillMaster.strength="+skillMaster.strength +", attack=" + attack+", defense="+defense);
             if (attackCharacter.MoveType == MoveType.cavalry && targetCharacter.MoveType == MoveType.infantry && !targetCharacter.IsArcheryWeapon)
             {
                 //骑兵克制近身步兵

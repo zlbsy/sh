@@ -197,6 +197,7 @@
      <Compile Include="Assets\Script\App\Model\Scriptable\ScenarioAsset.cs" />
      <Compile Include="Assets\Script\App\Model\Scriptable\ShopAsset.cs" />
      <Compile Include="Assets\Script\App\Model\Scriptable\SkillAsset.cs" />
+     <Compile Include="Assets\Script\App\Model\Scriptable\StoryProgressAsset.cs" />
      <Compile Include="Assets\Script\App\Model\Scriptable\StrategyAsset.cs" />
      <Compile Include="Assets\Script\App\Model\Scriptable\TileAsset.cs" />
      <Compile Include="Assets\Script\App\Model\Scriptable\TutorialAsset.cs" />
@@ -410,7 +411,7 @@
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>
  </Reference>
  <Reference Include="HOTween">
- <HintPath>/Users/zhanglubin/git/sh/Assets/HOTween/Plugins/HOTween.dll</HintPath>
+ <HintPath>/Users/lubin.zhang/Documents/git/sh/Assets/HOTween/Plugins/HOTween.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>

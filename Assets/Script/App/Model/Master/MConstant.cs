@@ -45,5 +45,17 @@ namespace App.Model.Master{
         /// AI判断是否治疗的HP比例
         /// </summary>
         public float weak_hp = 0.2f;
+        /// <summary>
+        /// 野生特技适用地形
+        /// </summary>
+        public int[] tile_wild = new int[]{3,4,6,7};
+        /// <summary>
+        /// 水性特技适用地形
+        /// </summary>
+        public int[] tile_swim = new int[]{5};
+        /// <summary>
+        /// 残血状态
+        /// </summary>
+        public float is_pant = 0.2f;
 	}
 }

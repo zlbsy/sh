@@ -55,7 +55,12 @@ namespace App.Controller.Mission{
         private void ScrollViewSets(){
             App.Model.Master.MMission.MissionType type = types[typeIndex];
             title.text = Language.Get(string.Format("mission_{0}", type.ToString()));
-            MMission[] missions = System.Array.FindAll(Global.SUser.self.missions, m=>m.Master.mission_type == type && m.Status != MMission.MissionStatus.complete);
+            MMission[] missions = System.Array.FindAll(Global.SUser.self.missions, m=>m.Master.mission_type == type);
+            System.Array.Sort(missions, (a, b)=>{
+                int va = a.Status == MMission.MissionStatus.clear ? 1 : 0;
+                int vb = b.Status == MMission.MissionStatus.clear ? 1 : 0;
+                return vb - va;
+            });
             ScrollViewSets(content, childItem, missions);
         }
         public void ClickComplete(App.View.Mission.VMissionChild child){

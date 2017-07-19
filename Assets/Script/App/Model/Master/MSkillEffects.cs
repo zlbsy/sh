@@ -80,7 +80,11 @@ namespace App.Model.Master{
         /// <summary>
         /// 固定伤害攻击
         /// </summary>
-        fixed_damage
+        fixed_damage,
+        /// <summary>
+        /// 地形辅助
+        /// </summary>
+        tile,
     }
     [System.Serializable]
 	public class MSkillEffects : MBase {

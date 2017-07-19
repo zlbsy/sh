@@ -33,8 +33,55 @@ namespace App.Util.Battle{
             cBattlefield.StartCoroutine(Execute());
         }
         public IEnumerator Execute(){
-            //TODO::行动顺序
-            mCharacter = System.Array.Find(mBaseMap.Characters, c=>c.Belong == this.belong && c.Hp > 0 && !c.IsHide && !c.ActionOver);
+            //行动顺序
+            MCharacter[] characters = System.Array.FindAll(mBaseMap.Characters, c=>c.Belong == this.belong && c.Hp > 0 && !c.IsHide && !c.ActionOver);
+            System.Array.Sort(characters, (a, b)=>{
+                VTile aTile = cBattlefield.mapSearch.GetTile(a.CoordinateX, a.CoordinateY);
+                VTile bTile = cBattlefield.mapSearch.GetTile(b.CoordinateX, b.CoordinateY);
+                App.Model.Master.MTile aMTile = TileCacher.Instance.Get(aTile.TileId);
+                App.Model.Master.MTile bMTile = TileCacher.Instance.Get(bTile.TileId);
+                //恢复地形
+                if(aMTile.heal > bMTile.heal){
+                    return 1;
+                }else if(aMTile.heal > bMTile.heal){
+                    return -1;
+                }
+                bool aPant = a.IsPant;
+                bool bPant = b.IsPant;
+                //残血状态
+                if(aPant && !bPant){
+                    return 1;
+                }else if(!aPant && bPant){
+                    return -1;
+                }
+                bool aMagic = a.WeaponType == WeaponType.magic;
+                bool bMagic = b.WeaponType == WeaponType.magic;
+                bool aHeal = a.CanHeal;
+                bool bHeal = b.CanHeal;
+                //攻击型法师
+                if(aMagic && !bMagic && !aHeal){
+                    return 1;
+                }else if(!aMagic && bMagic && !bHeal){
+                    return -1;
+                }
+                bool aArchery = a.IsArcheryWeapon;
+                bool bArchery = b.IsArcheryWeapon;
+                //远程类
+                if(aArchery && !bArchery){
+                    return 1;
+                }else if(!aArchery && bArchery){
+                    return -1;
+                }
+                //近战类
+                if(!aMagic && bMagic){
+                    return 1;
+                }else if(aMagic && !bMagic){
+                    return -1;
+                }
+                //恢复型法师
+                return 0;
+            });
+            mCharacter = characters[0];
             MSkill attackSkill = System.Array.Find(mCharacter.Skills, delegate(MSkill skill){
                 App.Model.Master.MSkill skillMaster = skill.Master;
                 return System.Array.Exists(skillMaster.types, s=>(s==SkillType.attack || s==SkillType.magic)) 
@@ -102,6 +149,10 @@ namespace App.Util.Battle{
             List<VTile> tileList = null;
             foreach (MCharacter character in mBaseMap.Characters)
             {
+                if (character.Hp == 0 || character.IsHide)
+                {
+                    continue;
+                }
                 if (cBattlefield.charactersManager.IsSameBelong(mCharacter.Belong, character.Belong))
                 {
                     continue;
@@ -153,6 +204,7 @@ namespace App.Util.Battle{
             {
                 return;
             }
+            float tileAid = 0;
             foreach (MCharacter character in mBaseMap.Characters)
             {
                 if (character.Hp == 0 || character.IsHide)
@@ -164,6 +216,7 @@ namespace App.Util.Battle{
                     continue;
                 }
                 VTile vTile = GetNearestNode(character, cBattlefield.tilesManager.CurrentMovingTiles);
+                //可否攻击
                 bool canAttack = cBattlefield.charactersManager.IsInSkillDistance(character.CoordinateX, character.CoordinateY, vTile.CoordinateX, vTile.CoordinateY, mCharacter);
                 if (!canAttack)
                 {
@@ -173,8 +226,10 @@ namespace App.Util.Battle{
                 {
                     attackTarget = character;
                     targetTile = vTile;
+                    tileAid = 0;
                     continue;
                 }
+                //是否可杀死
                 bool aCanKill = cBattlefield.calculateManager.Hert(mCharacter, attackTarget, targetTile) - attackTarget.Hp >= 0;
                 if (aCanKill)
                 {
@@ -185,8 +240,10 @@ namespace App.Util.Battle{
                 {
                     attackTarget = character;
                     targetTile = vTile;
+                    tileAid = 0;
                     continue;
                 }
+                //是否反击
                 bool aCanCounter = cBattlefield.calculateManager.CanCounterAttack(mCharacter, attackTarget, targetTile.CoordinateX, targetTile.CoordinateY, attackTarget.CoordinateX, attackTarget.CoordinateY);
                 bool bCanCounter = cBattlefield.calculateManager.CanCounterAttack(mCharacter, character, vTile.CoordinateX, vTile.CoordinateY, character.CoordinateX, character.CoordinateY);
                 if (!aCanCounter && bCanCounter)
@@ -196,9 +253,24 @@ namespace App.Util.Battle{
                 {
                     attackTarget = character;
                     targetTile = vTile;
+                    tileAid = 0;
                     continue;
                 }
-                //TODO::地形优势
+                //地形优势
+                float aTileAid = tileAid;
+                if (aTileAid == 0)
+                {
+                    aTileAid = attackTarget.TileAid(targetTile);
+                }
+                float bTileAid = character.TileAid(vTile);
+                if (aTileAid > bTileAid)
+                {
+                    attackTarget = character;
+                    targetTile = vTile;
+                    tileAid = bTileAid;
+                    continue;
+                }
+
             }
         }
         private void FindHealTarget(out MCharacter healTarget, out VTile healTile){
@@ -206,6 +278,10 @@ namespace App.Util.Battle{
             healTile = null;
             foreach (MCharacter character in mBaseMap.Characters)
             {
+                if (character.Hp == 0 || character.IsHide)
+                {
+                    continue;
+                }
                 if (!cBattlefield.charactersManager.IsSameBelong(mCharacter.Belong, character.Belong))
                 {
                     continue;
@@ -261,8 +337,14 @@ namespace App.Util.Battle{
                     }else if(!aCanCounter && bCanCounter){
                         return -1;
                     }else if(aCanCounter && bCanCounter){
-                        //TODO::地形优势
-                        //return 0;
+                        //地形优势
+                        float aTileAid = mCharacter.TileAid(a);
+                        float bTileAid = mCharacter.TileAid(b);
+                        if(aTileAid < bTileAid){
+                            return -1;
+                        }else if(aTileAid > bTileAid){
+                            return 1;
+                        }
                     }
                 }
                 int aDistance = cBattlefield.mapSearch.GetDistance(mCharacter.CoordinateX, mCharacter.CoordinateY, a.CoordinateX, a.CoordinateY);

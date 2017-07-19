@@ -170,6 +170,12 @@ namespace MyEditor
             BuildAssetBundleMasterBattlefield();
             BuildAssetBundleMasterStrategy();
             BuildAssetBundleCharacterStar();
+            BuildAssetBundleStoryProgress();
+        }
+        [MenuItem("SH/Build Assetbundle/Master/StoryProgress")]
+        static private void BuildAssetBundleStoryProgress()
+        {
+            BuildAssetBundleMaster(App.Model.Scriptable.StoryProgressAsset.Name);
         }
         [MenuItem("SH/Build Assetbundle/Master/CharacterStar")]
         static private void BuildAssetBundleCharacterStar()

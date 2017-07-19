@@ -40,6 +40,8 @@ namespace App.Controller{
             {
                 return;
             }
+            App.Util.LSharp.LSharpFunction.Clear();
+            //App.Util.LSharp.LSharpScript.Instance.UpdateVarList();
             //根据world.id配对scenario脚本
             App.Util.LSharp.LSharpScript.Instance.Analysis(new List<string>{string.Format("Load.script({0})", world.id)});
         }

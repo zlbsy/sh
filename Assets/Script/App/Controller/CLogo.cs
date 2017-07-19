@@ -225,6 +225,13 @@ namespace App.Controller{
                 EquipmentCacher.Instance.ResetClothes(ClothesAsset.Data.equipments);
                 ClothesAsset.Clear();
             }));
+            list.Add(sUser.Download(StoryProgressAsset.Url, versions.character, (AssetBundle assetbundle)=>{
+                StoryProgressAsset.assetbundle = assetbundle;
+                foreach(string key in StoryProgressAsset.Data.keys){
+                    App.Util.LSharp.LSharpVarlable.SetVarlable(key, "0");
+                }
+                StoryProgressAsset.Clear();
+            }));
             if (App.Util.Global.SUser.self != null)
             {
                 list.Add(sUser.RequestGet());

@@ -23,6 +23,12 @@ namespace App.Model.Master{
         public string animation;
         /// <summary>
         /// 五行
+        /// 物理攻击类：无
+        /// 妖术类：金
+        /// 风类：木
+        /// 水类：水
+        /// 火类：火
+        /// 地类：土
         /// </summary>
         public FiveElements five_elements;
         public string explanation;
@@ -51,6 +57,14 @@ namespace App.Model.Master{
         public int hidden_weapons;//暗器
         public int dual_wield;//双手
         public int magic;//法宝
+        /// <summary>
+        /// 野生地形辅助
+        /// </summary>
+        public int wild;
+        /// <summary>
+        /// 水性地形辅助
+        /// </summary>
+        public int swim;
         public int resistance_metal;//抗金
         public int resistance_wood;//抗木
         public int resistance_water;//抗水

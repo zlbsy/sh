@@ -64,6 +64,7 @@ namespace App.Controller{
                     apis.Add("loginbonus", CreateScriptableObjectMasterLoginBonusRun());
                     apis.Add("exp", CreateScriptableObjectMasterExpRun());
                     apis.Add("scenario", CreateScriptableObjectMasterScenarioRun());
+                    apis.Add("story_progress", CreateScriptableObjectMasterStoryProgressRun());
                     apiKeys = apis.Keys.ToArray();
 
                     assets.Add("face", CreateScriptableObjectFaceAssetRun());
@@ -192,6 +193,15 @@ namespace App.Controller{
         {
             var faceAsset = ScriptableObject.CreateInstance<App.Model.Scriptable.FaceAsset>();
             UnityEditor.AssetDatabase.CreateAsset(faceAsset, string.Format("Assets/Editor Default Resources/ScriptableObject/{0}.asset", App.Model.Scriptable.FaceAsset.Name));
+            UnityEditor.AssetDatabase.Refresh();
+            yield break;
+        }
+        IEnumerator CreateScriptableObjectMasterStoryProgressRun(){
+            SEditorMaster sMaster = new SEditorMaster();
+            yield return StartCoroutine (sMaster.RequestAll("story_progress"));
+            var asset = ScriptableObject.CreateInstance<App.Model.Scriptable.StoryProgressAsset>();
+            asset.keys = sMaster.responseAll.story_progress_keys;
+            UnityEditor.AssetDatabase.CreateAsset(asset, string.Format("Assets/Editor Default Resources/ScriptableObject/{0}.asset", App.Model.Scriptable.StoryProgressAsset.Name));
             UnityEditor.AssetDatabase.Refresh();
             yield break;
         }

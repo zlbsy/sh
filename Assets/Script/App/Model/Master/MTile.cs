@@ -7,14 +7,22 @@ namespace App.Model.Master{
         public MTile(){
         }
         public string name;//
+        public int road;
+        public int hp;
+        public int boat;
         public float heal;//回复能力
-        //可使用法术
-        public int[] _strategys;
-        public int[] strategys{
+        //法术适用度
+        private float[] _strategys;
+        /// <summary>
+        /// 法术适用度
+        /// [无，金，木，水，火，土]
+        /// </summary>
+        /// <value>The strategys.</value>
+        public float[] strategys{
             get{ 
                 if (_strategys == null)
                 {
-                    _strategys = (int[])JsonFx.JsonReader.Deserialize(strategy, typeof(int[]));
+                    _strategys = (float[])JsonFx.JsonReader.Deserialize(strategy, typeof(float[]));
                 }
                 return _strategys;
             }

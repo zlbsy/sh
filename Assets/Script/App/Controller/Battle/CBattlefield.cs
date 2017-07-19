@@ -80,6 +80,9 @@ namespace App.Controller.Battle{
             //mBaseMap.Tiles = battlefieldMaster.tiles.Clone() as App.Model.MTile[];
             mBaseMap.Tiles = mWorld.stages.Clone() as App.Model.MTile[];
             base.InitMap();
+            List<int[]> vs = new List<int[]>();
+            vs.Add(new int[]{8, 0});
+            vs.Add(new int[]{9, 0});
             List<MCharacter> characters = new List<MCharacter>();
             for (int i = 0; i < characterIds.Count; i++)
             {
@@ -90,13 +93,24 @@ namespace App.Controller.Battle{
                 App.Model.Master.MBattleOwn mBattleOwn = battlefieldMaster.owns[i];
                 mCharacter.CoordinateX = mBattleOwn.x;
                 mCharacter.CoordinateY = mBattleOwn.y;
+                mCharacter.CoordinateX = vs[0][0];
+                mCharacter.CoordinateY = vs[0][1];
+                vs.RemoveAt(0);
                 CharacterInit(mCharacter);
                 characters.Add(mCharacter);
                 //mCharacter.Hp -= 50;
             }
+            vs.Add(new int[]{7, 8});
+            vs.Add(new int[]{8, 8});
+            vs.Add(new int[]{7, 9});
+            vs.Add(new int[]{8, 9});
+            vs.Add(new int[]{9, 7});
             foreach(App.Model.Master.MBattleNpc battleNpc in battlefieldMaster.enemys){
                 MCharacter mCharacter = NpcCacher.Instance.GetFromBattleNpc(battleNpc);
                 mCharacter.Belong = Belong.enemy;
+                mCharacter.CoordinateX = vs[0][0];
+                mCharacter.CoordinateY = vs[0][1];
+                vs.RemoveAt(0);
                 //mCharacter.Level = 50;
                 CharacterInit(mCharacter);
                 characters.Add(mCharacter);
