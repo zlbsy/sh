@@ -11,7 +11,7 @@ namespace App.Model.Master{
         public MBattleNpc[] friends;
         public MBattleOwn[] owns;
         public int[][] own_positions;
-        public int map_id;
+        public int world_id;
         public int ap;
         public int max_bout;
         public List<string> script;

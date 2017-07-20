@@ -14,7 +14,7 @@ namespace App.Model{
             set{ 
                 ViewModel.Id.Value = value;
                 App.Model.Master.MBattlefield master = this.Master;
-                this.ViewModel.MapId.Value = master.map_id;
+                this.ViewModel.MapId.Value = master.world_id;
                 this.ViewModel.Tiles.Value = master.tiles;
                 //this.ViewModel.Characters.Value = App.Service.HttpClient.Deserialize<MCharacter[]>(master.enemys);
             }

@@ -24,6 +24,7 @@ namespace App.Controller{
         private App.Model.Master.MTile currentTile = null;
         private App.View.VTile currentVTile = null;
         private bool isBuild = false;
+        private bool isCheck = false;
         private bool deleteBuild = false;
         private int setId = 1;
         private int mapId = 1;
@@ -46,6 +47,10 @@ namespace App.Controller{
                 if (GUI.Button(new Rect(50, 50, 100, 30), "isBuild:"+isBuild))
                 {
                     isBuild = !isBuild;
+                }
+                if (GUI.Button(new Rect(160, 50, 100, 30), "isCheck:"+isCheck))
+                {
+                    isCheck = !isCheck;
                 }
                 if (isBuild)
                 {
@@ -196,6 +201,10 @@ namespace App.Controller{
             Vector2 coordinate = topMapMaster.GetCoordinateFromIndex(index);
             App.View.VTile vTile = this.mapSearch.GetTile(coordinate);
             Debug.Log("vTile:"+vTile.Index+","+vTile.TileId+",("+vTile.CoordinateX+","+vTile.CoordinateY+")");
+            if (isCheck)
+            {
+                return;
+            }
             if (isBuild)
             {
                 if (vTile.BuildingId > 0)

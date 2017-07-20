@@ -331,7 +331,11 @@ namespace App.Util.Battle{
             {
                 //敌军全灭
                 Debug.LogError("敌军全灭");
-                cBattlefield.BattleWin();
+                //cBattlefield.BattleWin();
+                List<string> script = new List<string>();
+                script.Add("Call.battle_win();");
+                script.Add("Battle.win();");
+                App.Util.LSharp.LSharpScript.Instance.Analysis(script);
                 yield break;
             }else if (!System.Array.Exists(mBaseMap.Characters, c => c.Hp > 0 && !c.IsHide && c.Belong == Belong.self))
             {

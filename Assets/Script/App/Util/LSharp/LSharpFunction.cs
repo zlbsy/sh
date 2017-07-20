@@ -16,6 +16,13 @@ namespace App.Util.LSharp{
         public static void Clear(){
             LSharpFunction.Instance.FunList.Clear();
         }
+        public static void Remove(string methodName){
+            if (!LSharpFunction.Instance.FunList.ContainsKey(methodName))
+            {
+                return;
+            }
+            LSharpFunction.Instance.FunList.Remove(methodName);
+        }
         public static void AddFunction(string lineValue){
             lineValue = lineValue.Trim();
             Dictionary<string, List<string>> funArr = new Dictionary<string, List<string>>();

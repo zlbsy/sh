@@ -55,9 +55,13 @@ namespace App.Controller.Battle{
             characterIds = request.Get<List<int>>("characterIds");
             fromScene = request.Get<App.Util.SceneManager.Scenes>("fromScene");
             fromRequest = request.Get<Request>("fromRequest");
+            LSharpInit();
+            yield return this.StartCoroutine(base.OnLoad(request));
+        }
+        private void LSharpInit(){
             App.Util.LSharp.LSharpVarlable.SetVarlable(string.Format("battlefield_{0}", battlefieldId), "0");
             App.Util.LSharp.LSharpScript.Instance.UpdateBattleList();
-            yield return this.StartCoroutine(base.OnLoad(request));
+            App.Util.LSharp.LSharpFunction.Remove("battle_win");
         }
         public GameObject CreateEffect(string name, Transform trans){
             GameObject obj = Instantiate(CBattlefield.effectAnimation.gameObject);
@@ -75,14 +79,11 @@ namespace App.Controller.Battle{
             maxBout = battlefieldMaster.max_bout;
             title.text = battlefieldMaster.name;
             mBaseMap = new MBaseMap();
-            App.Model.Master.MWorld mWorld = System.Array.Find(Global.worlds, w=>w.id == battlefieldMaster.map_id);
+            App.Model.Master.MWorld mWorld = System.Array.Find(Global.worlds, w=>w.id == battlefieldMaster.world_id);
             mBaseMap.MapId = mWorld.map_id;
             //mBaseMap.Tiles = battlefieldMaster.tiles.Clone() as App.Model.MTile[];
             mBaseMap.Tiles = mWorld.stages.Clone() as App.Model.MTile[];
             base.InitMap();
-            List<int[]> vs = new List<int[]>();
-            vs.Add(new int[]{8, 0});
-            vs.Add(new int[]{9, 0});
             List<MCharacter> characters = new List<MCharacter>();
             for (int i = 0; i < characterIds.Count; i++)
             {
@@ -93,24 +94,13 @@ namespace App.Controller.Battle{
                 App.Model.Master.MBattleOwn mBattleOwn = battlefieldMaster.owns[i];
                 mCharacter.CoordinateX = mBattleOwn.x;
                 mCharacter.CoordinateY = mBattleOwn.y;
-                mCharacter.CoordinateX = vs[0][0];
-                mCharacter.CoordinateY = vs[0][1];
-                vs.RemoveAt(0);
                 CharacterInit(mCharacter);
                 characters.Add(mCharacter);
                 //mCharacter.Hp -= 50;
             }
-            vs.Add(new int[]{7, 8});
-            vs.Add(new int[]{8, 8});
-            vs.Add(new int[]{7, 9});
-            vs.Add(new int[]{8, 9});
-            vs.Add(new int[]{9, 7});
             foreach(App.Model.Master.MBattleNpc battleNpc in battlefieldMaster.enemys){
                 MCharacter mCharacter = NpcCacher.Instance.GetFromBattleNpc(battleNpc);
                 mCharacter.Belong = Belong.enemy;
-                mCharacter.CoordinateX = vs[0][0];
-                mCharacter.CoordinateY = vs[0][1];
-                vs.RemoveAt(0);
                 //mCharacter.Level = 50;
                 CharacterInit(mCharacter);
                 characters.Add(mCharacter);

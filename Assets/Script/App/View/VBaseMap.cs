@@ -107,6 +107,7 @@ namespace App.View{
         public void ResetAll(App.Model.Master.MBaseMap baseMapMaster = null){
             if (baseMapMaster == null)
             {
+                Debug.LogError("ViewModel.MapId.Value = " + ViewModel.MapId.Value);
                 baseMapMaster = BaseMapCacher.Instance.Get(ViewModel.MapId.Value);
             }
             int widthCount = 0;
@@ -116,33 +117,37 @@ namespace App.View{
             foreach(VTile tile in tileUnits){
                 tile.gameObject.SetActive(false);
             }
-            foreach(App.Model.Master.MTile tile in baseMapMaster.tiles){
-                i = heightCount * mapWidth + widthCount;
-                obj = tileUnits[i];
-                obj.gameObject.SetActive (true);
-                App.Model.MTile building = System.Array.Find(ViewModel.Tiles.Value, _=>_.x == widthCount && _.y == heightCount);
-                //if(building != null)Debug.LogError(widthCount + ","+heightCount + ", " + building.Master);
-                string name = "";
-                if (building != null)
+            if (baseMapMaster.tiles != null && baseMapMaster.tiles.Count > 0)
+            {
+                foreach (App.Model.Master.MTile tile in baseMapMaster.tiles)
                 {
-                    if (building is App.Model.Master.MWorld)
+                    i = heightCount * mapWidth + widthCount;
+                    obj = tileUnits[i];
+                    obj.gameObject.SetActive(true);
+                    App.Model.MTile building = System.Array.Find(ViewModel.Tiles.Value, _ => _.x == widthCount && _.y == heightCount);
+                    //if(building != null)Debug.LogError(widthCount + ","+heightCount + ", " + building.Master);
+                    string name = "";
+                    if (building != null)
                     {
-                        name = (building as App.Model.Master.MWorld).build_name;
-                    }/*else if (building is App.Model.Master.MArea)
+                        if (building is App.Model.Master.MWorld)
+                        {
+                            name = (building as App.Model.Master.MWorld).build_name;
+                        }/*else if (building is App.Model.Master.MArea)
                     {
                         name = (building as App.Model.Master.MArea).build_name;
                     }*/
-                }
-                obj.SetData(heightCount * baseMapMaster.width + widthCount, widthCount, heightCount, tile.id, building != null ? building.Master.id : 0, name);
-                widthCount++;
-                if (widthCount >= baseMapMaster.width)
-                {
-                    widthCount = 0;
-                    heightCount++;
-                }
-                if (heightCount >= baseMapMaster.height)
-                {
-                    break;
+                    }
+                    obj.SetData(heightCount * baseMapMaster.width + widthCount, widthCount, heightCount, tile.id, building != null ? building.Master.id : 0, name);
+                    widthCount++;
+                    if (widthCount >= baseMapMaster.width)
+                    {
+                        widthCount = 0;
+                        heightCount++;
+                    }
+                    if (heightCount >= baseMapMaster.height)
+                    {
+                        break;
+                    }
                 }
             }
             BoxCollider collider = this.GetComponent<BoxCollider>();

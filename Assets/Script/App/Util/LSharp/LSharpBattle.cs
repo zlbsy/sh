@@ -20,6 +20,9 @@ namespace App.Util.LSharp{
             App.Model.Belong belong = (App.Model.Belong)System.Enum.Parse(typeof(App.Model.Belong), arguments[0], true);
             Battlefield.BoutWave(belong);
         }
+        public void Win(string[] arguments){
+            Battlefield.BattleWin();
+        }
         private App.Controller.Battle.CBattlefield Battlefield{
             get{ 
                 return App.Util.SceneManager.CurrentScene as App.Controller.Battle.CBattlefield;
