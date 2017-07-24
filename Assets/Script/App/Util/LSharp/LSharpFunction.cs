@@ -67,7 +67,7 @@ namespace App.Util.LSharp{
             Analysis(value, out methodName, out arguments);
             if (!funList.ContainsKey(methodName))
             {
-                LSharpScript.Instance.Analysis();
+                base.Analysis(value);
                 return;
             }
             Dictionary<string, List<string>> funArr = funList[methodName];
@@ -80,6 +80,41 @@ namespace App.Util.LSharp{
             foreach (string line in funLineList)
             {
                 LSharpScript.Instance.UnshiftLine(line);
+            }
+            LSharpScript.Instance.Analysis();
+        }
+
+        public void Method(string[] arguments){
+            string[] paths = arguments[0].Split('.');
+            Transform target = GameObject.Find(paths[0]).transform;
+            int index = 1;
+            while (index < paths.Length)
+            {
+                Transform tran = target.Find(paths[index]);
+                if (tran == null)
+                {
+                    LSharpScript.Instance.Analysis();
+                    return;
+                }
+                target = tran;
+                index++;
+            }
+            if (arguments.Length > 2)
+            {
+                string type = arguments[2];
+                switch (type)
+                {
+                    case "int":
+                        target.gameObject.SendMessage(arguments[1], int.Parse(arguments[3]));
+                        break;
+                    default:
+                        target.gameObject.SendMessage(arguments[1], arguments[3]);
+                        break;
+                }
+            }
+            else
+            {
+                target.gameObject.SendMessage(arguments[1]);
             }
             LSharpScript.Instance.Analysis();
         }
