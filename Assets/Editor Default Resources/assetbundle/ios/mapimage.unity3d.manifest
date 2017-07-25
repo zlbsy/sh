@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 3921210786
+CRC: 2643715567
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 9556df4bcc87669d005245a932ada1e8
+    Hash: 23c96d762d9680328dc604d4d4f6c38b
   TypeTreeHash:
     serializedVersion: 2
     Hash: 4774d6da9b606debf00b5a5d61c4487c
@@ -15,21 +15,29 @@ ClassTypes:
   Script: {instanceID: 0}
 Assets:
 - Assets/Atlas/map/tile_6.png
+- Assets/Atlas/map/tile_1001.png
 - Assets/Atlas/map/tile_attack.png
+- Assets/Atlas/map/tile_1002.png
 - Assets/Atlas/map/tile_3.png
+- Assets/Atlas/map/tile_2201.png
 - Assets/Atlas/map/tile_4.png
+- Assets/Atlas/map/tile_text_background1.png
 - Assets/Atlas/map/tile_2001.png
 - Assets/Atlas/map/tile_moving_enemy.png
+- Assets/Atlas/map/tile_2102.png
 - Assets/Atlas/map/tile_moving_friend.png
 - Assets/Atlas/map/tile_2002.png
 - Assets/Atlas/map/tile_7.png
-- Assets/Atlas/map/tile_3001.png
-- Assets/Atlas/map/tile_3004.png
+- Assets/Atlas/map/tile_2301.png
+- Assets/Atlas/map/tile_2101.png
+- Assets/Atlas/map/tile_2302.png
+- Assets/Atlas/map/tile_9.png
 - Assets/Atlas/map/tile_1.png
 - Assets/Atlas/map/tile_moving_self.png
+- Assets/Atlas/map/tile_text_background.png
+- Assets/Atlas/map/tile_2202.png
 - Assets/Atlas/map/tile_2.png
 - Assets/Atlas/map/tile_0.png
+- Assets/Atlas/map/tile_8.png
 - Assets/Atlas/map/tile_5.png
-- Assets/Atlas/map/tile_3003.png
-- Assets/Atlas/map/tile_3002.png
 Dependencies: []

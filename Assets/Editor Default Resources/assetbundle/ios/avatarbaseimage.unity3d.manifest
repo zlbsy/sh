@@ -1,0 +1,27 @@
+ManifestFileVersion: 0
+CRC: 3569736095
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 69fa29c8831c9982659123c376e189c4
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 4774d6da9b606debf00b5a5d61c4487c
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+Assets:
+- Assets/Atlas/AvatarBase/larm01.png
+- Assets/Atlas/AvatarBase/rleg01.png
+- Assets/Atlas/AvatarBase/string.png
+- Assets/Atlas/AvatarBase/clothes01.png
+- Assets/Atlas/AvatarBase/lleg01.png
+- Assets/Atlas/AvatarBase/rarm01.png
+- Assets/Atlas/AvatarBase/larm02.png
+- Assets/Atlas/AvatarBase/rarm02.png
+- Assets/Atlas/AvatarBase/body01.png
+- Assets/Atlas/AvatarBase/arrow.png
+Dependencies: []

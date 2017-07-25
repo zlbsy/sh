@@ -57,5 +57,9 @@ namespace App.Model.Master{
         /// 残血状态
         /// </summary>
         public float is_pant = 0.2f;
+        /// <summary>
+        /// 地图线
+        /// </summary>
+        public int tile_line = 0;
 	}
 }

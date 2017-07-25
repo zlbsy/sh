@@ -123,6 +123,38 @@ namespace App.Controller{
             mBaseMap = new MTopMap();
             mBaseMap.MapId = mUser.MapId;
             mBaseMap.Tiles = mUser.TopMap.Clone() as App.Model.MTile[];
+            base.InitMap();
+            System.Array.Sort(mUser.characters, (a, b)=>{
+                return b.Master.qualification - a.Master.qualification;
+            });
+
+            App.Model.Master.MBaseMap topMapMaster = BaseMapCacher.Instance.Get(mBaseMap.MapId);
+            int x = Mathf.FloorToInt(topMapMaster.width * 0.5f);
+            int y = Mathf.FloorToInt(topMapMaster.height * 0.5f);
+            int[][] vecs = new int[][]{ 
+                new int[]{0, 0},
+                new int[]{-1, 3},
+                new int[]{1, 2},
+                new int[]{-1, -2},
+                new int[]{1, -3}
+            };
+            //MCharacter[] characters = new MCharacter[5];
+            //System.Array.Copy(mUser.characters, characters, 5);
+            //int i = 0;
+            List<MCharacter> characters = new List<MCharacter>();
+            foreach (MCharacter character in mUser.characters)
+            {
+                int[] vec = vecs[characters.Count];
+                character.CoordinateX = x + vec[0];
+                character.CoordinateY = y + vec[1];
+                character.StatusInit();
+                characters.Add(character);
+                if (characters.Count >= vecs.Length)
+                {
+                    break;
+                }
+            }
+            mBaseMap.Characters = characters.ToArray();
             vBaseMap.BindingContext = mBaseMap.ViewModel;
             vBaseMap.UpdateView();
             vBaseMap.transform.parent.localScale = Vector3.one;

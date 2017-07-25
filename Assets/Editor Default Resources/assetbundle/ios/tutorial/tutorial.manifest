@@ -1,7 +1,7 @@
 ManifestFileVersion: 0
-CRC: 2545754851
+CRC: 2434046248
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
-      Name: tutorial_tutorialasset.unity3d
+      Name: tutorial_3.unity3d
       Dependencies: {}

@@ -1,0 +1,18 @@
+ManifestFileVersion: 0
+CRC: 3393909827
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 8a955f5eb6f279fba009d2eab9837ad5
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 022be60dc5148dc50c889e52e08554d8
+HashAppended: 0
+ClassTypes:
+- Class: 114
+  Script: {fileID: 11500000, guid: 36db7073a225545fb8414adaf9921510, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+Assets:
+- Assets/Editor Default Resources/ScriptableObject/missionasset.asset
+Dependencies: []
