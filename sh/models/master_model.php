@@ -252,13 +252,14 @@ class Master_model extends MY_Model
 		$table = $this->master_db->scenario;
 		$order_by = "id asc";
 		$result_array = $this->master_db->select($select, $table, null, $order_by);
-		$result = array();
+		$result = array(array(), array());
 		foreach($result_array as $val){
 			$arr = explode(";",$val["script"]);
 			foreach($arr as $k=>$v){
 				$arr[$k] = trim($v);
 			}
-			$result[] = $arr;
+			$result[0][] = $arr;
+			$result[1][] = $val["id"];
 		}
 		return $result;
 	}
