@@ -8,6 +8,7 @@ class Master extends MY_Controller {
 	}
 	private function master_data($args)
 	{
+		$this->log("master_data");
 		$result = array();
 		$master_model = new Master_model();
 		if($args["story_progress"]){

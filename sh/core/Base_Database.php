@@ -45,7 +45,7 @@ class Base_Database {
 			$sql .= " LIMIT " . $limit;
 		}
 		if(isset($_GET["debug"])){
-			echo $sql;
+			echo $sql."<br>";
 		}
 		$this->last_sql = $sql;
 		$result_select = mysql_query($sql, $this->connect);
@@ -74,7 +74,7 @@ class Base_Database {
 		$sql .= " WHERE " . implode(" AND ", $where);
 		
 		if(isset($_GET["debug"])){
-			echo $sql;
+			echo $sql."<br>";
 		}
 		$this->last_sql = $sql;
 		$result = mysql_query($sql, $this->connect);
@@ -89,7 +89,7 @@ class Base_Database {
 		$sql .= " SET ".implode(", ", $values)." ";
 		$sql .= " WHERE " . implode(" AND ", $where);
 		if(isset($_GET["debug"])){
-			echo $sql;
+			echo $sql."<br>";
 		}
 		$this->last_sql = $sql;
 		$result = mysql_query($sql, $this->connect);

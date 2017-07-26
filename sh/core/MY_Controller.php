@@ -17,6 +17,11 @@ class MY_Controller {
 		//共通Model
 		load_model(array('user_model', 'mission_model'));
 	}
+	protected function log($message){
+		$fp = fopen('/var/www/d/test/test.txt', 'a');
+		fwrite($fp, $message."\n");
+		fclose($fp);
+	}
 	protected function error($message){
 		die(json_encode(array("result"=>0,"message"=>$message)));
 	}

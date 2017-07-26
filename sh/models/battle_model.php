@@ -1,12 +1,15 @@
 <?php 
 class Battle_model extends MY_Model
 {
+	var $select_battlefield_master = "`id`,`world_id`,`conditions`, `max_num`, `ap`, `exp`";
+	var $select_battlefield_list = "id as Id,battlefield_id as BattlefieldId,level as Level,star as Star";
+	
 	function __construct(){
 		parent::__construct();
 	}
 	var $exp_master = null;
 	function get_list($user_id, $battlefield_id = 0){
-		$select = "id as Id,battlefield_id as BattlefieldId,level as Level,star as Star";
+		$select = $this->select_battlefield_list;
 		$table = $this->user_db->battle_list;
 		$where = array();
 		$where[] = "user_id={$user_id}";
@@ -36,19 +39,6 @@ class Battle_model extends MY_Model
 			$res = $this->user_db->update($values, $table, $where);
 		}
 		return $res;
-
-		$select = "id as Id,battlefield_id as BattlefieldId,level as Level,star as Star";
-		$table = $this->user_db->battle_list;
-		$where = array();
-		$where[] = "user_id={$user_id}";
-		if($battlefield_id > 0){
-			$where[] = "battlefield_id={$battlefield_id}";
-		}
-		$result = $this->user_db->select($select, $table, $where);
-		if(is_null($result)){
-			return array();
-		}
-		return $result;
 	}
 	function battle_start($battlefield_id){
 		$battlefield_master = $this->get_master($battlefield_id);
@@ -79,7 +69,7 @@ class Battle_model extends MY_Model
 			$this->user_db->trans_rollback();
 			$this->error("user update error");
 		}
-		$user["BattlingId"] = 1;
+		$user["BattlingId"] = $battlefield_id;
 		$user["Ap"] = $ap;
 		$this->setSessionData("user", $user);
 		$this->user_db->trans_commit();
@@ -102,9 +92,15 @@ class Battle_model extends MY_Model
 			}
 		}
 		$character_model = new Character_model();
-		$characters = $character_model->get_character_list($user_id);
+		
+		$characters = array();
 		foreach ($characterIds as $characterId) {
-			$has_character = false;
+			$character_list = $character_model->get_character_list($user_id, $characterId);
+			if(count($character_list) == 0){
+				return null;
+			}
+			$characters[] = $character_list[0];
+			/*$has_character = false;
 			foreach($characters as $character){
 				if($character["CharacterId"] == $characterId){
 					$has_character = true;
@@ -113,7 +109,7 @@ class Battle_model extends MY_Model
 			}
 			if(!$has_character){
 				return null;
-			}
+			}*/
 		}
 		$battleList = $this->get_list($user_id, $battlefield_id);
 		$isFirstBattle = (count($battleList) == 0);
@@ -169,7 +165,7 @@ class Battle_model extends MY_Model
 					break;
 				}
 			}
-			$exp = $this->get_character_exp($charater["Level"], $level, $battlefield_master["exp"]);
+			$exp = $this->get_character_exp($character["Level"], $level, $battlefield_master["exp"]);
 			if(array_search($characterId, $die_ids) !== false){
 				$exp = floor($exp * 0.5);
 			}
@@ -228,7 +224,7 @@ class Battle_model extends MY_Model
 		return $exp;
 	}
 	function get_master($battlefield_id){
-		$select = "`id`,`map_id`,`conditions`, `max_num`, `ap`, `exp`";
+		$select = $this->select_battlefield_master;
 		$table = $this->master_db->battlefield;
 		$where = array();
 		$where[] = "id={$battlefield_id}";

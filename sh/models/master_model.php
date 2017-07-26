@@ -7,13 +7,15 @@ class Master_model extends MY_Model
 	public function get_master_character(){
 		$select = "`id`,`name`,`nickname`,`head`,`hat`,`hp`,`mp`,`weapon`,`clothes`,`horse`,`qualification`,
 		`power`,`knowledge`,`trick`,`endurance`,`speed`,`moving_power`,`riding`,`walker`,`pike`,`sword`,
-		`long_knife`,`knife`,`long_ax`,`ax`,`long_sticks`,`sticks`,`archery`,`hidden_weapons`,`dual_wield`,`magic`, `introduction` ";
+		`long_knife`,`knife`,`long_ax`,`ax`,`long_sticks`,`sticks`,`archery`,`hidden_weapons`,`dual_wield`,`magic`,
+		`resistance_metal`,`resistance_wood`,`resistance_water`,`resistance_fire`,`resistance_earth`, `introduction` ";
 		$table = $this->master_db->base_character;
 		$order_by = "id";
 		$result = $this->master_db->select($select, $table, null, $order_by, null, Database_Result::TYPE_DEFAULT);
 		$result_array = array();
 		while ($row = mysql_fetch_assoc($result)) {
 			$row['skills'] = $this->get_character_skills($row["id"]);
+			$row['resistances'] = array(0,$row['resistance_metal'],$row['resistance_wood'],$row['resistance_water'],$row['resistance_fire'],$row['resistance_earth']);
 			$result_array[] = $row;
 		}
 		return $result_array;
@@ -126,7 +128,7 @@ class Master_model extends MY_Model
 		return $result;
 	}
 	function get_master_tile($language="cn"){
-		$select = "`id`,`name_{$language}` as `name`,`strategy`,`heal`,`boat`";
+		$select = "`id`,`name_{$language}` as `name`,`road`,`hp`,`strategy`,`heal`,`boat`";
 		$table = $this->master_db->tile;
 		$order_by = "id asc";
 		$result = $this->master_db->select($select, $table, null, $order_by);
@@ -263,8 +265,12 @@ class Master_model extends MY_Model
 	function get_master_story_progress(){
 		$select = "`k`";
 		$table = $this->master_db->story_progress;
-		$result = $this->master_db->select($select, $table);
-		return $result;
+		$result = $this->master_db->select($select, $table,null, $order_by, null, Database_Result::TYPE_DEFAULT);
+		$result_array = array();
+		while ($row = mysql_fetch_assoc($result)) {
+			$result_array[] = $row["k"];
+		}
+		return $result_array;
 	}
 	function get_master_tutorial($language="cn"){
 		$select = "`id`,`script_{$language}` as `script`";
@@ -283,13 +289,21 @@ class Master_model extends MY_Model
 		return $result;
 	}
 	function get_master_battlefields($language="cn"){
-		$select = "`id`,`name_{$language}` as `name`,`map_id`,`script_{$language}` as `script`,`max_bout`, `ap`";
+		$select = "`id`,`name_{$language}` as `name`,`world_id`,`script_{$language}` as `script`,`max_bout`, `ap`";
 		$table = $this->master_db->battlefield;
 		$order_by = "id asc";
 		$result_array = $this->master_db->select($select, $table, null, $order_by);
 		$result = array();
 		foreach($result_array as $val){
-			$val["script"] = explode(";",$val["script"]);
+			$scripts = explode(";",$val["script"]);
+			$val["script"] = array();
+			foreach($scripts as $script){
+				$script = Trim($script);
+				if(strlen($script) == 0){
+					continue;
+				}
+				$val["script"][] = $script;
+			}
 			$val["tiles"] = $this->get_master_battlefield_tiles($val["id"]);
 			$val["enemys"] = $this->get_master_battlefield_npcs($val["id"], "enemy");
 			$val["friends"] = $this->get_master_battlefield_npcs($val["id"], "friend");
