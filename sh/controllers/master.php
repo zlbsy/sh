@@ -20,7 +20,7 @@ class Master extends MY_Controller {
 			$result["constant"]=$master_constant;
 		}
 		if($args["scenario"]){
-			list($master_scenarios, , $master_scenario_ids) = $master_model->get_master_scenarios();
+			list($master_scenarios,$master_scenario_ids) = $master_model->get_master_scenarios();
 			//$master_scenarios = $master_model->get_master_scenarios();
 			$result["scenarios"]=$master_scenarios;
 			$result["scenario_ids"]=$master_scenario_ids;
