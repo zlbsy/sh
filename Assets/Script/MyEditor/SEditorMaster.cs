@@ -41,6 +41,7 @@ namespace App.Service{
             public App.MyEditor.MAvatar avatar;
             public List<string>[] tutorials;
             public List<string>[] scenarios;
+            public int[] scenario_ids;
             public string[] story_progress_keys;
 		}
         public IEnumerator RequestAll(string type = "")

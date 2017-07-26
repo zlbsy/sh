@@ -1,7 +1,7 @@
 ManifestFileVersion: 0
-CRC: 3344330783
+CRC: 1975486164
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
-      Name: basemapasset.unity3d
+      Name: characterasset.unity3d
       Dependencies: {}

@@ -208,11 +208,11 @@ namespace App.Controller{
         IEnumerator CreateScriptableObjectMasterScenarioRun(){
             SEditorMaster sMaster = new SEditorMaster();
             yield return StartCoroutine (sMaster.RequestAll("scenario"));
-            int i = 1;
-            foreach(List<string> scenario in sMaster.responseAll.scenarios){
+            for (int i = 0; i < sMaster.responseAll.scenarios.Length; i++)
+            {
                 var asset = ScriptableObject.CreateInstance<App.Model.Scriptable.ScenarioAsset>();
-                asset.script = scenario;
-                UnityEditor.AssetDatabase.CreateAsset(asset, string.Format("Assets/Editor Default Resources/ScriptableObject/scenario/{0}.asset", i++));
+                asset.script = sMaster.responseAll.scenarios[i];
+                UnityEditor.AssetDatabase.CreateAsset(asset, string.Format("Assets/Editor Default Resources/ScriptableObject/scenario/{0}.asset", sMaster.responseAll.scenario_ids[i]));
                 UnityEditor.AssetDatabase.Refresh();
             }
         }

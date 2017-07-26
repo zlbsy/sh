@@ -25,8 +25,8 @@ namespace App.Service{
             HttpClient client = new HttpClient();
             yield return App.Util.SceneManager.CurrentScene.StartCoroutine(client.Send( url ));
             ResponseBattleList response = client.Deserialize<ResponseBattleList>();
-            //battlelist = response.battlelist;
             App.Util.Global.SUser.self.battlelist = response.battlelist;
+            App.Util.LSharp.LSharpScript.Instance.UpdateBattleList();
         }
         public IEnumerator RequestBattleStart(int battlefield_id)
         {
@@ -54,6 +54,7 @@ namespace App.Service{
             yield return App.Util.SceneManager.CurrentScene.StartCoroutine(client.Send( url, form ));
             ResponseBattleEnd response = client.Deserialize<ResponseBattleEnd>();
             this.battleRewards = response.battle_rewards;
+            App.Util.LSharp.LSharpScript.Instance.UpdateBattleList();
         }
 	}
 }

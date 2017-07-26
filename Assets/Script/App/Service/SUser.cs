@@ -44,9 +44,14 @@ namespace App.Service{
             form.AddField("id", id);
             yield return App.Util.SceneManager.CurrentScene.StartCoroutine(client.Send( url, form));
         }
+        /// <summary>
+        /// 获取玩家自己的数据
+        /// </summary>
+        /// <returns>The get.</returns>
         public IEnumerator RequestGet()
         {
             yield return App.Util.SceneManager.CurrentScene.StartCoroutine(RequestGet( this.self.id ));
+            App.Util.LSharp.LSharpScript.Instance.UpdateBattleList();
         }
         public IEnumerator RequestProgress(string key, int value, System.Action callback = null)
         {

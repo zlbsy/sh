@@ -125,7 +125,15 @@ namespace App.Controller{
             mBaseMap.Tiles = mUser.TopMap.Clone() as App.Model.MTile[];
             base.InitMap();
             System.Array.Sort(mUser.characters, (a, b)=>{
-                return b.Master.qualification - a.Master.qualification;
+                App.Model.Master.MCharacter aMaster = a.Master;
+                App.Model.Master.MCharacter bMaster = b.Master;
+                if(bMaster.qualification != aMaster.qualification){
+                    return bMaster.qualification - aMaster.qualification;
+                }
+                if(b.Star != a.Star){
+                    return b.Star - a.Star;
+                }
+                return b.Level - a.Level;
             });
 
             App.Model.Master.MBaseMap topMapMaster = BaseMapCacher.Instance.Get(mBaseMap.MapId);

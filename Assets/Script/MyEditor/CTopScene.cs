@@ -152,7 +152,7 @@ namespace App.Controller{
                     continue;
                 }
                 App.Model.Master.MArea stage = new App.Model.Master.MArea();
-                stage.world_id = setId;
+                stage.map_id = setId;
                 stage.tile_id = vTile.BuildingId;
                 stage.x = vTile.CoordinateX;
                 stage.y = vTile.CoordinateY;
@@ -240,7 +240,7 @@ namespace App.Controller{
             }
             //OnClickTile(tile);
         }
-        IEnumerator LoadMap(VBaseMap vBaseMap, string tableName = "")
+        IEnumerator LoadMap(VBaseMap vBaseMap, string tableName = "map")
         {
             SEditorMaster sMaster = new SEditorMaster();
             int mapId = setId;
@@ -257,9 +257,13 @@ namespace App.Controller{
                 }
                 else if (tableName == "stage")
                 {
-                    App.Model.Master.MWorld world = System.Array.Find(worlds, w=>w.id == setId);
-                    mapId = world.map_id;
+                    mapId = setId;
+                    App.Model.Master.MWorld world = System.Array.Find(worlds, w=>w.map_id == mapId);
                     stages = world.stages;
+                }
+                else if (tableName == "map")
+                {
+                    mapId = setId;
                 }
             }
 

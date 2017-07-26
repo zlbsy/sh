@@ -242,7 +242,6 @@ namespace App.Controller{
                 CLoadingDialog.SetNextProgress((i + 1) * step);
                 yield return scene.StartCoroutine(list[i]);
             }
-            App.Util.LSharp.LSharpScript.Instance.UpdateBattleList();
             yield return 0;
         }
 	}

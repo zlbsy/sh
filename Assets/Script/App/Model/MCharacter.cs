@@ -333,7 +333,6 @@ namespace App.Model{
         }
         public float TileAid(App.View.VTile vTile){
             int aid = 0;
-            List<App.Model.Master.MSkill> skills = null;
             foreach (MSkill skill in this.Skills)
             {
                 App.Model.Master.MSkill mSkill = skill.Master;

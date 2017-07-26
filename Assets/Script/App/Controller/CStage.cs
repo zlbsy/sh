@@ -43,7 +43,7 @@ namespace App.Controller{
             App.Util.LSharp.LSharpFunction.Clear();
             //App.Util.LSharp.LSharpScript.Instance.UpdateVarList();
             //根据world.id配对scenario脚本
-            App.Util.LSharp.LSharpScript.Instance.Analysis(new List<string>{string.Format("Load.script({0})", world.id)});
+            App.Util.LSharp.LSharpScript.Instance.Analysis(new List<string>{string.Format("Load.script({0})", world.id * 100)});
         }
         public override void OnClickTile(int index){
             App.Model.Master.MBaseMap topMapMaster = BaseMapCacher.Instance.Get(mBaseMap.MapId);

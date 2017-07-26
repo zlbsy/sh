@@ -9,6 +9,6 @@ namespace App.Model.Master{
     public class MArea : App.Model.MTile {
         public MArea(){
         }
-        public int world_id;
+        public int map_id;
 	}
 }
