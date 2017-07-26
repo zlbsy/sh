@@ -147,10 +147,10 @@ class User_model extends MY_Model
 		$result = $this->user_db->select($select, $table, $where);
 		return $result;
 	}
-	function has_progress($key,$progress) {
+	function has_progress($progress,$key,$v=1) {
 	    foreach($progress as $child) {
 	        if($child["k"] == $key){
-	        	return $child["v"] == 1;
+	        	return $child["v"] == $v;
 	        }
 	    }
 	    return false;

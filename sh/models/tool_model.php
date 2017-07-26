@@ -7,7 +7,7 @@ class Tool_model extends MY_Model
 	function __construct(){
 		parent::__construct();
 	}
-	function set_stage($world_id, $stages){
+	function set_stage($map_id, $stages){
 		$this->master_db->trans_begin();
 		$where = array("world_id='{$world_id}'");
 		$res = $this->master_db->delete($this->area, $where);
@@ -15,12 +15,12 @@ class Tool_model extends MY_Model
 			$this->master_db->trans_rollback();
 			return false;
 		}
-		foreach ($stages as $world) {
+		foreach ($stages as $stage) {
 			$values = array();
-			$values["x"] = $world["x"];
-			$values["y"] = $world["y"];
-			$values["tile_id"] = $world["tile_id"];
-			$values["world_id"] = $world_id;
+			$values["x"] = $stage["x"];
+			$values["y"] = $stage["y"];
+			$values["tile_id"] = $stage["tile_id"];
+			$values["map_id"] = $map_id;
 			$res = $this->master_db->insert($values, $this->area);
 			if(!$res){
 				$this->master_db->trans_rollback();

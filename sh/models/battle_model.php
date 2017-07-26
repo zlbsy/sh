@@ -52,11 +52,11 @@ class Battle_model extends MY_Model
 			return false;
 		}
 		$user_model = new User_model();
-		$conditions = json_decode($battlefield_master["conditions"], true);
-		if(count($conditions) > 0){
+		if(!empty($battlefield_master["conditions"])){
+			$conditions = json_decode($battlefield_master["conditions"], true);
 			$progress = $user_model->get_story_progress($user_id);
-			foreach ($$conditions as $value) {
-				$has = $user_model->has_progress($value, $progress);
+			foreach ($conditions as $key => $value) {
+				$has = $user_model->has_progress($progress, $key, $value);
 				if(!$has){
 					return false;
 				}
@@ -81,16 +81,6 @@ class Battle_model extends MY_Model
 		$battlefield_master = $this->get_master($battlefield_id);
 		$user_id = $user["id"];
 		$user_model = new User_model();
-		$conditions = json_decode($battlefield_master["conditions"], true);
-		if(count($conditions) > 0){
-			$progress = $user_model->get_story_progress($user_id);
-			foreach ($$conditions as $value) {
-				$has = $user_model->has_progress($value, $progress);
-				if(!$has){
-					return null;
-				}
-			}
-		}
 		$character_model = new Character_model();
 		
 		$characters = array();

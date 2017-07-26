@@ -153,15 +153,15 @@ class Master_model extends MY_Model
 		$result_select = $this->master_db->select($select, $table, null, $order_by, null, Database_Result::TYPE_DEFAULT);
 		$result = array();
 		while ($row = mysql_fetch_assoc($result_select)) {
-			$row["stages"] = $this->get_master_area($row["id"], $language);
+			$row["stages"] = $this->get_master_area($row["map_id"], $language);
 			$result[] = $row;
 		}
 		return $result;
 	}
-	function get_master_area($world_id, $language = "cn"){
+	function get_master_area($map_id, $language = "cn"){
 		$select = "`id`,`tile_id`,`x`,`y`,`level`";
 		$table = $this->master_db->area;
-		$where = array("`world_id`={$world_id}");
+		$where = array("`map_id`={$map_id}");
 		$order_by = "id asc";
 		$result = $this->master_db->select($select, $table, $where, $order_by);
 		return $result;
