@@ -18,22 +18,10 @@ namespace App.Controller{
     /// </summary>
     public class CTalkDialog : CSingleDialog {
         [SerializeField]private VFace face;
-        [SerializeField]private Text characterName;
+        [SerializeField]private Text characterNameLeft;
+        [SerializeField]private Text characterNameRight;
         [SerializeField]private Text characterTalk;
-        private const float leftTextPosition = 410f;
-        private const float leftFacePosition = -172f;
-        private const float rightTextPosition = 184f;
-        private const float rightFacePosition = 168f;
-        private RectTransform faceTransform;
-        private RectTransform nameTransform;
-        private RectTransform talkTransform;
         private string message;
-        public override void OnEnable(){
-            faceTransform = face.GetComponent<RectTransform>();
-            nameTransform = characterName.GetComponent<RectTransform>();
-            talkTransform = characterTalk.GetComponent<RectTransform>();
-            base.OnEnable();
-        }
         public override IEnumerator OnLoad( Request request ) 
 		{  
             int faceId;
@@ -63,19 +51,16 @@ namespace App.Controller{
             bool isLeft = request.Get<bool>("isLeft");
             if (isLeft)
             {
-                faceTransform.anchoredPosition = new Vector2(leftFacePosition, faceTransform.anchoredPosition.y);
-                nameTransform.anchoredPosition = new Vector2(leftTextPosition, nameTransform.anchoredPosition.y);
-                talkTransform.anchoredPosition = new Vector2(leftTextPosition, talkTransform.anchoredPosition.y);
+                characterNameLeft.text = name;
+                characterNameRight.text = string.Empty;
             }
             else
             {
-                faceTransform.anchoredPosition = new Vector2(rightFacePosition, faceTransform.anchoredPosition.y);
-                nameTransform.anchoredPosition = new Vector2(rightTextPosition, nameTransform.anchoredPosition.y);
-                talkTransform.anchoredPosition = new Vector2(rightTextPosition, talkTransform.anchoredPosition.y);
+                characterNameRight.text = name;
+                characterNameLeft.text = string.Empty;
             }
             characterTalk.text = string.Empty;
             face.CharacterId = faceId;
-            characterName.text = name;
             StartCoroutine(UpdateMessage());
             yield return StartCoroutine(base.OnLoad(request));
         }
