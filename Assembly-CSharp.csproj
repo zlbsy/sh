@@ -312,6 +312,7 @@
      <Compile Include="Assets\Script\App\View\Shop\VShopItemChild.cs" />
      <Compile Include="Assets\Script\App\View\Skill\VSkillChild.cs" />
      <Compile Include="Assets\Script\App\View\Top\VBuildingMenu.cs" />
+     <Compile Include="Assets\Script\App\View\Top\VCharacterContents.cs" />
      <Compile Include="Assets\Script\App\View\Top\VHeaderTop.cs" />
      <Compile Include="Assets\Script\App\View\Top\VStrengthenMenu.cs" />
      <Compile Include="Assets\Script\App\View\Top\VTopFooterMenu.cs" />
@@ -343,6 +344,7 @@
      <Compile Include="Assets\Script\App\ViewModel\VMTopMap.cs" />
      <Compile Include="Assets\Script\App\ViewModel\VMUser.cs" />
      <Compile Include="Assets\Script\MyEditor\CMasterScene.cs" />
+     <Compile Include="Assets\Script\MyEditor\CSceneFaceMaker.cs" />
      <Compile Include="Assets\Script\MyEditor\CTopScene.cs" />
      <Compile Include="Assets\Script\MyEditor\CharacterTest.cs" />
      <Compile Include="Assets\Script\MyEditor\EditorCoroutine.cs" />
@@ -411,7 +413,7 @@
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>
  </Reference>
  <Reference Include="HOTween">
- <HintPath>/Users/zhanglubin/git/sh/Assets/HOTween/Plugins/HOTween.dll</HintPath>
+ <HintPath>/Users/lubin.zhang/Documents/git/sh/Assets/HOTween/Plugins/HOTween.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>

@@ -61,10 +61,10 @@ namespace App.View{
             buildingSprite.transform.localRotation = Quaternion.Euler(-30f, 0f, 0f);
             tileName.transform.localRotation = Quaternion.Euler(-30f, 0f, 0f);
             tileName.GetComponent<MeshRenderer>().sortingOrder = 6;
-            if (this.Controller is CTop)
+            /*if (this.Controller is CTop)
             {
                 lineSprite.gameObject.SetActive(false);
-            }
+            }*/
         }
         public void SetData(int index, int cx, int cy, int tileId, int subId = 0, string name = ""){
             this.Index = index;

@@ -21,9 +21,12 @@ namespace App.Controller{
         [SerializeField]GameObject menuBackground;
         [SerializeField]VHeaderFace headerFace;
         [SerializeField]VHeaderTop headerTop;
+        [SerializeField]GameObject tilesContent;
+        [SerializeField]GameObject charactersContent;
         private VBottomMenu currentMenu;
         public override IEnumerator OnLoad( Request request ) 
         {
+            tilesContent.SetActive(false);
             InitHeader();
             InitMap();
             yield return StartCoroutine(base.OnLoad(request));
@@ -231,6 +234,10 @@ namespace App.Controller{
         }
         public void OpenShop(){
             App.Controller.shop.CShopDialog.Show();
+        }
+        public void ChangeContents(){
+            tilesContent.SetActive(!tilesContent.activeSelf);
+            charactersContent.SetActive(!charactersContent.activeSelf);
         }
 	}
 }
