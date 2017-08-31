@@ -1,0 +1,20 @@
+ManifestFileVersion: 0
+CRC: 977621690
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: c17716f1b64a9dbfc520067c9e595116
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: a017645cb493262713de838e453ee78c
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: cb25d318a496c4573be008983559fc4d, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+Assets:
+- Assets/Editor Default Resources/ScriptableObject/face/5008.asset
+Dependencies: []
