@@ -1,0 +1,3 @@
+[submodule "Assets/Script/ShEditor"]
+	path = Assets/Script/ShEditor
+	url = https://zlbsy:zs1984717@github.com/zlbsy/sh.git
