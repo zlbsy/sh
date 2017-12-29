@@ -23,6 +23,7 @@ namespace App.View.Character{
             {
                 icon = this.GetComponent<Image>();
             }
+            icon.color = new Color32(255, 255, 255, 1);
             while (FaceCacher.Instance.IsLoadingId(characterId))
             {
                 yield return new WaitForEndOfFrame();
@@ -31,6 +32,7 @@ namespace App.View.Character{
             if (mFace != null)
             {
                 icon.sprite = Sprite.Create(mFace.image, new Rect (0, 0, mFace.image.width, mFace.image.height), Vector2.zero);
+                icon.color = new Color32(255, 255, 255, 255);
                 yield break;
             }
             string url = string.Format(App.Model.Scriptable.FaceAsset.FaceUrl, characterId);
@@ -41,6 +43,7 @@ namespace App.View.Character{
                 icon.sprite = Sprite.Create(mFace.image, new Rect (0, 0, mFace.image.width, mFace.image.height), Vector2.zero);
                 mFace.id = characterId;
                 FaceCacher.Instance.Set(mFace);
+                icon.color = new Color32(255, 255, 255, 255);
             }));
         }
 

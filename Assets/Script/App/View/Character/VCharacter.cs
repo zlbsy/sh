@@ -317,32 +317,32 @@ namespace App.View.Character{
         private void ActionChanged(App.Model.ActionType oldvalue, App.Model.ActionType newvalue)
         {
             string animatorName = string.Format("{0}_{1}_{2}", ViewModel.MoveType.ToString(), App.Util.WeaponManager.GetWeaponTypeAction(ViewModel.WeaponType.Value, newvalue), newvalue.ToString());
-            animator.Play(animatorName);
-            if (newvalue == App.Model.ActionType.idle)
+            if (!this.gameObject.activeInHierarchy)
             {
-                if (ViewModel.Hp.Value == 0)
-                {
-                    Holoville.HOTween.HOTween.To(this, 1f, new Holoville.HOTween.TweenParms().Prop("alpha", 0f).OnComplete(()=>{
-                        this.gameObject.SetActive(false);
-                        this.alpha = 1f;
-                        if (sequenceStatus != null)
-                        {
-                            sequenceStatus.Kill();
-                        }
-                        if(App.Util.SceneManager.CurrentScene != null){
-                            App.Util.SceneManager.CurrentScene.StartCoroutine(RemoveDynamicCharacter());
-                        }
-                    }));
-                }
-                else
-                {
-                    this.StartCoroutine(RemoveDynamicCharacter());
-                }
+                return;
             }
-            else
+            animator.Play(animatorName);
+            if (newvalue != App.Model.ActionType.idle)
             {
                 this.Controller.SendMessage("AddDynamicCharacter", this, SendMessageOptions.DontRequireReceiver);
+                return;
             }
+            if (ViewModel.Hp.Value > 0)
+            {
+                this.StartCoroutine(RemoveDynamicCharacter());
+                return;
+            }
+            Holoville.HOTween.HOTween.To(this, 1f, new Holoville.HOTween.TweenParms().Prop("alpha", 0f).OnComplete(()=>{
+                this.gameObject.SetActive(false);
+                this.alpha = 1f;
+                if (sequenceStatus != null)
+                {
+                    sequenceStatus.Kill();
+                }
+                if(App.Util.SceneManager.CurrentScene != null){
+                    App.Util.SceneManager.CurrentScene.StartCoroutine(RemoveDynamicCharacter());
+                }
+            }));
         }
         private IEnumerator RemoveDynamicCharacter(){
             while (this.gameObject.activeSelf && this.num.gameObject.activeSelf)

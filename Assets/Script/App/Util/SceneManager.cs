@@ -30,6 +30,7 @@ namespace App.Util{
             CharacterDetailDialog,
             EquipmentListDialog,
             TalkDialog,
+            MessageDialog,
             GachaDialog,
             GachaResultDialog,
             ReadyBattleDialog,
@@ -43,6 +44,7 @@ namespace App.Util{
             WebviewDialog,
             TutorialDialog,
             ContentsConfirmDialog,
+            BlackScreen
         }
         public static CScene CurrentScene;
         public static Request CurrentSceneRequest;

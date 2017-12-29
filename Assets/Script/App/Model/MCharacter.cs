@@ -383,6 +383,11 @@ namespace App.Model{
             }
         }
         public bool boutEventComplete;
+        public bool IsUserCharacter{
+            get{ 
+                return CharacterId >= App.Util.Global.Constant.user_characters[0] && CharacterId <= App.Util.Global.Constant.user_characters[1];
+            }
+        }
         public int CharacterId{
             set{
                 App.Model.Master.MCharacter master = CharacterCacher.Instance.Get(value);

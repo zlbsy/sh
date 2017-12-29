@@ -32,6 +32,7 @@ namespace App.Controller.Common{
         private static int dialogIndex = 0;
         protected Canvas canvas;
         protected System.Action closeEvent;
+        protected System.Action onLoadCompleteEvent;
         public override IEnumerator Start()
         {
             //覆盖CBase的Start，防止OnLoad自动发生
@@ -111,22 +112,36 @@ namespace App.Controller.Common{
             {
                 closeEvent = null;
             }
+            if (request != null && request.Has("onLoadComplete"))
+            {
+                onLoadCompleteEvent = request.Get<System.Action>("onLoadComplete");
+            }
+            else
+            {
+                onLoadCompleteEvent = null;
+            }
             if (background != null)
             {
                 HOTween.To(background, 0.1f, new TweenParms().Prop("color", new Color(0,0,0,0.6f)));
             }
             if (opentype == OpenType.Middle)
             {
-                HOTween.To(panel, 0.3f, new TweenParms().Prop("localScale", new Vector3(1f, 1f, 1f)));
+                HOTween.To(panel, 0.3f, new TweenParms().Prop("localScale", new Vector3(1f, 1f, 1f)).OnComplete(OnLoadAnimationOver));
             }else if (opentype == OpenType.Down || opentype == OpenType.Up)
             {
-                HOTween.To(panel as RectTransform, 0.3f, new TweenParms().Prop("anchoredPosition", _savePosition));
+                HOTween.To(panel as RectTransform, 0.3f, new TweenParms().Prop("anchoredPosition", _savePosition).OnComplete(OnLoadAnimationOver));
             }else if (opentype == OpenType.Fade)
             {
-                HOTween.To(panel.gameObject.GetComponent<CanvasGroup>(), 0.3f, new TweenParms().Prop("alpha", 1));
+                HOTween.To(panel.gameObject.GetComponent<CanvasGroup>(), 0.3f, new TweenParms().Prop("alpha", 1).OnComplete(OnLoadAnimationOver));
             }
             _isClose = false;
             yield return 0;
+        }
+        private void OnLoadAnimationOver(){
+            if (onLoadCompleteEvent != null)
+            {
+                onLoadCompleteEvent();
+            }
         }
         public virtual void Close(){
             if (_isClose)

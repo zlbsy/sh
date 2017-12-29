@@ -21,8 +21,10 @@ namespace App.Controller.Common{
         public App.Util.Search.BreadthFirst breadthFirst{ get; set;}
         public override IEnumerator OnLoad( Request request ) 
         {  
+            this.vBaseMap.gameObject.SetActive(false);
             InitMap();
             yield return this.StartCoroutine(base.OnLoad(request));
+            this.vBaseMap.gameObject.SetActive(true);
         }
         protected virtual void InitManager(){
             mapSearch = new App.Util.Search.TileMap(mBaseMap, vBaseMap);

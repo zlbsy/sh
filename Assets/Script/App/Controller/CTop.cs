@@ -22,7 +22,7 @@ namespace App.Controller{
         [SerializeField]VHeaderFace headerFace;
         [SerializeField]VHeaderTop headerTop;
         [SerializeField]GameObject tilesContent;
-        [SerializeField]GameObject charactersContent;
+        [SerializeField]VCharacterContents charactersContent;
         private VBottomMenu currentMenu;
         public override IEnumerator OnLoad( Request request ) 
         {
@@ -37,11 +37,14 @@ namespace App.Controller{
             if (!isTutorial && !Global.SUser.self.loginbonus_received)
             {
                 App.Model.Master.MLoginBonus[] loginBonusesList = App.Util.Cacher.LoginBonusCacher.Instance.GetAll();
-                App.Model.Master.MLoginBonus loginBonuses = loginBonusesList[Global.SUser.self.loginbonus_cnt];
-                SLoginBonus sLoginBonus = new SLoginBonus();
-                yield return StartCoroutine(sLoginBonus.RequestGet());
-                Request req = Request.Create("loginBonuses", loginBonuses);
-                this.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.LoginBonusDialog, req));
+                if (loginBonusesList.Length > 0)
+                {
+                    App.Model.Master.MLoginBonus loginBonuses = loginBonusesList[Global.SUser.self.loginbonus_cnt];
+                    SLoginBonus sLoginBonus = new SLoginBonus();
+                    yield return StartCoroutine(sLoginBonus.RequestGet());
+                    Request req = Request.Create("loginBonuses", loginBonuses);
+                    this.StartCoroutine(Global.SceneManager.ShowDialog(SceneManager.Prefabs.LoginBonusDialog, req));
+                }
 
             }
             yield break;
@@ -56,11 +59,13 @@ namespace App.Controller{
             StartCoroutine(sUser.Download(TutorialAsset.TutorialUrl(tutorial), Global.versions.tutorial, (AssetBundle assetbundle)=>{
                 TutorialAsset.assetbundle = assetbundle;
                 App.Util.LSharp.LSharpScript.Instance.Analysis(TutorialAsset.Data.tutorial);
+
                 /*
                 if(tutorial <= 0){
                     App.Util.LSharp.LSharpScript.Instance.Analysis(TutorialAsset.Data.tutorial);
-                }else{
-                    List<string> script = new List<string>();
+                }else{c
+              
+                    List<string> script = new List<string>();     
                     script.Add("Talk.set(4100,0,@player_name，恭喜你打了胜仗啊！,false);");
                     script.Add("Talk.setplayer(@player_id,0,差点儿被你害死了，还好友军比较厉害！,true);");
                     script.Add("Talk.set(4100,0,你也要继续变强啊，才能完成玄女娘娘交给你的任务！,false);");
@@ -170,6 +175,7 @@ namespace App.Controller{
             vBaseMap.UpdateView();
             vBaseMap.transform.parent.localScale = Vector3.one;
             vBaseMap.MoveToPosition();
+            charactersContent.UpdateView(mUser.characters);
         }
         public override void OnClickTile(int index){
             App.Model.Master.MBaseMap topMapMaster = BaseMapCacher.Instance.Get(mBaseMap.MapId);
@@ -237,7 +243,7 @@ namespace App.Controller{
         }
         public void ChangeContents(){
             tilesContent.SetActive(!tilesContent.activeSelf);
-            charactersContent.SetActive(!charactersContent.activeSelf);
+            charactersContent.gameObject.SetActive(!charactersContent.gameObject.activeSelf);
         }
-	}
+    }
 }

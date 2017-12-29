@@ -12,10 +12,36 @@ using App.View.Common;
 namespace App.View.Top{
     public class VCharacterContents : VBase{
         [SerializeField]protected Transform rotateLayer;
+        [SerializeField]private App.View.Character.VFaceSpriteRenderer[] characters;
         protected float angles;
         protected Vector2 mousePosition = Vector2.zero;
         protected Vector2 dragPosition = Vector2.zero;
         protected bool _camera3DEnable = true;
+        public void UpdateView(App.Model.MCharacter[] mCharacters){
+            List<App.Model.MCharacter> characterList = new List<App.Model.MCharacter>();
+            while(characterList.Count < 6){
+                foreach(App.Model.MCharacter mCharacter in mCharacters){
+                    if (mCharacter.IsUserCharacter)
+                    {
+                        continue;
+                    }
+                    characterList.Add(mCharacter);
+                }
+                if (characterList.Count == 0)
+                {
+                    foreach(App.View.Character.VFaceSpriteRenderer character in characters){
+                        character.gameObject.SetActive(false);
+                    }
+                    return;
+                }
+            }
+            characterList.Sort((a, b)=>b.Master.qualification - a.Master.qualification);
+            for(int i=0;i < characterList.Count && i < 6;i++){
+                App.Model.MCharacter mCharacter = characterList[i];
+                App.View.Character.VFaceSpriteRenderer character = characters[i];
+                character.CharacterId = mCharacter.CharacterId;
+            }
+        }
 
         public bool Camera3DEnable{
             set{ 

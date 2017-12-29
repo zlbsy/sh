@@ -9,6 +9,7 @@ namespace App.Service{
         //public IEnumerator Download (string url, string path)
         public IEnumerator Download (string url, int ver, System.Action<AssetBundle> handle, bool destory = true)
         {
+            Debug.Log("url="+url);
             bool showConnecting = false;
             if (App.Util.Global.SceneManager != null && !App.Util.Global.SceneManager.DialogIsShow(App.Util.SceneManager.Prefabs.ConnectingDialog) && !App.Util.Global.SceneManager.DialogIsShow(App.Util.SceneManager.Prefabs.LoadingDialog))
             {
@@ -40,10 +41,11 @@ namespace App.Service{
                 Debug.LogError(www.error);
                 yield break;
             }
-            handle(www.assetBundle);
-            if (destory && www.assetBundle != null)
+            AssetBundle assetBundle = www.assetBundle;
+            handle(assetBundle);
+            if (destory && assetBundle != null)
             {
-                www.assetBundle.Unload(false);
+                 assetBundle.Unload(false);
             }
             //www.assetBundle.Unload(false);
             /*using (WWW www = new WWW (url + "?time=" + System.DateTime.Now.GetHashCode())) {

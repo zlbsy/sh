@@ -33,6 +33,7 @@ namespace App.Util.LSharp{
             string methodName;
             string[] arguments;
             Analysis(value, out methodName, out arguments);
+            Debug.Log("Analysis methodName = " + methodName);
             Type t = this.GetType();
             MethodInfo mi = t.GetMethod(methodName,new Type[]{typeof(string[])});
             if (mi != null)

@@ -5,18 +5,26 @@ using App.ViewModel;
 using App.Util.Cacher;
 
 
-namespace App.Model{
-	public class MCharacterAbility : MBase {
-        public MCharacterAbility(){
-            viewModel = new VMCharacterAbility ();
+namespace App.Model
+{
+    public class MCharacterAbility : MBase
+    {
+        public MCharacterAbility()
+        {
+            viewModel = new VMCharacterAbility();
         }
-        public static MCharacterAbility Create(MCharacter mCharacter){
+
+        public static MCharacterAbility Create(MCharacter mCharacter)
+        {
             MCharacterAbility ability = new MCharacterAbility();
             ability.Update(mCharacter);
             return ability;
         }
+
         public VMCharacterAbility ViewModel { get { return (VMCharacterAbility)viewModel; } }
-        public void Update(MCharacter mCharacter){
+
+        public void Update(MCharacter mCharacter)
+        {
             App.Model.Master.MCharacter master = mCharacter.Master;
             if (master == null)
             {
@@ -54,6 +62,11 @@ namespace App.Model{
                 foreach (App.Model.MSkill skill in skills)
                 {
                     App.Model.Master.MSkill skillMaster = skill.Master;
+                    if (skillMaster == null)
+                    {
+                        Debug.LogError("master.name=" + master.name+", "+skill.SkillId+","+skill.Level);
+                        return;
+                    }
                     if (!System.Array.Exists(skillMaster.types, s => s == SkillType.ability))
                     {
                         continue;
@@ -143,7 +156,8 @@ namespace App.Model{
             this.HpMax = Mathf.FloorToInt(mCharacter.Level * (10 + this.Endurance * 0.2f) + hp);
             this.MpMax = Mathf.FloorToInt(mCharacter.Level * (5 + this.Knowledge * 0.1f) + mp);
             float moveTypeValue = (mCharacter.MoveType == MoveType.cavalry ? this.Riding : this.Walker);
-            switch(mCharacter.WeaponType){
+            switch (mCharacter.WeaponType)
+            {
                 case WeaponType.archery:
                     moveTypeValue += this.Archery;
                     break;
@@ -178,341 +192,465 @@ namespace App.Model{
                     moveTypeValue += this.Magic;
                     break;
             }
-            float starPower = 0.7f + mCharacter.Star *0.06f;
-            this.PhysicalAttack = Mathf.FloorToInt((this.Power + this.Knowledge)*0.3f + (this.Power * 2f + this.Knowledge) * (0.4f + (moveTypeValue * 0.5f) * 0.006f) * (1f + mCharacter.Level * starPower * 0.5f) * 0.1f);
+            float starPower = 0.7f + mCharacter.Star * 0.06f;
+            this.PhysicalAttack = Mathf.FloorToInt((this.Power + this.Knowledge) * 0.3f + (this.Power * 2f + this.Knowledge) * (0.4f + (moveTypeValue * 0.5f) * 0.006f) * (1f + mCharacter.Level * starPower * 0.5f) * 0.1f);
             this.PhysicalAttack += physicalAttack;
-            this.MagicAttack = Mathf.FloorToInt((this.Trick + this.Knowledge)*0.3f + (this.Trick * 2f + this.Knowledge) * (0.4f + (moveTypeValue * 0.5f) * 0.006f) * (1f + mCharacter.Level * starPower * 0.5f) * 0.1f);
+            this.MagicAttack = Mathf.FloorToInt((this.Trick + this.Knowledge) * 0.3f + (this.Trick * 2f + this.Knowledge) * (0.4f + (moveTypeValue * 0.5f) * 0.006f) * (1f + mCharacter.Level * starPower * 0.5f) * 0.1f);
             this.MagicAttack += magicAttack;
-            this.PhysicalDefense = Mathf.FloorToInt((this.Power*0.5f + this.Knowledge)*0.3f + (this.Power + this.Knowledge) * (1f + mCharacter.Level * starPower * 0.5f) * 0.04f);
+            this.PhysicalDefense = Mathf.FloorToInt((this.Power * 0.5f + this.Knowledge) * 0.3f + (this.Power + this.Knowledge) * (1f + mCharacter.Level * starPower * 0.5f) * 0.04f);
             this.PhysicalDefense += physicalDefense;
-            this.MagicDefense = Mathf.FloorToInt((this.Trick*0.5f + this.Knowledge)*0.3f + (this.Trick + this.Knowledge) * (1f + mCharacter.Level * starPower * 0.5f) * 0.04f);
+            this.MagicDefense = Mathf.FloorToInt((this.Trick * 0.5f + this.Knowledge) * 0.3f + (this.Trick + this.Knowledge) * (1f + mCharacter.Level * starPower * 0.5f) * 0.04f);
             this.MagicDefense += magicDefense;
         }
+
         /// <summary>
         /// 物攻 = Lv + (力量*2+技巧)*(骑术|步战)/100
         /// </summary>
-        public int PhysicalAttack{
-            set{
+        public int PhysicalAttack
+        {
+            set
+            {
                 this.ViewModel.PhysicalAttack.Value = value;
             }
-            get{ 
+            get
+            { 
                 return this.ViewModel.PhysicalAttack.Value;
             }
         }
+
         /// <summary>
         /// 法攻 = Lv + (谋略*2+技巧)*(骑术|步战)/100
         /// </summary>
-        public int MagicAttack{
-            set{
+        public int MagicAttack
+        {
+            set
+            {
                 this.ViewModel.MagicAttack.Value = value;
             }
-            get{ 
+            get
+            { 
                 return this.ViewModel.MagicAttack.Value;
             }
         }
+
         /// <summary>
         /// 物防 = Lv + 力量+技巧
         /// </summary>
-        public int PhysicalDefense{
-            set{
+        public int PhysicalDefense
+        {
+            set
+            {
                 this.ViewModel.PhysicalDefense.Value = value;
             }
-            get{ 
+            get
+            { 
                 return this.ViewModel.PhysicalDefense.Value;
             }
         }
+
         /// <summary>
         /// 法防 = Lv + 谋略+技巧
         /// </summary>
-        public int MagicDefense{
-            set{
+        public int MagicDefense
+        {
+            set
+            {
                 this.ViewModel.MagicDefense.Value = value;
             }
-            get{ 
+            get
+            { 
                 return this.ViewModel.MagicDefense.Value;
             }
         }
+
         /// <summary>
         /// 力量 = 初始 + 技能
         /// </summary>
-        public int Power{
-            set{
+        public int Power
+        {
+            set
+            {
                 this.ViewModel.Power.Value = value;
             }
-            get{ 
+            get
+            { 
                 return this.ViewModel.Power.Value;
             }
         }
+
         /// <summary>
         /// 技巧 = 初始 + 技能
         /// </summary>
-        public int Knowledge{
-            set{
+        public int Knowledge
+        {
+            set
+            {
                 this.ViewModel.Knowledge.Value = value;
             }
-            get{ 
+            get
+            { 
                 return this.ViewModel.Knowledge.Value;
             }
         }
+
         /// <summary>
         /// 速度 = 初始 + 技能
         /// </summary>
-        public int Speed{
-            set{
+        public int Speed
+        {
+            set
+            {
                 this.ViewModel.Speed.Value = value;
             }
-            get{ 
+            get
+            { 
                 return this.ViewModel.Speed.Value;
             }
         }
+
         /// <summary>
         /// 谋略 = 初始 + 技能
         /// </summary>
-        public int Trick{
-            set{
+        public int Trick
+        {
+            set
+            {
                 this.ViewModel.Trick.Value = value;
             }
-            get{ 
+            get
+            { 
                 return this.ViewModel.Trick.Value;
             }
         }
+
         /// <summary>
         /// 耐力 = 初始 + 技能
         /// </summary>
-        public int Endurance{
-            set{
+        public int Endurance
+        {
+            set
+            {
                 this.ViewModel.Endurance.Value = value;
             }
-            get{ 
+            get
+            { 
                 return this.ViewModel.Endurance.Value;
             }
         }
+
         /// <summary>
         /// 轻功 = 初始 + 技能
         /// </summary>
-        public int MovingPower{
-            set{
+        public int MovingPower
+        {
+            set
+            {
                 this.ViewModel.MovingPower.Value = value;
             }
-            get{ 
+            get
+            { 
                 return this.ViewModel.MovingPower.Value;
             }
         }
+
         /// <summary>
         /// 骑术 = 初始 + 技能
         /// </summary>
-        public int Riding{
-            set{
+        public int Riding
+        {
+            set
+            {
                 this.ViewModel.Riding.Value = value;
             }
-            get{ 
+            get
+            { 
                 return this.ViewModel.Riding.Value;
             }
         }
+
         /// <summary>
         /// 步战 = 初始 + 技能
         /// </summary>
-        public int Walker{
-            set{
+        public int Walker
+        {
+            set
+            {
                 this.ViewModel.Walker.Value = value;
             }
-            get{ 
+            get
+            { 
                 return this.ViewModel.Walker.Value;
             }
         }
+
         /// <summary>
         /// 长枪 = 初始 + 技能
         /// </summary>
-        public int Pike{
-            set{
+        public int Pike
+        {
+            set
+            {
                 this.ViewModel.Pike.Value = value;
             }
-            get{ 
+            get
+            { 
                 return this.ViewModel.Pike.Value;
             }
         }
+
         /// <summary>
         /// 短剑 = 初始 + 技能
         /// </summary>
-        public int Sword{
-            set{
+        public int Sword
+        {
+            set
+            {
                 this.ViewModel.Sword.Value = value;
             }
-            get{ 
+            get
+            { 
                 return this.ViewModel.Sword.Value;
             }
         }
+
         /// <summary>
         /// 大刀 = 初始 + 技能
         /// </summary>
-        public int LongKnife{
-            set{
+        public int LongKnife
+        {
+            set
+            {
                 this.ViewModel.LongKnife.Value = value;
             }
-            get{ 
+            get
+            { 
                 return this.ViewModel.LongKnife.Value;
             }
         }
+
         /// <summary>
         /// 短刀 = 初始 + 技能
         /// </summary>
-        public int Knife{
-            set{
+        public int Knife
+        {
+            set
+            {
                 this.ViewModel.Knife.Value = value;
             }
-            get{ 
+            get
+            { 
                 return this.ViewModel.Knife.Value;
             }
         }
+
         /// <summary>
         /// 长斧 = 初始 + 技能
         /// </summary>
-        public int LongAx{
-            set{
+        public int LongAx
+        {
+            set
+            {
                 this.ViewModel.LongAx.Value = value;
             }
-            get{ 
+            get
+            { 
                 return this.ViewModel.LongAx.Value;
             }
         }
+
         /// <summary>
         /// 短斧 = 初始 + 技能
         /// </summary>
-        public int Ax{
-            set{
+        public int Ax
+        {
+            set
+            {
                 this.ViewModel.Ax.Value = value;
             }
-            get{ 
+            get
+            { 
                 return this.ViewModel.Ax.Value;
             }
         }
+
         /// <summary>
         /// 长棍棒 = 初始 + 技能
         /// </summary>
-        public int LongSticks{
-            set{
+        public int LongSticks
+        {
+            set
+            {
                 this.ViewModel.LongSticks.Value = value;
             }
-            get{ 
+            get
+            { 
                 return this.ViewModel.LongSticks.Value;
             }
         }
+
         /// <summary>
         /// 短棍棒 = 初始 + 技能
         /// </summary>
-        public int Sticks{
-            set{
+        public int Sticks
+        {
+            set
+            {
                 this.ViewModel.Sticks.Value = value;
             }
-            get{ 
+            get
+            { 
                 return this.ViewModel.Sticks.Value;
             }
         }
+
         /// <summary>
         /// 箭术 = 初始 + 技能
         /// </summary>
-        public int Archery{
-            set{
+        public int Archery
+        {
+            set
+            {
                 this.ViewModel.Archery.Value = value;
             }
-            get{ 
+            get
+            { 
                 return this.ViewModel.Archery.Value;
             }
         }
+
         /// <summary>
         /// 暗器 = 初始 + 技能
         /// </summary>
-        public int HiddenWeapons{
-            set{
+        public int HiddenWeapons
+        {
+            set
+            {
                 this.ViewModel.HiddenWeapons.Value = value;
             }
-            get{ 
+            get
+            { 
                 return this.ViewModel.HiddenWeapons.Value;
             }
         }
+
         /// <summary>
         /// 双手 = 初始 + 技能
         /// </summary>
-        public int DualWield{
-            set{
+        public int DualWield
+        {
+            set
+            {
                 this.ViewModel.DualWield.Value = value;
             }
-            get{ 
+            get
+            { 
                 return this.ViewModel.DualWield.Value;
             }
         }
+
         /// <summary>
         /// 法宝 = 初始 + 技能
         /// </summary>
-        public int Magic{
-            set{
+        public int Magic
+        {
+            set
+            {
                 this.ViewModel.Magic.Value = value;
             }
-            get{ 
+            get
+            { 
                 return this.ViewModel.Magic.Value;
             }
         }
+
         /// <summary>
         /// HpMax = 初始HP + 耐力*等级
         /// </summary>
-        public int HpMax{
-            set{
+        public int HpMax
+        {
+            set
+            {
                 this.ViewModel.HpMax.Value = value;
             }
-            get{ 
+            get
+            { 
                 return this.ViewModel.HpMax.Value;
             }
         }
+
         /// <summary>
         /// MpMax = 初始MP + 技巧*等级
         /// </summary>
-        public int MpMax{
-            set{
+        public int MpMax
+        {
+            set
+            {
                 this.ViewModel.MpMax.Value = value;
             }
-            get{ 
+            get
+            { 
                 return this.ViewModel.MpMax.Value;
             }
         }
-        public int ResistanceMetal{
-            set{
+
+        public int ResistanceMetal
+        {
+            set
+            {
                 this.ViewModel.ResistanceMetal.Value = value;
             }
-            get{ 
+            get
+            { 
                 return this.ViewModel.ResistanceMetal.Value;
             }
         }
-        public int ResistanceWood{
-            set{
+
+        public int ResistanceWood
+        {
+            set
+            {
                 this.ViewModel.ResistanceWood.Value = value;
             }
-            get{ 
+            get
+            { 
                 return this.ViewModel.ResistanceWood.Value;
             }
         }
-        public int ResistanceWater{
-            set{
+
+        public int ResistanceWater
+        {
+            set
+            {
                 this.ViewModel.ResistanceWater.Value = value;
             }
-            get{ 
+            get
+            { 
                 return this.ViewModel.ResistanceWater.Value;
             }
         }
-        public int ResistanceFire{
-            set{
+
+        public int ResistanceFire
+        {
+            set
+            {
                 this.ViewModel.ResistanceFire.Value = value;
             }
-            get{ 
+            get
+            { 
                 return this.ViewModel.ResistanceFire.Value;
             }
         }
-        public int ResistanceEarth{
-            set{
+
+        public int ResistanceEarth
+        {
+            set
+            {
                 this.ViewModel.ResistanceEarth.Value = value;
             }
-            get{ 
+            get
+            { 
                 return this.ViewModel.ResistanceEarth.Value;
             }
         }
-	}
+    }
 }

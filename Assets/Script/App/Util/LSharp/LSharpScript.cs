@@ -24,6 +24,8 @@ namespace App.Util.LSharp{
             subClasses.Add("Var", LSharpVarlable.Instance);
             subClasses.Add("Tutorial", LSharpTutorial.Instance);
             subClasses.Add("Wait", LSharpWait.Instance);
+            subClasses.Add("Message", LSharpMessage.Instance);
+            subClasses.Add("Screen", LSharpScreen.Instance);
             if (Global.SUser.self != null && Global.SUser.self.characters != null && Global.SUser.self.characters.Length > 0)
             {
                 UpdatePlayer();
@@ -31,10 +33,13 @@ namespace App.Util.LSharp{
             }
         }
         public void UpdatePlayer(){
-            LSharpVarlable.SetVarlable("player_character_id", System.Array.Find(Global.SUser.self.characters, c=>c.CharacterId >= App.Util.Global.Constant.user_characters[0]).CharacterId.ToString());
+            App.Model.MCharacter mCharacter = System.Array.Find(Global.SUser.self.characters, c => c.CharacterId >= App.Util.Global.Constant.user_characters[0]);
+            LSharpVarlable.SetVarlable("player_character_id", mCharacter.CharacterId.ToString());
             LSharpVarlable.SetVarlable("player_id", Global.SUser.self.id.ToString());
             LSharpVarlable.SetVarlable("player_name", Global.SUser.self.name);
             LSharpVarlable.SetVarlable("player_nickname", Global.SUser.self.Nickname);
+            LSharpVarlable.SetVarlable("player_claim", Language.Get(string.Format("player_claim_{0}", mCharacter.Gender.ToString())));
+            LSharpVarlable.SetVarlable("player_claim_called", Language.Get(string.Format("player_claim_called_{0}", mCharacter.Gender.ToString())));
         }
         public void UpdateVarList(){
             if (Global.SUser.self.Progress != null)
@@ -135,6 +140,7 @@ namespace App.Util.LSharp{
             }
             string[] sarr = lineValue.Split('.');
             string key = sarr[0];
+            Debug.Log("key = " + key + ", " + subClasses.ContainsKey(key));
             if (subClasses.ContainsKey(key))
             {
                 object subClass = subClasses[key];
@@ -148,6 +154,7 @@ namespace App.Util.LSharp{
         public void CallAnalysis(object o, string lineValue){
             Type t = o.GetType();
             MethodInfo mi = t.GetMethod("Analysis",new Type[]{typeof(String)});
+            Debug.Log("CallAnalysis mi = " + mi);
             if (mi != null)
             {
                 mi.Invoke(o, new string[]{lineValue});

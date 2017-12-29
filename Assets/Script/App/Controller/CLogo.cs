@@ -29,7 +29,7 @@ namespace App.Controller{
 			yield return 0;
 		}
         public void ClearCacher(){
-            Caching.CleanCache();
+            Caching.ClearCache();
             PlayerPrefs.DeleteAll();
         }
         public void GameStart(){
@@ -92,6 +92,7 @@ namespace App.Controller{
             SUser sUser = Global.SUser;
             List<IEnumerator> list = new List<IEnumerator>();
             list.Add(sUser.Download(PromptMessageAsset.Url, versions.prompt_message, (AssetBundle assetbundle)=>{
+                Debug.Log("CLogo assetbundle="+assetbundle);
                 PromptMessageAsset.assetbundle = assetbundle;
             }));
             list.Add(sUser.Download(LanguageAsset.WORD_URL, versions.word, (AssetBundle assetbundle)=>{

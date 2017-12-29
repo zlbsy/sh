@@ -20,12 +20,12 @@ namespace App.Controller{
         [SerializeField]private VFace face;
         [SerializeField]private Text characterNameLeft;
         [SerializeField]private Text characterNameRight;
-        [SerializeField]private Text characterTalk;
-        private string message;
+        [SerializeField]protected Text characterTalk;
+        protected string message;
         public override IEnumerator OnLoad( Request request ) 
 		{  
-            int faceId;
-            string name;
+            int faceId = 0;
+            string name = string.Empty;
             if (request.Has("userId"))
             {
                 int userId = request.Get<int>("userId");
@@ -41,26 +41,29 @@ namespace App.Controller{
                 faceId = mCharacter.CharacterId;
                 name = mCharacter.Master.name;
             }
-            else
+            else if (request.Has("characterId"))
             {
                 faceId = request.Get<int>("characterId");
                 App.Model.Master.MCharacter mCharacter = CharacterCacher.Instance.Get(faceId);
                 name = mCharacter.name;
             }
             message = request.Get<string>("message");
-            bool isLeft = request.Get<bool>("isLeft");
-            if (isLeft)
+            if (name != string.Empty && faceId > 0)
             {
-                characterNameLeft.text = name;
-                characterNameRight.text = string.Empty;
-            }
-            else
-            {
-                characterNameRight.text = name;
-                characterNameLeft.text = string.Empty;
+                face.CharacterId = faceId;
+                bool isLeft = request.Get<bool>("isLeft");
+                if (isLeft)
+                {
+                    characterNameLeft.text = name;
+                    characterNameRight.text = string.Empty;
+                }
+                else
+                {
+                    characterNameRight.text = name;
+                    characterNameLeft.text = string.Empty;
+                }
             }
             characterTalk.text = string.Empty;
-            face.CharacterId = faceId;
             StartCoroutine(UpdateMessage());
             yield return StartCoroutine(base.OnLoad(request));
         }

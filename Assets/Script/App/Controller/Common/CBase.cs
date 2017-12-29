@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace App.Controller.Common{
-	public class CBase : MonoBehaviour {
+    public class CBase : MonoBehaviour {
 		public virtual IEnumerator Start()
 		{
 			yield return StartCoroutine (OnLoad(null));

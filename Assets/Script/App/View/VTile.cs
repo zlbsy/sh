@@ -97,6 +97,7 @@ namespace App.View{
             StartCoroutine (OnClickTile());
         }
         IEnumerator OnClickTile(){
+            Debug.Log("OnClickTile");
             yield return 0;
             if (Global.SceneManager.DialogIsShow())
             {

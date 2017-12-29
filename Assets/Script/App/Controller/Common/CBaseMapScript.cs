@@ -116,6 +116,12 @@ namespace App.Controller.Common{
                     {
                         tweenParms.OnComplete(moveComplete);
                     }
+                    else
+                    {
+                        tweenParms.OnComplete(()=>{
+                            MapMoveToPosition(tile.CoordinateX, tile.CoordinateY);
+                        });
+                    }
                     sequence.Append(HOTween.To(mCharacter, 0.5f, tweenParms));
                 }
                 sequence.Play();
