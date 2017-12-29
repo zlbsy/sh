@@ -28,7 +28,7 @@ namespace App.Controller{
         private bool deleteBuild = false;
         private int setId = 1;
         private int mapId = 1;
-        private int worldId = 0;
+        //private int worldId = 0;
         private string buildName = "";
         public override IEnumerator OnLoad( Request req ) 
 		{  
@@ -388,7 +388,7 @@ namespace App.Controller{
 
         public override IEnumerator Start()
         {
-            Caching.CleanCache();
+            Caching.ClearCache();
             Global.Initialize();
             yield return StartCoroutine (base.Start());
             //SEditorMaster sMaster = new SEditorMaster();

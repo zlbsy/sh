@@ -28,7 +28,7 @@ namespace App.Controller{
         }
         void OnGUI()
         {
-            string _faceId = GUI.TextField(new Rect(400, 50, 100, 30),faceId.ToString());
+            string _faceId = GUI.TextField(new Rect(10, 50, 100, 30),faceId.ToString());
             if (faceId == 0 || faceId != int.Parse(_faceId))
             {
                 if (faceId == 0)
@@ -50,7 +50,7 @@ namespace App.Controller{
                     rawImage.uvRect = faceAsset.face.rect;
                 }
             }
-            if (GUI.Button(new Rect(300, 100, 300, 30), "Save Scriptable : " + faceId))
+            if (GUI.Button(new Rect(100, 100, 300, 30), "Save Scriptable : " + faceId))
             {
                 SaveScriptable();
             }
