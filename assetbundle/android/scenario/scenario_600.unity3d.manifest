@@ -1,0 +1,18 @@
+ManifestFileVersion: 0
+CRC: 1125079944
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 3465198a25f470bcc81fc98e1e167fe8
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 9f06704ce218d852ec1dd91e182343c2
+HashAppended: 0
+ClassTypes:
+- Class: 114
+  Script: {fileID: 11500000, guid: 055892e0465aa42d48d06dec5f465b08, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+Assets:
+- Assets/Editor Default Resources/ScriptableObject/scenario/600.asset
+Dependencies: []

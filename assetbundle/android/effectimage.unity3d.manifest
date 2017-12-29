@@ -1,0 +1,20 @@
+ManifestFileVersion: 0
+CRC: 2940138427
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 15c8457e7ab35107a7e524c256ad0441
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 21f0dc8ebad690f009368069428e0a1a
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+Assets:
+- Assets/Atlas/effect/effect_add.png
+- Assets/Atlas/effect/effect_up.png
+- Assets/Atlas/effect/effect_down.png
+Dependencies: []
