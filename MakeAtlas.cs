@@ -481,7 +481,7 @@ namespace MyEditor
             Debug.LogError("BuildAssetBundleMaster success "+child+" : "+name);
         }
 
-
+        /*
         [MenuItem("SH/Build Assetbundle/Face")]
         static private void BuildAssetBundleFace()
         {
@@ -509,7 +509,7 @@ namespace MyEditor
                 ,GetBuildTarget()
             );
             Debug.LogError("BuildAssetBundleMaster success face : "+index);
-        }
+        }*/
 
 
         static public BuildTarget GetBuildTarget()

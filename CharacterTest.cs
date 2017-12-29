@@ -180,7 +180,7 @@ namespace MyEditor
 
         public override IEnumerator Start()
         {
-            Caching.CleanCache();
+            Caching.ClearCache();
             Global.Initialize();
             characterPrefab.SetActive(false);
             yield return StartCoroutine (base.Start());
